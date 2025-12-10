@@ -7,6 +7,6 @@
 <title>予約完了画面</title>
 </head>
 <body>
-
+	<button onclick="location.href='Main.jsp'">ホームに戻る</button>
 </body>
 </html>

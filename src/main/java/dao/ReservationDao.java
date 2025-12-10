@@ -8,7 +8,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.Reservation;
 
@@ -73,6 +76,41 @@ public class ReservationDao {
 				return "RES" + dateStr + seqStr;
 			}
 		}
+	}
+
+	public List<Reservation> ReservationHistoryByUser(String userId) {
+		String sql = "SELECT * FROM 予約 WHERE member_id = ?";
+		List<Reservation> list = new ArrayList<>();
+		try (Connection con = createConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, userId);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				while (rs.next()) {
+					LocalDate date = rs.getObject("reservation_date", LocalDate.class);
+					LocalDateTime start = rs.getObject("start_time", LocalDateTime.class);
+					LocalDateTime end = rs.getObject("end_time", LocalDateTime.class);
+					Reservation r = new Reservation(
+							rs.getString("reservation_number"),
+							rs.getInt("reservation_people"),
+							date,
+							rs.getString("member_id"),
+							rs.getInt("seat_id"),
+							start,
+							end);
+
+					list.add(r);
+
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (list.isEmpty()) {
+	        return null;
+	    }
+		return list;
 	}
 
 	public boolean delete(int reservationId) {

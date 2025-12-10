@@ -6,7 +6,7 @@
 <%
 User user = (User) session.getAttribute("LoginUser");
 int course = (int) session.getAttribute("Course");
-int numPeople = (int) session.getAttribute("numPeople");
+int people = (int) session.getAttribute("people");
 LocalDate localDate = (LocalDate) session.getAttribute("localDate");
 int seatId = (int) session.getAttribute("seatId");
 LocalDateTime selectedTime = (LocalDateTime) session.getAttribute("selectedTime");
@@ -25,7 +25,7 @@ String endTime = selectedTime.plusMinutes(course).format(timeFormatter);
 	<p>
 		予約者:<%=user.getName()%></p>
 	<p>
-		予約人数:<%=numPeople%></p>
+		予約人数:<%=people%></p>
 	<p>
 		予約日:<%=localDate%></p>
 	<p>

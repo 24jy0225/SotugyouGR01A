@@ -18,6 +18,7 @@ import jakarta.servlet.http.HttpSession;
 import action.LoginAction;
 import action.RegisterAction;
 import action.ReservationConfirmAction;
+import action.ReservationHistoryAction;
 import action.ReservationSeatAction;
 import action.ReservationTimeAction;
 import action.ReserveAction;
@@ -205,6 +206,14 @@ public class Controller extends HttpServlet {
 			}
 
 			break;
+		case "History":
+			nextPage = "paipai.jsp";
+			session = req.getSession();
+			session.setAttribute("action", "ByUser");
+			List<Reservation> list = new ArrayList<>();
+			ReservationHistoryAction reservationHistoryAction = new ReservationHistoryAction();
+			list = reservationHistoryAction.execute(req);
+			session.setAttribute("reservationHistory", list);
 		}
 
 		RequestDispatcher rd = req.getRequestDispatcher(nextPage);

@@ -77,5 +77,14 @@ public class Reservation {
 		this.startDateTime = startDateTime;
 		this.endDateTime = endDateTime;
 	}
+	public Reservation(String reserveId, int reservePeople, LocalDate reserveDate, String userId, int seatId, LocalDateTime startDateTime, LocalDateTime endDateTime ) {
+		this.reserveId = reserveId;
+		this.reservePeople = reservePeople;
+		this.reserveDate = reserveDate;
+		this.userId = userId;
+		this.seatId = seatId;
+		this.startDateTime = startDateTime;
+		this.endDateTime = endDateTime;
+	}
 
 }

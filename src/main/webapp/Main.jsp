@@ -20,6 +20,11 @@
 		<input type="submit" value="ログアウト">
 		<input type="hidden" name="command" value="Logaut">
 	</form>
+	<form action="Controller" method="post">
+		<input type="submit" value="予約履歴を表示">
+		<input type="hidden" name="command" value="History">
+	</form>
+	
 	<%
 	} else {
 	%>
