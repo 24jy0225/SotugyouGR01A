@@ -3,6 +3,7 @@ package action;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 import dao.UserDao;
 import model.User;
@@ -23,13 +24,23 @@ public class LoginAction extends HttpServlet {
     }
 
 	public User execute(HttpServletRequest req) {
-		String password = req.getParameter("password");
-		String email = req.getParameter("email");
-		
-		UserDao dao = new UserDao();
-		User user = dao.Login(email, password);
-	
-		return user;
+		HttpSession session = req.getSession();
+    	String action = (String)session.getAttribute("action");
+    	User user = null;
+    	UserDao dao = new UserDao();
+    	switch(action){
+    	case "Byuser":
+    		String password = req.getParameter("password");
+    		String email = req.getParameter("email");
+    		user = dao.Login(email, password);
+    		break;
+    	case "ByAdmin":
+    		String adminId = req.getParameter("adminId");
+    		String adminPassword = req.getParameter("adminPassword");
+    		user = dao.adminLogin(adminId, adminPassword);
+    		
+    	}
+    	return user;
 	}
 
 }

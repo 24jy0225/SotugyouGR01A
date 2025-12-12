@@ -15,7 +15,7 @@ String date = (String) session.getAttribute("date");
 <body>
 	<h2><%=date%>の予約可能時間
 	</h2>
-	<form action="Controller" method="post">
+	<form action="UserController" method="post">
 		<ul>
 			<%
 			DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");

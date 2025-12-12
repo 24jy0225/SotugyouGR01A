@@ -10,7 +10,7 @@ storeList = (List<Store>)session.getAttribute("storeList"); %>
 <title>コース選択</title>
 </head>
 <body>
-	<form action="Controller" method="get">
+	<form action="UserController" method="get">
 		<input type="checkbox" name="course" value="60">60分コース
 		<input type="checkbox" name="course" value="90">90分コース
 		<input type="checkbox" name="course" value="120">120分コース

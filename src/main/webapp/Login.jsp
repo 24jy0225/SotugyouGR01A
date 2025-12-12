@@ -7,7 +7,7 @@
 <title>ログインだお</title>
 </head>
 <body>
-	<form action="Controller" method="post">
+	<form action="UserController" method="post">
 		<p>
 			メールアドレス<input type="text" name="email">
 		</p>

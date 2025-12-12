@@ -13,7 +13,7 @@ String date = (String) session.getAttribute("date");
 <title>Seat</title>
 </head>
 <body>
-	<form method="get" action="Controller">
+	<form method="get" action="UserController">
 	<input type="hidden" name="command" value="Seat">
 		<ul>
 			<% for(Seat seat : seatList)  {%>

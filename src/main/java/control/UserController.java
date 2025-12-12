@@ -29,16 +29,16 @@ import model.Store;
 import model.User;
 
 /**
- * Servlet implementation class Controller
+ * Servlet implementation class UserController
  */
-@WebServlet("/Controller")
-public class Controller extends HttpServlet {
+@WebServlet("/UserController")
+public class UserController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public Controller() {
+	public UserController() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

@@ -7,7 +7,7 @@
 <title>新規登録だお</title>
 </head>
 <body>
-	<form action="Controller" method="post">
+	<form action="UserController" method="post">
 		<p>名前<input type="text" name="name" required></p>
 		<p>電話番号<input type="text" name="tel" required ></p>
 		<p>メールアドレス<input type="text" name="email" required></p>

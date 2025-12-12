@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.User;
 
@@ -77,6 +79,54 @@ public class UserDao {
 		}
 		return null;
 	}
+	public User adminLogin(String adminId, String adminPassword) {
+		String sql = "SELECT member_id , member_email_address , member_password , member_name FROM 会員 WHERE member_id = ? AND member_password = ? ";
+		try (Connection con = createConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, adminId);
+			pstmt.setString(2, adminPassword);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				User user = new User();
+				user.setUserId(rs.getString("member_id"));
+				user.setUserEmail(rs.getString("member_email_address"));
+				user.setPassword(rs.getString("member_password"));
+				user.setName(rs.getString("member_name"));
+				return user;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return null;
+	}
+	
+	public List<User> getUser(){
+		String sql = "SELECT member_id , member_email_address , member_password , member_name FROM 会員 ";
+		List<User> list = new ArrayList<>();
+		try (Connection con = createConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				User user = new User();
+				user.setUserId(rs.getString("member_id"));
+				user.setUserEmail(rs.getString("member_email_address"));
+				user.setPassword(rs.getString("member_password"));
+				user.setName(rs.getString("member_name"));
+				list.add(user);
+			}
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	} 
 
 	
 	

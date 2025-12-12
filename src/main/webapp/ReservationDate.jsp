@@ -49,7 +49,7 @@
 	            }
 
 	            const date = info.dateStr;
-	            window.location.href = "Controller?date=" + date;
+	            window.location.href = "UserController?date=" + date;
 	        },
 
 	        // ここでセルに色を付ける

@@ -32,7 +32,7 @@ String endTime = selectedTime.plusMinutes(course).format(timeFormatter);
 		席番号:<%=seatId%></p>
 	<p>
 		予約時間:<%=startTime%>～<%=endTime%></p>
-	<form action="Controller" method="post">
+	<form action="UserController" method="post">
 		<input type="submit" value="この内容で予約する"> <input type="hidden"
 			name="command" value="Reserve">
 	</form>
