@@ -138,6 +138,7 @@ public class UserController extends HttpServlet {
 			String after = (String) session.getAttribute("afterLoginPage");
 
 			if (user != null) {
+				session.setAttribute("action", "ByUser");
 				session.setAttribute("LoginUser", user);
 				if (after != null) {
 					nextPage = after;
@@ -209,10 +210,9 @@ public class UserController extends HttpServlet {
 		case "History":
 			nextPage = "paipai.jsp";
 			session = req.getSession();
-			session.setAttribute("action", "ByUser");
 			List<Reservation> list = new ArrayList<>();
 			ReservationHistoryAction reservationHistoryAction = new ReservationHistoryAction();
-			list = reservationHistoryAction.execute(req);
+			list = reservationHistoryAction.execute(req);						
 			session.setAttribute("reservationHistory", list);
 		}
 

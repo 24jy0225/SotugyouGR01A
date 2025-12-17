@@ -11,7 +11,16 @@ public class Reservation {
 	private int seatId;
 	private LocalDateTime startDateTime;
 	private LocalDateTime endDateTime;
+	private String userName;
 	
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
 	public String getReserveId() {
 		return reserveId;

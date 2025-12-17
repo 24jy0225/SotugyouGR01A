@@ -14,8 +14,12 @@ import jakarta.servlet.http.HttpSession;
 
 import action.LoginAction;
 import action.ReservationHistoryAction;
+import action.ReservationSeatAction;
+import action.StoreAction;
 import action.UserAction;
 import model.Reservation;
+import model.Seat;
+import model.Store;
 import model.User;
 
 /**
@@ -36,10 +40,16 @@ public class AdminController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String date = (String) req.getParameter("date");
+		String nextPage = "ReservationManage.jsp";
+		HttpSession session = req.getSession();
+
+		session.setAttribute("date", date);
+		RequestDispatcher rd = req.getRequestDispatcher(nextPage);
+		rd.forward(req, resp);
 	}
 
 	/**
@@ -47,30 +57,43 @@ public class AdminController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String nextPage = "AdminMain.jsp";
+		String nextPage = null;
 		HttpSession session = req.getSession();
+
 		User user = new User();
 		try {
+			session.setAttribute("adminId", "ADMIN");
+			session.setAttribute("AdminPassword", req.getParameter("AdminPassword"));
 			session.setAttribute("action", "ByAdmin");
 			LoginAction loginAction = new LoginAction();
-			user =loginAction.execute(req);
-		}catch(Exception e) {
+			user = loginAction.execute(req);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if(user != null) {
+		
+		if (user != null) {
+			nextPage = "AdminMain.jsp";
+			
 			List<Reservation> reservationList = new ArrayList<>();
 			ReservationHistoryAction action = new ReservationHistoryAction();
 			List<User> userList = new ArrayList<>();
 			UserAction userAction = new UserAction();
+
+			StoreAction storeAction = new StoreAction();
+			List<Store> storeList = new ArrayList<>();
+			storeList = storeAction.execute();
+			session.setAttribute("storeList", storeList);
+
+			ReservationSeatAction rsa = new ReservationSeatAction();
+			List<Seat> seatList = rsa.execute(req);
+			session.setAttribute("Seat", seatList);
+
 			userList = userAction.execute(req);
-			session.setAttribute("userList", userList);
-			
+			session.setAttribute("UserList", userList);
+
 			reservationList = action.execute(req);
-			session.setAttribute("ReservationHistory", reservationList);
-			
-			
+			session.setAttribute("ReservationHistoryList", reservationList);
 		}
-		
 
 		RequestDispatcher rd = req.getRequestDispatcher(nextPage);
 		rd.forward(req, resp);

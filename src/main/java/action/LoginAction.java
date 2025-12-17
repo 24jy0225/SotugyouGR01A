@@ -28,6 +28,7 @@ public class LoginAction extends HttpServlet {
     	String action = (String)session.getAttribute("action");
     	User user = null;
     	UserDao dao = new UserDao();
+    	
     	switch(action){
     	case "Byuser":
     		String password = req.getParameter("password");
@@ -35,10 +36,10 @@ public class LoginAction extends HttpServlet {
     		user = dao.Login(email, password);
     		break;
     	case "ByAdmin":
-    		String adminId = req.getParameter("adminId");
-    		String adminPassword = req.getParameter("adminPassword");
+    		String adminId = (String)session.getAttribute("adminId");
+    		String adminPassword = (String)session.getAttribute("AdminPassword");
     		user = dao.adminLogin(adminId, adminPassword);
-    		
+    		break;
     	}
     	return user;
 	}

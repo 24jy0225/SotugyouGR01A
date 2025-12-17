@@ -18,29 +18,38 @@ import model.User;
 @WebServlet("/ReservationHistoryAction")
 public class ReservationHistoryAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ReservationHistoryAction() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-    public List<Reservation> execute(HttpServletRequest req) {
-    	HttpSession session = req.getSession();
-    	String action = (String)session.getAttribute("action");
-    	ReservationDao dao = new ReservationDao();
-    	switch(action) {   
-    	case "ByUser":
-    		List<Reservation> list = new ArrayList<>();
-    		User user = (User)session.getAttribute("LoginUser");
-    		list = dao.ReservationHistoryByUser(user.getUserId());
-    		return list;
-    	case "ByAdmin":
-    		
-    	}
-    	return null;
-    }
-	
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public ReservationHistoryAction() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public List<Reservation> execute(HttpServletRequest req) {
+		HttpSession session = req.getSession(false);
+		if (session == null) {
+			return new ArrayList<>();
+		}
+
+		String action = (String) session.getAttribute("action");
+		ReservationDao dao = new ReservationDao();
+
+		if ("ByUser".equals(action)) {
+
+			User user = (User) session.getAttribute("LoginUser");
+			if (user == null) {
+				return new ArrayList<>();
+			}
+
+			return dao.ReservationHistoryByUser(user.getUserId());
+
+		} else if ("ByAdmin".equals(action)) {
+
+			return dao.ReservationHistoryAll();
+		}
+		return new ArrayList<>();
+	}
+
 }

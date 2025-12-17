@@ -28,9 +28,16 @@ public class ReservationSeatAction extends HttpServlet {
     public List<Seat> execute(HttpServletRequest req) {
     	HttpSession session = req.getSession();
     	List<Seat> list = new ArrayList<>();
-    	int storeNumber = (int)session.getAttribute("storeNumber");
-		SeatDao dao = new SeatDao();
-		 list = dao.findByStoreNumber(storeNumber);
+    	String action = (String)session.getAttribute("action");
+    	SeatDao dao = new SeatDao();
+    	switch(action) {
+    	case "ByUser":
+    		int storeNumber = (int)session.getAttribute("storeNumber");    		
+    		list = dao.findByStoreNumber(storeNumber);
+    		break;
+    	case "ByAdmin":
+    		list = dao.findAll();
+    	}
 		 return list;
     }
 }

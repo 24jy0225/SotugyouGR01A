@@ -10,7 +10,7 @@
 <body>
 	<header>
 		<form action="AdminController" method="post">
-			<p><input type="password" name="AdminPassword"</p>
+			<p><input type="password" name="AdminPassword" value="Drive666"</p>
 			<input type="submit" value="ログイン">
 		</form>
 	</header>

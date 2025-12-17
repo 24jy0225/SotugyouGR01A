@@ -28,7 +28,7 @@ public class SeatDao {
 	public List<Seat> findAll() {
 		List<Seat> list = new ArrayList<>();
 
-		String sql = "SELECT seat_id , is_active , store_number FROM 席 WHERE is_active = 1";
+		String sql = "SELECT seat_id , is_active , store_number FROM 席 ";
 		try (Connection con = createConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				) {

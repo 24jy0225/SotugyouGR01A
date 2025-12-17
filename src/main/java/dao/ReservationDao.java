@@ -108,8 +108,48 @@ public class ReservationDao {
 			e.printStackTrace();
 		}
 		if (list.isEmpty()) {
-	        return null;
-	    }
+			return null;
+		}
+		return list;
+	}
+
+	public  List<Reservation> ReservationHistoryAll() {
+		List<Reservation> list = new ArrayList<>();
+
+		String sql = "SELECT r.reservation_number, r.reservation_people, r.reservation_date, " +
+				"r.start_time, r.end_time, r.seat_id, " +
+				"m.member_id, m.member_name " +
+				"FROM 予約 r " +
+				"JOIN 会員 m ON r.member_id = m.member_id " +
+				"ORDER BY r.reservation_date, r.start_time";
+
+		try (Connection con = createConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+
+			while (rs.next()) {
+				LocalDate date = rs.getObject("reservation_date", LocalDate.class);
+				LocalDateTime start = rs.getTimestamp("start_time").toLocalDateTime();
+
+				LocalDateTime end = rs.getTimestamp("end_time").toLocalDateTime();
+	
+				Reservation r = new Reservation(
+						rs.getString("reservation_number"),
+						rs.getInt("reservation_people"),
+						date,
+						rs.getString("member_id"),
+						rs.getInt("seat_id"),
+						start,
+						end);
+				r.setUserName(rs.getString("member_name"));
+
+				list.add(r);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return list;
 	}
 
