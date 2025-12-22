@@ -131,6 +131,7 @@ public class UserController extends HttpServlet {
 			break;
 		case "LoginAction":
 			session = req.getSession();
+			session.setAttribute("action", "ByUser");
 
 			LoginAction loginAction = new LoginAction();
 			User user = loginAction.execute(req);

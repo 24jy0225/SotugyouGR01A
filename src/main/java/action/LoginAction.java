@@ -30,7 +30,7 @@ public class LoginAction extends HttpServlet {
     	UserDao dao = new UserDao();
     	
     	switch(action){
-    	case "Byuser":
+    	case "ByUser":
     		String password = req.getParameter("password");
     		String email = req.getParameter("email");
     		user = dao.Login(email, password);
