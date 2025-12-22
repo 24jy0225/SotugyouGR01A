@@ -28,7 +28,7 @@ public class SeatDao {
 	public List<Seat> findAll() {
 		List<Seat> list = new ArrayList<>();
 
-		String sql = "SELECT seat_id , is_active , store_number FROM 席 ";
+		String sql = "SELECT seat_id , is_active , seat_number , store_number FROM 席 ";
 		try (Connection con = createConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				) {
@@ -39,6 +39,7 @@ public class SeatDao {
 							rs.getInt("store_number"),
 							rs.getInt("is_active")
 							);
+					s.setSeatNumber(rs.getInt("seat_number"));
 					
 					list.add(s);
 				}

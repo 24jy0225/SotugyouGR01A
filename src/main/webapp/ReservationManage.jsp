@@ -1,144 +1,248 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.util.*, java.time.format.DateTimeFormatter , model.Reservation , model.Seat"%>
+<%@ page
+	import="java.util.*, java.time.format.DateTimeFormatter , model.Reservation , model.Seat"%>
+
 <%
-	DateTimeFormatter dateFmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-	DateTimeFormatter timeFmt = DateTimeFormatter.ofPattern("HH:mm");
-	List<Reservation> list = (List<Reservation>)session.getAttribute("ReservationHistoryList");
-	List<Seat> seatList = (List<Seat>)session.getAttribute("Seat");
+DateTimeFormatter dateFmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+DateTimeFormatter timeFmt = DateTimeFormatter.ofPattern("HH:mm");
+
+List<Reservation> list = (List<Reservation>) session.getAttribute("ReservationHistoryList");
+List<Seat> seatList = (List<Seat>) session.getAttribute("Seat");
+
+String[] hours = {"20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30", "00:00", "00:30", "01:00",
+		"01:30", "02:00", "02:30", "03:00", "03:30"};
 %>
+
 <html>
 <head>
 <meta charset="UTF-8">
 <title>席予約</title>
+<style>
+body {
+	background-color: #2c2c2c;
+	font-family: "Helvetica Neue", Arial, sans-serif;
+	color: #333;
+}
+
+#dateLabel {
+	color: white;
+	text-align: center;
+}
+
+/* テーブルのスタイル */
+table {
+	background: white;
+	border-collapse: collapse;
+	margin: 20px auto;
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+th, td {
+	border: 1px solid #ddd;
+	width: 80px;
+	height: 45px;
+	text-align: center;
+	font-size: 11px;
+	position: relative; /* ゴミ箱配置用 */
+}
+
+th {
+	background: #f4f4f4;
+	color: #555;
+}
+
+/* 予約済みセルの色（お手本に合わせた3色） */
+.reserved.color-0 {
+	background-color: #f5d5b5;
+} /* ベージュ */
+.reserved.color-1 {
+	background-color: #d1e8f5;
+} /* 水色 */
+.reserved.color-2 {
+	background-color: #d1f5d1;
+} /* 薄緑 */
+.reserved {
+	border: none !important;
+	color: #444;
+	vertical-align: middle;
+	line-height: 1.3;
+}
+
+/* ゴミ箱アイコン */
+.delete-icon {
+	position: absolute;
+	bottom: 2px;
+	right: 2px;
+	font-size: 10px;
+	background: rgba(0, 0, 0, 0.1);
+	padding: 1px 3px;
+	border-radius: 2px;
+	cursor: pointer;
+}
+</style>
 </head>
+
 <body>
+
 	<h3 id="dateLabel"></h3>
 	<button onclick="prevDay()">←</button>
 	<button onclick="nextDay()">→</button>
-	<p><%= list %></p>
-	<table id="reserveTable">
+
+	<table>
 		<thead>
 			<tr>
 				<th>時間</th>
-				<% for(Seat s : seatList){ %>
-				<th><%= s.getSeatNumber() %></th>
-				<% } %>
+				<%
+				for (Seat s : seatList) {
+				%>
+				<th>座席<%=s.getSeatNumber()%></th>
+				<%
+				}
+				%>
 			</tr>
 		</thead>
-		<tbody id="tableBody"></tbody>
-	</table>
-	
-	<script type="text/javascript">
 
-		let currentDate = new Date(); // 今日
-
-		showDay(currentDate);
-
-		const allReservations = [
-			
+		<tbody>
 			<%
-			for (Reservation r : list) {
+			for (String h : hours) {
 			%>
-			{
-				date: "<%=r.getStartDateTime().toLocalDate().format(dateFmt)%>" ,
-				seatId: "<%=r.getSeatId()%>" ,
-				start: "<%=r.getStartDateTime().toLocalTime().format(timeFmt)%>" ,
-				end: "<%=r.getEndDateTime().toLocalTime().format(timeFmt)%>" 
-			},
-			<%
-			}
-			%>
-			];
-
-		const seatArray = [
-			<%
-			for (Seat s : seatList) {
-			%>
-			    {
-			        seatId: "<%= s.getSeatId() %>",
-			        seatNumber: "<%= s.getSeatNumber() %>"
-			    },
-			<%
-			}
-			%>
-			];
-
-		function createHourSlots(){
-			const hours = [];
-
-			for(let h=20; h<24; h++){
-				hours.push(h + ":00");
-			}
-
-			for(let h=0; h<4; h++){
-				hours.push(h + ":00")
+			<tr>
+				<th><%=h%></th>
+				<%
+				for (Seat s : seatList) {
+				%>
+				<td data-seat="<%=s.getSeatId()%>" data-hour="<%=h%>"></td>
+				<%
 				}
-			return hours;
-		}
-		
-		function prevDay() {
-			currentDate.setDate(currentDate.getDate() - 1);
-			showDay(currentDate);
+				%>
+			</tr>
+			<%
 			}
+			%>
+		</tbody>
+	</table>
 
-		function nextDay(){
-			currentDate.setDate(currentDate.getDate() + 1);
-			showDay(currentDate);
-			}
+	<script>
+const hourList = ["20:00","20:30", "21:00","21:30", "22:00","22:30", "23:00","23:30", "00:00","00:30", "01:00","01:30", "02:00","02:30", "03:00","03:30"];
 
-		function showDay(dateObj){
-				const yyyyMMdd = dateObj.toISOString().split("T")[0];
+const reservations = [
+<%for (Reservation r : list) {%>
+{
+  date: "<%=r.getStartDateTime().toLocalDate().format(dateFmt)%>",
+  seatId: "<%=r.getSeatId()%>",
+  start: "<%=r.getStartDateTime().toLocalTime().format(timeFmt)%>",
+  end: "<%=r.getEndDateTime().toLocalTime().format(timeFmt)%>",
+  name: "<%=r.getUserName()%>",
+  count: <%=r.getReservePeople()%>
+},
+<%}%>
+];
 
-				document.getElementById("dateLabel").innerText = yyyyMMdd;
+let currentDate = new Date();
 
-				const dayReservations = [];
+function formatDate(d){
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+}
 
-				for(let i=0; i<allReservations.length; i++){
-					if(allReservations[i].date === yyyyMMdd){
-						dayReservations.push(allReservations[i]);
-						}
-					}
+function prevDay(){
+  currentDate.setDate(currentDate.getDate()-1);
+  paintDay();
+}
 
-					drawTable(dayReservations);
-		}
+function nextDay(){
+  currentDate.setDate(currentDate.getDate()+1);
+  paintDay();
+}
 
-		function drawEmptyTable() {
-			  const tbody = document.getElementById("tableBody");
-			  tbody.innerHTML = "";
+function toMin(t){
+  if(!t) return 0;
+  const [h,m]=t.split(":").map(Number);
+  return h*60+m;
+}
 
-			  const hours = createHourSlots();
+function getFixMin(timeStr) {
+  let m = toMin(timeStr);
+  if (m < 12 * 60) m += 1440; 
+  return m;
+}
 
-			  for (let i = 0; i < hours.length; i++) {
-			    const tr = document.createElement("tr");
+function getCourseName(start, end) {
+  const s = getFixMin(start);
+  const e = getFixMin(end);
+  const diff = e - s; 
 
-			    // 時間列
-			    const timeTd = document.createElement("td");
-			    timeTd.textContent = hours[i];
-			    tr.appendChild(timeTd);
+  if (diff >= 60) {
+    const hours = diff / 60;
+    return hours + "時間コース";
+  } else {
+    return diff + "分コース";
+  }
+}
 
-			    // 席列
-			    for (let seatId = 0; seatId<seatArray.length ; seatId++) {
-			      const td = document.createElement("td");
-			      td.className = "cell free";
-			      td.dataset.seatId = seatArray[s].seatId;
-			      td.dataset.time = hours[i];
-			      tr.appendChild(td);
-			    }
+function paintDay() {
+  const dateStr = formatDate(currentDate);
+  document.getElementById("dateLabel").innerText = dateStr;
 
-			    tbody.appendChild(tr);
-			  }
-			}
-		
-		function showDay(dateObj) {
-			  const yyyyMMdd = dateObj.toISOString().split("T")[0];
-			  document.getElementById("dateLabel").innerText = yyyyMMdd;
+  const cellMap = {};
+  document.querySelectorAll("td[data-seat]").forEach(td => {
+    td.innerHTML = "";
+    td.className = ""; 
+    const key = td.getAttribute("data-seat") + "_" + td.getAttribute("data-hour");
+    cellMap[key] = td;
+  });
 
-			  drawEmptyTable();
-			}
+  reservations.forEach((r, idx) => {
+    let businessDate = r.date;
+    if (toMin(r.start) < 12 * 60) {
+      let d = new Date(r.date);
+      d.setDate(d.getDate() - 1);
+      businessDate = formatDate(d);
+    }
 
-		
-		
-	</script>
+    if (businessDate !== dateStr) return;
+
+    const colorClass = "color-" + (idx % 3);
+
+    hourList.forEach(h => {
+      const s = getFixMin(r.start);
+      const e = getFixMin(r.end);
+      const slot = getFixMin(h);
+
+      if (slot >= s && slot < e) {
+        const targetCell = cellMap[r.seatId + "_" + h];
+        if (targetCell) {
+          targetCell.classList.add("reserved", colorClass);
+
+          if (h === r.start) {
+            const courseText = getCourseName(r.start, r.end);
+            targetCell.innerHTML = `
+              <div style="font-weight:bold;">${r.name}</div>
+              <div>会員</div>
+              <div style="color: #d63384; font-weight: bold;">${courseText}</div>
+              <div>${r.count}人</div>
+            `;
+          }
+
+          // 30分後の枠が終了時間ならゴミ箱を表示
+          if (slot + 30 === e) {
+            targetCell.innerHTML += `<div class="delete-icon" onclick="deleteRes('${r.id}')">🗑️</div>`;
+          }
+        }
+      }
+    });
+  });
+}
+
+function deleteRes(id) {
+  if(confirm("予約ID: " + id + " を削除しますか？")) {
+    // ここで window.location.href = "DeleteServlet?id=" + id; 等へ飛ばす
+    console.log("Delete ID:", id);
+  }
+}
+
+paintDay();
+</script>
+
 </body>
 </html>
