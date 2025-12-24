@@ -18,6 +18,18 @@ String[] hours = {"20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00",
 <head>
 <meta charset="UTF-8">
 <title>席予約</title>
+<%
+String msg = (String) session.getAttribute("message");
+if (msg != null) {
+%>
+    <div style="color: yellow; text-align: center; background: #444; padding: 10px;">
+        <%= msg %>
+    </div>
+<%
+    // 一度表示したら消す（出しっぱなし防止）
+    session.removeAttribute("message");
+}
+%>
 <style>
 body {
 	background-color: #2c2c2c;
@@ -71,14 +83,12 @@ th {
 
 /* ゴミ箱アイコン */
 .delete-icon {
-	position: absolute;
-	bottom: 2px;
-	right: 2px;
-	font-size: 10px;
-	background: rgba(0, 0, 0, 0.1);
-	padding: 1px 3px;
-	border-radius: 2px;
-	cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+.delete-icon:hover {
+    opacity: 1.0;
+    transform: scale(1.2); /* 少し大きくしてクリックしやすく */
 }
 </style>
 </head>
@@ -129,6 +139,7 @@ const hourList = ["20:00","20:30", "21:00","21:30", "22:00","22:30", "23:00","23
 const reservations = [
 <%for (Reservation r : list) {%>
 {
+  id: "<%= r.getReserveId() %>",
   date: "<%=r.getStartDateTime().toLocalDate().format(dateFmt)%>",
   seatId: "<%=r.getSeatId()%>",
   start: "<%=r.getStartDateTime().toLocalTime().format(timeFmt)%>",
@@ -217,16 +228,23 @@ function paintDay() {
           if (h === r.start) {
             const courseText = getCourseName(r.start, r.end);
             targetCell.innerHTML = `
-              <div style="font-weight:bold;">${r.name}</div>
+              <div>会員番号<p>\${r.id}</p></div>
+              <div style="font-weight:bold;">\${r.name}</div>
               <div>会員</div>
-              <div style="color: #d63384; font-weight: bold;">${courseText}</div>
-              <div>${r.count}人</div>
+              <div style="color: #d63384; font-weight: bold;">\${courseText}</div>
+              <div>\${r.count}人</div>
             `;
           }
 
           // 30分後の枠が終了時間ならゴミ箱を表示
           if (slot + 30 === e) {
-            targetCell.innerHTML += `<div class="delete-icon" onclick="deleteRes('${r.id}')">🗑️</div>`;
+            targetCell.innerHTML += `
+				<form action="AdminController" methoe="post" onsubmit="return confirm('予約を削除しますか？')" style="position: absolute; bottom:2px; right: 2px; margin: 0;">
+				<input type="hidden" name="command" value="delete">
+				<input type="hidden" name="id" value="\${r.id}">
+				<button type="submit" class="delete-icon" style="border:none; background:none; cursor:pointer; padding:0; font-size: 12px;">🗑️</button>
+				</form>
+				`;
           }
         }
       }
@@ -234,12 +252,6 @@ function paintDay() {
   });
 }
 
-function deleteRes(id) {
-  if(confirm("予約ID: " + id + " を削除しますか？")) {
-    // ここで window.location.href = "DeleteServlet?id=" + id; 等へ飛ばす
-    console.log("Delete ID:", id);
-  }
-}
 
 paintDay();
 </script>

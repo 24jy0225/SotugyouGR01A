@@ -153,11 +153,11 @@ public class ReservationDao {
 		return list;
 	}
 
-	public boolean delete(int reservationId) {
-		String sql = "DELETE FROM reservation WHERE reservation_id = ?";
+	public boolean delete(String reservationId) {
+		String sql = "DELETE FROM 予約 WHERE reservation_number = ?";
 		try (Connection con = createConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setInt(1, reservationId);
+			pstmt.setString(1, reservationId);
 			return pstmt.executeUpdate() == 1;
 		} catch (SQLException e) {
 			e.printStackTrace();

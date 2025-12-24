@@ -1,16 +1,16 @@
 package model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Coupon {
 	private int couponId;
 	private String couponName;
 	private String couponDetail;
-	private Date startDate;
-	private Date endDate;
-	private int isActive;
+	private LocalDate startDate;
+	private LocalDate endDate;
+	private boolean isActive;
 
-	public Coupon(int couponId, String couponName, String couponDetail, Date startDate, Date endDate, int isActive) {
+	public Coupon(int couponId, String couponName, String couponDetail, LocalDate startDate, LocalDate endDate, boolean isActive) {
 		this.couponId = couponId;
 		this.couponName = couponName;
 		this.couponDetail = couponDetail;
@@ -18,6 +18,7 @@ public class Coupon {
 		this.endDate = endDate;
 		this.isActive = isActive;
 	}
+	public Coupon() {}
 
 	public int getCouponId() {
 		return couponId;
@@ -43,27 +44,27 @@ public class Coupon {
 		this.couponDetail = couponDetail;
 	}
 
-	public Date getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public LocalDate getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
 	
-	public int getIsActive() {
+	public boolean getIsActive() {
 		return isActive;
 	}
 	
-	public void setIsActive(int isActive) {
+	public void setIsActive(boolean isActive) {
 		this.isActive = isActive;
 	}
 }
