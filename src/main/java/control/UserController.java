@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import action.CouponAction;
 import action.LoginAction;
 import action.RegisterAction;
 import action.ReservationConfirmAction;
@@ -23,6 +24,8 @@ import action.ReservationSeatAction;
 import action.ReservationTimeAction;
 import action.ReserveAction;
 import action.StoreAction;
+import action.UseCouponAction;
+import model.CouponUsage;
 import model.Reservation;
 import model.Seat;
 import model.Store;
@@ -87,7 +90,17 @@ public class UserController extends HttpServlet {
 			List<LocalDateTime> list = reservationTimeAction.execute(req);
 			session.setAttribute("timeList", list);
 			break;
-
+		case "MyPage":
+			nextPage = "MyPage.jsp";
+			session = req.getSession();
+			session.setAttribute("action", "ByUser");
+			ReservationHistoryAction reservationHistoryAction = new ReservationHistoryAction();
+			List<Reservation> reservationList = reservationHistoryAction.execute(req);						
+			session.setAttribute("reservationHistory", reservationList);
+			CouponAction couponAction = new CouponAction();
+			List<CouponUsage> couponList = couponAction.execute(req);
+			session.setAttribute("couponList", couponList);
+			break;
 		default:
 			nextPage = "Error.jsp"; // 例としてエラーページを設定
 			req.setAttribute("errorMsg", "無効なGETコマンド: " + command);
@@ -215,6 +228,25 @@ public class UserController extends HttpServlet {
 			ReservationHistoryAction reservationHistoryAction = new ReservationHistoryAction();
 			list = reservationHistoryAction.execute(req);						
 			session.setAttribute("reservationHistory", list);
+			break;
+		case "useCoupon":
+			try {
+		        UseCouponAction useAction = new UseCouponAction();
+		        useAction.execute(req, resp);
+		        
+		        return; 
+
+		    } catch (Exception e) {
+		        // エラーが発生した場合の処理
+		        e.printStackTrace();
+		        req.setAttribute("errorMsg", "クーポンの使用処理でエラーが発生しました。");
+		        nextPage = "Error.jsp";
+		        break;
+		    }
+		default:
+            nextPage = "Error.jsp";
+            req.setAttribute("errorMsg", "不正なポストコマンド: " + command);
+            break;
 		}
 
 		RequestDispatcher rd = req.getRequestDispatcher(nextPage);

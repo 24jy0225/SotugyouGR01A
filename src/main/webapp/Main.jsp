@@ -24,6 +24,11 @@
 		<input type="submit" value="予約履歴を表示">
 		<input type="hidden" name="command" value="History">
 	</form>
+	<form action="UserController" method="get">
+		<input type="submit" value="MyPage">
+		<input type="hidden" name="command" value="MyPage">
+	</form>
+	
 	
 	<%
 	} else {

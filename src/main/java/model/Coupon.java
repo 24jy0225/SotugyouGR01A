@@ -3,14 +3,14 @@ package model;
 import java.time.LocalDate;
 
 public class Coupon {
-	private int couponId;
+	private String couponId;
 	private String couponName;
 	private String couponDetail;
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private boolean isActive;
 
-	public Coupon(int couponId, String couponName, String couponDetail, LocalDate startDate, LocalDate endDate, boolean isActive) {
+	public Coupon(String couponId, String couponName, String couponDetail, LocalDate startDate, LocalDate endDate, boolean isActive) {
 		this.couponId = couponId;
 		this.couponName = couponName;
 		this.couponDetail = couponDetail;
@@ -20,11 +20,11 @@ public class Coupon {
 	}
 	public Coupon() {}
 
-	public int getCouponId() {
+	public String getCouponId() {
 		return couponId;
 	}
 
-	public void setCouponId(int couponId) {
+	public void setCouponId(String couponId) {
 		this.couponId = couponId;
 	}
 

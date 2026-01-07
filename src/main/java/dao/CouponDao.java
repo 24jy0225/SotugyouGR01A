@@ -7,8 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.Coupon;
+import model.CouponUsage;
 
 public class CouponDao {
 	private Connection createConnection() throws Exception {
@@ -84,5 +87,54 @@ public class CouponDao {
 			return false;
 		}
 
+	}
+	
+	public List<CouponUsage> findById(String userId) {
+		List<CouponUsage> list = new ArrayList<>();
+		String sql = "SELECT * FROM クーポン利用 " +
+                "JOIN クーポン ON クーポン利用.coupon_number = クーポン.coupon_number " +
+                "WHERE クーポン利用.member_id = ? AND クーポン利用.coupon_usage = 1";
+		try (Connection con = createConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				) {
+			pstmt.setString(1,userId);
+			try(ResultSet rs = pstmt.executeQuery()){
+				while (rs.next()) {
+					Coupon coupon = new Coupon();
+	                coupon.setCouponId(rs.getString("coupon_number"));
+	                coupon.setCouponName(rs.getString("coupon_name"));
+	                coupon.setCouponDetail(rs.getString("coupon_detail"));
+	                coupon.setEndDate(rs.getDate("coupon_end_date").toLocalDate());
+	                coupon.setStartDate(rs.getDate("coupon_start_date").toLocalDate());	                
+	                CouponUsage usage = new CouponUsage(
+	                        rs.getString("member_id"),
+	                        coupon, // ここで合体！
+	                        rs.getBoolean("coupon_usage")
+	                    );
+	                    
+	                    list.add(usage);
+				}
+				
+				}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public boolean useCoupon(String userId , String couponId) {
+		String sql = "UPDATE クーポン利用 SET coupon_usage = 0 WHERE member_id = ? AND coupon_number = ?";
+		try (Connection con = createConnection();
+		         PreparedStatement pstmt = con.prepareStatement(sql)) {
+		        
+		        pstmt.setString(1, userId);
+		        pstmt.setString(2, couponId);
+		        
+		        return pstmt.executeUpdate() > 0; // 更新できたら true
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        return false;
+		    }
 	}
 }

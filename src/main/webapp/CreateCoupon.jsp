@@ -13,7 +13,7 @@
 		<p>クーポン名</p>
 		<p><input type="text" name="couponName"></p>
 		<p>クーポン内容</p>
-		<p><textarea name="couponDetail"></textarea></p>
+		<p><textarea name="couponDetail" maxlength="100"></textarea></p>
 		<p>開始日<input type="date" name="startDate"></p>
 		<p>有効期限<input type="date" name="endDate"></p>
 		<p><button type="submit">クーポンを作成する</button></p>
