@@ -17,5 +17,7 @@ public class DeleteCouponAction extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
+    
+    
 
 }

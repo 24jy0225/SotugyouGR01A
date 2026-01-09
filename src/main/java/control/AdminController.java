@@ -181,6 +181,9 @@ public class AdminController extends HttpServlet {
 				nextPage = "Error.jsp";
 				break;
 			}
+		case "deleteCoupon" :
+			couponNumber = req.getParameter("couponNumber");
+			
 		}
 		if (nextPage != null) {
 			RequestDispatcher rd = req.getRequestDispatcher(nextPage);
