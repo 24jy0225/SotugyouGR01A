@@ -2,6 +2,10 @@ package action;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
+import dao.CouponDao;
 
 /**
  * Servlet implementation class DeleteCouponAction
@@ -18,6 +22,12 @@ public class CouponDeleteAction extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
     
-    
+    public boolean execute(HttpServletRequest req) {
+		HttpSession session = req.getSession(false);
+		
+		String id = (String)session.getAttribute("");
+		CouponDao dao = new CouponDao();
+		return dao.delete();
+	}
 
 }

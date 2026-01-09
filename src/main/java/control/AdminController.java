@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpSession;
 
 import action.CouponAction;
 import action.CouponCreateAction;
+import action.CouponDeleteAction;
 import action.CouponEditAction;
 import action.LoginAction;
 import action.ReservationDeleteAction;
@@ -183,7 +184,24 @@ public class AdminController extends HttpServlet {
 			}
 		case "deleteCoupon" :
 			couponNumber = req.getParameter("couponNumber");
+			session.setAttribute("couponNumber", couponNumber);
 			
+			CouponDeleteAction couponDeleteAction = new CouponDeleteAction();
+			flag = couponDeleteAction.execute(req);
+			
+			List<Coupon> couponList = new ArrayList<>();
+			CouponAction couponAction = new CouponAction();
+			couponList = couponAction.execute(req);
+			
+			if (flag && reservationList != null) {
+				session.setAttribute("couponList", couponList);
+				session.setAttribute("message", "クーポンを削除しました。");
+				resp.sendRedirect("CouponManage.jsp");
+				return;
+			} else {
+				session.setAttribute("errorMsg", "予約削除エラー");
+				nextPage = "Error.jsp";
+			}
 		}
 		if (nextPage != null) {
 			RequestDispatcher rd = req.getRequestDispatcher(nextPage);

@@ -184,4 +184,20 @@ public class CouponDao {
 		        return false;
 		    }
 	}
+	
+	public boolean delete(String couponNumber) {
+		String sql = "DELETE FROM クーポン WHERE couupon_number = ?";
+		try (Connection con = createConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, couponNumber);
+			return pstmt.executeUpdate() == 1;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	
 }
