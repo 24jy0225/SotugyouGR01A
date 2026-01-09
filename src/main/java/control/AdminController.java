@@ -14,8 +14,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import action.CouponAction;
-import action.CreateCouponAction;
-import action.EditCouponAction;
+import action.CouponCreateAction;
+import action.CouponEditAction;
 import action.LoginAction;
 import action.ReservationDeleteAction;
 import action.ReservationHistoryAction;
@@ -154,7 +154,7 @@ public class AdminController extends HttpServlet {
 			session.setAttribute("startDate", startDate);
 			session.setAttribute("endDate", endDate);
 
-			CreateCouponAction cca = new CreateCouponAction();
+			CouponCreateAction cca = new CouponCreateAction();
 			flag = cca.execute(req);
 			if (flag) {
 				nextPage = "CreateCouponSuccess.jsp";
@@ -171,7 +171,7 @@ public class AdminController extends HttpServlet {
 			session.setAttribute("couponActive", couponActive);
 
 			try {
-				EditCouponAction editCouponAction = new EditCouponAction();
+				CouponEditAction editCouponAction = new CouponEditAction();
 				editCouponAction.execute(req, resp);
 				return;
 			} catch (Exception e) {

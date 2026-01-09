@@ -13,13 +13,13 @@ import model.User;
  * Servlet implementation class UseCouponAction
  */
 @WebServlet("/UseCouponAction")
-public class UseCouponAction extends HttpServlet {
+public class CouponUseAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UseCouponAction() {
+    public CouponUseAction() {
         super();
         // TODO Auto-generated constructor stub
     }

@@ -24,7 +24,7 @@ import action.ReservationSeatAction;
 import action.ReservationTimeAction;
 import action.ReserveAction;
 import action.StoreAction;
-import action.UseCouponAction;
+import action.CouponUseAction;
 import model.CouponUsage;
 import model.Reservation;
 import model.Seat;
@@ -231,7 +231,7 @@ public class UserController extends HttpServlet {
 			break;
 		case "useCoupon":
 			try {
-		        UseCouponAction useAction = new UseCouponAction();
+		        CouponUseAction useAction = new CouponUseAction();
 		        useAction.execute(req, resp);
 		        
 		        return; 

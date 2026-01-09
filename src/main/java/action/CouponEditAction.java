@@ -14,13 +14,13 @@ import dao.CouponDao;
  * Servlet implementation class EditCouponAction
  */
 @WebServlet("/EditCouponAction")
-public class EditCouponAction extends HttpServlet {
+public class CouponEditAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EditCouponAction() {
+    public CouponEditAction() {
         super();
         // TODO Auto-generated constructor stub
     }
