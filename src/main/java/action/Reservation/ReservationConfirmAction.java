@@ -1,4 +1,4 @@
-package action;
+package action.Reservation;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
