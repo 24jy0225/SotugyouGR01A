@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import action.CouponAction;
+import action.CouponUsageAction;
 import action.LoginAction;
 import action.RegisterAction;
 import action.ReservationConfirmAction;
@@ -97,7 +97,7 @@ public class UserController extends HttpServlet {
 			ReservationHistoryAction reservationHistoryAction = new ReservationHistoryAction();
 			List<Reservation> reservationList = reservationHistoryAction.execute(req);						
 			session.setAttribute("reservationHistory", reservationList);
-			CouponAction couponAction = new CouponAction();
+			CouponUsageAction couponAction = new CouponUsageAction();
 			List<CouponUsage> couponList = couponAction.execute(req);
 			session.setAttribute("couponList", couponList);
 			break;

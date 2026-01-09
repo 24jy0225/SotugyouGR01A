@@ -49,7 +49,8 @@ List<CouponUsage> couponList = (List<CouponUsage>) session.getAttribute("couponL
 	if (couponList != null && !couponList.isEmpty()) {
 		for (CouponUsage usage : couponList) {
 			LocalDate startDate = usage.getCoupon().getStartDate();
-			if (today.isBefore(startDate)) {
+			LocalDate endDate = usage.getCoupon().getEndDate();
+			if (today.isBefore(startDate) || today.isAfter(endDate) || usage.getCoupon().getIsActive() != true) {
                 continue; 
             }
 	%>
