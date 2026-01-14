@@ -1,4 +1,4 @@
-package action;
+package action.Coupon;
 
 import java.time.LocalDate;
 
