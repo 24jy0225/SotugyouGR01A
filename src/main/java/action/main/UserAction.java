@@ -1,4 +1,4 @@
-package action;
+package action.main;
 
 import java.util.List;
 
@@ -6,29 +6,27 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 
-import dao.CouponDao;
-import model.Coupon;
+import dao.UserDao;
+import model.User;
 
 /**
- * Servlet implementation class CouponAction
+ * Servlet implementation class UserAction
  */
-@WebServlet("/CouponAction")
-public class CouponAction extends HttpServlet {
+@WebServlet("/UserAction")
+public class UserAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CouponAction() {
+    public UserAction() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-public List<Coupon> execute(HttpServletRequest req) {
-  
-    	CouponDao dao = new CouponDao();
-    	return dao.findAll();
-        
-	}
+    public List<User> execute(HttpServletRequest req) {
+    	UserDao dao = new UserDao();
+    	return dao.getUser();
+    }
 
 }

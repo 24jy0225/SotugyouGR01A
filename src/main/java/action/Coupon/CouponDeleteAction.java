@@ -1,4 +1,4 @@
-package action;
+package action.Coupon;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
