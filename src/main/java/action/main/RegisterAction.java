@@ -1,4 +1,4 @@
-package action.Reservation;
+package action.main;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

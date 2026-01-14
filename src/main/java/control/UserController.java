@@ -17,13 +17,13 @@ import jakarta.servlet.http.HttpSession;
 
 import action.Coupon.CouponUsageAction;
 import action.Coupon.CouponUseAction;
-import action.Reservation.RegisterAction;
 import action.Reservation.ReservationConfirmAction;
 import action.Reservation.ReservationHistoryAction;
 import action.Reservation.ReservationSeatAction;
 import action.Reservation.ReservationTimeAction;
 import action.Reservation.ReserveAction;
 import action.main.LoginAction;
+import action.main.RegisterAction;
 import action.main.StoreAction;
 import model.CouponUsage;
 import model.Reservation;
