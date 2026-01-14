@@ -199,7 +199,7 @@ public class AdminController extends HttpServlet {
 				resp.sendRedirect("CouponManage.jsp");
 				return;
 			} else {
-				session.setAttribute("errorMsg", "予約削除エラー");
+				session.setAttribute("errorMsg", "クーポン削除エラー");
 				nextPage = "Error.jsp";
 			}
 		}

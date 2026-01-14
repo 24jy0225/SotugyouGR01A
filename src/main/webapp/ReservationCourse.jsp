@@ -22,7 +22,7 @@ storeList = (List<Store>)session.getAttribute("storeList"); %>
 			<% } %>
 		</select>
 		<input type="submit" value="送信">
-		<input type="hidden" name="command" value="Course">
+		<input type="hidden" name="command" value="Seat">
 	</form>
 </body>
 </html>

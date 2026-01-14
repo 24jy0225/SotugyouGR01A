@@ -14,7 +14,7 @@ String date = (String) session.getAttribute("date");
 </head>
 <body>
 	<form method="get" action="UserController">
-	<input type="hidden" name="command" value="Seat">
+	<input type="hidden" name="command" value="Time">
 		<ul>
 			<% for(Seat seat : seatList)  {%>
 				<p><input type	="submit" name="seatId" id=<%= seat.getSeatId() %> value=<%= seat.getSeatId() %>></p>

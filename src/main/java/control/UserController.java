@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import action.CouponUsageAction;
+import action.CouponUseAction;
 import action.LoginAction;
 import action.StoreAction;
 import action.Reservation.RegisterAction;
@@ -24,7 +25,6 @@ import action.Reservation.ReservationHistoryAction;
 import action.Reservation.ReservationSeatAction;
 import action.Reservation.ReservationTimeAction;
 import action.Reservation.ReserveAction;
-import action.CouponUseAction;
 import model.CouponUsage;
 import model.Reservation;
 import model.Seat;
@@ -55,7 +55,7 @@ public class UserController extends HttpServlet {
 		String nextPage = null;
 		HttpSession session = req.getSession();
 		switch (command) {
-		case null:
+		case "Cource":
 			nextPage = "ReservationCourse.jsp";
 			String date = req.getParameter("date");
 			session.setAttribute("date", date);
@@ -63,8 +63,9 @@ public class UserController extends HttpServlet {
 			List<Store> storeList = new ArrayList<>();
 			storeList = storeAction.execute();
 			session.setAttribute("storeList", storeList);
+			session.setAttribute("action", "ByUser");
 			break;
-		case "Course":
+		case "Seat":
 			nextPage = "ReservationSeat.jsp";
 			
 			int storeNumber = Integer.parseInt(req.getParameter("storeNumber"));
@@ -78,7 +79,7 @@ public class UserController extends HttpServlet {
 			session.setAttribute("Seat", SeatList);
 			
 			break;
-		case "Seat":
+		case "Time":
 			nextPage = "ReservationTime.jsp";
 			int seatId = Integer.parseInt(req.getParameter("seatId"));
 			String date2 = (String) session.getAttribute("date");
