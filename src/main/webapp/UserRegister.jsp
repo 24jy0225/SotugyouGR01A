@@ -9,7 +9,7 @@
 <body>
 	<form action="UserController" method="post">
 		<p>名前<input type="text" name="name" required></p>
-		<p>電話番号<input type="text" name="tel" required ></p>
+		<p>電話番号<input type="text" name="tel" ></p>
 		<p>メールアドレス<input type="text" name="email" required></p>
 		<p>パスワード<input type="text" name="password" required></p>
 		<p><input type="submit" value="登録" ></p>

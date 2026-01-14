@@ -55,7 +55,7 @@ public class UserDao {
 	}
 
 	public User Login(String email, String password) {
-		String sql = "SELECT member_id , member_email_address , member_password , member_name FROM 会員 WHERE member_email_address = ? AND member_password = ? ";
+		String sql = "SELECT * FROM 会員 WHERE member_email_address = ? AND member_password = ? ";
 		try (Connection con = createConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 
@@ -68,6 +68,8 @@ public class UserDao {
 				user.setUserEmail(rs.getString("member_email_address"));
 				user.setPassword(rs.getString("member_password"));
 				user.setName(rs.getString("member_name"));
+				user.setUserTel(rs.getString("member_tel"));
+				
 				return user;
 			}
 		} catch (SQLException e) {
@@ -105,7 +107,7 @@ public class UserDao {
 	}
 	
 	public List<User> getUser(){
-		String sql = "SELECT member_id , member_email_address , member_password , member_name FROM 会員 ";
+		String sql = "SELECT * FROM 会員 ";
 		List<User> list = new ArrayList<>();
 		try (Connection con = createConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -116,6 +118,7 @@ public class UserDao {
 				user.setUserEmail(rs.getString("member_email_address"));
 				user.setPassword(rs.getString("member_password"));
 				user.setName(rs.getString("member_name"));
+				user.setUserTel(rs.getString("member_tel"));
 				list.add(user);
 			}
 			return list;

@@ -38,10 +38,10 @@ List<CouponUsage> couponList = (List<CouponUsage>) session.getAttribute("couponL
 	<p>メールアドレス:<%=user.getUserEmail()%></p>
 	<p>
 	電話番号:
-	<% if(user.getUserTel() != null){ %>
-	<%=user.getUserTel()%>
-	<%}else{ %>
+	<% if(user.getUserTel().isEmpty()){ %>
 	電話番号は登録されていません
+	<%}else{ %>
+	<%=user.getUserTel()%>
 	<%} %>
 	</p>
 	<p>クーポン</p>

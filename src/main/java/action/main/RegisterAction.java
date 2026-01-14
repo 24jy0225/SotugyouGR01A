@@ -29,10 +29,13 @@ public class RegisterAction extends HttpServlet {
 	public boolean execute(HttpServletRequest req) {
 		String name = req.getParameter("name");
 		String tel = req.getParameter("tel");
+		if(tel == null) {
+			tel = "";
+		}
 		String email = req.getParameter("email");
 		String password = req.getParameter("password");
 		
-		if(name == null || tel == null || email == null || password == null ) {
+		if(name == null  || email == null || password == null ) {
 			return false;
 		}
 		

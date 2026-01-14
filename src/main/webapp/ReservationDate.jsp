@@ -49,7 +49,7 @@
 	            }
 
 	            const date = info.dateStr;
-	            window.location.href = "UserController?date=" + date + "&command='Cource'";
+	            window.location.href = "UserController?date=" + date + "&command=" + "Cource";
 	        },
 
 	        // ここでセルに色を付ける
