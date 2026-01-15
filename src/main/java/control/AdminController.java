@@ -86,7 +86,7 @@ public class AdminController extends HttpServlet {
 			return;
 		}
 		switch (command) {
-		case "delete":
+		case "reservationDelete":
 			String id = (String) req.getParameter("id");
 			session.setAttribute("id", id);
 			session.setAttribute("action", "ByAdmin");
