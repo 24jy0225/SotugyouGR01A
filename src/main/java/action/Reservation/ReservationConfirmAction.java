@@ -35,7 +35,7 @@ public class ReservationConfirmAction extends HttpServlet {
 		LocalDateTime endDateTime = startDateTime.plusMinutes(courseMinutes);
 		User user = (User)session.getAttribute("LoginUser");
 		int seatId = (Integer)session.getAttribute("seatId");
-		Reservation reservation = new Reservation(people,localDate,user.getUserId(),seatId,startDateTime,endDateTime);
+		Reservation reservation = new Reservation(people,localDate,user.getUserId(),seatId,startDateTime,endDateTime , user.getName());
 		
 		return reservation;
 		

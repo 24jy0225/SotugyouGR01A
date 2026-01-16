@@ -31,7 +31,7 @@ public class ReservationDao {
 	}
 
 	public boolean insert(Reservation r) {
-		String sql = "INSERT INTO 予約(reservation_number , reservation_people , reservation_date , member_id , seat_id , start_time , end_time) VALUES(?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO 予約(reservation_number , reservation_people , reservation_date , member_id , member_name , seat_id , start_time , end_time) VALUES(?,?,?,?,?,?,?,?)";
 		try (Connection con = createConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 
@@ -43,10 +43,12 @@ public class ReservationDao {
 			pstmt.setString(1, r.getReserveId());
 			pstmt.setInt(2, r.getReservePeople());
 			pstmt.setDate(3, Date.valueOf(r.getReserveDate()));
-			pstmt.setString(4, r.getUserId());
-			pstmt.setInt(5, r.getSeatId());
-			pstmt.setTimestamp(6, Timestamp.valueOf(r.getStartDateTime())); // start_time
-			pstmt.setTimestamp(7, Timestamp.valueOf(r.getEndDateTime())); // end_time
+			pstmt.setString(4, r.getUserId());			
+			pstmt.setString(5, r.getUserName());
+			pstmt.setInt(6, r.getSeatId());
+			pstmt.setTimestamp(7, Timestamp.valueOf(r.getStartDateTime())); // start_time
+			pstmt.setTimestamp(8, Timestamp.valueOf(r.getEndDateTime())); // end_time
+			
 			return pstmt.executeUpdate() == 1;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -96,7 +98,8 @@ public class ReservationDao {
 							rs.getString("member_id"),
 							rs.getInt("seat_id"),
 							start,
-							end);
+							end,
+							rs.getString("member_name"));
 
 					list.add(r);
 
@@ -140,9 +143,8 @@ public class ReservationDao {
 						rs.getString("member_id"),
 						rs.getInt("seat_id"),
 						start,
-						end);
-				r.setUserName(rs.getString("member_name"));
-
+						end,
+						rs.getString("member_name"));
 				list.add(r);
 			}
 

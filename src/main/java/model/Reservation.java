@@ -78,15 +78,16 @@ public class Reservation {
 		this.endDateTime = endDateTime;
 	}
 
-	public Reservation(int reservePeople, LocalDate reserveDate, String userId, int seatId, LocalDateTime startDateTime, LocalDateTime endDateTime ) {
+	public Reservation(int reservePeople, LocalDate reserveDate, String userId, int seatId, LocalDateTime startDateTime, LocalDateTime endDateTime ,String userName) {
 		this.reservePeople = reservePeople;
 		this.reserveDate = reserveDate;
 		this.userId = userId;
 		this.seatId = seatId;
 		this.startDateTime = startDateTime;
 		this.endDateTime = endDateTime;
+		this.userName = userName;
 	}
-	public Reservation(String reserveId, int reservePeople, LocalDate reserveDate, String userId, int seatId, LocalDateTime startDateTime, LocalDateTime endDateTime ) {
+	public Reservation(String reserveId, int reservePeople, LocalDate reserveDate, String userId, int seatId, LocalDateTime startDateTime, LocalDateTime endDateTime ,String userName ) {
 		this.reserveId = reserveId;
 		this.reservePeople = reservePeople;
 		this.reserveDate = reserveDate;
@@ -94,6 +95,8 @@ public class Reservation {
 		this.seatId = seatId;
 		this.startDateTime = startDateTime;
 		this.endDateTime = endDateTime;
+		this.userName = userName;
+		
 	}
 
 }
