@@ -186,17 +186,26 @@ public class CouponDao {
 	}
 	
 	public boolean delete(String couponNumber) {
-		String sql = "DELETE FROM クーポン WHERE couupon_number = ?";
+		String sql = "DELETE FROM クーポン WHERE coupon_number = ?;";
+		String sql2	= "DELETE FROM クーポン利用 WHERE coupon_number = ?;";
+		
 		try (Connection con = createConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql)) {
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				PreparedStatement pstmt2 = con.prepareStatement(sql2)) {
+			pstmt2.setString(1, couponNumber);
+			pstmt2.executeUpdate();
+			
 			pstmt.setString(1, couponNumber);
-			return pstmt.executeUpdate() == 1;
+			pstmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
-		return false;
+		return true;
 	}
 	
 	
