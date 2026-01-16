@@ -239,8 +239,8 @@ function paintDay() {
           // 30分後の枠が終了時間ならゴミ箱を表示
           if (slot + 30 === e) {
             targetCell.innerHTML += `
-				<form action="AdminController" methoe="post" onsubmit="return confirm('予約を削除しますか？')" style="position: absolute; bottom:2px; right: 2px; margin: 0;">
-				<input type="hidden" name="command" value="delete">
+				<form action="AdminController" method="post" onsubmit="return confirm('予約を削除しますか？')" style="position: absolute; bottom:2px; right: 2px; margin: 0;">
+				<input type="hidden" name="command" value="reservationDelete">
 				<input type="hidden" name="id" value="\${r.id}">
 				<button type="submit" class="delete-icon" style="border:none; background:none; cursor:pointer; padding:0; font-size: 12px;">🗑️</button>
 				</form>

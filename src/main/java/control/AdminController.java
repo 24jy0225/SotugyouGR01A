@@ -86,7 +86,7 @@ public class AdminController extends HttpServlet {
 			return;
 		}
 		switch (command) {
-		case "delete":
+		case "reservationDelete":
 			String id = (String) req.getParameter("id");
 			session.setAttribute("id", id);
 			session.setAttribute("action", "ByAdmin");
@@ -185,7 +185,7 @@ public class AdminController extends HttpServlet {
 		case "deleteCoupon" :
 			couponNumber = req.getParameter("couponNumber");
 			session.setAttribute("couponNumber", couponNumber);
-			
+			System.out.println(couponNumber);
 			CouponDeleteAction couponDeleteAction = new CouponDeleteAction();
 			flag = couponDeleteAction.execute(req);
 			
@@ -193,7 +193,7 @@ public class AdminController extends HttpServlet {
 			CouponAction couponAction = new CouponAction();
 			couponList = couponAction.execute(req);
 			
-			if (flag && reservationList != null) {
+			if (flag && couponList != null) {
 				session.setAttribute("couponList", couponList);
 				session.setAttribute("message", "クーポンを削除しました。");
 				resp.sendRedirect("CouponManage.jsp");

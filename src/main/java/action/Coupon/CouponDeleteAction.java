@@ -25,9 +25,9 @@ public class CouponDeleteAction extends HttpServlet {
     public boolean execute(HttpServletRequest req) {
 		HttpSession session = req.getSession(false);
 		
-		String id = (String)session.getAttribute("");
+		String couponNumber = (String)session.getAttribute("couponNumber");
 		CouponDao dao = new CouponDao();
-		return dao.delete();
+		return dao.delete(couponNumber);
 	}
 
 }
