@@ -1,6 +1,8 @@
 package control;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 
+import action.DesignUpdateAction;
 import action.Coupon.CouponAction;
 import action.Coupon.CouponCreateAction;
 import action.Coupon.CouponDeleteAction;
@@ -158,6 +162,12 @@ public class AdminController extends HttpServlet {
 			CouponCreateAction cca = new CouponCreateAction();
 			flag = cca.execute(req);
 			if (flag) {
+				List<Coupon> couponList = new ArrayList<>();
+				CouponAction couponAction = new CouponAction();
+				couponList = couponAction.execute(req);
+				
+				session.setAttribute("couponList", couponList);
+				
 				nextPage = "CreateCouponSuccess.jsp";
 			} else {
 				session.setAttribute("errorMsg", "クーポン作成エラー");
@@ -202,6 +212,73 @@ public class AdminController extends HttpServlet {
 				session.setAttribute("errorMsg", "クーポン削除エラー");
 				nextPage = "Error.jsp";
 			}
+			break;
+		case "designUpdate":
+			Part part = req.getPart("image");
+			String category = req.getParameter("category");
+			String contentType = part.getContentType();
+
+			if (!contentType.startsWith("image/")) {
+				req.setAttribute("error", "画像ファイルのみアップロード可能です");
+				req.getRequestDispatcher("noticeAdd.jsp").forward(req, resp);
+				return;
+			}
+			if (part == null || part.getSize() == 0) {
+				resp.sendRedirect("photoAdd.jsp");
+				return;
+			}
+			
+			String fileName = System.currentTimeMillis() + "_" +
+			Paths.get(part.getSubmittedFileName()).getFileName().toString();
+						
+			session.setAttribute("category", category);
+			session.setAttribute("fileName", fileName);
+			
+			String saveDir = getServletContext().getRealPath("/images/photo");
+			File dir = new File(saveDir);
+			
+			if (!dir.exists()) dir.mkdirs();
+	        part.write(saveDir + File.separator + fileName);
+	        
+	        DesignUpdateAction designUpdateAction = new DesignUpdateAction();
+	        designUpdateAction.execute(req , resp);
+
+	        resp.sendRedirect("photoList.jsp");
+
+			break;
+			
+		case "topicsAdd":
+			Part topicsPart = req.getPart("image");
+			contentType = topicsPart.getContentType();
+
+			if (!contentType.startsWith("image/")) {
+				req.setAttribute("error", "画像ファイルのみアップロード可能です");
+				req.getRequestDispatcher("noticeAdd.jsp").forward(req, resp);
+				return;
+			}
+			if (topicsPart == null || topicsPart.getSize() == 0) {
+				resp.sendRedirect("photoAdd.jsp");
+				return;
+			}
+			
+			fileName = System.currentTimeMillis() + "_" +
+			Paths.get(topicsPart.getSubmittedFileName()).getFileName().toString();
+						
+			
+			
+			saveDir = getServletContext().getRealPath("/images/photo");
+			dir = new File(saveDir);
+			
+			if (!dir.exists()) dir.mkdirs();
+	        topicsPart.write(saveDir + File.separator + fileName);
+	        
+	        
+	        
+
+	        resp.sendRedirect("photoList.jsp");
+
+			break;
+
 		}
 		if (nextPage != null) {
 			RequestDispatcher rd = req.getRequestDispatcher(nextPage);
