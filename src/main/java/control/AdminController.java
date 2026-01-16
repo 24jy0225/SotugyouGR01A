@@ -272,7 +272,7 @@ public class AdminController extends HttpServlet {
 			if (!dir.exists()) dir.mkdirs();
 	        topicsPart.write(saveDir + File.separator + fileName);
 	        
-	        
+	        //action入れる
 	        
 
 	        resp.sendRedirect("photoList.jsp");

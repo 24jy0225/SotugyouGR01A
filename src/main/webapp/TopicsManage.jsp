@@ -18,4 +18,4 @@
 		<input type="hidden" name="command" value="topicsAdd">
 	</form>
 </body>
-</html>
+</html> 
