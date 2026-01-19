@@ -6,6 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import model.Topics;
 
 public class TopicsDao {
 	private Connection createConnection() throws Exception {
@@ -22,16 +26,14 @@ public class TopicsDao {
 	}
 
 	// 写真テーブルへインサートし、自動採番されたIDを返す
-	public int insertPhoto(String category, String fileName) {
-		// カラム名は update メソッドに合わせました。適宜DBに合わせてください
-		String sql = "INSERT INTO 写真 (photo_category, photo_file_name) VALUES (?, ?)";
+	public int insertPhoto(String fileName) {
+		String sql = "INSERT INTO 写真 (photo_category, photo_file_name) VALUES ('topics', ?)";
 		int generatedId = -1;
 
 		try (Connection conn = createConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-			pstmt.setString(1, category);
-			pstmt.setString(2, fileName);
+			pstmt.setString(1, fileName);
 			pstmt.executeUpdate();
 
 			// 生成された写真IDを取得
@@ -45,18 +47,19 @@ public class TopicsDao {
 		}
 		return generatedId;
 	}
-	
+
 	public void insertTopic(int photoId, String title, String content) {
-	    String sql = "INSERT INTO お知らせ (写真ID, タイトル, 内容) VALUES (?, ?, ?)";
-	    try (Connection con = createConnection();
-	         PreparedStatement ps = con.prepareStatement(sql)) {
-	        ps.setInt(1, photoId);
-	        ps.setString(2, title);
-	        ps.setString(3, content);
-	        ps.executeUpdate();
-	    } catch (Exception e) { e.printStackTrace(); }
+		String sql = "INSERT INTO お知らせ (photo_id, topics_title , topics_content) VALUES (?, ?, ?)";
+		try (Connection con = createConnection();
+				PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setInt(1, photoId);
+			ps.setString(2, title);
+			ps.setString(3, content);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-	
 
 	public void update(String category, String fileName) {
 
@@ -77,4 +80,42 @@ public class TopicsDao {
 			e.printStackTrace();
 		}
 	}
+
+	public List<Topics> findAll() {
+		List<Topics> list = new ArrayList<>();
+		String sql = "SELECT * FROM お知らせ ";
+		try (Connection con = createConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);) {
+			try (ResultSet rs = pstmt.executeQuery()) {
+				while (rs.next()) {
+					Topics topics = new Topics(
+							rs.getInt("topics_id"),
+							rs.getInt("photo_id"),
+							rs.getString("topics_title"),
+							rs.getString("topics_content"));
+
+					list.add(topics);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public boolean delete(int topicsId) {
+		String sql = "DELETE FROM お知らせ WHERE topics_id = ?";
+		try (Connection con = createConnection();
+				PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setInt(1, topicsId);
+			ps.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 }

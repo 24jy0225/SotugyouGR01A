@@ -191,6 +191,36 @@ function getCourseName(start, end) {
   }
 }
 
+function deleteReservation(reserveId){
+	if(!confirm('この予約を削除しますか？')) return;
+
+	const params = new URLSearchParams();
+	params.append("command" , "reservationDelete");
+	params.append("id" , reserveId);
+
+	fetch("AdminController" , {
+		method: "POST" ,
+		body: params ,
+		headers: {
+			'Content-Type': 'application/x-www-form-urlencoded'
+			}
+
+		})
+		.then(response => {
+			if(response.ok) {
+				const index = reservations.findIndex(r => r.id === reserveId);
+				if(index !== -1) reservations.splice(index, 1);
+
+				paintDay();
+				}else{
+					alert("削除に失敗しました。");
+				}
+		})
+		.catch(error => {
+			console.error("Error" , error);
+			alert("通信エラーが発生しました。");
+			});
+	}
 function paintDay() {
   const dateStr = formatDate(currentDate);
   document.getElementById("dateLabel").innerText = dateStr;
@@ -239,11 +269,7 @@ function paintDay() {
           // 30分後の枠が終了時間ならゴミ箱を表示
           if (slot + 30 === e) {
             targetCell.innerHTML += `
-				<form action="AdminController" method="post" onsubmit="return confirm('予約を削除しますか？')" style="position: absolute; bottom:2px; right: 2px; margin: 0;">
-				<input type="hidden" name="command" value="reservationDelete">
-				<input type="hidden" name="id" value="\${r.id}">
-				<button type="submit" class="delete-icon" style="border:none; background:none; cursor:pointer; padding:0; font-size: 12px;">🗑️</button>
-				</form>
+				<button type="button" class="delete-icon" onclick="deleteReservation('\${r.id}')" style="border:none; background:none; cursor:pointer; padding:0; font-size: 12px;">🗑️</button>				
 				`;
           }
         }

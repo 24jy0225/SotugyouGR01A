@@ -55,7 +55,7 @@ List<CouponUsage> couponList = (List<CouponUsage>) session.getAttribute("couponL
             }
 	%>
 	<h4><%=usage.getCoupon().getCouponName()%></h4>
-	<p><%=usage.getCoupon().getCouponDetail()%></p>
+	<p><%=usage.getCoupon().getCouponContent()%></p>
 	<p>
 		期限：<%=usage.getCoupon().getEndDate()%>まで</p>
 	<button type="button"

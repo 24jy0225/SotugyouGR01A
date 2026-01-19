@@ -18,6 +18,9 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 
 import action.DesignUpdateAction;
+import action.TopicsAction;
+import action.TopicsAddAction;
+import action.TopicsDeleteAction;
 import action.Coupon.CouponAction;
 import action.Coupon.CouponCreateAction;
 import action.Coupon.CouponDeleteAction;
@@ -32,6 +35,7 @@ import model.Coupon;
 import model.Reservation;
 import model.Seat;
 import model.Store;
+import model.Topics;
 import model.User;
 
 /**
@@ -93,22 +97,20 @@ public class AdminController extends HttpServlet {
 		}
 		switch (command) {
 		case "reservationDelete":
-			String id = (String) req.getParameter("id");
-			session.setAttribute("id", id);
+			String id = req.getParameter("id");
+			session.setAttribute("id", id);  
 			session.setAttribute("action", "ByAdmin");
-			ReservationDeleteAction rda = new ReservationDeleteAction();
-			boolean flag = rda.execute(req);
-			reservationList = action.execute(req);
-			if (flag && reservationList != null) {
-				session.setAttribute("ReservationHistoryList", reservationList);
-				session.setAttribute("message", "予約を削除しました。");
-				resp.sendRedirect("ReservationManage.jsp");
-				return;
-			} else {
-				session.setAttribute("errorMsg", "予約削除エラー");
-				nextPage = "Error.jsp";
-			}
-			break;
+		    ReservationDeleteAction rda = new ReservationDeleteAction();
+		    boolean flag = rda.execute(req);
+
+		    if (flag) {
+		        // 成功！Ajax側に「200 OK」を返す（画面遷移はしない）
+		        resp.setStatus(HttpServletResponse.SC_OK);
+		    } else {
+		        // 失敗！Ajax側に「500 Internal Server Error」などを返す
+		        resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		    }
+		    return;
 		case "login":
 			User user = new User();
 			try {
@@ -123,6 +125,11 @@ public class AdminController extends HttpServlet {
 
 			if (user != null) {
 				nextPage = "AdminMain.jsp";
+				
+				List<Topics> topicsList = new ArrayList<>();
+				TopicsAction topicsAction = new TopicsAction();
+				topicsList = topicsAction.execute();
+				session.setAttribute("topicsList", topicsList);
 
 				List<Coupon> couponList = new ArrayList<>();
 				CouponAction couponAction = new CouponAction();
@@ -215,6 +222,7 @@ public class AdminController extends HttpServlet {
 				nextPage = "Error.jsp";
 			}
 			break;
+			
 		case "designUpdate":
 			Part part = req.getPart("image");
 			String category = req.getParameter("category");
@@ -270,6 +278,8 @@ public class AdminController extends HttpServlet {
 			
 			fileName = System.currentTimeMillis() + "_" +
 			Paths.get(topicsPart.getSubmittedFileName()).getFileName().toString();
+			
+			session.setAttribute("fileName", fileName);
 						
 			saveDir = "Z:\\卒業制作\\SotugyouGR01A\\src\\main\\webapp\\image\\photo";
 			dir = new File(saveDir);
@@ -278,13 +288,29 @@ public class AdminController extends HttpServlet {
 		    }
 		    fullPath = saveDir + File.separator + fileName;
 		    topicsPart.write(fullPath);
-	        //action入れる
-	        
 		    
-	        resp.sendRedirect("PhotoList.jsp");
+	        TopicsAddAction topicsAddAction = new TopicsAddAction();
+	        boolean success = topicsAddAction.execute(req, resp);
 	        
-			return;
-
+	        if (success) {
+	            resp.setStatus(HttpServletResponse.SC_OK); // 200を返す
+	        } else {
+	            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); // 500を返す
+	        }
+	        return;
+	        
+		case "deleteTopics":
+			int topicsId = Integer.parseInt(req.getParameter("topicsId"));
+			session.setAttribute("topicsId", topicsId);
+			TopicsDeleteAction topicsDeleteAction = new TopicsDeleteAction();
+			success = topicsDeleteAction.execute(req);
+			if (success) {
+		        resp.setStatus(HttpServletResponse.SC_OK);
+		    } else {
+		        resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		    }
+		    return;	
+			
 		}
 		if (nextPage != null) {
 			RequestDispatcher rd = req.getRequestDispatcher(nextPage);
