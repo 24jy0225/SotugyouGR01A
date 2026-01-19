@@ -5,15 +5,15 @@ import java.time.LocalDate;
 public class Coupon {
 	private String couponId;
 	private String couponName;
-	private String couponDetail;
+	private String couponContent;
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private boolean isActive;
 
-	public Coupon(String couponId, String couponName, String couponDetail, LocalDate startDate, LocalDate endDate, boolean isActive) {
+	public Coupon(String couponId, String couponName, String couponContent, LocalDate startDate, LocalDate endDate, boolean isActive) {
 		this.couponId = couponId;
 		this.couponName = couponName;
-		this.couponDetail = couponDetail;
+		this.couponContent = couponContent;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.isActive = isActive;
@@ -36,12 +36,12 @@ public class Coupon {
 		this.couponName = couponName;
 	}
 
-	public String getCouponDetail() {
-		return couponDetail;
+	public String getCouponContent() {
+		return couponContent;
 	}
 
-	public void setCouponDetail(String couponDetail) {
-		this.couponDetail = couponDetail;
+	public void setCouponContent(String couponContent) {
+		this.couponContent = couponContent;
 	}
 
 	public LocalDate getStartDate() {

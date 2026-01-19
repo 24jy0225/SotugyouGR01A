@@ -16,7 +16,7 @@
     </select><br>
     画像：<input type="file" name="image" accept="image/png, image/jpeg, image/jpg" ><br>
     <button type="submit">登録</button>
-    <input type="hidden" name="command" value="design">
+    <input type="hidden" name="command" value="designUpdate">
 </form>
 </body>
 </html>

@@ -40,7 +40,7 @@ LocalDate today = LocalDate.now();
 		<tr>
 	<% for(Coupon coupon : couponList){ %>
 		<td><%= coupon.getCouponName() %></td>
-		<td><%= coupon.getCouponDetail() %></td>
+		<td><%= coupon.getCouponContent() %></td>
 		<td><%= coupon.getStartDate() %> ～ <%= coupon.getEndDate() %></td>
 	<% if(!coupon.getEndDate().isAfter(today)){ %>
 			<td style="background-color: red; color: white; padding: 10px; border: none;">期限切れ</td>

@@ -28,12 +28,12 @@ public class CouponCreateAction extends HttpServlet {
 	public boolean execute(HttpServletRequest req) {
 		HttpSession session = req.getSession(false);
 		String couponName = (String)session.getAttribute("couponName");
-		String couponDetail = (String)session.getAttribute("couponDetail");
+		String couponContent = (String)session.getAttribute("couponContent");
 		LocalDate startDate = (LocalDate)session.getAttribute("startDate");
 		LocalDate endDate = (LocalDate)session.getAttribute("endDate");
 		Coupon coupon = new Coupon();
         coupon.setCouponName(couponName);
-        coupon.setCouponDetail(couponDetail);
+        coupon.setCouponContent(couponContent);
         coupon.setStartDate(startDate);
         coupon.setEndDate(endDate);
         CouponDao dao = new CouponDao();

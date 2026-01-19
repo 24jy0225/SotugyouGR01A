@@ -39,7 +39,7 @@ public class CouponDao {
 					Coupon coupon = new Coupon();
 	                coupon.setCouponId(rs.getString("coupon_number"));
 	                coupon.setCouponName(rs.getString("coupon_name"));
-	                coupon.setCouponDetail(rs.getString("coupon_detail"));
+	                coupon.setCouponContent(rs.getString("coupon_content"));
 	                coupon.setEndDate(rs.getDate("coupon_end_date").toLocalDate());
 	                coupon.setStartDate(rs.getDate("coupon_start_date").toLocalDate());	
 	                coupon.setIsActive(rs.getBoolean("valid_flag"));
@@ -59,7 +59,7 @@ public class CouponDao {
 		String todayPrefix = "COU" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
 		String selectSql = "SELECT MAX(coupon_number) FROM クーポン WHERE coupon_number LIKE ?";
-		String insertSql = "INSERT INTO クーポン (coupon_number, coupon_name, coupon_detail, coupon_start_date, coupon_end_date, valid_flag) VALUES (?, ?, ?, ?, ?, ?)";
+		String insertSql = "INSERT INTO クーポン (coupon_number, coupon_name, coupon_content, coupon_start_date, coupon_end_date, valid_flag) VALUES (?, ?, ?, ?, ?, ?)";
 
 		// 全員に配布するSQL（会員テーブルの全員分をクーポン利用テーブルに入れる）
 		String distributeSql = "INSERT INTO クーポン利用 (member_id, coupon_number, coupon_usage) SELECT member_id, ?, 1 FROM 会員";
@@ -89,7 +89,7 @@ public class CouponDao {
 				// --- 2. クーポン本体のINSERT実行 ---
 				psInsert.setString(1, newId);
 				psInsert.setString(2, coupon.getCouponName());
-				psInsert.setString(3, coupon.getCouponDetail());
+				psInsert.setString(3, coupon.getCouponContent());
 				psInsert.setDate(4, java.sql.Date.valueOf(coupon.getStartDate()));
 				psInsert.setDate(5, java.sql.Date.valueOf(coupon.getEndDate()));
 				psInsert.setBoolean(6, true);
@@ -130,7 +130,7 @@ public class CouponDao {
 					Coupon coupon = new Coupon();
 	                coupon.setCouponId(rs.getString("coupon_number"));
 	                coupon.setCouponName(rs.getString("coupon_name"));
-	                coupon.setCouponDetail(rs.getString("coupon_detail"));
+	                coupon.setCouponContent(rs.getString("coupon_content"));
 	                coupon.setEndDate(rs.getDate("coupon_end_date").toLocalDate());
 	                coupon.setStartDate(rs.getDate("coupon_start_date").toLocalDate());
 	                coupon.setIsActive(rs.getBoolean("valid_flag"));

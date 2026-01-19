@@ -9,6 +9,7 @@ import java.util.List;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,6 +38,7 @@ import model.User;
  * Servlet implementation class AdminController
  */
 @WebServlet("/AdminController")
+@MultipartConfig
 public class AdminController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -148,14 +150,14 @@ public class AdminController extends HttpServlet {
 			break;
 		case "createCoupon":
 			String couponName = req.getParameter("couponName");
-			String couponDetail = req.getParameter("couponDetail");
+			String couponContent = req.getParameter("couponContent");
 			String startDateStr = req.getParameter("startDate");
 			String endDateStr = req.getParameter("endDate");
 			LocalDate startDate = LocalDate.parse(startDateStr);
 			LocalDate endDate = LocalDate.parse(endDateStr);
 
 			session.setAttribute("couponName", couponName);
-			session.setAttribute("couponDetail", couponDetail);
+			session.setAttribute("couponContent", couponContent);
 			session.setAttribute("startDate", startDate);
 			session.setAttribute("endDate", endDate);
 
@@ -224,60 +226,64 @@ public class AdminController extends HttpServlet {
 				return;
 			}
 			if (part == null || part.getSize() == 0) {
-				resp.sendRedirect("photoAdd.jsp");
+				resp.sendRedirect("PhotoAdd.jsp");
 				return;
 			}
 			
-			String fileName = System.currentTimeMillis() + "_" +
-			Paths.get(part.getSubmittedFileName()).getFileName().toString();
+			String fileName = System.currentTimeMillis() + "_" + Paths.get(part.getSubmittedFileName()).getFileName().toString();
 						
 			session.setAttribute("category", category);
 			session.setAttribute("fileName", fileName);
 			
-			String saveDir = getServletContext().getRealPath("/images/photo");
+			// 修正後（より確実な方法）
+			String saveDir = "Z:\\卒業制作\\SotugyouGR01A\\src\\main\\webapp\\image\\photo";
 			File dir = new File(saveDir);
-			
-			if (!dir.exists()) dir.mkdirs();
-	        part.write(saveDir + File.separator + fileName);
+		    if (!dir.exists()) {
+		        dir.mkdirs(); // フォルダがなければ作成
+		    }
+		    String fullPath = saveDir + File.separator + fileName;
+		    System.out.println("★ここに保存します: " + fullPath);
 	        
 	        DesignUpdateAction designUpdateAction = new DesignUpdateAction();
 	        designUpdateAction.execute(req , resp);
-
-	        resp.sendRedirect("photoList.jsp");
-
-			break;
+	        return;
 			
 		case "topicsAdd":
 			Part topicsPart = req.getPart("image");
 			contentType = topicsPart.getContentType();
+			
+			String topicsTitle = req.getParameter("topicsTitle");
+			String topicsContent = req.getParameter("topicsContent");			
 
 			if (!contentType.startsWith("image/")) {
 				req.setAttribute("error", "画像ファイルのみアップロード可能です");
-				req.getRequestDispatcher("noticeAdd.jsp").forward(req, resp);
+				req.getRequestDispatcher("NoticeAdd.jsp").forward(req, resp);
 				return;
 			}
 			if (topicsPart == null || topicsPart.getSize() == 0) {
-				resp.sendRedirect("photoAdd.jsp");
+				resp.sendRedirect("PhotoAdd.jsp");
 				return;
 			}
+			
+			session.setAttribute("topicsTitle", topicsTitle);
+			session.setAttribute("topicsContent", topicsContent);
 			
 			fileName = System.currentTimeMillis() + "_" +
 			Paths.get(topicsPart.getSubmittedFileName()).getFileName().toString();
 						
-			
-			
-			saveDir = getServletContext().getRealPath("/images/photo");
+			saveDir = "Z:\\卒業制作\\SotugyouGR01A\\src\\main\\webapp\\image\\photo";
 			dir = new File(saveDir);
-			
-			if (!dir.exists()) dir.mkdirs();
-	        topicsPart.write(saveDir + File.separator + fileName);
-	        
+		    if (!dir.exists()) {
+		        dir.mkdirs(); // フォルダがなければ作成
+		    }
+		    fullPath = saveDir + File.separator + fileName;
+		    topicsPart.write(fullPath);
 	        //action入れる
 	        
-
-	        resp.sendRedirect("photoList.jsp");
-
-			break;
+		    
+	        resp.sendRedirect("PhotoList.jsp");
+	        
+			return;
 
 		}
 		if (nextPage != null) {

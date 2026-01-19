@@ -12,9 +12,8 @@
 		<p><input type="text" name="topicsTitle"></p>
 		<p>説明</p>
 		<p><input type="text" name="topicsContent"></p>
-		<p>画像</p>
-		<p><input type="file" name="photoFileName" required ></p>
-		<input type="submit" value="追加する">
+		画像：<input type="file" name="image" accept="image/png, image/jpeg, image/jpg" ><br>
+        <button type="submit">追加</button>
 		<input type="hidden" name="command" value="topicsAdd">
 	</form>
 </body>

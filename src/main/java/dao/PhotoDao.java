@@ -39,11 +39,10 @@ public class PhotoDao {
 	}
 
 	public void update(String category, String fileName) {
-		
+
 		String sql = """
 				    UPDATE 写真
-				    SET prev_photo_file_name = photo_file_name,
-				        photo_file_name = ?
+				    SET photo_file_name = ?
 				    WHERE photo_category = ?
 				""";
 
@@ -58,4 +57,5 @@ public class PhotoDao {
 			e.printStackTrace();
 		}
 	}
+
 }

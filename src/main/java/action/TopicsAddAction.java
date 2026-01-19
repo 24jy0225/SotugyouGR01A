@@ -11,21 +11,21 @@ import jakarta.servlet.http.HttpSession;
 import dao.TopicsDao;
 
 /**
- * Servlet implementation class DesignUpdateAction
+ * Servlet implementation class TopicsAddAction
  */
-@WebServlet("/DesignUpdateAction")
-public class DesignUpdateAction extends HttpServlet {
+@WebServlet("/TopicsAddAction")
+public class TopicsAddAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public TopicsAddAction() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public DesignUpdateAction() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public void execute(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public void execute(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
 		HttpSession session = req.getSession();
 		String fileName = (String)session.getAttribute("fileName");
