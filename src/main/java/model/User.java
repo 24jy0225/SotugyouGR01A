@@ -9,6 +9,8 @@ public class User {
 	private String userEmail;
 	private Date registDate;
 	private String password;
+	private int reserveCount;
+	private int couponCount;
 	
 	public User() {
 		
@@ -61,6 +63,26 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+
+	public int getReserveCount() {
+		return reserveCount;
+	}
+
+
+	public void setReserveCount(int reserveCount) {
+		this.reserveCount = reserveCount;
+	}
+
+
+	public int getCouponCount() {
+		return couponCount;
+	}
+
+
+	public void setCouponCount(int couponCount) {
+		this.couponCount = couponCount;
 	}
 
 }

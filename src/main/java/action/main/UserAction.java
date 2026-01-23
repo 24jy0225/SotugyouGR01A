@@ -26,7 +26,7 @@ public class UserAction extends HttpServlet {
 
     public List<User> execute(HttpServletRequest req) {
     	UserDao dao = new UserDao();
-    	return dao.getUser();
+    	return dao.findAll();
     }
 
 }
