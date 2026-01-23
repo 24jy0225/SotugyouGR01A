@@ -292,6 +292,11 @@ public class AdminController extends HttpServlet {
 	        TopicsAddAction topicsAddAction = new TopicsAddAction();
 	        boolean success = topicsAddAction.execute(req, resp);
 	        
+	        List<Topics> topicsList = new ArrayList<>();
+			TopicsAction topicsAction = new TopicsAction();
+			topicsList = topicsAction.execute();
+			session.setAttribute("topicsList", topicsList);
+	        
 	        if (success) {
 	            resp.setStatus(HttpServletResponse.SC_OK); // 200を返す
 	        } else {
@@ -304,6 +309,11 @@ public class AdminController extends HttpServlet {
 			session.setAttribute("topicsId", topicsId);
 			TopicsDeleteAction topicsDeleteAction = new TopicsDeleteAction();
 			success = topicsDeleteAction.execute(req);
+			
+			topicsAction = new TopicsAction();
+			topicsList = topicsAction.execute();
+			session.setAttribute("topicsList", topicsList);
+			
 			if (success) {
 		        resp.setStatus(HttpServletResponse.SC_OK);
 		    } else {

@@ -61,24 +61,26 @@ public class TopicsDao {
 		}
 	}
 
-	public void update(String category, String fileName) {
+	
+	
+	public int getPhotoIdByTopicsId(int topicsId) {
+	    int photoId = -1;
+	    String sql = "SELECT photo_id FROM お知らせ WHERE topics_id = ?";
 
-		String sql = """
-				    UPDATE 写真
-				    SET photo_file_name = ?
-				    WHERE photo_category = ?
-				""";
-
-		try (Connection con = createConnection();
-				PreparedStatement ps = con.prepareStatement(sql)) {
-
-			ps.setString(1, fileName);
-			ps.setString(2, category);
-			ps.executeUpdate();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	    try (Connection con = createConnection();
+	         PreparedStatement ps = con.prepareStatement(sql)) {
+	        
+	        ps.setInt(1, topicsId);
+	        
+	        try (ResultSet rs = ps.executeQuery()) {
+	            if (rs.next()) {
+	                photoId = rs.getInt("photo_id");
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return photoId;
 	}
 
 	public List<Topics> findAll() {
@@ -117,5 +119,7 @@ public class TopicsDao {
 			return false;
 		}
 	}
+	
+	
 
 }

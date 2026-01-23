@@ -58,6 +58,32 @@ public class PhotoDao {
 		}
 	}
 	
+	public String getFileNameById(int photoId) {
+	    String sql = "SELECT photo_file_name FROM 写真 WHERE photo_id = ?";
+	    try (Connection con = createConnection();
+	         PreparedStatement ps = con.prepareStatement(sql)) {
+	        ps.setInt(1, photoId);
+	        ResultSet rs = ps.executeQuery();
+	        if (rs.next()) {
+	            return rs.getString("photo_file_name");
+	        }
+	    } catch (Exception e) { e.printStackTrace(); }
+	    return null;
+	}
+	
+	public boolean delete(int photoId) {
+		String sql = "DELETE FROM 写真 WHERE photo_id = ?";
+		try (Connection con = createConnection();
+				PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setInt(1, photoId);
+			ps.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	
 
 }

@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import dao.TopicsDao;
+import dao.PhotoDao;
 
 /**
  * Servlet implementation class DesignUpdateAction
@@ -31,7 +31,7 @@ public class DesignUpdateAction extends HttpServlet {
 		String fileName = (String)session.getAttribute("fileName");
 		String category = (String)session.getAttribute("category");
 		
-		TopicsDao dao = new TopicsDao();
+		PhotoDao dao = new PhotoDao();
 		dao.update(category,fileName);
 		
 		resp.sendRedirect("PhotoList.jsp");
