@@ -1,0 +1,87 @@
+main {
+    margin: 0 auto;
+    margin-top: 100px;
+    width: 900px;
+    display: grid;
+    place-content: center;
+    grid-template-areas:
+    "leftGrid midGrid rightGrid"
+    "leftBottom midGrid rightGrid";
+    grid-template-columns: 500px 10px 500px;
+    grid-template-rows: max-content 1fr;
+
+}
+
+.leftGrid {
+    border: solid black px;
+    background-image: url("../image/assets/dairiseki.jpg");
+    background-repeat: repeat;
+    background-size: cover;
+    border-radius: 10px;
+    padding: 30px;
+    max-height: 236px;
+    
+}
+
+.rightGrid {
+    background-image: url("../image/assets/dairiseki.jpg");
+    background-repeat: repeat;
+    background-size: cover;
+    border-radius: 10px;
+    padding-top: 30px;
+    max-width: 1fr;
+    grid-row: auto;
+    text-align: center;
+    align-items: center;
+}
+
+
+.visual-change-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.visual-change-div {
+    display: flex;
+    flex-direction: column;
+}
+
+#photo_category {
+    width: 300px;
+    height: 40px;
+    padding-left: 8px;
+    color: rgba(69, 85, 108, 1);
+    border-radius: 8px;
+    border: #D1D5DC solid 1px;
+    background-color: white;
+}
+
+.visual-photo::file-selector-button {
+    display: flex;
+    width: 300px;
+    height: 40px;
+    padding: 6px 10px 10px 13px;
+    justify-content: center;
+    align-items: flex-start;
+    color: rgba(69, 85, 108, 1);
+    border-radius: 8px;
+    border: #D1D5DC solid 1px;
+    background-color: white;
+    cursor: pointer;
+}
+
+#photo-submit {
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+    background-color: white;
+    border: #D1D5DC solid 1px;
+    border-radius: 10px;
+}
+.preview{
+    max-width: 450px;
+    text-align: center;
+    align-items: center;
+    margin: 0 auto;
+}

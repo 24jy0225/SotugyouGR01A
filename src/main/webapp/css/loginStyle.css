@@ -1,0 +1,73 @@
+#login {
+    margin: 0 auto;
+    margin-top: 315px;
+    text-align: center;
+    width: 680px;
+    border: solid 3px white;
+}
+#login_header h2 {
+    font-weight: bold;
+    font-family: "Playfair Display", serif;
+    font-size: 42px;
+    margin-bottom: 0px;
+}
+
+#login_header p {
+    margin-top: 0%;
+    font-size: 18px;
+}
+
+#login_main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: stretch;
+}
+
+#login_word {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#login_word legend {
+    color: white;
+    font-size: 14px;
+}
+
+#login_word input {
+    display: flex;
+    height: 48px;
+    width: 520px;
+    align-items: center;
+    align-self: stretch;
+    border: none;
+}
+#login_word input::placeholder{
+    padding: 16px;
+    font-size: 18px;
+}
+#login_submit{
+    margin-top: 16px;
+    margin-bottom: 16px;
+    display: flex;
+    width: 524px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    background: #016630;
+    color: white;
+    font-size: 18px;
+    border: none;
+}
+#login_line{
+    border-color: dde1e6;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+#login_margin{
+    margin-top: 60px;
+    margin-bottom: 80px;
+}

@@ -1,0 +1,12 @@
+button {
+    background-image: url(../image/assets/gakubuti.webp);
+    background-size: cover;
+    width: 300px;
+    height: 210px;
+    font-size: 32px;
+    margin: 100px;
+}
+
+.adtop_btn {
+    text-align: center;
+}

@@ -1,0 +1,144 @@
+main {
+    width: 900px;
+    margin: 0 auto;
+    margin-bottom: 100px;
+    display: grid;
+    place-content: center;
+    grid-template-areas:
+    "add-topic midGrid rightGrid"
+    "bottomGrid bottomGrid bottomGrid";
+    grid-template-columns: 500px 10px 500px;
+    grid-template-rows: 620px auto;
+}
+.topics-preview{
+    max-width: 450px;
+    max-height: 460px;
+    margin: 0 auto;
+    height: 85%;
+}
+.rightGrid{
+    text-align: center;
+    margin-top: 100px;
+    border-radius: 10px;
+    padding: 25px;
+    background-image: url("../image/assets/dairiseki.jpg");
+    background-repeat: repeat;
+    background-size: cover;
+}
+.bottomGrid{
+    grid-column: 1 / 4;
+}
+.topics-head {
+    display: flex;
+    text-align: center;
+}
+
+.topics-head table {
+    margin: 0 auto;
+    margin-bottom: 40px;
+}
+
+.add-topic {
+    margin-top: 100px;
+    border-radius: 10px;
+    padding: 25px;
+    background-image: url("../image/assets/dairiseki.jpg");
+    background-repeat: repeat;
+    background-size: cover;
+}
+
+.add-topic-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.topics-form-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.topic-title {
+    height: 35px;
+    width: auto;
+    display: flex;
+    padding: 4px 12px;
+    align-items: center;
+    border-radius: 8px;
+    border: #D1D5DC solid 1px;
+    background: white;
+}
+
+.topic-content {
+    height: 65px;
+    width: auto;
+    display: flex;
+    padding: 16px 12px;
+    align-items: flex-start;
+    align-items: stretch;
+    border-radius: 8px;
+    border: #D1D5DC solid 1px;
+    background: white;
+}
+
+.topic-photo::file-selector-button {
+    display: flex;
+    height: 35px;
+    padding: 6px 10px 10px 13px;
+    justify-content: center;
+    align-items: flex-start;
+    border-radius: 8px;
+    border: 1.25px solid rgba(0, 0, 0, 0.10);
+    background: #FFF;
+    cursor: pointer;
+}
+
+.topic-submit {
+    display: flex;
+    padding: 6px 0 10px 0;
+    justify-content: flex-end;
+    align-items: flex-end;
+    align-self: stretch;
+    border-radius: 8px;
+    opacity: 0.5;
+    background: #030213;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.topics {
+    border-radius: 10px;
+    padding: 25px;
+    background-image: url("../image/assets/dairiseki.jpg");
+    background-repeat: repeat;
+    background-size: cover;
+    margin-bottom: 20px;
+}
+
+.topics th {
+    text-align: left;
+    font-weight: normal;
+    padding: 5px;
+}
+
+.topics td {
+    color: rgba(69, 85, 108, 1);
+	white-space: pre-wrap;  /* これを入れるだけで、改行が反映されます */
+	word-wrap: break-word;  /* 長い単語が枠をはみ出すのを防ぎます */
+}
+
+.topic-delete {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    border-radius: 8px;
+    border: #D1D5DC solid 1px;
+    background-color: white;
+    padding: 4px 12px 8px 12px;
+}
+.preview-title{
+    padding: 0;
+    margin-top: 0;
+    margin-left: 0;
+}

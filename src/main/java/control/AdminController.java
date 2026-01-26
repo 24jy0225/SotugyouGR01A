@@ -105,6 +105,8 @@ public class AdminController extends HttpServlet {
 
 		    if (flag) {
 		        // 成功！Ajax側に「200 OK」を返す（画面遷移はしない）
+		    	reservationList = action.execute(req);
+		    	session.setAttribute("ReservationHistoryList", reservationList);
 		        resp.setStatus(HttpServletResponse.SC_OK);
 		    } else {
 		        // 失敗！Ajax側に「500 Internal Server Error」などを返す
@@ -177,7 +179,7 @@ public class AdminController extends HttpServlet {
 				
 				session.setAttribute("couponList", couponList);
 				
-				nextPage = "CreateCouponSuccess.jsp";
+				nextPage = "CouponManage.jsp";
 			} else {
 				session.setAttribute("errorMsg", "クーポン作成エラー");
 				nextPage = "Error.jsp";

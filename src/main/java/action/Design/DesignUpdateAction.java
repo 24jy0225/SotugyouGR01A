@@ -34,7 +34,7 @@ public class DesignUpdateAction extends HttpServlet {
 		PhotoDao dao = new PhotoDao();
 		dao.update(category,fileName);
 		
-		resp.sendRedirect("PhotoList.jsp");
+		resp.sendRedirect("DesignCustom.jsp");
 		
 	}
 

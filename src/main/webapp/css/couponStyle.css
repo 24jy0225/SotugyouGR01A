@@ -1,0 +1,146 @@
+.coupon-main {
+    margin: 0 auto;
+    margin-top: 100px;
+    border-radius: 10px;
+    padding: 25px;
+    width: 1200px;
+    background-image: url("../image/assets/dairiseki.jpg");
+    background-repeat: repeat;
+    background-size: cover;
+}
+
+.coupon-main-head {
+    display: flex;
+    margin-bottom: 25px;
+}
+
+.coupon-main-head button {
+    display: flex;
+    float: right;
+    margin: auto 0 auto auto;
+    height: 36px;
+    width: 180px;
+    padding: 10px 15px 8px 15px;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 15.977px;
+    border-radius: 8px;
+    background: #030213;
+    color: white;
+}
+
+.coupon-main-body {
+    display: flex;
+}
+
+.coupon-main-body table,
+tr {
+    border: 1.25px solid rgba(0, 0, 0, 0.10);
+    width: 1200px;
+    border-collapse: collapse;
+}
+
+.coupon-main-body td {
+    padding: 8px;
+    height: 50px;
+}
+
+.table-coupon-name {
+    width: 300px;
+}
+
+.table-coupon-id {
+    width: 150px;
+}
+
+.table-coupon-content {
+    width: 200px;
+}
+
+.table-coupon-expiration {
+    width: 130px;
+    text-align: center;
+}
+
+.table-coupon-status {
+    align-items: center;
+}
+
+.active-btn {
+    display: flex;
+    height: 25px;
+    width: 80px;
+    padding: 2.242px 9.242px 4.219px 9.238px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    border: 1.25px solid rgba(0, 0, 0, 0.2);
+    background: #030213;
+    color: white;
+    cursor: pointer;
+}
+
+.passive-btn {
+    display: flex;
+    height: 25px;
+    width: 80px;
+    padding: 2.242px 9.242px 4.219px 9.238px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    border: 1.25px solid rgba(0, 0, 0, 0.2);
+    background: #D4183D;
+    color: white;
+    cursor: pointer;
+}
+
+.coupon-delete {
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.delete-btn {
+    height: 25px;
+    width: 50px;
+    border-radius: 10px;
+    border: #D1D5DC solid 1px;
+    background-color: white;
+}
+.coupon-add {
+    margin: 0 auto;
+    margin-top: 100px;
+    border-radius: 10px;
+    padding: 25px;
+    width: 800px;
+    background-image: url("../image/assets/dairiseki.jpg");
+    background-repeat: repeat;
+    background-size: cover;
+}
+.color-gray {
+    color: #717182;
+    font-family: "Noto Sans JP";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+}
+.add-coupon-form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.coupon-form-div{
+    display: flex;
+    flex-direction: column;
+}
+.coupon-add input{
+    background-color: white;
+    border: #D1D5DC solid 1px;
+    border-radius: 10px;
+    height: 35px;
+}
+#coupon-submit{
+    margin-top: 40px;
+    background-color: black;
+    color: white;
+}
