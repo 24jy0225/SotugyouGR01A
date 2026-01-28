@@ -27,6 +27,7 @@
     border-radius: 8px;
     background: #030213;
     color: white;
+	cursor: pointer;
 }
 
 .coupon-main-body {
@@ -98,6 +99,7 @@ tr {
     align-items: center;
     text-align: center;
     justify-content: center;
+	cursor: pointer;
 }
 
 .delete-btn {
@@ -106,7 +108,14 @@ tr {
     border-radius: 10px;
     border: #D1D5DC solid 1px;
     background-color: white;
+	cursor: pointer;
 }
+
+.delete-btn:hover{
+	background-color: #f0f0f0;
+	border-color:#030213
+}
+
 .coupon-add {
     margin: 0 auto;
     margin-top: 100px;
@@ -116,6 +125,7 @@ tr {
     background-image: url("../image/assets/dairiseki.jpg");
     background-repeat: repeat;
     background-size: cover;
+	cursor: pointer;
 }
 .color-gray {
     color: #717182;
