@@ -41,7 +41,7 @@ List<User> userList = (List<User>) session.getAttribute("UserList");
 			}
 			%>
 			<div class="customer"
-				onclick="location.href='Admin_CustomerDetails.html'">
+				onclick="customerDetail('<%= u.getUserId() %>')">
 				<svg xlns="http://www.w3.org/2000/svg" width="20" height="20"
 					viewBox="0 0 20 20" fill="none" class="customer-icon">
                     <path
@@ -74,6 +74,17 @@ List<User> userList = (List<User>) session.getAttribute("UserList");
 			}
 			%>
 		</div>
+		<form id="customerDetailForm" action="AdminController" method="POST">
+			<input type="hidden" name="command" id="targetCommand">
+			<input type="hidden" name="userId" id="targetUserId"> 
+		</form>
 	</main>
+	<script type="text/javascript">
+		function customerDetail(userId){
+			document.getElementById("targetCommand").value = "customerDetail";
+			document.getElementById("targetUserId").value = userId;
+			document.getElementById('customerDetailForm').submit();
+			}
+	</script>
 </body>
 </html>

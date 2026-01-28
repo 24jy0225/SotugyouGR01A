@@ -1,5 +1,6 @@
 package action.Coupon;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.servlet.annotation.WebServlet;
@@ -27,11 +28,20 @@ public class CouponUsageAction extends HttpServlet {
     }
 
     public List<CouponUsage> execute(HttpServletRequest req) {
-    	
     	HttpSession session = req.getSession(false);
-    	User user = (User)session.getAttribute("LoginUser");
-    	CouponDao dao = new CouponDao();
-    	return dao.findById(user.getUserId());
+    	String action = (String)session.getAttribute("action");
+    	User user;
+    	switch(action) {
+    	case "ByUser" :
+    		user = (User)session.getAttribute("LoginUser");
+    		CouponDao dao = new CouponDao();
+    		return dao.findById(user.getUserId());    		
+    	case "ByAdmin":
+    		user = (User)session.getAttribute("targetUser");
+    		dao = new CouponDao();
+    		return dao.findById(user.getUserId());
+    	}
+    	return new ArrayList<>();
         
 	}
 
