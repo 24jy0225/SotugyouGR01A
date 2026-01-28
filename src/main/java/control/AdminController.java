@@ -21,6 +21,7 @@ import action.Coupon.CouponAction;
 import action.Coupon.CouponCreateAction;
 import action.Coupon.CouponDeleteAction;
 import action.Coupon.CouponEditAction;
+import action.Coupon.CouponUsageAction;
 import action.Design.DesignUpdateAction;
 import action.Reservation.ReservationDeleteAction;
 import action.Reservation.ReservationHistoryAction;
@@ -28,10 +29,12 @@ import action.Reservation.ReservationSeatAction;
 import action.Topics.TopicsAction;
 import action.Topics.TopicsAddAction;
 import action.Topics.TopicsDeleteAction;
+import action.main.CustomerDetailAction;
 import action.main.LoginAction;
 import action.main.StoreAction;
 import action.main.UserAction;
 import model.Coupon;
+import model.CouponUsage;
 import model.Reservation;
 import model.Seat;
 import model.Store;
@@ -322,8 +325,28 @@ public class AdminController extends HttpServlet {
 		        resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		    }
 		    return;	
+		case "customerDetail" :
+			String userId = req.getParameter("userId");
 			
-		}
+			session.setAttribute("userId", userId);
+			
+			CustomerDetailAction customerDetailAction = new CustomerDetailAction();
+			user = customerDetailAction.execute(req);
+			session.setAttribute("targetUser", user);
+			
+			CouponUsageAction couponUsageAction = new CouponUsageAction();
+			List<CouponUsage> couponUsageList = couponUsageAction.execute(req);
+			
+			session.setAttribute("couponUsageList", couponUsageList);
+			
+			if(user != null) {
+				nextPage ="CustomerDetails.jsp";				
+			}else {
+				session.setAttribute("errorMsg", "顧客情報取得エラー");
+				nextPage ="Error.jsp";
+			}
+			
+			}
 		if (nextPage != null) {
 			RequestDispatcher rd = req.getRequestDispatcher(nextPage);
 			rd.forward(req, resp);

@@ -69,6 +69,7 @@ public class UserDao {
 				user.setPassword(rs.getString("member_password"));
 				user.setName(rs.getString("member_name"));
 				user.setUserTel(rs.getString("member_tel"));
+				user.setRegistDate(rs.getDate("registration_time"));
 
 				return user;
 			}
@@ -125,6 +126,7 @@ public class UserDao {
 				user.setPassword(rs.getString("member_password"));
 				user.setName(rs.getString("member_name"));
 				user.setUserTel(rs.getString("member_tel"));
+				user.setRegistDate(rs.getDate("registration_time"));
 				user.setReserveCount(rs.getInt("res_count"));
 				user.setCouponCount(rs.getInt("coup_count"));
 				list.add(user);
@@ -137,6 +139,39 @@ public class UserDao {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public User findById(String userId) {
+		String sql = """
+				   SELECT *,
+				     (SELECT COUNT(*) FROM 予約 WHERE 予約.member_id = 会員.member_id AND 予約.reservation_date >= CURDATE()) AS res_count,
+				     (SELECT COUNT(*) FROM クーポン利用 WHERE クーポン利用.member_id = 会員.member_id AND クーポン利用.coupon_usage = 1) AS coup_count
+				   FROM 会員 WHERE member_id = ?
+				""";
+		try (Connection con = createConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, userId);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				User user = new User();
+				user.setUserId(rs.getString("member_id"));
+				user.setUserEmail(rs.getString("member_email_address"));
+				user.setPassword(rs.getString("member_password"));
+				user.setName(rs.getString("member_name"));
+				user.setUserTel(rs.getString("member_tel"));
+				user.setRegistDate(rs.getDate("registration_time"));
+				user.setReserveCount(rs.getInt("res_count"));
+				user.setCouponCount(rs.getInt("coup_count"));
+				return user;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return null;
 	}
 
 }
