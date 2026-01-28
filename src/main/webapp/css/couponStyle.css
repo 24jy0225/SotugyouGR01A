@@ -27,6 +27,11 @@
     border-radius: 8px;
     background: #030213;
     color: white;
+	cursor:pointer;
+}
+
+.coupon-main-head button:hover {
+    opacity: 0.8;
 }
 
 .coupon-main-body {
@@ -106,7 +111,14 @@ tr {
     border-radius: 10px;
     border: #D1D5DC solid 1px;
     background-color: white;
+	cursor: pointer;
 }
+
+.delete-btn:hover{
+	background-color: #f0f0f0;
+	border-color: #999;
+}
+
 .coupon-add {
     margin: 0 auto;
     margin-top: 100px;

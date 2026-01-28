@@ -39,7 +39,7 @@ import model.Reservation;
 import model.Seat;
 import model.Store;
 import model.Topics;
-import model.User;
+import model.User;	
 
 /**
  * Servlet implementation class AdminController

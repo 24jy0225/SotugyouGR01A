@@ -25,10 +25,8 @@ public class CouponAction extends HttpServlet {
     }
 
 public List<Coupon> execute(HttpServletRequest req) {
-  
     	CouponDao dao = new CouponDao();
-    	return dao.findAll();
-        
+    	dao.updateExpiredCoupon();
+    	return dao.findAll(); 
 	}
-
 }

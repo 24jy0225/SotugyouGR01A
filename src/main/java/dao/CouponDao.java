@@ -208,5 +208,24 @@ public class CouponDao {
 		return true;
 	}
 	
-	
+	public void updateExpiredCoupon() {
+		//期限切れのクーポンのisActiveをfalseに更新する
+		String sql = "UPDATE クーポン SET valid_flag = false WHERE coupon_end_date < ? AND valid_flag = true;";
+		
+		java.sql.Date today = java.sql.Date.valueOf(java.time.LocalDate.now());
+		
+		try(Connection con = createConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+					pstmt.setDate(1, today);
+					int rows = pstmt.executeUpdate();
+					
+					if(rows > 0) {
+						System.out.println(rows + "件の期限切れクーポンを無効にしました。");
+					}
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+	}
 }

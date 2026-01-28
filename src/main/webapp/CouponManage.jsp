@@ -13,40 +13,30 @@ LocalDate today = LocalDate.now();
 // リストの並べ替え処理 (ここを追加)
 // ---------------------------------------------------------
 if (couponList != null && !couponList.isEmpty()) {
-    Collections.sort(couponList, new Comparator<Coupon>() {
-        @Override
-        public int compare(Coupon c1, Coupon c2) {
-            // 今日の日付を取得 (scope外で定義されている場合は不要ですが念のため)
-            LocalDate now = LocalDate.now();
+	couponList.sort((c1, c2) -> {
+		// 優先度判定ロジックを統一
+		// 有効(1): 今日 <= 終了日 かつ Active
+		// 無効(2): 今日 <= 終了日 かつ !Active
+		// 期限切れ(3): 終了日 < 今日
 
-            // 優先度を数値化する関数 (小さいほど上に来る)
-            // 1: 有効, 2: 無効, 3: 期限切れ
-            int p1 = getPriority(c1, now);
-            int p2 = getPriority(c2, now);
+		int p1 = getPriority(c1, today);
+		int p2 = getPriority(c2, today);
 
-            if (p1 != p2) {
-                return Integer.compare(p1, p2); // ステータスで比較
-            } else {
-                // ステータスが同じなら、有効期限が「早い順」に並べる
-                return c1.getEndDate().compareTo(c2.getEndDate());
-            }
-        }
-
-        // 状態から優先度を判定するヘルパーメソッド
-        private int getPriority(Coupon c, LocalDate now) {
-            boolean isExpired = c.getEndDate().isBefore(now);
-            if (isExpired) {
-                return 3; // 期限切れ (一番下)
-            }
-            if (c.getIsActive()) {
-                return 1; // 有効 (一番上)
-            }
-            return 2; // 無効 (真ん中)
-        }
-    });
+		if (p1 != p2) {
+	return Integer.compare(p1, p2);
+		}
+		// 同じステータスなら期限が近い順
+		return c1.getEndDate().compareTo(c2.getEndDate());
+	});
 }
 // ---------------------------------------------------------
 %>
+<%!private int getPriority(model.Coupon c, java.time.LocalDate today) {
+		if (c.getEndDate().isBefore(today)) {
+			return 3; // 期限切れ
+		}
+		return c.getIsActive() ? 1 : 2; // 有効 or 無効
+	}%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -119,19 +109,24 @@ if (couponList != null && !couponList.isEmpty()) {
 					<td>~</td>
 					<td class="table-coupon-expiration"><%=coupon.getEndDate()%></td>
 					<%
-					if (!coupon.getEndDate().isAfter(today)) {
+					int priority = getPriority(coupon, today);
+					if (priority == 3) { // 期限切れ
 					%>
 					<td class="table-coupon-status">期限切れ</td>
 					<%
-					} else if (!coupon.getEndDate().isBefore(today) && coupon.getIsActive() != false) {
+					} else if (priority == 1) { // 有効
 					%>
-					<td class="table-coupon-status"><button class="active-btn"
-							onclick="editCoupon('<%=coupon.getCouponId()%>' , '<%=coupon.getIsActive()%>')">有効</button></td>
+					<td class="table-coupon-status">
+						<button class="active-btn"
+							onclick="editCoupon('<%=coupon.getCouponId()%>', 'true')">有効</button>
+					</td>
 					<%
-					} else {
+					} else { // 無効
 					%>
-					<td class="table-coupon-status"><button class="passive-btn"
-							onclick="editCoupon('<%=coupon.getCouponId()%>' , '<%=coupon.getIsActive()%>')">無効</button></td>
+					<td class="table-coupon-status">
+						<button class="passive-btn"
+							onclick="editCoupon('<%=coupon.getCouponId()%>', 'false')">無効</button>
+					</td>
 					<%
 					}
 					%>
