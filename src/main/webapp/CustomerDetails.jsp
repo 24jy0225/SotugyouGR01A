@@ -26,12 +26,12 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 	<header>
 		<nav class="nav-menu">
 			<button
-				onclick="location.href='../Reservation/Admin_ReservationControl.html'">予約管理</button>
+				onclick="location.href='ReservationManage.jsp'">予約管理</button>
 			<button
-				onclick="location.href='../Customer/Admin_CustomerControl.html'">顧客管理</button>
-			<button onclick="location.href='../Coupon/Admin_CouponControl.html'">クーポン管理</button>
-			<button onclick="location.href='../Topics/Admin_TopicsControl.html'">お知らせ管理</button>
-			<button onclick="location.href='../Visual/Admin_VisualChange.html'">Webサイト管理</button>
+				onclick="location.href='MemberManage.jsp'">顧客管理</button>
+			<button onclick="location.href='CouponManage.jsp'">クーポン管理</button>
+			<button onclick="location.href='DesignCustom.jsp'">お知らせ管理</button>
+			<button onclick="location.href='TopicsManage.jsp'">Webサイト管理</button>
 		</nav>
 	</header>
 	<main>
