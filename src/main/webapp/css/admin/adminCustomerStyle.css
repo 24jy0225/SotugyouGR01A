@@ -36,6 +36,12 @@
     padding: 16px;
     font-size: 16px;
     display: flex;
+	border: 1px solid white;
+}
+
+.customer:hover{
+	border: 1px solid black;
+	transform: translateY(-5px);
 }
 
 .customer-icon {
@@ -76,6 +82,10 @@
     border-radius: 10px;
     padding: 5px 10px 5px 10px;
     margin-right: 10px;
+}
+
+.customer-add-reservation-btn:hover{
+	opacity: 0.8;
 }
 
 .customer-coupon-btn {
@@ -312,6 +322,10 @@
     border-radius: 10px;
     padding: 5px 10px;
     cursor: pointer;
+}
+.coupon-btn:hover{
+	background-color:#f0f0f0;
+	border: 1.25px solid black;
 }
 .coupon-frame{
     margin-bottom: 200px;

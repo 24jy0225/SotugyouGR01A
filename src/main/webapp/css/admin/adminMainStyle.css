@@ -5,7 +5,9 @@ button {
     height: 210px;
     font-size: 32px;
     margin: 100px;
+	cursor: pointer;
 }
+
 
 .adtop_btn {
     text-align: center;
