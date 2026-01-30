@@ -63,11 +63,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 						</td>
 					</tr>
 				</table>
-<<<<<<< HEAD
 				<button class="customer-add-reservation-btn" onclick="customerReserv('<%=user.getUserId() %>>')">＋ 予約追加</button>
-=======
-				<button class="customer-add-reservation-btn" onclick="customerReserve('<%= user.getUserId() %>')" >＋ 予約追加</button>
->>>>>>> branch 'master' of https://github.com/24jy0225/SotugyouGR01A.git
 			</div>
 			<p>今後の予約</p>
 			<%
@@ -176,12 +172,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 				<div class="coupon-list">
 					<%
 					for (CouponUsage c : couponUsageList) {
-<<<<<<< HEAD
 						if (c.isCouponUsage() == false) {
-=======
-						System.out.println(c.isCouponUsage());
-						if (c.isCouponUsage() != true) {
->>>>>>> branch 'master' of https://github.com/24jy0225/SotugyouGR01A.git
 							continue;
 						}
 					%>
@@ -262,21 +253,12 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 			}
 		}
 
-<<<<<<< HEAD
-		function customerResave(userId){
-			document.getElementById("targetCommand").value = "customerReserve";
-			document.getElementById("targetUserId").value = userId;
-			document.getElementById("editCustomerForm").submit();
-			}
-=======
 		function customerReserve(userId){
 			document.getElementById("targetCommand").value = "customerReserve";
 			document.getElementById("targetUserId").value = userId;
 			document.getElementById("editCustomerForm").submit();
 			
 			}
-		
->>>>>>> branch 'master' of https://github.com/24jy0225/SotugyouGR01A.git
 	</script>
 </body>
 
