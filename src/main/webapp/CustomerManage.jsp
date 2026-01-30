@@ -15,15 +15,26 @@ List<User> userList = (List<User>) session.getAttribute("UserList");
 <body>
 	<header>
 		<nav class="nav-menu">
-			<button
-				onclick="location.href='ReservationManage.jsp'">予約管理</button>
-			<button
-				onclick="location.href='MemberManage.jsp'">顧客管理</button>
+			<button onclick="location.href='ReservationManage.jsp'">予約管理</button>
+			<button onclick="location.href='CustomerManage.jsp'">顧客管理</button>
 			<button onclick="location.href='CouponManage.jsp'">クーポン管理</button>
 			<button onclick="location.href='DesignCustom.jsp'">お知らせ管理</button>
 			<button onclick="location.href='TopicsManage.jsp'">Webサイト管理</button>
 		</nav>
 	</header>
+	<%
+	String msg = (String) session.getAttribute("message");
+	if (msg != null) {
+	%>
+	<div
+		style="color: green; font-weight: bold; border: 1px solid green; padding: 10px; margin-bottom: 10px;">
+		<%=msg%>
+	</div>
+	<%
+	// 一度表示したら消す（そうしないと、ずっと表示され続けてしまうため）
+	session.removeAttribute("message");
+	}
+	%>
 	<main class="customer-main">
 		<div>
 			<p class="title">顧客一覧</p>
@@ -40,8 +51,7 @@ List<User> userList = (List<User>) session.getAttribute("UserList");
 				continue;
 			}
 			%>
-			<div class="customer"
-				onclick="customerDetail('<%= u.getUserId() %>')">
+			<div class="customer" onclick="customerDetail('<%=u.getUserId()%>')">
 				<svg xlns="http://www.w3.org/2000/svg" width="20" height="20"
 					viewBox="0 0 20 20" fill="none" class="customer-icon">
                     <path
@@ -75,16 +85,18 @@ List<User> userList = (List<User>) session.getAttribute("UserList");
 			%>
 		</div>
 		<form id="customerDetailForm" action="AdminController" method="POST">
-			<input type="hidden" name="command" id="targetCommand">
-			<input type="hidden" name="userId" id="targetUserId"> 
+			<input type="hidden" name="command" id="targetCommand"> <input
+				type="hidden" name="userId" id="targetUserId">
 		</form>
 	</main>
 	<script type="text/javascript">
-		function customerDetail(userId){
-			document.getElementById("targetCommand").value = "customerDetail";
-			document.getElementById("targetUserId").value = userId;
-			document.getElementById('customerDetailForm').submit();
+		function customerDetail(userId) {
+			if (confirm("ユーザーを削除しますか？*予約とクーポンも削除されます*")) {
+				document.getElementById("targetCommand").value = "customerDetail";
+				document.getElementById("targetUserId").value = userId;
+				document.getElementById('customerDetailForm').submit();
 			}
+		}
 	</script>
 </body>
 </html>
