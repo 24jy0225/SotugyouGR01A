@@ -20,7 +20,7 @@ body {
 }
 
 header nav button {
-    background: url("../image/assets/wood.jpg") lightgray 0% 0% / 100px 100px repeat;
+    background: url("../../image/assets/wood.jpg") lightgray 0% 0% / 100px 100px repeat;
     width: 300px;
     height: 120px;
     color: #000;
