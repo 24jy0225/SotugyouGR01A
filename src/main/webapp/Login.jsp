@@ -19,6 +19,6 @@
 			<input type="submit" value="ログイン">
 		</p>
 	</form>
-	<button onclick="location.href='UserRegister.jsp'">新規登録</button>
+	<button onclick="location.href='CustomerRegister.jsp'">新規登録</button>
 </body>
 </html>

@@ -5,8 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="./css/style.css">
-<link rel="stylesheet" href="./css/couponStyle.css">
+<link rel="stylesheet" href="./css/admin/style.css">
+<link rel="stylesheet" href="./css/admin/couponStyle.css">
 <title>管理者クーポン発行</title>
 </head>
 <body>
