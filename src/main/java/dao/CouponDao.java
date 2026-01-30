@@ -30,7 +30,7 @@ public class CouponDao {
 	
 	public List<Coupon> findAll() {
 		List<Coupon> list = new ArrayList<>();
-		String sql = "SELECT * FROM クーポン " ;
+		String sql = "SELECT * FROM クーポン ;" ;
 		try (Connection con = createConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				) {
@@ -59,10 +59,10 @@ public class CouponDao {
 		String todayPrefix = "COU" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
 		String selectSql = "SELECT MAX(coupon_number) FROM クーポン WHERE coupon_number LIKE ?";
-		String insertSql = "INSERT INTO クーポン (coupon_number, coupon_name, coupon_content, coupon_start_date, coupon_end_date, valid_flag) VALUES (?, ?, ?, ?, ?, ?)";
+		String insertSql = "INSERT INTO クーポン (coupon_number, coupon_name, coupon_content, coupon_start_date, coupon_end_date, valid_flag) VALUES (?, ?, ?, ?, ?, ?) ;";
 
 		// 全員に配布するSQL（会員テーブルの全員分をクーポン利用テーブルに入れる）
-		String distributeSql = "INSERT INTO クーポン利用 (member_id, coupon_number, coupon_usage) SELECT member_id, ?, 1 FROM 会員";
+		String distributeSql = "INSERT INTO クーポン利用 (member_id, coupon_number, coupon_usage) SELECT member_id, ?, 1 FROM 会員 ;";
 
 		try (Connection con = createConnection()) {
 			// オートコミットをオフにする（トランザクション開始）
@@ -120,7 +120,7 @@ public class CouponDao {
 		List<CouponUsage> list = new ArrayList<>();
 		String sql = "SELECT * FROM クーポン利用 " +
                 "JOIN クーポン ON クーポン利用.coupon_number = クーポン.coupon_number " +
-                "WHERE クーポン利用.member_id = ? AND クーポン利用.coupon_usage = 1";
+                "WHERE クーポン利用.member_id = ? AND クーポン利用.coupon_usage = 1 ;";
 		try (Connection con = createConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				) {
@@ -152,7 +152,7 @@ public class CouponDao {
 		return list;
 	}
 	public boolean useCoupon(String userId , String couponId) {
-		String sql = "UPDATE クーポン利用 SET coupon_usage = 0 WHERE member_id = ? AND coupon_number = ?";
+		String sql = "UPDATE クーポン利用 SET coupon_usage = 0 WHERE member_id = ? AND coupon_number = ? ;";
 		try (Connection con = createConnection();
 		         PreparedStatement pstmt = con.prepareStatement(sql)) {
 		        
@@ -169,9 +169,9 @@ public class CouponDao {
 	public boolean editCoupon(String couponNumber , boolean couponActive) {
 		String sql = "";
 		if(couponActive) {
-			sql = "UPDATE クーポン SET valid_flag = 0 WHERE coupon_number = ?";			
+			sql = "UPDATE クーポン SET valid_flag = 0 WHERE coupon_number = ? ;";			
 		}else {
-			sql = "UPDATE クーポン SET valid_flag = 1 WHERE coupon_number = ?";
+			sql = "UPDATE クーポン SET valid_flag = 1 WHERE coupon_number = ? ;";
 		}
 		try (Connection con = createConnection();
 		         PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -230,11 +230,12 @@ public class CouponDao {
 	}
 	
 	public boolean deleteUserCoupon(String userId) {
-		String sql = "DELETE FROM クーポン利用 WHERE member_id = ?";
+		String sql = "DELETE FROM クーポン利用 WHERE member_id = ? ;";
 		try (Connection con = createConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, userId);
-			return pstmt.executeUpdate() == 1;
+			pstmt.executeUpdate();
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -242,4 +243,5 @@ public class CouponDao {
 		}
 		return false;
 	}
+	
 }
