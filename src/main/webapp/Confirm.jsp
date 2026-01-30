@@ -1,9 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ page import="java.time.LocalDate"%>
 <%@ page import="java.time.LocalDateTime"%>
 <%@ page import="java.time.format.DateTimeFormatter"%>
 <%@ page import="model.User"%>
 <%
+String action = (String) session.getAttribute("action");
 User user = (User) session.getAttribute("LoginUser");
 int course = (int) session.getAttribute("Course");
 int people = (int) session.getAttribute("people");
@@ -32,10 +34,23 @@ String endTime = selectedTime.plusMinutes(course).format(timeFormatter);
 		席番号:<%=seatId%></p>
 	<p>
 		予約時間:<%=startTime%>～<%=endTime%></p>
+	<%
+	if (action.equals("ByUser")) {
+	%>
 	<form action="UserController" method="post">
 		<input type="submit" value="この内容で予約する"> <input type="hidden"
 			name="command" value="Reserve">
 	</form>
+	<%
+	} else if (action.equals("ByAdmin")) {
+	%>
+	<form action="AdminController" method="post">
+		<input type="submit" value="この内容で予約する"> <input type="hidden"
+			name="command" value="Reserve">
+	</form>
+	<%
+	}
+	%>
 
 </body>
 </html>
