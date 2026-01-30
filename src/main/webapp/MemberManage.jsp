@@ -8,8 +8,8 @@ List<User> userList = (List<User>) session.getAttribute("UserList");
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="./css/admin/style.css">
-<link rel="stylesheet" href="./css/admin/customerStyle.css">
+<link rel="stylesheet" href="./css/admin/adminStyle.css">
+<link rel="stylesheet" href="./css/adimn/adminCustomerStyle.css">
 <title>管理者顧客管理</title>
 </head>
 <body>
