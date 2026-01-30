@@ -20,8 +20,8 @@ String[] hours = {"20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00",
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="./css/admin/style.css">
-<link rel="stylesheet" href="./css/admin/reservationStyle.css">
+<link rel="stylesheet" href="./css/admin/adminStyle.css">
+<link rel="stylesheet" href="./css/admin/adminReservationStyle.css">
 <title>管理者予約管理</title>
 <style>
 	.reserved {

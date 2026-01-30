@@ -42,8 +42,8 @@ if (couponList != null && !couponList.isEmpty()) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="./css/admin/style.css">
-<link rel="stylesheet" href="./css/admin/couponStyle.css">
+<link rel="stylesheet" href="./css/admin/adminStyle.css">
+<link rel="stylesheet" href="./css/admin/adminCouponStyle.css">
 <title>クーポン管理</title>
 </head>
 <body>
