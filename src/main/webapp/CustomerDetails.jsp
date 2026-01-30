@@ -68,7 +68,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 						</td>
 					</tr>
 				</table>
-				<button class="customer-add-reservation-btn">＋ 予約追加</button>
+				<button class="customer-add-reservation-btn" onclick="customerReserve('<%= user.getUserId() %>')" >＋ 予約追加</button>
 			</div>
 			<p>今後の予約</p>
 			<%
@@ -175,6 +175,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 				<div class="coupon-list">
 					<%
 					for (CouponUsage c : couponUsageList) {
+						System.out.println(c.isCouponUsage());
 						if (c.isCouponUsage() != true) {
 							continue;
 						}
@@ -254,6 +255,14 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 				document.getElementById("editCustomerForm").submit();
 			}
 		}
+
+		function customerReserve(userId){
+			document.getElementById("targetCommand").value = "customerReserve";
+			document.getElementById("targetUserId").value = userId;
+			document.getElementById("editCustomerForm").submit();
+			
+			}
+		
 	</script>
 </body>
 

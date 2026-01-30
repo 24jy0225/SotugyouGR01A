@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+String action = (String) session.getAttribute("action");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,7 +52,11 @@
 	            }
 
 	            const date = info.dateStr;
-	            window.location.href = "UserController?date=" + date + "&command=" + "Cource";
+	            if(<%=action.equals("ByUser")%> ){
+	            	window.location.href = "UserController?date=" + date + "&command=" + "Cource";
+		        }else if(<%=action.equals("ByAdmin")%>){
+	            	window.location.href = "AdminController?date=" + date + "&command=" + "Cource";
+			        }
 	        },
 
 	        // ここでセルに色を付ける

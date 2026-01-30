@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +25,12 @@ import action.Coupon.CouponDeleteAction;
 import action.Coupon.CouponEditAction;
 import action.Coupon.CouponUsageAction;
 import action.Design.DesignUpdateAction;
+import action.Reservation.ReservationConfirmAction;
 import action.Reservation.ReservationDeleteAction;
 import action.Reservation.ReservationHistoryAction;
 import action.Reservation.ReservationSeatAction;
+import action.Reservation.ReservationTimeAction;
+import action.Reservation.ReserveAction;
 import action.Topics.TopicsAction;
 import action.Topics.TopicsAddAction;
 import action.Topics.TopicsDeleteAction;
@@ -40,7 +45,7 @@ import model.Reservation;
 import model.Seat;
 import model.Store;
 import model.Topics;
-import model.User;	
+import model.User;
 
 /**
  * Servlet implementation class AdminController
@@ -67,13 +72,50 @@ public class AdminController extends HttpServlet {
 		String nextPage = null;
 		HttpSession session = req.getSession();
 		String command = (String) req.getParameter("command");
-		switch(command) {
-		case "editCoupon" :
+		switch (command) {
+		case "editCoupon":
 			nextPage = "CouponManage.jsp";
 			List<Coupon> couponList = new ArrayList<>();
 			CouponAction couponAction = new CouponAction();
 			couponList = couponAction.execute(req);
 			session.setAttribute("couponList", couponList);
+		case "Cource":
+			nextPage = "ReservationCourse.jsp";
+			String date = req.getParameter("date");
+			session.setAttribute("date", date);
+			StoreAction storeAction = new StoreAction();
+			List<Store> storeList = new ArrayList<>();
+			storeList = storeAction.execute();
+			session.setAttribute("storeList", storeList);
+			
+			break;
+		case "Seat":
+			nextPage = "ReservationSeat.jsp";
+
+			int storeNumber = Integer.parseInt(req.getParameter("storeNumber"));
+			int course = Integer.parseInt(req.getParameter("course"));
+
+			session.setAttribute("Course", course);
+			session.setAttribute("storeNumber", storeNumber);
+			session.setAttribute("action", "ByUser");
+			ReservationSeatAction rsa = new ReservationSeatAction();
+			List<Seat> SeatList = rsa.execute(req);
+			session.setAttribute("Seat", SeatList);
+			session.setAttribute("action", "ByAdmin");
+
+			break;
+		case "Time":
+			nextPage = "ReservationTime.jsp";
+			int seatId = Integer.parseInt(req.getParameter("seatId"));
+			String date2 = (String) session.getAttribute("date");
+			DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
+			LocalDate localDate = LocalDate.parse(date2, formatter);
+			session.setAttribute("seatId", seatId);
+			session.setAttribute("localDate", localDate);
+			ReservationTimeAction reservationTimeAction = new ReservationTimeAction();
+			List<LocalDateTime> list = reservationTimeAction.execute(req);
+			session.setAttribute("timeList", list);
+			break;
 		}
 
 		if (nextPage != null) {
@@ -102,21 +144,22 @@ public class AdminController extends HttpServlet {
 		switch (command) {
 		case "reservationDelete":
 			String id = req.getParameter("id");
-			session.setAttribute("id", id);  
+			session.setAttribute("id", id);
 			session.setAttribute("action", "ByAdmin");
-		    ReservationDeleteAction rda = new ReservationDeleteAction();
-		    boolean flag = rda.execute(req);
+			ReservationDeleteAction rda = new ReservationDeleteAction();
+			boolean flag = rda.execute(req);
 
-		    if (flag) {
-		        // 成功！Ajax側に「200 OK」を返す（画面遷移はしない）
-		    	reservationList = action.execute(req);
-		    	session.setAttribute("ReservationHistoryList", reservationList);
-		        resp.setStatus(HttpServletResponse.SC_OK);
-		    } else {
-		        // 失敗！Ajax側に「500 Internal Server Error」などを返す
-		        resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-		    }
-		    return;
+			if (flag) {
+				// 成功！Ajax側に「200 OK」を返す（画面遷移はしない）
+				reservationList = action.execute(req);
+				session.setAttribute("ReservationHistoryList", reservationList);
+				resp.setStatus(HttpServletResponse.SC_OK);
+			} else {
+				// 失敗！Ajax側に「500 Internal Server Error」などを返す
+				resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			}
+			return;
+
 		case "login":
 			User user = new User();
 			try {
@@ -131,7 +174,7 @@ public class AdminController extends HttpServlet {
 
 			if (user != null) {
 				nextPage = "AdminMain.jsp";
-				
+
 				List<Topics> topicsList = new ArrayList<>();
 				TopicsAction topicsAction = new TopicsAction();
 				topicsList = topicsAction.execute();
@@ -180,9 +223,9 @@ public class AdminController extends HttpServlet {
 				List<Coupon> couponList = new ArrayList<>();
 				CouponAction couponAction = new CouponAction();
 				couponList = couponAction.execute(req);
-				
+
 				session.setAttribute("couponList", couponList);
-				
+
 				nextPage = "CouponManage.jsp";
 			} else {
 				session.setAttribute("errorMsg", "クーポン作成エラー");
@@ -207,17 +250,17 @@ public class AdminController extends HttpServlet {
 				nextPage = "Error.jsp";
 				break;
 			}
-		case "deleteCoupon" :
+		case "deleteCoupon":
 			couponNumber = req.getParameter("couponNumber");
 			session.setAttribute("couponNumber", couponNumber);
 			System.out.println(couponNumber);
 			CouponDeleteAction couponDeleteAction = new CouponDeleteAction();
 			flag = couponDeleteAction.execute(req);
-			
+
 			List<Coupon> couponList = new ArrayList<>();
 			CouponAction couponAction = new CouponAction();
 			couponList = couponAction.execute(req);
-			
+
 			if (flag && couponList != null) {
 				session.setAttribute("couponList", couponList);
 				session.setAttribute("message", "クーポンを削除しました。");
@@ -228,7 +271,7 @@ public class AdminController extends HttpServlet {
 				nextPage = "Error.jsp";
 			}
 			break;
-			
+
 		case "designUpdate":
 			Part part = req.getPart("image");
 			String category = req.getParameter("category");
@@ -243,31 +286,32 @@ public class AdminController extends HttpServlet {
 				resp.sendRedirect("PhotoAdd.jsp");
 				return;
 			}
-			
-			String fileName = System.currentTimeMillis() + "_" + Paths.get(part.getSubmittedFileName()).getFileName().toString();
-						
+
+			String fileName = System.currentTimeMillis() + "_"
+					+ Paths.get(part.getSubmittedFileName()).getFileName().toString();
+
 			session.setAttribute("category", category);
 			session.setAttribute("fileName", fileName);
-			
+
 			// 修正後（より確実な方法）
 			String saveDir = "Z:\\卒業制作\\SotugyouGR01A\\src\\main\\webapp\\image\\photo";
 			File dir = new File(saveDir);
-		    if (!dir.exists()) {
-		        dir.mkdirs(); // フォルダがなければ作成
-		    }
-		    String fullPath = saveDir + File.separator + fileName;
-		    System.out.println("★ここに保存します: " + fullPath);
-	        
-	        DesignUpdateAction designUpdateAction = new DesignUpdateAction();
-	        designUpdateAction.execute(req , resp);
-	        return;
-			
+			if (!dir.exists()) {
+				dir.mkdirs(); // フォルダがなければ作成
+			}
+			String fullPath = saveDir + File.separator + fileName;
+			System.out.println("★ここに保存します: " + fullPath);
+
+			DesignUpdateAction designUpdateAction = new DesignUpdateAction();
+			designUpdateAction.execute(req, resp);
+			return;
+
 		case "topicsAdd":
 			Part topicsPart = req.getPart("image");
 			contentType = topicsPart.getContentType();
-			
+
 			String topicsTitle = req.getParameter("topicsTitle");
-			String topicsContent = req.getParameter("topicsContent");			
+			String topicsContent = req.getParameter("topicsContent");
 
 			if (!contentType.startsWith("image/")) {
 				req.setAttribute("error", "画像ファイルのみアップロード可能です");
@@ -278,94 +322,153 @@ public class AdminController extends HttpServlet {
 				resp.sendRedirect("PhotoAdd.jsp");
 				return;
 			}
-			
+
 			session.setAttribute("topicsTitle", topicsTitle);
 			session.setAttribute("topicsContent", topicsContent);
-			
+
 			fileName = System.currentTimeMillis() + "_" +
-			Paths.get(topicsPart.getSubmittedFileName()).getFileName().toString();
-			
+					Paths.get(topicsPart.getSubmittedFileName()).getFileName().toString();
+
 			session.setAttribute("fileName", fileName);
-						
+
 			saveDir = "Z:\\卒業制作\\SotugyouGR01A\\src\\main\\webapp\\image\\photo";
 			dir = new File(saveDir);
-		    if (!dir.exists()) {
-		        dir.mkdirs(); // フォルダがなければ作成
-		    }
-		    fullPath = saveDir + File.separator + fileName;
-		    topicsPart.write(fullPath);
-		    
-	        TopicsAddAction topicsAddAction = new TopicsAddAction();
-	        boolean success = topicsAddAction.execute(req, resp);
-	        
-	        List<Topics> topicsList = new ArrayList<>();
+			if (!dir.exists()) {
+				dir.mkdirs(); // フォルダがなければ作成
+			}
+			fullPath = saveDir + File.separator + fileName;
+			topicsPart.write(fullPath);
+
+			TopicsAddAction topicsAddAction = new TopicsAddAction();
+			boolean success = topicsAddAction.execute(req, resp);
+
+			List<Topics> topicsList = new ArrayList<>();
 			TopicsAction topicsAction = new TopicsAction();
 			topicsList = topicsAction.execute();
 			session.setAttribute("topicsList", topicsList);
-	        
-	        if (success) {
-	            resp.setStatus(HttpServletResponse.SC_OK); // 200を返す
-	        } else {
-	            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); // 500を返す
-	        }
-	        return;
-	        
+
+			if (success) {
+				resp.setStatus(HttpServletResponse.SC_OK); // 200を返す
+			} else {
+				resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); // 500を返す
+			}
+			return;
+
 		case "deleteTopics":
 			int topicsId = Integer.parseInt(req.getParameter("topicsId"));
 			session.setAttribute("topicsId", topicsId);
 			TopicsDeleteAction topicsDeleteAction = new TopicsDeleteAction();
 			success = topicsDeleteAction.execute(req);
-			
+
 			topicsAction = new TopicsAction();
 			topicsList = topicsAction.execute();
 			session.setAttribute("topicsList", topicsList);
-			
+
 			if (success) {
-		        resp.setStatus(HttpServletResponse.SC_OK);
-		    } else {
-		        resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-		    }
-		    return;	
-		case "customerDetail" :
+				resp.setStatus(HttpServletResponse.SC_OK);
+			} else {
+				resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			}
+			return;
+		case "customerDetail":
 			String userId = req.getParameter("userId");
-			
+
 			session.setAttribute("userId", userId);
-			
+
 			CustomerDetailAction customerDetailAction = new CustomerDetailAction();
 			user = customerDetailAction.execute(req);
 			session.setAttribute("targetUser", user);
-			
+
 			CouponUsageAction couponUsageAction = new CouponUsageAction();
 			List<CouponUsage> couponUsageList = couponUsageAction.execute(req);
-			
+
 			session.setAttribute("couponUsageList", couponUsageList);
-			
-			if(user != null) {
-				nextPage ="CustomerDetails.jsp";				
-			}else {
+
+			if (user != null) {
+				nextPage = "CustomerDetails.jsp";
+			} else {
 				session.setAttribute("errorMsg", "顧客情報取得エラー");
-				nextPage ="Error.jsp";
+				nextPage = "Error.jsp";
 			}
 			break;
-		case "customerDelete" :
+		case "customerDelete":
 			userId = req.getParameter("userId");
-			
+
 			session.setAttribute("userId", userId);
-			
+
 			CustomerDeleteAction customerDeleteAction = new CustomerDeleteAction();
 			success = customerDeleteAction.execute(req);
-			if(success) {
+			if (success) {
 				UserAction userAction = new UserAction();
 				List<User> userList = userAction.execute(req);
 				session.setAttribute("UserList", userList);
 				nextPage = "CustomerManage.jsp";
 				session.setAttribute("message", "ユーザーを削除しました！");
-			}else {
+			} else {
 				nextPage = "Error.jsp";
 				session.setAttribute("errorMsg", "ユーザーを削除できませんでした");
 			}
 			break;
+		case "Confirm":
+
+			String selectTime = req.getParameter("selectedTime");
+			String peopleStr = req.getParameter("people");
+
+			if (selectTime != null) {
+				DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+				LocalDateTime selectedTime = LocalDateTime.parse(selectTime, format);
+				session.setAttribute("selectedTime", selectedTime);
 			}
+
+			if (peopleStr != null) {
+				int people = Integer.parseInt(peopleStr);
+				session.setAttribute("people", people);
+			}
+
+			User LoginUser = (User) session.getAttribute("LoginUser");
+
+			if (LoginUser != null) {
+				// ログイン済み
+				nextPage = "Confirm.jsp";
+
+			} else {
+				// 未ログイン → ログイン後に戻る画面を保存
+				session.setAttribute("errorMsg", "セッション切れ");
+				nextPage = "Error.jsp";
+			}
+
+			break;
+		case "Reserve":
+
+			session = req.getSession();
+
+			ReservationConfirmAction reservationConfirmAction = new ReservationConfirmAction();
+			Reservation reservation = reservationConfirmAction.execute(req);
+
+			session.setAttribute("Reservation", reservation);
+			ReserveAction reserveAction = new ReserveAction();
+			if (reserveAction.execute(req)) {
+				reservationList = action.execute(req);
+				session.setAttribute("ReservationHistoryList", reservationList);
+				
+				nextPage = "ReservationSuccess.jsp";
+			} else {
+				nextPage = "Error.jsp";
+				req.setAttribute("errorMsg", "予約失敗");
+			}
+
+			break;
+		case "customerReserve":
+			nextPage = "ReservationDate.jsp";
+			
+			userId = req.getParameter("userId");
+
+			session.setAttribute("userId", userId);
+			customerDetailAction = new CustomerDetailAction();
+			user = customerDetailAction.execute(req);
+
+			session.setAttribute("LoginUser", user);
+		}
 		if (nextPage != null) {
 			RequestDispatcher rd = req.getRequestDispatcher(nextPage);
 			rd.forward(req, resp);
