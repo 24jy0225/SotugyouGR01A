@@ -13,7 +13,7 @@
 	<header>
 		<nav class="nav-menu">
 			<button onclick="location.href='ReservationManage.jsp'">予約管理</button>
-			<button onclick="location.href='MemberManage.jsp'">顧客管理</button>
+			<button onclick="location.href='CustomerManage.jsp'">顧客管理</button>
 			<button onclick="location.href='CouponManage.jsp'">クーポン管理</button>
 			<button onclick="location.href='TopicsManage.jsp'">お知らせ管理</button>
 			<button onclick="location.href='DesignCustom.jsp'">Webサイト管理</button>
