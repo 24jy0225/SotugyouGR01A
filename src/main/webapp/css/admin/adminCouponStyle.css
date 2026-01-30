@@ -80,7 +80,7 @@ tr {
     align-items: center;
     border-radius: 8px;
     border: 1.25px solid rgba(0, 0, 0, 0.2);
-    background: #030213;
+    background: rgb(0, 128, 0);
     color: white;
     cursor: pointer;
 }
@@ -89,7 +89,7 @@ tr {
 	opacity: 0.8;
 }
 
-.passive-btn {
+.inactive-btn {
     display: flex;
     height: 25px;
     width: 80px;
@@ -98,12 +98,12 @@ tr {
     align-items: center;
     border-radius: 8px;
     border: 1.25px solid rgba(0, 0, 0, 0.2);
-    background: #D4183D;
+    background: rgb(255, 0, 0);
     color: white;
     cursor: pointer;
 }
 
-.passive-btn:hover{
+.inactive-btn:hover{
 	opacity: 0.8;	
 }
 

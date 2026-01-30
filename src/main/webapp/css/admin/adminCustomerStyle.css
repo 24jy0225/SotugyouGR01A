@@ -145,7 +145,12 @@
     cursor: pointer;
     width: 75px;
     height: 30px;
-    border: none;
+    border: 1px solid white;
+}
+
+.customer-edit-btn:hover{
+	background-color:#f0f0f0;
+	border: 1px solid black;
 }
 
 .edit-icon {
@@ -157,7 +162,7 @@
 .customer-delete-btn {
     background-color: white;
     color: black;
-    border: none;
+    border: 1.25px solid white;
     border-radius: 10px;
     cursor: pointer;
     width: 40px;
@@ -165,6 +170,11 @@
     padding: 0px 5px 5px 5px;
     text-align: center;
     margin-left: 10px;
+}
+
+.customer-delete-btn:hover{
+	background-color:#f0f0f0;
+	border: 1px solid black;
 }
 
 .trash-icon {
@@ -261,6 +271,7 @@
 .reservation-delete-btn {
     padding-right: 6px;
 }
+
 .coupon-list{
     display: flex;
     flex-direction: column;

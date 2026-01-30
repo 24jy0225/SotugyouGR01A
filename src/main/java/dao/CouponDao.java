@@ -120,7 +120,7 @@ public class CouponDao {
 		List<CouponUsage> list = new ArrayList<>();
 		String sql = "SELECT * FROM クーポン利用 " +
                 "JOIN クーポン ON クーポン利用.coupon_number = クーポン.coupon_number " +
-                "WHERE クーポン利用.member_id = ? AND クーポン利用.coupon_usage = 1 ;";
+                "WHERE クーポン利用.member_id = ?";
 		try (Connection con = createConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				) {

@@ -112,7 +112,7 @@ public class UserDao {
 		String sql = """
 				   SELECT *,
 				     (SELECT COUNT(*) FROM 予約 WHERE 予約.member_id = 会員.member_id AND 予約.reservation_date >= CURDATE()) AS res_count,
-				     (SELECT COUNT(*) FROM クーポン利用 WHERE クーポン利用.member_id = 会員.member_id AND クーポン利用.coupon_usage = 1) AS coup_count
+				     (SELECT COUNT(*) FROM クーポン利用 WHERE クーポン利用.member_id = 会員.member_id) AS coup_count
 				   FROM 会員
 				""";
 		List<User> list = new ArrayList<>();
@@ -145,7 +145,7 @@ public class UserDao {
 		String sql = """
 				   SELECT *,
 				     (SELECT COUNT(*) FROM 予約 WHERE 予約.member_id = 会員.member_id AND 予約.reservation_date >= CURDATE()) AS res_count,
-				     (SELECT COUNT(*) FROM クーポン利用 WHERE クーポン利用.member_id = 会員.member_id AND クーポン利用.coupon_usage = 1) AS coup_count
+				     (SELECT COUNT(*) FROM クーポン利用 WHERE クーポン利用.member_id = 会員.member_id) AS coup_count
 				   FROM 会員 WHERE member_id = ?
 				""";
 		try (Connection con = createConnection();

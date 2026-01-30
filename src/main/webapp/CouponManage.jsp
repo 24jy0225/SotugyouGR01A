@@ -124,7 +124,7 @@ if (couponList != null && !couponList.isEmpty()) {
 					} else { // 無効
 					%>
 					<td class="table-coupon-status">
-						<button class="passive-btn"
+						<button class="inactive-btn"
 							onclick="editCoupon('<%=coupon.getCouponId()%>', 'false')">無効</button>
 					</td>
 					<%

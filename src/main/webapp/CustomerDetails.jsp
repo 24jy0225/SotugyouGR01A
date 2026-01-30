@@ -8,7 +8,6 @@ DateTimeFormatter timeFmt = DateTimeFormatter.ofPattern("HH:mm");
 int year, month, day;
 LocalDate today = LocalDate.now();
 List<Reservation> reservationList = (List<Reservation>) session.getAttribute("ReservationHistoryList");
-
 List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("couponUsageList");
 %>
 <!DOCTYPE html>
@@ -37,15 +36,11 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 		<div class="customer-details-main customer-top-margin">
 			<table class="customer-details-table">
 				<tr>
-					<td></td>
-				</tr>
-				<tr>
 					<td><%=user.getName()%></td>
-					<td><%=user.getUserTel()%></td>
 				</tr>
 				<tr class="customer-stetas">
-					<td></td>
-					<td></td>
+					<td><%=user.getUserTel()%></td>
+					<td><%=user.getUserEmail() %></td>
 					<td><%=user.getRegistDate()%> 登録</td>
 				</tr>
 			</table>
@@ -68,7 +63,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 						</td>
 					</tr>
 				</table>
-				<button class="customer-add-reservation-btn">＋ 予約追加</button>
+				<button class="customer-add-reservation-btn" onclick="customerReserv('<%=user.getUserId() %>>')">＋ 予約追加</button>
 			</div>
 			<p>今後の予約</p>
 			<%
@@ -157,11 +152,12 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 						</td>
 					</tr>
 				</table>
+			</div>
 			<%
 			}
 			%>
-			</div>
 			<div class="customer-details-main coupon-frame">
+			
 				<table>
 					<tr>
 						<td>クーポン</td>
@@ -171,11 +167,12 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 						</td>
 					</tr>
 				</table>
-				<p>有効クーポン</p>
+				
+				<p>未使用クーポン</p>
 				<div class="coupon-list">
 					<%
 					for (CouponUsage c : couponUsageList) {
-						if (c.isCouponUsage() != true) {
+						if (c.isCouponUsage() == false) {
 							continue;
 						}
 					%>
@@ -197,24 +194,24 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 							</tr>
 						</table>
 						<div class="coupon-content">
-							<button class="coupon-btn">無効にする</button>
+							<button class="coupon-btn">使用状態にする</button>
 						</div>
 					</div>
 					<%
 					}
 					%>
 				</div>
-
-				<p>無効クーポン</p>
+				
+				<p>使用済みクーポン</p>
 				<div class="coupon-list">
 					<%
 					for (CouponUsage c : couponUsageList) {
-						if (c.isCouponUsage() == true) {
+						if (c.isCouponUsage() != false) {
 							continue;
 						}
 					%>
-					<div class="coupon-passive">
-						<img src="../../image/assets/coupon.png" class="coupon-img">
+					<div class="coupon-active">
+						<img src="./image/assets/coupon.png" class="coupon-img">
 						<table>
 							<tr>
 								<td class="coupon-value"><%=c.getCoupon().getCouponName()%></td>
@@ -231,13 +228,14 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 							</tr>
 						</table>
 						<div class="coupon-content">
-							<button class="coupon-btn">有効にする</button>
+							<button class="coupon-btn">未使用状態にする</button>
 						</div>
 					</div>
 					<%
 					}
 					%>
 				</div>
+				
 			</div>
 			<form id="editCustomerForm" action="AdminController" method="POST">
 				<input type="hidden" name="command" id="targetCommand"> <input
@@ -254,6 +252,12 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 				document.getElementById("editCustomerForm").submit();
 			}
 		}
+
+		function customerResave(userId){
+			document.getElementById("targetCommand").value = "customerReserve";
+			document.getElementById("targetUserId").value = userId;
+			document.getElementById("editCustomerForm").submit();
+			}
 	</script>
 </body>
 

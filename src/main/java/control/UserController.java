@@ -223,7 +223,7 @@ public class UserController extends HttpServlet {
 
 			break;
 		case "History":
-			nextPage = "paipai.jsp";
+			nextPage = "CustomerReservationHistory.jsp";
 			session = req.getSession();
 			List<Reservation> list = new ArrayList<>();
 			ReservationHistoryAction reservationHistoryAction = new ReservationHistoryAction();
