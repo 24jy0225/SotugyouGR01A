@@ -32,6 +32,19 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 			<button onclick="location.href='TopicsManage.jsp'">Webサイト管理</button>
 		</nav>
 	</header>
+	<%
+	String msg = (String) session.getAttribute("message");
+	if (msg != null) {
+	%>
+	<div
+		style="color: green; font-weight: bold; border: 1px solid green; padding: 10px; margin-bottom: 10px;">
+		<%=msg%>
+	</div>
+	<%
+	// 一度表示したら消す（そうしないと、ずっと表示され続けてしまうため）
+	session.removeAttribute("message");
+	}
+	%>
 	<main>
 		<div class="customer-details-main customer-top-margin">
 			<table class="customer-details-table">
@@ -239,17 +252,19 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 				</div>
 			</div>
 			<form id="editCustomerForm" action="AdminController" method="POST">
-				<input type="hidden" name="command" id="targetCommand">
-				<input type="hidden" name="userId" id="targetUserId">
-				<input type="hidden" name="couponId" id="targetCouponId">
-				<input type="hidden" name="ReservationId" id="targetReservationId">
+				<input type="hidden" name="command" id="targetCommand"> <input
+					type="hidden" name="userId" id="targetUserId"> <input
+					type="hidden" name="couponId" id="targetCouponId"> <input
+					type="hidden" name="ReservationId" id="targetReservationId">
 			</form>
 	</main>
 	<script type="text/javascript">
 		function customerDelete(userId) {
-			document.getElementById("targetCommand").value = "customerDelete";
-			document.getElementById("targetUserId").value = userId;
-			document.getElementById("editCustomerForm").submit();
+			if (confirm("ユーザーを削除しますか？\n*予約とクーポンも削除されます*")) {
+				document.getElementById("targetCommand").value = "customerDelete";
+				document.getElementById("targetUserId").value = userId;
+				document.getElementById("editCustomerForm").submit();
+			}
 		}
 	</script>
 </body>
