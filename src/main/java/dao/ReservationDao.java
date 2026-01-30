@@ -168,5 +168,19 @@ public class ReservationDao {
 		}
 		return false;
 	}
+	
+	public boolean deleteAll(String userId) {
+		String sql = "DELETE FROM 予約 WHERE member_id = ?";
+		try (Connection con = createConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, userId);
+			return pstmt.executeUpdate() == 1;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 
 }

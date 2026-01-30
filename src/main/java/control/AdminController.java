@@ -29,6 +29,7 @@ import action.Reservation.ReservationSeatAction;
 import action.Topics.TopicsAction;
 import action.Topics.TopicsAddAction;
 import action.Topics.TopicsDeleteAction;
+import action.main.CustomerDeleteAction;
 import action.main.CustomerDetailAction;
 import action.main.LoginAction;
 import action.main.StoreAction;
@@ -345,6 +346,14 @@ public class AdminController extends HttpServlet {
 				session.setAttribute("errorMsg", "顧客情報取得エラー");
 				nextPage ="Error.jsp";
 			}
+			break;
+		case "customerDelete" :
+			userId = req.getParameter("userId");
+			
+			session.setAttribute("userId", userId);
+			
+			CustomerDeleteAction customerDeleteAction = new CustomerDeleteAction();
+			customerDeleteAction.execute(req);
 			
 			}
 		if (nextPage != null) {

@@ -173,5 +173,19 @@ public class UserDao {
 		}
 		return null;
 	}
+	
+	public boolean delete(String userId) {
+		String sql = "DELETE FROM 会員 WHERE member_id = ?";
+		try (Connection con = createConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, userId);
+			return pstmt.executeUpdate() == 1;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 
 }

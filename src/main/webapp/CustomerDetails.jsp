@@ -17,18 +17,16 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="./css/admin/style.css">
-<link rel="stylesheet" href="./css/admin/customerStyle.css">
+<link rel="stylesheet" href="./css/admin/adminStyle.css">
+<link rel="stylesheet" href="./css/common/commonCustomerStyle.css">
 <title>管理者顧客詳細情報</title>
 </head>
 
 <body>
 	<header>
 		<nav class="nav-menu">
-			<button
-				onclick="location.href='ReservationManage.jsp'">予約管理</button>
-			<button
-				onclick="location.href='MemberManage.jsp'">顧客管理</button>
+			<button onclick="location.href='ReservationManage.jsp'">予約管理</button>
+			<button onclick="location.href='MemberManage.jsp'">顧客管理</button>
 			<button onclick="location.href='CouponManage.jsp'">クーポン管理</button>
 			<button onclick="location.href='DesignCustom.jsp'">お知らせ管理</button>
 			<button onclick="location.href='TopicsManage.jsp'">Webサイト管理</button>
@@ -50,13 +48,11 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 					<td><%=user.getRegistDate()%> 登録</td>
 				</tr>
 			</table>
-			<div class="customer-details-btns" onclick="cutomerInfoEdit()">
-				<button class="customer-edit-btn">
-					<img src="./image/assets/edit.jpg" alt="" class="edit-icon">
-					編集
-				</button>
-				<button class="customer-delete-btn">
-					<img src="./image/assets/trash.png" alt="" class="trash-icon">
+			<div class="customer-details-btns">
+
+				<button class="customer-delete-btn"
+					onclick="customerDelete('<%=user.getUserId()%>')">
+					<img src="../../image/assets/trash.png" alt="" class="trash-icon">
 				</button>
 			</div>
 		</div>
@@ -96,18 +92,20 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 						<td class="reservation-days reservation-day"><%=day%>日</td>
 						<td class="reservation-starttime"><%=startTimeStr%></td>
 						<td class="reservation-timebr">~</td>
-						<td class="reservation-endtime"><%= endTimeStr %></td>
+						<td class="reservation-endtime"><%=endTimeStr%></td>
 						<td class="reservation-width"><%=r.getReservePeople()%>名</td>
 						<td class="reservation-width">座席<%=r.getSeatId()%></td>
 						<td>
 							<button class="customer-edit-btn"
 								onclick="location.href='../Reservation/Admin_ReservationEdit.html'">
-								<img src="./image/assets/edit.jpg" alt="" class="edit-icon"> 編集
+								<img src="../../image/assets/edit.jpg" alt="" class="edit-icon">
+								編集
 							</button>
 						</td>
 						<td class="reservation-delete-btn">
 							<button class="customer-delete-btn">
-								<img src="./image/assets/trash.png" alt="" class="trash-icon">
+								<img src="../../image/assets/trash.png" alt=""
+									class="trash-icon">
 							</button>
 						</td>
 					</tr>
@@ -146,12 +144,14 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 						<td>
 							<button class="customer-edit-btn"
 								onclick="location.href='../Reservation/Admin_ReservationEdit.html'">
-								<img src="../image/assets/edit.jpg" alt="" class="edit-icon"> 編集
+								<img src="../../image/assets/edit.jpg" alt="" class="edit-icon">
+								編集
 							</button>
 						</td>
 						<td class="reservation-delete-btn">
 							<button class="customer-delete-btn">
-								<img src="./image/assets/trash.png" alt="" class="trash-icon">
+								<img src="../../image/assets/trash.png" alt=""
+									class="trash-icon">
 							</button>
 						</td>
 					</tr>
@@ -179,7 +179,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 						}
 					%>
 					<div class="coupon-active">
-						<img src="./image/assets/coupon.png" class="coupon-img">
+						<img src="../../image/assets/coupon.png" class="coupon-img">
 						<table>
 							<tr>
 								<td class="coupon-value"><%=c.getCoupon().getCouponName()%></td>
@@ -213,7 +213,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 						}
 					%>
 					<div class="coupon-passive">
-						<img src="./image/assets/coupon.png" class="coupon-img">
+						<img src="../../image/assets/coupon.png" class="coupon-img">
 						<table>
 							<tr>
 								<td class="coupon-value"><%=c.getCoupon().getCouponName()%></td>
@@ -238,9 +238,19 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 					%>
 				</div>
 			</div>
+			<form id="editCustomerForm" action="AdminController" method="POST">
+				<input type="hidden" name="command" id="targetCommand">
+				<input type="hidden" name="userId" id="targetUserId">
+				<input type="hidden" name="couponId" id="targetCouponId">
+				<input type="hidden" name="ReservationId" id="targetReservationId">
+			</form>
 	</main>
 	<script type="text/javascript">
-		
+		function customerDelete(userId) {
+			document.getElementById("targetCommand").value = "customerDelete";
+			document.getElementById("targetUserId").value = userId;
+			document.getElementById("editCustomerForm").submit();
+		}
 	</script>
 </body>
 
