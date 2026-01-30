@@ -32,19 +32,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 			<button onclick="location.href='TopicsManage.jsp'">Webサイト管理</button>
 		</nav>
 	</header>
-	<%
-	String msg = (String) session.getAttribute("message");
-	if (msg != null) {
-	%>
-	<div
-		style="color: green; font-weight: bold; border: 1px solid green; padding: 10px; margin-bottom: 10px;">
-		<%=msg%>
-	</div>
-	<%
-	// 一度表示したら消す（そうしないと、ずっと表示され続けてしまうため）
-	session.removeAttribute("message");
-	}
-	%>
+	
 	<main>
 		<div class="customer-details-main customer-top-margin">
 			<table class="customer-details-table">
@@ -65,7 +53,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 
 				<button class="customer-delete-btn"
 					onclick="customerDelete('<%=user.getUserId()%>')">
-					<img src="../../image/assets/trash.png" alt="" class="trash-icon">
+					<img src="./image/assets/trash.png" alt="" class="trash-icon">
 				</button>
 			</div>
 		</div>
@@ -111,13 +99,13 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 						<td>
 							<button class="customer-edit-btn"
 								onclick="location.href='../Reservation/Admin_ReservationEdit.html'">
-								<img src="../../image/assets/edit.jpg" alt="" class="edit-icon">
+								<img src="./image/assets/edit.jpg" alt="" class="edit-icon">
 								編集
 							</button>
 						</td>
 						<td class="reservation-delete-btn">
 							<button class="customer-delete-btn">
-								<img src="../../image/assets/trash.png" alt=""
+								<img src="./image/assets/trash.png" alt=""
 									class="trash-icon">
 							</button>
 						</td>
@@ -157,22 +145,22 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 						<td>
 							<button class="customer-edit-btn"
 								onclick="location.href='../Reservation/Admin_ReservationEdit.html'">
-								<img src="../../image/assets/edit.jpg" alt="" class="edit-icon">
+								<img src="./image/assets/edit.jpg" alt="" class="edit-icon">
 								編集
 							</button>
 						</td>
 						<td class="reservation-delete-btn">
 							<button class="customer-delete-btn">
-								<img src="../../image/assets/trash.png" alt=""
+								<img src="./image/assets/trash.png" alt=""
 									class="trash-icon">
 							</button>
 						</td>
 					</tr>
 				</table>
-			</div>
 			<%
 			}
 			%>
+			</div>
 			<div class="customer-details-main coupon-frame">
 				<table>
 					<tr>
@@ -192,7 +180,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 						}
 					%>
 					<div class="coupon-active">
-						<img src="../../image/assets/coupon.png" class="coupon-img">
+						<img src="./image/assets/coupon.png" class="coupon-img">
 						<table>
 							<tr>
 								<td class="coupon-value"><%=c.getCoupon().getCouponName()%></td>

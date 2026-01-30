@@ -22,6 +22,19 @@ List<User> userList = (List<User>) session.getAttribute("UserList");
 			<button onclick="location.href='TopicsManage.jsp'">Webサイト管理</button>
 		</nav>
 	</header>
+	<%
+	String msg = (String) session.getAttribute("message");
+	if (msg != null) {
+	%>
+	<div
+		style="color: green; font-weight: bold; border: 1px solid green; padding: 10px; margin-bottom: 10px;">
+		<%=msg%>
+	</div>
+	<%
+	// 一度表示したら消す（そうしないと、ずっと表示され続けてしまうため）
+	session.removeAttribute("message");
+	}
+	%>
 	<main class="customer-main">
 		<div>
 			<p class="title">顧客一覧</p>

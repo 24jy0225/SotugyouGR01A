@@ -175,7 +175,7 @@ public class UserDao {
 	}
 	
 	public boolean delete(String userId) {
-		String sql = "DELETE FROM 会員 WHERE member_id = ?";
+		String sql = "DELETE FROM 会員 WHERE member_id = ? ;";
 		try (Connection con = createConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, userId);

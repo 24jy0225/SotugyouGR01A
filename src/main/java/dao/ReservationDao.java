@@ -31,7 +31,7 @@ public class ReservationDao {
 	}
 
 	public boolean insert(Reservation r) {
-		String sql = "INSERT INTO 予約(reservation_number , reservation_people , reservation_date , member_id , member_name , seat_id , start_time , end_time) VALUES(?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO 予約(reservation_number , reservation_people , reservation_date , member_id , member_name , seat_id , start_time , end_time) VALUES(?,?,?,?,?,?,?,?) ;";
 		try (Connection con = createConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 
@@ -65,7 +65,7 @@ public class ReservationDao {
 	public String generateReservationNumber(LocalDate date, Connection con) throws SQLException {
 		String dateStr = date.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
-		String countSql = "SELECT COUNT(*) FROM 予約 WHERE reservation_date = ?";
+		String countSql = "SELECT COUNT(*) FROM 予約 WHERE reservation_date = ? ;";
 		try (PreparedStatement countStmt = con.prepareStatement(countSql)) {
 			countStmt.setDate(1, Date.valueOf(date));
 			try (ResultSet rs = countStmt.executeQuery()) {
@@ -81,7 +81,7 @@ public class ReservationDao {
 	}
 
 	public List<Reservation> ReservationHistoryByUser(String userId) {
-		String sql = "SELECT * FROM 予約 WHERE member_id = ?";
+		String sql = "SELECT * FROM 予約 WHERE member_id = ? ;";
 		List<Reservation> list = new ArrayList<>();
 		try (Connection con = createConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -124,7 +124,7 @@ public class ReservationDao {
 				"m.member_id, m.member_name " +
 				"FROM 予約 r " +
 				"JOIN 会員 m ON r.member_id = m.member_id " +
-				"ORDER BY r.reservation_date, r.start_time";
+				"ORDER BY r.reservation_date, r.start_time ;";
 
 		try (Connection con = createConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
@@ -156,7 +156,7 @@ public class ReservationDao {
 	}
 
 	public boolean delete(String reservationId) {
-		String sql = "DELETE FROM 予約 WHERE reservation_number = ?";
+		String sql = "DELETE FROM 予約 WHERE reservation_number = ? ;";
 		try (Connection con = createConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, reservationId);
@@ -170,11 +170,12 @@ public class ReservationDao {
 	}
 	
 	public boolean deleteAll(String userId) {
-		String sql = "DELETE FROM 予約 WHERE member_id = ?";
+		String sql = "DELETE FROM 予約 WHERE member_id = ? ;";
 		try (Connection con = createConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, userId);
-			return pstmt.executeUpdate() == 1;
+			pstmt.executeUpdate();
+			return true; 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
