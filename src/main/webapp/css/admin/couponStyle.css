@@ -85,6 +85,10 @@ tr {
     cursor: pointer;
 }
 
+.active-btn:hover{
+	opacity: 0.8;
+}
+
 .passive-btn {
     display: flex;
     height: 25px;
@@ -97,6 +101,10 @@ tr {
     background: #D4183D;
     color: white;
     cursor: pointer;
+}
+
+.passive-btn:hover{
+	opacity: 0.8;	
 }
 
 .coupon-delete {
