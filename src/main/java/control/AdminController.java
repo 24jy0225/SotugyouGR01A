@@ -353,8 +353,14 @@ public class AdminController extends HttpServlet {
 			session.setAttribute("userId", userId);
 			
 			CustomerDeleteAction customerDeleteAction = new CustomerDeleteAction();
-			customerDeleteAction.execute(req);
-			
+			success = customerDeleteAction.execute(req);
+			if(success) {
+				nextPage = "CustomerManage.jsp";
+				session.setAttribute("message", "ユーザーを削除しました！");
+			}else {
+				nextPage = "Error.jsp";
+				session.setAttribute("errorMsg", "ユーザーを削除できませんでした");
+			}
 			}
 		if (nextPage != null) {
 			RequestDispatcher rd = req.getRequestDispatcher(nextPage);

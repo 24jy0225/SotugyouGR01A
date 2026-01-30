@@ -18,7 +18,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="./css/admin/adminStyle.css">
-<link rel="stylesheet" href="./css/common/commonCustomerStyle.css">
+<link rel="stylesheet" href="./css/admin/adminCustomerStyle.css">
 <title>管理者顧客詳細情報</title>
 </head>
 
