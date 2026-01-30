@@ -36,7 +36,7 @@ String[] hours = {"20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00",
 	<header>
 		<nav class="nav-menu">
 			<button onclick="location.href='ReservationManage.jsp'">予約管理</button>
-			<button onclick="location.href='MemberManage.jsp'">顧客管理</button>
+			<button onclick="location.href='CustomerManage.jsp'">顧客管理</button>
 			<button onclick="location.href='CouponManage.jsp'">クーポン管理</button>
 			<button onclick="location.href='DesignCustom.jsp'">お知らせ管理</button>
 			<button onclick="location.href='TopicsManage.jsp'">Webサイト管理</button>
