@@ -28,10 +28,10 @@ public class CouponEditAction extends HttpServlet {
 public void execute(HttpServletRequest req , HttpServletResponse resp) throws IOException {
     	
     	HttpSession session = req.getSession(false);
-    	String couponNumber = (String)session.getAttribute("couponNumber");
+    	String couponId = (String)session.getAttribute("couponId");
     	boolean couponActive = (boolean)session.getAttribute("couponActive");
     	CouponDao dao = new CouponDao();
-    	boolean success = dao.editCoupon(couponNumber, couponActive);
+    	boolean success = dao.editCoupon(couponId, couponActive);
         
     	if (success) {
             // 2. 完了メッセージをセットして再表示（リダイレクトがおすすめ）

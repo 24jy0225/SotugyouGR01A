@@ -278,6 +278,7 @@
     gap: 10px;
 
 }
+
 .coupon-active {
     display: flex;
     border-radius: 10px;
@@ -285,6 +286,7 @@
     background: rgba(123, 241, 168, 0.2);
     height: 100px; 
 }
+
 .coupon-inactive {
     display: flex;
     border-radius: 10px;
@@ -292,6 +294,15 @@
     background: rgba(60, 60, 80, 0.2);
     height: 100px; 
 }
+
+.coupon-expired {
+    display: flex;
+    border-radius: 10px;
+    border: 1.25px solid rgb(255, 0, 0);
+    background: rgba(200, 0, 0, 0.2);
+    height: 100px; 
+}
+
 
 .coupon-img {
     display: flex;

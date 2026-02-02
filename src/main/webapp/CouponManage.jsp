@@ -145,25 +145,25 @@ if (couponList != null && !couponList.isEmpty()) {
 
 	<form id="editCouponForm" action="AdminController" method="POST">
 		<input type="hidden" name="command" id="targetCommand"> <input
-			type="hidden" name="couponNumber" id="targetCouponNumber"> <input
+			type="hidden" name="couponId" id="targetCouponId"> <input
 			type="hidden" name="couponActive" id="targetCouponActive">
 	</form>
 
 	<script type="text/javascript">
-		function editCoupon(number, active) {
+		function editCoupon(couponId, active) {
 			if (confirm("現在のステータスから変更しますか？")) {
 				document.getElementById('targetCommand').value = "editCoupon";
-				document.getElementById('targetCouponNumber').value = number;
+				document.getElementById('targetCouponId').value = couponId;
 				document.getElementById('targetCouponActive').value = active;
 				document.getElementById('editCouponForm').submit();
 			}
 
 		}
 
-		function deleteCoupon(number) {
+		function deleteCoupon(couponId) {
 			if (confirm("本当にこのクーポンを削除しますか？\nこの操作は取り消せません。")) {
 				document.getElementById('targetCommand').value = "deleteCoupon"; // commandを削除用に書き換え
-				document.getElementById('targetCouponNumber').value = number;
+				document.getElementById('targetCouponId').value = couponId;
 				document.getElementById('editCouponForm').submit();
 			}
 		}

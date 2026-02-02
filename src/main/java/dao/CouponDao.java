@@ -27,26 +27,25 @@ public class CouponDao {
 			throw new Exception("DB接続処理に失敗しました");
 		}
 	}
-	
+
 	public List<Coupon> findAll() {
 		List<Coupon> list = new ArrayList<>();
-		String sql = "SELECT * FROM クーポン ;" ;
+		String sql = "SELECT * FROM クーポン ;";
 		try (Connection con = createConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql);
-				) {
-			try(ResultSet rs = pstmt.executeQuery()){
+				PreparedStatement pstmt = con.prepareStatement(sql);) {
+			try (ResultSet rs = pstmt.executeQuery()) {
 				while (rs.next()) {
 					Coupon coupon = new Coupon();
-	                coupon.setCouponId(rs.getString("coupon_number"));
-	                coupon.setCouponName(rs.getString("coupon_name"));
-	                coupon.setCouponContent(rs.getString("coupon_content"));
-	                coupon.setEndDate(rs.getDate("coupon_end_date").toLocalDate());
-	                coupon.setStartDate(rs.getDate("coupon_start_date").toLocalDate());	
-	                coupon.setIsActive(rs.getBoolean("valid_flag"));
-	                list.add(coupon);
+					coupon.setCouponId(rs.getString("coupon_number"));
+					coupon.setCouponName(rs.getString("coupon_name"));
+					coupon.setCouponContent(rs.getString("coupon_content"));
+					coupon.setEndDate(rs.getDate("coupon_end_date").toLocalDate());
+					coupon.setStartDate(rs.getDate("coupon_start_date").toLocalDate());
+					coupon.setIsActive(rs.getBoolean("valid_flag"));
+					list.add(coupon);
 				}
-				
-				}
+
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -115,35 +114,33 @@ public class CouponDao {
 		}
 
 	}
-	
+
 	public List<CouponUsage> findById(String userId) {
 		List<CouponUsage> list = new ArrayList<>();
 		String sql = "SELECT * FROM クーポン利用 " +
-                "JOIN クーポン ON クーポン利用.coupon_number = クーポン.coupon_number " +
-                "WHERE クーポン利用.member_id = ?";
+				"JOIN クーポン ON クーポン利用.coupon_number = クーポン.coupon_number " +
+				"WHERE クーポン利用.member_id = ?";
 		try (Connection con = createConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql);
-				) {
-			pstmt.setString(1,userId);
-			try(ResultSet rs = pstmt.executeQuery()){
+				PreparedStatement pstmt = con.prepareStatement(sql);) {
+			pstmt.setString(1, userId);
+			try (ResultSet rs = pstmt.executeQuery()) {
 				while (rs.next()) {
 					Coupon coupon = new Coupon();
-	                coupon.setCouponId(rs.getString("coupon_number"));
-	                coupon.setCouponName(rs.getString("coupon_name"));
-	                coupon.setCouponContent(rs.getString("coupon_content"));
-	                coupon.setEndDate(rs.getDate("coupon_end_date").toLocalDate());
-	                coupon.setStartDate(rs.getDate("coupon_start_date").toLocalDate());
-	                coupon.setIsActive(rs.getBoolean("valid_flag"));
-	                CouponUsage usage = new CouponUsage(
-	                        rs.getString("member_id"),
-	                        coupon, // ここで合体！
-	                        rs.getBoolean("coupon_usage")
-	                    );
-	                    
-	                    list.add(usage);
+					coupon.setCouponId(rs.getString("coupon_number"));
+					coupon.setCouponName(rs.getString("coupon_name"));
+					coupon.setCouponContent(rs.getString("coupon_content"));
+					coupon.setEndDate(rs.getDate("coupon_end_date").toLocalDate());
+					coupon.setStartDate(rs.getDate("coupon_start_date").toLocalDate());
+					coupon.setIsActive(rs.getBoolean("valid_flag"));
+					CouponUsage usage = new CouponUsage(
+							rs.getString("member_id"),
+							coupon, // ここで合体！
+							rs.getBoolean("coupon_usage"));
+
+					list.add(usage);
 				}
-				
-				}
+
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -151,53 +148,54 @@ public class CouponDao {
 		}
 		return list;
 	}
-	public boolean useCoupon(String userId , String couponId) {
+
+	public boolean useCoupon(String userId, String couponId) {
 		String sql = "UPDATE クーポン利用 SET coupon_usage = 0 WHERE member_id = ? AND coupon_number = ? ;";
 		try (Connection con = createConnection();
-		         PreparedStatement pstmt = con.prepareStatement(sql)) {
-		        
-		        pstmt.setString(1, userId);
-		        pstmt.setString(2, couponId);
-		        
-		        return pstmt.executeUpdate() > 0; // 更新できたら true
-		    } catch (Exception e) {
-		        e.printStackTrace();
-		        return false;
-		    }
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+			pstmt.setString(1, userId);
+			pstmt.setString(2, couponId);
+
+			return pstmt.executeUpdate() > 0; // 更新できたら true
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
-	
-	public boolean editCoupon(String couponNumber , boolean couponActive) {
+
+	public boolean editCoupon(String couponNumber, boolean couponActive) {
 		String sql = "";
-		if(couponActive) {
-			sql = "UPDATE クーポン SET valid_flag = 0 WHERE coupon_number = ? ;";			
-		}else {
+		if (couponActive) {
+			sql = "UPDATE クーポン SET valid_flag = 0 WHERE coupon_number = ? ;";
+		} else {
 			sql = "UPDATE クーポン SET valid_flag = 1 WHERE coupon_number = ? ;";
 		}
 		try (Connection con = createConnection();
-		         PreparedStatement pstmt = con.prepareStatement(sql)) {
-		        
-		        pstmt.setString(1, couponNumber);
-		        
-		        return pstmt.executeUpdate() > 0; // 更新できたら true
-		    } catch (Exception e) {
-		        e.printStackTrace();
-		        return false;
-		    }
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+			pstmt.setString(1, couponNumber);
+
+			return pstmt.executeUpdate() > 0; // 更新できたら true
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
-	
+
 	public boolean delete(String couponNumber) {
 		String sql = "DELETE FROM クーポン WHERE coupon_number = ?;";
-		String sql2	= "DELETE FROM クーポン利用 WHERE coupon_number = ?;";
-		
+		String sql2 = "DELETE FROM クーポン利用 WHERE coupon_number = ?;";
+
 		try (Connection con = createConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				PreparedStatement pstmt2 = con.prepareStatement(sql2)) {
 			pstmt2.setString(1, couponNumber);
 			pstmt2.executeUpdate();
-			
+
 			pstmt.setString(1, couponNumber);
 			pstmt.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -207,28 +205,28 @@ public class CouponDao {
 		}
 		return true;
 	}
-	
+
 	public void updateExpiredCoupon() {
 		//期限切れのクーポンのisActiveをfalseに更新する
 		String sql = "UPDATE クーポン SET valid_flag = false WHERE coupon_end_date < ? AND valid_flag = true;";
-		
+
 		java.sql.Date today = java.sql.Date.valueOf(java.time.LocalDate.now());
-		
-		try(Connection con = createConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql)){
-					pstmt.setDate(1, today);
-					int rows = pstmt.executeUpdate();
-					
-					if(rows > 0) {
-						System.out.println(rows + "件の期限切れクーポンを無効にしました。");
-					}
-				}catch(SQLException e) {
-					e.printStackTrace();
-				}catch(Exception e) {
-					e.printStackTrace();
-				}
+
+		try (Connection con = createConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setDate(1, today);
+			int rows = pstmt.executeUpdate();
+
+			if (rows > 0) {
+				System.out.println(rows + "件の期限切れクーポンを無効にしました。");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-	
+
 	public boolean deleteUserCoupon(String userId) {
 		String sql = "DELETE FROM クーポン利用 WHERE member_id = ? ;";
 		try (Connection con = createConnection();
@@ -243,5 +241,25 @@ public class CouponDao {
 		}
 		return false;
 	}
-	
+
+	public boolean changeCouponFlag(String userId, String couponId , boolean couponUsage) {
+		String sql = "";
+		if (couponUsage) {
+			sql = "UPDATE クーポン利用 SET coupon_usage = 0 WHERE coupon_number = ? AND member_id = ?;";
+		} else {
+			sql = "UPDATE クーポン利用 SET coupon_usage = 1 WHERE coupon_number = ? AND member_id = ?;";
+		}
+		try (Connection con = createConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+			pstmt.setString(1, couponId);
+			pstmt.setString(2, userId);
+
+			return pstmt.executeUpdate() > 0; // 更新できたら true
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 }

@@ -24,6 +24,7 @@ import action.Coupon.CouponCreateAction;
 import action.Coupon.CouponDeleteAction;
 import action.Coupon.CouponEditAction;
 import action.Coupon.CouponUsageAction;
+import action.Coupon.CouponUseAction;
 import action.Design.DesignUpdateAction;
 import action.Reservation.ReservationConfirmAction;
 import action.Reservation.ReservationDeleteAction;
@@ -204,9 +205,9 @@ public class AdminController extends HttpServlet {
 			break;
 
 		case "editCoupon":
-			String couponNumber = req.getParameter("couponNumber");
+			String couponId = req.getParameter("couponNumber");
 			boolean couponActive = Boolean.parseBoolean(req.getParameter("couponActive"));
-			session.setAttribute("couponNumber", couponNumber);
+			session.setAttribute("couponId", couponId);
 			session.setAttribute("couponActive", couponActive);
 			try {
 				CouponEditAction editCouponAction = new CouponEditAction();
@@ -220,8 +221,8 @@ public class AdminController extends HttpServlet {
 			}
 
 		case "deleteCoupon":
-			couponNumber = req.getParameter("couponNumber");
-			session.setAttribute("couponNumber", couponNumber);
+			couponId = req.getParameter("couponNumber");
+			session.setAttribute("couponNumber", couponId);
 			CouponDeleteAction couponDeleteAction = new CouponDeleteAction();
 			flag = couponDeleteAction.execute(req);
 			List<Coupon> couponList = new ArrayList<>();
@@ -254,7 +255,8 @@ public class AdminController extends HttpServlet {
 				resp.sendRedirect("PhotoAdd.jsp");
 				return;
 			}
-			String fileName = System.currentTimeMillis() + "_" + Paths.get(part.getSubmittedFileName()).getFileName().toString();
+			String fileName = System.currentTimeMillis() + "_"
+					+ Paths.get(part.getSubmittedFileName()).getFileName().toString();
 			session.setAttribute("category", category);
 			session.setAttribute("fileName", fileName);
 			String saveDir = "Z:\\卒業制作\\SotugyouGR01A\\src\\main\\webapp\\image\\photo";
@@ -283,7 +285,8 @@ public class AdminController extends HttpServlet {
 			}
 			session.setAttribute("topicsTitle", topicsTitle);
 			session.setAttribute("topicsContent", topicsContent);
-			fileName = System.currentTimeMillis() + "_" + Paths.get(topicsPart.getSubmittedFileName()).getFileName().toString();
+			fileName = System.currentTimeMillis() + "_"
+					+ Paths.get(topicsPart.getSubmittedFileName()).getFileName().toString();
 			session.setAttribute("fileName", fileName);
 			saveDir = "Z:\\卒業制作\\SotugyouGR01A\\src\\main\\webapp\\image\\photo";
 			dir = new File(saveDir);
@@ -337,7 +340,7 @@ public class AdminController extends HttpServlet {
 			}
 			break;
 
-		case "userDelete": // customerDelete -> userDelete
+		case "deleteUser": // customerDelete -> userDelete
 			userId = req.getParameter("userId");
 			session.setAttribute("userId", userId);
 			UserDeleteAction userDeleteAction = new UserDeleteAction();
@@ -387,11 +390,11 @@ public class AdminController extends HttpServlet {
 				nextPage = "ReservationSuccess.jsp";
 			} else {
 				nextPage = "Error.jsp";
-				req.setAttribute("errorMsg", "予約失敗");
+				session.setAttribute("errorMsg", "予約失敗");
 			}
 			break;
 
-		case "userReserve": // customerReserve -> userReserve
+		case "makeUserReserve": // customerReserve -> userReserve
 			nextPage = "ReservationDate.jsp";
 			session.setAttribute("action", "ByAdmin");
 			userId = req.getParameter("userId");
@@ -401,7 +404,7 @@ public class AdminController extends HttpServlet {
 			session.setAttribute("targetUser", user);
 			break;
 
-		case "userDeleteReserve": // customerDeleteReserve -> userDeleteReserve
+		case "deleteUserReserve": // customerDeleteReserve -> userDeleteReserve
 			String reservationId = req.getParameter("reservationId");
 			session.setAttribute("id", reservationId);
 			ReservationDeleteAction reservationDeleteAction = new ReservationDeleteAction();
@@ -412,9 +415,32 @@ public class AdminController extends HttpServlet {
 				nextPage = "UserDetails.jsp"; // CustomerDetails.jsp -> UserDetails.jsp
 			} else {
 				nextPage = "Error.jsp";
-				req.setAttribute("errorMsg", "予約削除失敗");
+				session.setAttribute("errorMsg", "予約削除失敗");
 			}
 			break;
+		case "changeCouponFlag":
+			session.setAttribute("action", "ByAdmin");
+			couponId = req.getParameter("couponId");
+			userId = req.getParameter("userId");
+			boolean couponUsage = Boolean.parseBoolean(req.getParameter("couponUsage"));
+
+			session.setAttribute("couponUsage", couponUsage);
+			session.setAttribute("couponId", couponId);
+			session.setAttribute("userId", userId);
+
+			CouponUseAction couponUseAction = new CouponUseAction();
+			success = couponUseAction.executeUpdate(req, resp);
+
+			if (success) {
+				couponUsageAction = new CouponUsageAction();
+				couponUsageList = couponUsageAction.execute(req);
+				session.setAttribute("couponUsageList", couponUsageList);
+				nextPage = "UserDetails.jsp";
+				session.setAttribute("message", "クーポンのステータスを変更しました！");
+			} else {
+				session.setAttribute("errorMsg", "ステータス変更失敗");
+				nextPage = "Error.jsp";
+			}
 		}
 
 		if (nextPage != null) {

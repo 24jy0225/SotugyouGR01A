@@ -31,7 +31,19 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 			<button onclick="location.href='TopicsManage.jsp'">Webサイト管理</button>
 		</nav>
 	</header>
-
+	<%
+	String msg = (String) session.getAttribute("message");
+	if (msg != null) {
+	%>
+	<div
+		style="color: green; font-weight: bold; border: 1px solid green; padding: 10px; margin-bottom: 10px;">
+		<%=msg%>
+	</div>
+	<%
+	// 一度表示したら消す（そうしないと、ずっと表示され続けてしまうため）
+	session.removeAttribute("message");
+	}
+	%>
 	<main>
 		<div class="customer-details-main customer-top-margin">
 			<table class="customer-details-table">
@@ -47,7 +59,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 			<div class="customer-details-btns">
 
 				<button class="customer-delete-btn"
-					onclick="userDelete('<%=user.getUserId()%>')">
+					onclick="deleteUser('<%=user.getUserId()%>')">
 					<img src="./image/assets/trash.png" alt="" class="trash-icon">
 				</button>
 			</div>
@@ -64,7 +76,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 					</tr>
 				</table>
 				<button class="customer-add-reservation-btn"
-					onclick="userReserve('<%=user.getUserId()%>')">＋ 予約追加</button>
+					onclick="makeUserReserve('<%=user.getUserId()%>')">＋ 予約追加</button>
 			</div>
 			<p>今後の予約</p>
 			<%
@@ -94,7 +106,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 						<td class="reservation-width">座席<%=r.getSeatId()%></td>
 						<td class="reservation-delete-btn">
 							<button class="customer-delete-btn"
-								onclick="customerDeleteReserve('<%=r.getReserveId()%>')">
+								onclick="deleteUserReserve('<%=r.getReserveId()%>')">
 								<img src="./image/assets/trash.png" alt="" class="trash-icon">
 							</button>
 						</td>
@@ -105,20 +117,20 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 			}
 			%>
 			<p>過去の予約</p>
-				<%
-				for (Reservation r : reservationList) {
-					if (r.getUserId() != user.getUserId() && r.getStartDateTime().isAfter(today.atStartOfDay())) {
-						continue;
-					}
-					java.time.LocalDateTime start = r.getStartDateTime();
-					java.time.LocalDateTime end = r.getEndDateTime();
-					year = start.getYear();
-					month = start.getMonthValue();
-					day = start.getDayOfMonth();
+			<%
+			for (Reservation r : reservationList) {
+				if (r.getUserId() != user.getUserId() && r.getStartDateTime().isAfter(today.atStartOfDay())) {
+					continue;
+				}
+				java.time.LocalDateTime start = r.getStartDateTime();
+				java.time.LocalDateTime end = r.getEndDateTime();
+				year = start.getYear();
+				month = start.getMonthValue();
+				day = start.getDayOfMonth();
 
-					String startTimeStr = start.format(timeFmt);
-					String endTimeStr = end.format(timeFmt);
-				%>
+				String startTimeStr = start.format(timeFmt);
+				String endTimeStr = end.format(timeFmt);
+			%>
 			<div class="customer-reservation-info">
 				<table class="customer-details-reservation-table">
 					<tr>
@@ -158,7 +170,11 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 						continue;
 					}
 				%>
+				<% if (!c.getCoupon().getEndDate().isBefore(today)) { %>
 				<div class="coupon-active">
+				<%}else{ %>
+				<div class="coupon-expired">
+				<%} %>
 					<img src="./image/assets/coupon.png" class="coupon-img">
 					<table>
 						<tr>
@@ -178,7 +194,8 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 					<%
 					if (!c.getCoupon().getEndDate().isBefore(today)) {
 					%>
-					<div class="coupon-content" onclick="userEditCoupon('<%= c.getCoupon().getCouponId() %>','<%= c.getUserId() %>')">
+					<div class="coupon-content"
+						onclick="changeCouponFlag('<%=c.getCoupon().getCouponId()%>','<%=c.getUserId()%>','true')">
 						<button class="coupon-btn">使用状態にする</button>
 					</div>
 					<%
@@ -198,7 +215,11 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 						continue;
 					}
 				%>
+				<% if (!c.getCoupon().getEndDate().isBefore(today)) { %>
 				<div class="coupon-inactive">
+				<%}else{ %>
+				<div class="coupon-expired">
+				<%} %>
 					<img src="./image/assets/coupon.png" class="coupon-img">
 					<table>
 						<tr>
@@ -219,7 +240,8 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 					if (!c.getCoupon().getEndDate().isBefore(today)) {
 					%>
 					<div class="coupon-content">
-						<button class="coupon-btn">未使用状態にする</button>
+						<button class="coupon-btn"
+							onclick="changeCouponFlag('<%=c.getCoupon().getCouponId()%>','<%=c.getUserId()%>','false')">未使用状態にする</button>
 					</div>
 					<%
 					}
@@ -236,41 +258,43 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 				type="hidden" name="userId" id="targetUserId"> <input
 				type="hidden" name="couponId" id="targetCouponId"> <input
 				type="hidden" name="reservationId" id="targetReservationId">
+			<input type="hidden" name="couponUsage" id="targetCouponUsage">
+
 		</form>
 	</main>
 	<script type="text/javascript">
-		function userDelete(userId) {
+		function deleteUser(userId) {
 			if (confirm("ユーザーを削除しますか？\n*予約とクーポンも削除されます*")) {
-				document.getElementById("targetCommand").value = "userDelete";
+				document.getElementById("targetCommand").value = "deleteUser";
 				document.getElementById("targetUserId").value = userId;
 				document.getElementById("editUserForm").submit();
 			}
 		}
 
-		function userReserve(userId) {
-			document.getElementById("targetCommand").value = "userReserve";
+		function makeUserReserve(userId) {
+			document.getElementById("targetCommand").value = "makeUserReserve";
 			document.getElementById("targetUserId").value = userId;
 			document.getElementById("editUserForm").submit();
 
 		}
 
-		function userDeleteReserve(reservationId) {
+		function deleteUserReserve(reservationId) {
 			if (confirm("予約を削除しますか？\n一度削除すると取り消せません")) {
-				document.getElementById("targetCommand").value = "userDeleteReserve";
+				document.getElementById("targetCommand").value = "deleteUserReserve";
 				document.getElementById("targetReservationId").value = reservationId;
 				document.getElementById("editUserForm").submit();
 			}
 		}
 
-		function userEditCoupon(couponId , userId){
+		function changeCouponFlag(couponId, userId, couponUsage) {
 			if (confirm("クーポンのステータスを変更しますか？")) {
-				document.getElementById("targetCommand").value = "userEditCoupon";
-				document.getElementById("targetReservationId").value = couponId;
+				document.getElementById("targetCommand").value = "changeCouponFlag";
+				document.getElementById("targetCouponId").value = couponId;
 				document.getElementById("targetUserId").value = userId;
+				document.getElementById("targetCouponUsage").value = couponUsage;
 				document.getElementById("editUserForm").submit();
 			}
-			}
-		
+		}
 	</script>
 </body>
 

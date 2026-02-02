@@ -52,7 +52,7 @@ List<User> userList = (List<User>) session.getAttribute("UserList");
 			}
 			%>
 			<div class="customer"
-				onclick="UserDetail('<%=u.getUserId()%>')">
+				onclick="userDetail('<%=u.getUserId()%>')">
 				<svg xlns="http://www.w3.org/2000/svg" width="20" height="20"
 					viewBox="0 0 20 20" fill="none" class="customer-icon">
                     <path
@@ -91,10 +91,10 @@ List<User> userList = (List<User>) session.getAttribute("UserList");
 		</form>
 	</main>
 	<script type="text/javascript">
-		function customerDetail(userId) {
-			document.getElementById("targetCommand").value = "customerDetail";
+		function userDetail(userId) {
+			document.getElementById("targetCommand").value = "userDetail";
 			document.getElementById("targetUserId").value = userId;
-			document.getElementById('customerDetailForm').submit();
+			document.getElementById('UserDetailForm').submit();
 		}
 	</script>
 </body>
