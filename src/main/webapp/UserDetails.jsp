@@ -25,7 +25,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 	<header>
 		<nav class="nav-menu">
 			<button onclick="location.href='ReservationManage.jsp'">予約管理</button>
-			<button onclick="location.href='CustomerManage.jsp'">顧客管理</button>
+			<button onclick="location.href='UserManage.jsp'">顧客管理</button>
 			<button onclick="location.href='CouponManage.jsp'">クーポン管理</button>
 			<button onclick="location.href='DesignCustom.jsp'">お知らせ管理</button>
 			<button onclick="location.href='TopicsManage.jsp'">Webサイト管理</button>
@@ -47,7 +47,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 			<div class="customer-details-btns">
 
 				<button class="customer-delete-btn"
-					onclick="customerDelete('<%=user.getUserId()%>')">
+					onclick="userDelete('<%=user.getUserId()%>')">
 					<img src="./image/assets/trash.png" alt="" class="trash-icon">
 				</button>
 			</div>
@@ -64,7 +64,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 					</tr>
 				</table>
 				<button class="customer-add-reservation-btn"
-					onclick="customerReserve('<%=user.getUserId()%>')">＋ 予約追加</button>
+					onclick="userReserve('<%=user.getUserId()%>')">＋ 予約追加</button>
 			</div>
 			<p>今後の予約</p>
 			<%
@@ -178,7 +178,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 					<%
 					if (!c.getCoupon().getEndDate().isBefore(today)) {
 					%>
-					<div class="coupon-content">
+					<div class="coupon-content" onclick="userEditCoupon('<%= c.getCoupon().getCouponId() %>','<%= c.getUserId() %>')">
 						<button class="coupon-btn">使用状態にする</button>
 					</div>
 					<%
@@ -231,7 +231,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 			</div>
 
 		</div>
-		<form id="editCustomerForm" action="AdminController" method="POST">
+		<form id="editUserForm" action="AdminController" method="POST">
 			<input type="hidden" name="command" id="targetCommand"> <input
 				type="hidden" name="userId" id="targetUserId"> <input
 				type="hidden" name="couponId" id="targetCouponId"> <input
@@ -239,28 +239,38 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 		</form>
 	</main>
 	<script type="text/javascript">
-		function customerDelete(userId) {
+		function userDelete(userId) {
 			if (confirm("ユーザーを削除しますか？\n*予約とクーポンも削除されます*")) {
-				document.getElementById("targetCommand").value = "customerDelete";
+				document.getElementById("targetCommand").value = "userDelete";
 				document.getElementById("targetUserId").value = userId;
-				document.getElementById("editCustomerForm").submit();
+				document.getElementById("editUserForm").submit();
 			}
 		}
 
-		function customerReserve(userId) {
-			document.getElementById("targetCommand").value = "customerReserve";
+		function userReserve(userId) {
+			document.getElementById("targetCommand").value = "userReserve";
 			document.getElementById("targetUserId").value = userId;
-			document.getElementById("editCustomerForm").submit();
+			document.getElementById("editUserForm").submit();
 
 		}
 
-		function customerDeleteReserve(reservationId) {
+		function userDeleteReserve(reservationId) {
 			if (confirm("予約を削除しますか？\n一度削除すると取り消せません")) {
-				document.getElementById("targetCommand").value = "customerDeleteReserve";
+				document.getElementById("targetCommand").value = "userDeleteReserve";
 				document.getElementById("targetReservationId").value = reservationId;
-				document.getElementById("editCustomerForm").submit();
+				document.getElementById("editUserForm").submit();
 			}
 		}
+
+		function userEditCoupon(couponId , userId){
+			if (confirm("クーポンのステータスを変更しますか？")) {
+				document.getElementById("targetCommand").value = "userEditCoupon";
+				document.getElementById("targetReservationId").value = couponId;
+				document.getElementById("targetUserId").value = userId;
+				document.getElementById("editUserForm").submit();
+			}
+			}
+		
 	</script>
 </body>
 
