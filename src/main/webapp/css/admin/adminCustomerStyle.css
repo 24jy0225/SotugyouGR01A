@@ -285,7 +285,7 @@
     background: rgba(123, 241, 168, 0.2);
     height: 100px; 
 }
-.coupon-passive {
+.coupon-inactive {
     display: flex;
     border-radius: 10px;
     border: 1.25px solid black;
