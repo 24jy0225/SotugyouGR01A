@@ -6,6 +6,7 @@
 String action = (String) session.getAttribute("action");
 List<LocalDateTime> slots = (List<LocalDateTime>) session.getAttribute("timeList");
 User user = (User) session.getAttribute("LoginUser");
+User targetUser = (User) session.getAttribute("targetUser");
 String date = (String) session.getAttribute("date");
 %>
 <html>
@@ -68,7 +69,7 @@ String date = (String) session.getAttribute("date");
 
 		人数:<input type="number" name="people" max="4" min="1">
 		<%
-		if (user != null) {
+		if (user != null || targetUser != null) {
 		%>
 		<button type="submit">確認画面へ</button>
 		<%

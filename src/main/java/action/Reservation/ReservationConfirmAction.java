@@ -28,18 +28,37 @@ public class ReservationConfirmAction extends HttpServlet {
 
 	public Reservation execute(HttpServletRequest req) {
 		HttpSession session = req.getSession();
-		int people = (Integer)session.getAttribute("people");
-		LocalDate localDate = (LocalDate)session.getAttribute("localDate");
-		LocalDateTime startDateTime = (LocalDateTime)session.getAttribute("selectedTime");
-		int courseMinutes = (int) session.getAttribute("Course");
-		LocalDateTime endDateTime = startDateTime.plusMinutes(courseMinutes);
-		User user = (User)session.getAttribute("LoginUser");
-		int seatId = (Integer)session.getAttribute("seatId");
-		Reservation reservation = new Reservation(people,localDate,user.getUserId(),seatId,startDateTime,endDateTime , user.getName());
-		
+		String command = (String) session.getAttribute("action");
+		Reservation reservation;
+		int people , courseMinutes , seatId;
+		User user;
+		LocalDate localDate;
+		LocalDateTime startDateTime,endDateTime;
+		switch (command) {
+		case "ByAdmin":
+			people = (Integer) session.getAttribute("people");
+			localDate = (LocalDate) session.getAttribute("localDate");
+			startDateTime = (LocalDateTime) session.getAttribute("selectedTime");
+			courseMinutes = (int) session.getAttribute("Course");
+			endDateTime = startDateTime.plusMinutes(courseMinutes);
+			user = (User) session.getAttribute("targetUser");
+			seatId = (Integer) session.getAttribute("seatId");
+			break;
+		default:
+			people = (Integer) session.getAttribute("people");
+			localDate = (LocalDate) session.getAttribute("localDate");
+			startDateTime = (LocalDateTime) session.getAttribute("selectedTime");
+			courseMinutes = (int) session.getAttribute("Course");
+			endDateTime = startDateTime.plusMinutes(courseMinutes);
+			user = (User) session.getAttribute("LoginUser");
+			seatId = (Integer) session.getAttribute("seatId");
+			break;
+		}
+		reservation = new Reservation(people, localDate, user.getUserId(), seatId, startDateTime,
+				endDateTime, user.getName());
+
 		return reservation;
-		
-		
+
 	}
 
 }

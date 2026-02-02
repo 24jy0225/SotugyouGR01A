@@ -31,7 +31,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 			<button onclick="location.href='TopicsManage.jsp'">Webサイト管理</button>
 		</nav>
 	</header>
-	
+
 	<main>
 		<div class="customer-details-main customer-top-margin">
 			<table class="customer-details-table">
@@ -40,7 +40,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 				</tr>
 				<tr class="customer-stetas">
 					<td><%=user.getUserTel()%></td>
-					<td><%=user.getUserEmail() %></td>
+					<td><%=user.getUserEmail()%></td>
 					<td><%=user.getRegistDate()%> 登録</td>
 				</tr>
 			</table>
@@ -63,7 +63,8 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 						</td>
 					</tr>
 				</table>
-				<button class="customer-add-reservation-btn" onclick="customerReserv('<%=user.getUserId() %>>')">＋ 予約追加</button>
+				<button class="customer-add-reservation-btn"
+					onclick="customerReserve('<%=user.getUserId()%>')">＋ 予約追加</button>
 			</div>
 			<p>今後の予約</p>
 			<%
@@ -91,17 +92,10 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 						<td class="reservation-endtime"><%=endTimeStr%></td>
 						<td class="reservation-width"><%=r.getReservePeople()%>名</td>
 						<td class="reservation-width">座席<%=r.getSeatId()%></td>
-						<td>
-							<button class="customer-edit-btn"
-								onclick="location.href='../Reservation/Admin_ReservationEdit.html'">
-								<img src="./image/assets/edit.jpg" alt="" class="edit-icon" onclick>
-								編集
-							</button>
-						</td>
 						<td class="reservation-delete-btn">
-							<button class="customer-delete-btn">
-								<img src="./image/assets/trash.png" alt=""
-									class="trash-icon">
+							<button class="customer-delete-btn"
+								onclick="customerDeleteReserve('<%=r.getReserveId()%>')">
+								<img src="./image/assets/trash.png" alt="" class="trash-icon">
 							</button>
 						</td>
 					</tr>
@@ -137,19 +131,6 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 						<td class="reservation-endtime"><%=endTimeStr%></td>
 						<td class="reservation-width"><%=r.getReservePeople()%>名</td>
 						<td class="reservation-width">座席<%=r.getSeatId()%></td>
-						<td>
-							<button class="customer-edit-btn"
-								onclick="location.href='../Reservation/Admin_ReservationEdit.html'">
-								<img src="./image/assets/edit.jpg" alt="" class="edit-icon" onclick="customerReserve('<%= r.getReserveId() %>')">
-								編集
-							</button>
-						</td>
-						<td class="reservation-delete-btn">
-							<button class="customer-delete-btn">
-								<img src="./image/assets/trash.png" alt=""
-									class="trash-icon">
-							</button>
-						</td>
 					</tr>
 				</table>
 			</div>
@@ -157,7 +138,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 			}
 			%>
 			<div class="customer-details-main coupon-frame">
-			
+
 				<table>
 					<tr>
 						<td>クーポン</td>
@@ -167,7 +148,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 						</td>
 					</tr>
 				</table>
-				
+
 				<p>未使用クーポン</p>
 				<div class="coupon-list">
 					<%
@@ -193,17 +174,21 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 								<td class="coupon-end"><%=c.getCoupon().getEndDate()%></td>
 							</tr>
 						</table>
-						<% if(!c.getCoupon().getEndDate().isBefore(today)){ %>
+						<%
+						if (!c.getCoupon().getEndDate().isBefore(today)) {
+						%>
 						<div class="coupon-content">
 							<button class="coupon-btn">使用状態にする</button>
 						</div>
-						<% } %>
+						<%
+						}
+						%>
 					</div>
 					<%
 					}
 					%>
 				</div>
-				
+
 				<p>使用済みクーポン</p>
 				<div class="coupon-list">
 					<%
@@ -229,17 +214,21 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 								<td class="coupon-end"><%=c.getCoupon().getEndDate()%></td>
 							</tr>
 						</table>
-						<% if(!c.getCoupon().getEndDate().isBefore(today)){ %>
+						<%
+						if (!c.getCoupon().getEndDate().isBefore(today)) {
+						%>
 						<div class="coupon-content">
 							<button class="coupon-btn">未使用状態にする</button>
 						</div>
-						<% } %>
+						<%
+						}
+						%>
 					</div>
 					<%
 					}
 					%>
 				</div>
-				
+
 			</div>
 			<form id="editCustomerForm" action="AdminController" method="POST">
 				<input type="hidden" name="command" id="targetCommand"> <input
@@ -257,21 +246,20 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 			}
 		}
 
-		function customerReserve(userId){
+		function customerReserve(userId) {
 			document.getElementById("targetCommand").value = "customerReserve";
 			document.getElementById("targetUserId").value = userId;
 			document.getElementById("editCustomerForm").submit();
-			
-			}
 
-		function customerEditReserve(reservationId){
-			
-			document.getElementById("targetCommand").value = "customerEditReserve";
-			document.getElementById("targetReservationId").value = reservationId;
-			document.getElementById("editCustomerForm").submit();
+		}
 
+		function customerDeleteReserve(reservationId) {
+			if (confirm("予約を削除しますか？\n一度削除すると取り消せません")) {
+				document.getElementById("targetCommand").value = "customerDeleteReserve";
+				document.getElementById("targetReservationId").value = reservationId;
+				document.getElementById("editCustomerForm").submit();
 			}
-		
+		}
 	</script>
 </body>
 

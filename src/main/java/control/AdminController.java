@@ -79,6 +79,7 @@ public class AdminController extends HttpServlet {
 			CouponAction couponAction = new CouponAction();
 			couponList = couponAction.execute(req);
 			session.setAttribute("couponList", couponList);
+			break;
 		case "Cource":
 			nextPage = "ReservationCourse.jsp";
 			String date = req.getParameter("date");
@@ -87,7 +88,7 @@ public class AdminController extends HttpServlet {
 			List<Store> storeList = new ArrayList<>();
 			storeList = storeAction.execute();
 			session.setAttribute("storeList", storeList);
-			
+
 			break;
 		case "Seat":
 			nextPage = "ReservationSeat.jsp";
@@ -260,9 +261,12 @@ public class AdminController extends HttpServlet {
 			List<Coupon> couponList = new ArrayList<>();
 			CouponAction couponAction = new CouponAction();
 			couponList = couponAction.execute(req);
+			UserAction userAction = new UserAction();
+			List<User> userList = userAction.execute(req);
 
 			if (flag && couponList != null) {
 				session.setAttribute("couponList", couponList);
+				session.setAttribute("userList", userList);
 				session.setAttribute("message", "クーポンを削除しました。");
 				resp.sendRedirect("CouponManage.jsp");
 				return;
@@ -399,8 +403,8 @@ public class AdminController extends HttpServlet {
 			CustomerDeleteAction customerDeleteAction = new CustomerDeleteAction();
 			success = customerDeleteAction.execute(req);
 			if (success) {
-				UserAction userAction = new UserAction();
-				List<User> userList = userAction.execute(req);
+				userAction = new UserAction();
+				userList = userAction.execute(req);
 				session.setAttribute("UserList", userList);
 				nextPage = "CustomerManage.jsp";
 				session.setAttribute("message", "ユーザーを削除しました！");
@@ -424,8 +428,9 @@ public class AdminController extends HttpServlet {
 				int people = Integer.parseInt(peopleStr);
 				session.setAttribute("people", people);
 			}
+			
 
-			User LoginUser = (User) session.getAttribute("LoginUser");
+			User LoginUser = (User) session.getAttribute("targetUser");
 
 			if (LoginUser != null) {
 				// ログイン済み
@@ -450,7 +455,7 @@ public class AdminController extends HttpServlet {
 			if (reserveAction.execute(req)) {
 				reservationList = action.execute(req);
 				session.setAttribute("ReservationHistoryList", reservationList);
-				
+
 				nextPage = "ReservationSuccess.jsp";
 			} else {
 				nextPage = "Error.jsp";
@@ -461,20 +466,33 @@ public class AdminController extends HttpServlet {
 		case "customerReserve":
 			nextPage = "ReservationDate.jsp";
 			
+			session.setAttribute("action", "ByAdmin");
+			
 			userId = req.getParameter("userId");
 
 			session.setAttribute("userId", userId);
 			customerDetailAction = new CustomerDetailAction();
 			user = customerDetailAction.execute(req);
 
-			session.setAttribute("LoginUser", user);
+			session.setAttribute("targetUser", user);
 			break;
-		case "customerEditReserve":
-			nextPage = "CustomerEditReserve.jsp";
-			
+		case "customerDeleteReserve":
+
 			String reservationId = req.getParameter("reservationId");
-			session.setAttribute("reservationId", reservationId);
-			
+			session.setAttribute("id", reservationId);
+
+			ReservationDeleteAction reservationDeleteAction = new ReservationDeleteAction();
+			success = reservationDeleteAction.execute(req);
+
+			if (success) {
+				reservationList = action.execute(req);
+				session.setAttribute("ReservationHistoryList", reservationList);
+				nextPage = "CustomerDetails.jsp";
+			} else {
+				nextPage = "Error.jsp";
+				req.setAttribute("errorMsg", "予約削除失敗");
+			}
+
 			break;
 		}
 		if (nextPage != null) {

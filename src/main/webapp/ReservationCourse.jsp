@@ -13,9 +13,9 @@ List
 <body>
 	<% if(action.equals("ByUser")){ %>
 	<form action="UserController" method="get">
-		<input type="checkbox" name="course" value="60">60分コース <input
-			type="checkbox" name="course" value="90">90分コース <input
-			type="checkbox" name="course" value="120">120分コース <select
+		<input type="radio" name="course" value="60">60分コース <input
+			type="radio" name="course" value="90">90分コース <input
+			type="radio" name="course" value="120">120分コース <select
 			name="storeNumber">
 			<% for(Store store : storeList){ %>
 			<option value="<%= store.getStoreNumber()%>">
@@ -27,9 +27,9 @@ List
 	</form>
 	<% }else if(action.equals("ByAdmin")){ %>
 	<form action="AdminController" method="get">
-		<input type="checkbox" name="course" value="60">60分コース <input
-			type="checkbox" name="course" value="90">90分コース <input
-			type="checkbox" name="course" value="120">120分コース <select
+		<input type="radio" name="course" value="60">60分コース <input
+			type="radio" name="course" value="90">90分コース <input
+			type="radio" name="course" value="120">120分コース <select
 			name="storeNumber">
 			<% for(Store store : storeList){ %>
 			<option value="<%= store.getStoreNumber()%>">

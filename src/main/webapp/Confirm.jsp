@@ -7,6 +7,7 @@
 <%
 String action = (String) session.getAttribute("action");
 User user = (User) session.getAttribute("LoginUser");
+User targetUser = (User) session.getAttribute("targetUser");
 int course = (int) session.getAttribute("Course");
 int people = (int) session.getAttribute("people");
 LocalDate localDate = (LocalDate) session.getAttribute("localDate");
@@ -24,9 +25,22 @@ String endTime = selectedTime.plusMinutes(course).format(timeFormatter);
 </head>
 <body>
 	<h1>予約確認画面</h1>
+	<%
+	if (user != null) {
+	%>
 	<p>
 		予約者:<%=user.getName()%></p>
 	<p>
+		<%
+		} else if (targetUser != null) {
+		%>
+	
+	<p>
+		予約者:<%=targetUser.getName()%></p>
+	<p>
+		<%
+		}
+		%>
 		予約人数:<%=people%></p>
 	<p>
 		予約日:<%=localDate%></p>
