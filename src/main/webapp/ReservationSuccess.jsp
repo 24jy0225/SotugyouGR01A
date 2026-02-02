@@ -11,7 +11,7 @@
 	<% if(action.equals("ByUser")){ %>
 	<button onclick="location.href='Main.jsp'">ホームに戻る</button>
 	<%}else if(action.equals("ByAdmin")){ %>
-	<button onclick="location.href='CustomerDetails.jsp'">顧客管理に戻る</button>
+	<button onclick="location.href='UserDetails.jsp'">顧客管理に戻る</button>
 	<% } %>
 </body>
 </html>

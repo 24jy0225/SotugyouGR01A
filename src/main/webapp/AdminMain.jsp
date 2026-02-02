@@ -14,7 +14,7 @@
 <body>
     <div class="adtop_btn">
         <button onclick="location.href='ReservationManage.jsp'">予約管理</button>
-        <button onclick="location.href='CustomerManage.jsp'">顧客管理</button>
+        <button onclick="location.href='UserManage.jsp'">顧客管理</button>
     </div>
     <br>
     <div class="adtop_btn">
