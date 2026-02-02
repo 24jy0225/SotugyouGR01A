@@ -16,7 +16,7 @@ List<User> userList = (List<User>) session.getAttribute("UserList");
 	<header>
 		<nav class="nav-menu">
 			<button onclick="location.href='ReservationManage.jsp'">予約管理</button>
-			<button onclick="location.href='CustomerManage.jsp'">顧客管理</button>
+			<button onclick="location.href='UserManage.jsp'">顧客管理</button>
 			<button onclick="location.href='CouponManage.jsp'">クーポン管理</button>
 			<button onclick="location.href='DesignCustom.jsp'">お知らせ管理</button>
 			<button onclick="location.href='TopicsManage.jsp'">Webサイト管理</button>
@@ -52,7 +52,7 @@ List<User> userList = (List<User>) session.getAttribute("UserList");
 			}
 			%>
 			<div class="customer"
-				onclick="customerDetail('<%=u.getUserId()%>')">
+				onclick="UserDetail('<%=u.getUserId()%>')">
 				<svg xlns="http://www.w3.org/2000/svg" width="20" height="20"
 					viewBox="0 0 20 20" fill="none" class="customer-icon">
                     <path
@@ -85,7 +85,7 @@ List<User> userList = (List<User>) session.getAttribute("UserList");
 			}
 			%>
 		</div>
-		<form id="customerDetailForm" action="AdminController" method="POST">
+		<form id="UserDetailForm" action="AdminController" method="POST">
 			<input type="hidden" name="command" id="targetCommand"> <input
 				type="hidden" name="userId" id="targetUserId">
 		</form>
