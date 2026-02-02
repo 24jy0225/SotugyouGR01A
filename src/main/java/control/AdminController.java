@@ -468,6 +468,14 @@ public class AdminController extends HttpServlet {
 			user = customerDetailAction.execute(req);
 
 			session.setAttribute("LoginUser", user);
+			break;
+		case "customerEditReserve":
+			nextPage = "CustomerEditReserve.jsp";
+			
+			String reservationId = req.getParameter("reservationId");
+			session.setAttribute("reservationId", reservationId);
+			
+			break;
 		}
 		if (nextPage != null) {
 			RequestDispatcher rd = req.getRequestDispatcher(nextPage);

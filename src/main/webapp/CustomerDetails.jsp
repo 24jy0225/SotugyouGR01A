@@ -94,7 +94,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 						<td>
 							<button class="customer-edit-btn"
 								onclick="location.href='../Reservation/Admin_ReservationEdit.html'">
-								<img src="./image/assets/edit.jpg" alt="" class="edit-icon">
+								<img src="./image/assets/edit.jpg" alt="" class="edit-icon" onclick>
 								編集
 							</button>
 						</td>
@@ -140,7 +140,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 						<td>
 							<button class="customer-edit-btn"
 								onclick="location.href='../Reservation/Admin_ReservationEdit.html'">
-								<img src="./image/assets/edit.jpg" alt="" class="edit-icon">
+								<img src="./image/assets/edit.jpg" alt="" class="edit-icon" onclick="customerReserve('<%= r.getReserveId() %>')">
 								編集
 							</button>
 						</td>
@@ -197,7 +197,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 						<div class="coupon-content">
 							<button class="coupon-btn">使用状態にする</button>
 						</div>
-						<%} %>
+						<% } %>
 					</div>
 					<%
 					}
@@ -212,7 +212,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 							continue;
 						}
 					%>
-					<div class="coupon-active">
+					<div class="coupon-inactive">
 						<img src="./image/assets/coupon.png" class="coupon-img">
 						<table>
 							<tr>
@@ -229,9 +229,11 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 								<td class="coupon-end"><%=c.getCoupon().getEndDate()%></td>
 							</tr>
 						</table>
+						<% if(!c.getCoupon().getEndDate().isBefore(today)){ %>
 						<div class="coupon-content">
 							<button class="coupon-btn">未使用状態にする</button>
 						</div>
+						<% } %>
 					</div>
 					<%
 					}
@@ -243,7 +245,7 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 				<input type="hidden" name="command" id="targetCommand"> <input
 					type="hidden" name="userId" id="targetUserId"> <input
 					type="hidden" name="couponId" id="targetCouponId"> <input
-					type="hidden" name="ReservationId" id="targetReservationId">
+					type="hidden" name="reservationId" id="targetReservationId">
 			</form>
 	</main>
 	<script type="text/javascript">
@@ -259,8 +261,16 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 			document.getElementById("targetCommand").value = "customerReserve";
 			document.getElementById("targetUserId").value = userId;
 			document.getElementById("editCustomerForm").submit();
-		}
+			
+			}
 
+		function customerEditReserve(reservationId){
+			
+			document.getElementById("targetCommand").value = "customerEditReserve";
+			document.getElementById("targetReservationId").value = reservationId;
+			document.getElementById("editCustomerForm").submit();
+
+			}
 		
 	</script>
 </body>
