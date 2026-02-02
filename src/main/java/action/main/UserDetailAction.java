@@ -11,14 +11,14 @@ import model.User;
 /**
  * Servlet implementation class CustomerDetailAction
  */
-@WebServlet("/CustomerDetailAction")
-public class CustomerDetailAction extends HttpServlet {
+@WebServlet("/UserDetailAction")
+public class UserDetailAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CustomerDetailAction() {
+    public UserDetailAction() {
         super();
         // TODO Auto-generated constructor stub
     }
