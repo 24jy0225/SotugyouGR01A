@@ -12,14 +12,14 @@ import dao.UserDao;
 /**
  * Servlet implementation class CustomerDeleteAction
  */
-@WebServlet("/CustomerDeleteAction")
-public class CustomerDeleteAction extends HttpServlet {
+@WebServlet("/UserDeleteAction")
+public class UserDeleteAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CustomerDeleteAction() {
+    public UserDeleteAction() {
         super();
         // TODO Auto-generated constructor stub
     }
