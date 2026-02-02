@@ -27,6 +27,11 @@
     width: 40px;
 }
 
+.date-nav-btn:hover{
+	background-color:#f0f0f0;
+	border: 2px solid black;
+}
+
 #date-nav-input {
     width: 268px;
     text-align: center;
