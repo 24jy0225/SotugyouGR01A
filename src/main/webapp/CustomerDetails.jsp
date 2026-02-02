@@ -193,9 +193,11 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 								<td class="coupon-end"><%=c.getCoupon().getEndDate()%></td>
 							</tr>
 						</table>
+						<% if(!c.getCoupon().getEndDate().isBefore(today)){ %>
 						<div class="coupon-content">
 							<button class="coupon-btn">使用状態にする</button>
 						</div>
+						<%} %>
 					</div>
 					<%
 					}
@@ -257,8 +259,9 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 			document.getElementById("targetCommand").value = "customerReserve";
 			document.getElementById("targetUserId").value = userId;
 			document.getElementById("editCustomerForm").submit();
-			
-			}
+		}
+
+		
 	</script>
 </body>
 
