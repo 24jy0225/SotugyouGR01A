@@ -34,11 +34,11 @@ import action.Reservation.ReserveAction;
 import action.Topics.TopicsAction;
 import action.Topics.TopicsAddAction;
 import action.Topics.TopicsDeleteAction;
-import action.main.CustomerDeleteAction; // クラス名はファイル名に依存するためそのまま
-import action.main.CustomerDetailAction; // 同上
 import action.main.LoginAction;
 import action.main.StoreAction;
 import action.main.UserAction;
+import action.main.UserDeleteAction;
+import action.main.UserDetailAction;
 import model.Coupon;
 import model.CouponUsage;
 import model.Reservation;
@@ -323,7 +323,7 @@ public class AdminController extends HttpServlet {
 		case "userDetail": // customerDetail -> userDetail
 			String userId = req.getParameter("userId");
 			session.setAttribute("userId", userId);
-			CustomerDetailAction userDetailAction = new CustomerDetailAction();
+			UserDetailAction userDetailAction = new UserDetailAction();
 			user = userDetailAction.execute(req);
 			session.setAttribute("targetUser", user);
 			CouponUsageAction couponUsageAction = new CouponUsageAction();
@@ -340,7 +340,7 @@ public class AdminController extends HttpServlet {
 		case "userDelete": // customerDelete -> userDelete
 			userId = req.getParameter("userId");
 			session.setAttribute("userId", userId);
-			CustomerDeleteAction userDeleteAction = new CustomerDeleteAction();
+			UserDeleteAction userDeleteAction = new UserDeleteAction();
 			success = userDeleteAction.execute(req);
 			if (success) {
 				userAction = new UserAction();
@@ -396,7 +396,7 @@ public class AdminController extends HttpServlet {
 			session.setAttribute("action", "ByAdmin");
 			userId = req.getParameter("userId");
 			session.setAttribute("userId", userId);
-			userDetailAction = new CustomerDetailAction();
+			userDetailAction = new UserDetailAction();
 			user = userDetailAction.execute(req);
 			session.setAttribute("targetUser", user);
 			break;
