@@ -27,7 +27,7 @@ public class CouponEditAction extends HttpServlet {
 
 public void execute(HttpServletRequest req , HttpServletResponse resp) throws IOException {
     	
-    	HttpSession session = req.getSession(false);
+    	HttpSession session = req.getSession();
     	String couponId = (String)session.getAttribute("couponId");
     	boolean couponActive = (boolean)session.getAttribute("couponActive");
     	CouponDao dao = new CouponDao();

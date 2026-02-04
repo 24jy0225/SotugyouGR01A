@@ -205,7 +205,7 @@ public class AdminController extends HttpServlet {
 			break;
 
 		case "editCoupon":
-			String couponId = req.getParameter("couponNumber");
+			String couponId = req.getParameter("couponId");
 			boolean couponActive = Boolean.parseBoolean(req.getParameter("couponActive"));
 			session.setAttribute("couponId", couponId);
 			session.setAttribute("couponActive", couponActive);

@@ -46,15 +46,15 @@ String[] hours = {"20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00",
 	<main class="main-content">
 		<%-- メッセージ表示エリア --%>
 		<%
-		String msg = (String) req.getAttribute("message");
+		String msg = (String) session.getAttribute("message");
 		if (msg != null) {
 		%>
-		<div
+		<div>
 			style="color: white; text-align: center; background: #333; padding: 10px; margin-bottom: 10px;">
 			<%=msg%>
 		</div>
 		<%
-		req.removeAttribute("message");
+		session.removeAttribute("message");
 		}
 		%>
 
