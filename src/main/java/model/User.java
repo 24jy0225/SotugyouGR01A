@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class User {
 	private String name;
@@ -11,6 +12,9 @@ public class User {
 	private String password;
 	private int reserveCount;
 	private int couponCount;
+	private boolean authenticate;
+	private String urlToken;
+	private LocalDateTime tokenExpire;
 	
 	public User() {
 		
@@ -83,6 +87,36 @@ public class User {
 
 	public void setCouponCount(int couponCount) {
 		this.couponCount = couponCount;
+	}
+
+
+	public boolean isAuthenticate() {
+		return authenticate;
+	}
+
+
+	public void setAuthenticate(boolean authenticate) {
+		this.authenticate = authenticate;
+	}
+
+
+	public String getUrlToken() {
+		return urlToken;
+	}
+
+
+	public void setUrlToken(String urlToken) {
+		this.urlToken = urlToken;
+	}
+
+
+	public LocalDateTime getTokenExpire() {
+		return tokenExpire;
+	}
+
+
+	public void setTokenExpire(LocalDateTime tokenExpire) {
+		this.tokenExpire = tokenExpire;
 	}
 
 }

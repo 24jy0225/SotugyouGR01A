@@ -29,7 +29,6 @@
 		<input type="hidden" name="command" value="MyPage">
 	</form>
 	
-	
 	<%
 	} else {
 	%>
@@ -41,6 +40,7 @@
 	</form>
 
 	<button onclick="location.href='Login.jsp'">ログイン</button>
+	<button onclick="location.href='UserAuthentication.jsp'">saisou</button>
 	<%
 	}
 	%>

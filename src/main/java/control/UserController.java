@@ -22,9 +22,12 @@ import action.Reservation.ReservationHistoryAction;
 import action.Reservation.ReservationSeatAction;
 import action.Reservation.ReservationTimeAction;
 import action.Reservation.ReserveAction;
+import action.main.AuthenticateAction;
 import action.main.LoginAction;
+import action.main.PasswordResetAction;
 import action.main.RegisterAction;
 import action.main.StoreAction;
+import dao.UserDao;
 import model.CouponUsage;
 import model.Reservation;
 import model.Seat;
@@ -67,17 +70,17 @@ public class UserController extends HttpServlet {
 			break;
 		case "Seat":
 			nextPage = "ReservationSeat.jsp";
-			
+
 			int storeNumber = Integer.parseInt(req.getParameter("storeNumber"));
 			int course = Integer.parseInt(req.getParameter("course"));
-			
+
 			session.setAttribute("Course", course);
 			session.setAttribute("storeNumber", storeNumber);
-			
+
 			ReservationSeatAction rsa = new ReservationSeatAction();
 			List<Seat> SeatList = rsa.execute(req);
 			session.setAttribute("Seat", SeatList);
-			
+
 			break;
 		case "Time":
 			nextPage = "ReservationTime.jsp";
@@ -96,15 +99,31 @@ public class UserController extends HttpServlet {
 			session = req.getSession();
 			session.setAttribute("action", "ByUser");
 			ReservationHistoryAction reservationHistoryAction = new ReservationHistoryAction();
-			List<Reservation> reservationList = reservationHistoryAction.execute(req);						
+			List<Reservation> reservationList = reservationHistoryAction.execute(req);
 			session.setAttribute("reservationHistory", reservationList);
 			CouponUsageAction couponAction = new CouponUsageAction();
 			List<CouponUsage> couponList = couponAction.execute(req);
 			session.setAttribute("couponList", couponList);
 			break;
+		case "authentication":
+			AuthenticateAction authenticateAction = new AuthenticateAction();
+			boolean authenticateResult = authenticateAction.execute(req);
+			if (authenticateResult) {
+				req.setAttribute("msg", "本登録が完了しました。ログインしてください。");
+				nextPage = "Success.jsp";
+			} else {
+				session.setAttribute("errorMsg", "無効なリンクか、有効期限切れです。");
+				nextPage = "Error.jsp";
+			}
+			break;
+		case "passwordReset":
+		    req.setAttribute("token", req.getParameter("token"));
+		    nextPage = "PasswordResetInput.jsp";
+		    break;
+		
 		default:
 			nextPage = "Error.jsp"; // 例としてエラーページを設定
-			req.setAttribute("errorMsg", "無効なGETコマンド: " + command);
+			session.setAttribute("errorMsg", "無効なGETコマンド: " + command);
 			break;
 		}
 		RequestDispatcher rd = req.getRequestDispatcher(nextPage);
@@ -137,10 +156,10 @@ public class UserController extends HttpServlet {
 			boolean regResult = ra.execute(req);
 
 			if (regResult) {
-				nextPage = "Success.jsp";
+				nextPage = "UserAuthentication.jsp";
 			} else {
 				nextPage = "Error.jsp";
-				req.setAttribute("errorMsg", "登録失敗");
+				req.setAttribute("errorMsg", "登録処理またはメール送信に失敗しました");
 			}
 			break;
 		case "LoginAction":
@@ -197,7 +216,7 @@ public class UserController extends HttpServlet {
 			if (loginUser != null) {
 				// ログイン済み
 				nextPage = "Confirm.jsp";
-				
+
 			} else {
 				// 未ログイン → ログイン後に戻る画面を保存
 				session.setAttribute("afterLoginPage", "Confirm.jsp");
@@ -206,9 +225,9 @@ public class UserController extends HttpServlet {
 
 			break;
 		case "Reserve":
-			
+
 			session = req.getSession();
-			
+
 			ReservationConfirmAction reservationConfirmAction = new ReservationConfirmAction();
 			Reservation reservation = reservationConfirmAction.execute(req);
 
@@ -227,27 +246,48 @@ public class UserController extends HttpServlet {
 			session = req.getSession();
 			List<Reservation> list = new ArrayList<>();
 			ReservationHistoryAction reservationHistoryAction = new ReservationHistoryAction();
-			list = reservationHistoryAction.execute(req);						
+			list = reservationHistoryAction.execute(req);
 			session.setAttribute("reservationHistory", list);
 			break;
 		case "useCoupon":
 			try {
-		        CouponUseAction useAction = new CouponUseAction();
-		        useAction.execute(req, resp);
-		        
-		        return; 
+				CouponUseAction useAction = new CouponUseAction();
+				useAction.execute(req, resp);
 
-		    } catch (Exception e) {
-		        // エラーが発生した場合の処理
-		        e.printStackTrace();
-		        req.setAttribute("errorMsg", "クーポンの使用処理でエラーが発生しました。");
-		        nextPage = "Error.jsp";
-		        break;
-		    }
+				return;
+
+			} catch (Exception e) {
+				// エラーが発生した場合の処理
+				e.printStackTrace();
+				req.setAttribute("errorMsg", "クーポンの使用処理でエラーが発生しました。");
+				nextPage = "Error.jsp";
+				break;
+			}
+		case "passwordReset":
+			PasswordResetAction passwordResetAction = new PasswordResetAction();
+			if (passwordResetAction.execute(req)) {
+				req.setAttribute("alertMsg", "再設定用のメールを送信しました。30分以内に確認してください。");
+			} else {
+				req.setAttribute("alertMsg", "メール送信に失敗しました。アドレスが正しいか確認してください。");
+			}
+			resp.sendRedirect("PasswordReset.jsp");
+			return;
+		case "passwordResetInput":
+			String token = req.getParameter("token");
+			String newPass = req.getParameter("password");
+			UserDao dao = new UserDao();
+			if (dao.updatePassword(token, newPass)) {
+				nextPage = "Success.jsp";
+				req.setAttribute("alertMsg", "Password Reset Completed");
+			} else {
+				nextPage = "Error.jsp";
+				req.setAttribute("errorMsg", "有効期限切れか、不正なアクセスです。");
+			}
+			break;
 		default:
-            nextPage = "Error.jsp";
-            req.setAttribute("errorMsg", "不正なポストコマンド: " + command);
-            break;
+			nextPage = "Error.jsp";
+			req.setAttribute("errorMsg", "不正なポストコマンド: " + command);
+			break;
 		}
 
 		RequestDispatcher rd = req.getRequestDispatcher(nextPage);

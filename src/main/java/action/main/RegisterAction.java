@@ -1,5 +1,7 @@
 package action.main;
 
+import java.util.UUID;
+
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -7,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import dao.UserDao;
 import model.User;
+import util.MailUtil;
 
 /**
  * Servlet implementation class RegisterAction
@@ -39,13 +42,30 @@ public class RegisterAction extends HttpServlet {
 			return false;
 		}
 		
+		String token = UUID.randomUUID().toString();
+		
 		User user = new User();
 		user.setName(name);
 		user.setUserTel(tel);
 		user.setUserEmail(email);
 		user.setPassword(password);
+		user.setAuthenticate(false);
+		user.setUrlToken(token);
 		
 		UserDao dao = new UserDao();
-		return dao.createUser(user);
+		boolean result = dao.createUser(user , token);
+		
+		if(result) {
+			req.getSession().setAttribute("tempEmail", "email");
+			String requestURL = req.getRequestURL().toString();
+            String baseURL = requestURL.substring(0, requestURL.lastIndexOf("/"));
+            String authenticationURL = baseURL + "/UserController?command=authentication&token=" + token;
+
+            // メール送信 (MailUtil呼び出し)
+            MailUtil.send(email, authenticationURL);
+		}
+		
+		return result;
+		
 	}
 }

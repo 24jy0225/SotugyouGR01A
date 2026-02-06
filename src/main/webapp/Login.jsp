@@ -20,5 +20,7 @@
 		</p>
 	</form>
 	<button onclick="location.href='UserRegister.jsp'">新規登録</button>
+	<p>パスワードを忘れた方<a href="PasswordReset.jsp">こちら</a></p>
+	
 </body>
 </html>

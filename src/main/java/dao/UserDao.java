@@ -28,13 +28,13 @@ public class UserDao {
 		}
 	}
 
-	public boolean createUser(User user) {
+	public boolean createUser(User user, String token) {
 		Timestamp ts = new Timestamp(System.currentTimeMillis());
 		SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMdd");
 		String registTime = sdf.format(ts);
 		int random = (int) (Math.random() * 1000);
 		String randomNo = String.format("%03d", random);
-		String sql = "INSERT INTO 会員(member_id,member_name,member_tel,registration_time,member_email_address,member_password) VALUES (?,?,?,?,?,?) ";
+		String sql = "INSERT INTO 会員(member_id,member_name,member_tel,registration_time,member_email_address,member_password , url_token , token_expire , authentication) VALUES (?,?,?,?,?,?,?,DATE_ADD(NOW(),INTERVAL 1 DAY),0) ";
 
 		try (Connection con = createConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, "MEM" + registTime + randomNo);
@@ -43,6 +43,7 @@ public class UserDao {
 			pstmt.setDate(4, new Date(System.currentTimeMillis()));
 			pstmt.setString(5, user.getUserEmail());
 			pstmt.setString(6, user.getPassword());
+			pstmt.setString(7, token);
 			int result = pstmt.executeUpdate();
 			return result == 1;
 		} catch (SQLException e) {
@@ -55,7 +56,7 @@ public class UserDao {
 	}
 
 	public User Login(String email, String password) {
-		String sql = "SELECT * FROM 会員 WHERE member_email_address = ? AND member_password = ? ";
+		String sql = "SELECT * FROM 会員 WHERE member_email_address = ? AND member_password = ? AND authentication = 1";
 		try (Connection con = createConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 
@@ -140,7 +141,7 @@ public class UserDao {
 			return null;
 		}
 	}
-	
+
 	public User findById(String userId) {
 		String sql = """
 				   SELECT *,
@@ -173,7 +174,7 @@ public class UserDao {
 		}
 		return null;
 	}
-	
+
 	public boolean delete(String userId) {
 		String sql = "DELETE FROM 会員 WHERE member_id = ? ;";
 		try (Connection con = createConnection();
@@ -186,6 +187,68 @@ public class UserDao {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	public boolean authenticate(String token) {
+		String sql = "UPDATE 会員 SET authentication = 1, url_token = NULL "
+				+ "WHERE url_token = ? AND token_expire > NOW() AND authentication = 0";
+
+		try (Connection con = createConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, token);
+
+			int count = pstmt.executeUpdate();
+			// 1件更新できれば認証成功
+			return count == 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean reissueToken(String email , String newToken) {
+		String sql = "UPDATE 会員 SET url_token = ?, token_expire = DATE_ADD(NOW(), INTERVAL 1 DAY) "
+	               + "WHERE member_email_address = ? AND authenticate = 0";
+
+	    try (Connection con = createConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, newToken);
+			pstmt.setString(2, email);
+	        
+	        int count = pstmt.executeUpdate();
+	        // 1件更新できれば成功（メアドが存在し、かつ仮登録だった）
+	        return count == 1;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+	
+	public boolean setPasswordResetToken(String email, String token) {
+	    String sql = "UPDATE 会員 SET url_token = ?, token_expire = DATE_ADD(NOW(), INTERVAL 30 MINUTE) "
+	               + "WHERE member_email_address = ?";
+	    // パスワード再設定はセキュリティ上、期限を短め（30分など）にするのが一般的です。
+
+	    try (Connection con = createConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+	        pstmt.setString(1, token);
+	        pstmt.setString(2, email);
+	        return pstmt.executeUpdate() == 1;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+	
+	public boolean updatePassword(String token, String newPassword) {
+	    String sql = "UPDATE 会員 SET member_password = ?, url_token = NULL "
+	               + "WHERE url_token = ? AND token_expire > NOW()";
+
+	    try (Connection con = createConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+	        pstmt.setString(1, newPassword);
+	        pstmt.setString(2, token);
+	        return pstmt.executeUpdate() == 1;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
 
 }
