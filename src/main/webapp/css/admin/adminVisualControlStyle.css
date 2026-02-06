@@ -55,6 +55,11 @@ main {
     border-radius: 8px;
     border: #D1D5DC solid 1px;
     background-color: white;
+	cursor: pointer;
+}
+
+#photo_category:hover{
+	border:1px solid black;
 }
 
 .visual-photo::file-selector-button {
@@ -78,7 +83,13 @@ main {
     background-color: white;
     border: #D1D5DC solid 1px;
     border-radius: 10px;
+	cursor: pointer;
 }
+
+#photo-submit:hover{
+	border:1px solid black;	
+}
+
 .preview{
     max-width: 450px;
     text-align: center;
