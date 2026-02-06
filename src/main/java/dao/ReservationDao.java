@@ -43,12 +43,12 @@ public class ReservationDao {
 			pstmt.setString(1, r.getReserveId());
 			pstmt.setInt(2, r.getReservePeople());
 			pstmt.setDate(3, Date.valueOf(r.getReserveDate()));
-			pstmt.setString(4, r.getUserId());			
+			pstmt.setString(4, r.getUserId());
 			pstmt.setString(5, r.getUserName());
 			pstmt.setInt(6, r.getSeatId());
 			pstmt.setTimestamp(7, Timestamp.valueOf(r.getStartDateTime())); // start_time
 			pstmt.setTimestamp(8, Timestamp.valueOf(r.getEndDateTime())); // end_time
-			
+
 			return pstmt.executeUpdate() == 1;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -116,7 +116,7 @@ public class ReservationDao {
 		return list;
 	}
 
-	public  List<Reservation> ReservationHistoryAll() {
+	public List<Reservation> ReservationHistoryAll() {
 		List<Reservation> list = new ArrayList<>();
 
 		String sql = "SELECT r.reservation_number, r.reservation_people, r.reservation_date, " +
@@ -135,7 +135,7 @@ public class ReservationDao {
 				LocalDateTime start = rs.getTimestamp("start_time").toLocalDateTime();
 
 				LocalDateTime end = rs.getTimestamp("end_time").toLocalDateTime();
-	
+
 				Reservation r = new Reservation(
 						rs.getString("reservation_number"),
 						rs.getInt("reservation_people"),
@@ -168,20 +168,66 @@ public class ReservationDao {
 		}
 		return false;
 	}
-	
+
 	public boolean deleteAll(String userId) {
 		String sql = "DELETE FROM 予約 WHERE member_id = ? ;";
 		try (Connection con = createConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, userId);
 			pstmt.executeUpdate();
-			return true; 
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	public java.util.Map<String, String> getMonthlyStatus(LocalDate startMonth, LocalDate endMonth) {
+		java.util.Map<String, String> statusMap = new java.util.HashMap<>();
+
+		String sql = "SELECT " +
+				"  reservation_date, " +
+				"  SUM(TIMESTAMPDIFF(MINUTE, start_time, end_time)) as daily_total, " +
+				"  (SELECT COUNT(*) FROM 席 WHERE is_active = 1) * 480 as total_capacity " +
+				"FROM 予約 " +
+				"WHERE reservation_date BETWEEN ? AND ? " +
+				"GROUP BY reservation_date";
+
+		try (Connection con = createConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+			pstmt.setDate(1, Date.valueOf(startMonth));
+			pstmt.setDate(2, Date.valueOf(endMonth));
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+				while (rs.next()) {
+					// 文字列ではなくDateとして取得し、フォーマットを yyyy-MM-dd に固定
+					LocalDate localDate = rs.getDate("reservation_date").toLocalDate();
+					String date = localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+					int reservedMinutes = rs.getInt("daily_total");
+					int totalCapacity = rs.getInt("total_capacity");
+
+					double occupancyRate = (double) reservedMinutes / totalCapacity;
+
+					if (occupancyRate >= 0.85) { // 0.9 から 0.85 に下げる。これで 0.895 は「赤」になります！
+						statusMap.put(date, "is-full");
+					} else if (occupancyRate >= 0.5) { // 0.6 から 0.5 に下げる。これで少しの予約でも「黄色」になります
+						statusMap.put(date, "is-warning");
+					} else {
+						statusMap.put(date, "is-available");
+					}
+
+					System.out.println("日付: " + date + " | 予約合計: " + reservedMinutes + "分 | 枠合計: " + totalCapacity
+							+ "分 | 占有率: " + occupancyRate + statusMap);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return statusMap;
 	}
 
 }

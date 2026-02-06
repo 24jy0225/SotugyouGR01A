@@ -18,6 +18,7 @@ import jakarta.servlet.http.HttpSession;
 import action.Coupon.CouponUsageAction;
 import action.Coupon.CouponUseAction;
 import action.Reservation.ReservationConfirmAction;
+import action.Reservation.ReservationDateAction;
 import action.Reservation.ReservationHistoryAction;
 import action.Reservation.ReservationSeatAction;
 import action.Reservation.ReservationTimeAction;
@@ -120,6 +121,11 @@ public class UserController extends HttpServlet {
 		    req.setAttribute("token", req.getParameter("token"));
 		    nextPage = "PasswordResetInput.jsp";
 		    break;
+		case "reservationDate":
+			ReservationDateAction reservationDateAction = new ReservationDateAction();
+			reservationDateAction.execute(req);
+			nextPage = "ReservationDate.jsp";
+			break;
 		
 		default:
 			nextPage = "Error.jsp"; // 例としてエラーページを設定

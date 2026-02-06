@@ -44,6 +44,6 @@
 	<%
 	}
 	%>
-	<button onclick="location.href='ReservationDate.jsp'">席予約</button>
+	<button onclick="location.href='UserController?command=reservationDate'">席予約</button>
 </body>
 </html>
