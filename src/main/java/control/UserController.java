@@ -127,6 +127,7 @@ public class UserController extends HttpServlet {
 			nextPage = "ReservationDate.jsp";
 			break;
 		case "goMain":
+			
 			nextPage = "Main.jsp";
 			break;
 		default:
