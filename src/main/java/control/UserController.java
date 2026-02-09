@@ -251,7 +251,7 @@ public class UserController extends HttpServlet {
 
 			break;
 		case "History":
-			nextPage = "CustomerReservationHistory.jsp";
+			nextPage = "UserReservationHistory.jsp";
 			session = req.getSession();
 			List<Reservation> list = new ArrayList<>();
 			ReservationHistoryAction reservationHistoryAction = new ReservationHistoryAction();

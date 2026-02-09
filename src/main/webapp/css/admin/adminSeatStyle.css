@@ -61,12 +61,16 @@ tr {
     align-items: center;
     border-radius: 8px;
     border: 1.25px solid rgba(0, 0, 0, 0.2);
-    background: #030213;
-    color: white;
-    cursor: pointer;
+	background: rgb(0, 128, 0);
+	color: white;
+	cursor: pointer;
 }
 
-.passive-btn {
+.active-btn:hover{
+	opacity: 0.8;
+}
+
+.inactive-btn {
     display: flex;
     height: 25px;
     width: 80px;
@@ -79,6 +83,11 @@ tr {
     color: white;
     cursor: pointer;
 }
+
+.inactive-btn:hover{
+	opacity: 0.8;
+}
+
 .delete-btn {
     height: 25px;
     width: 50px;
