@@ -35,7 +35,7 @@ String date = (String) session.getAttribute("date");
 			%>
 		</ul>
 
-		人数:<input type="number" name="people" max="4" min="1">
+		人数:<input type="number" name="people" max="4" min="1" value="1">
 		<%
 		if (user != null) {
 		%>
@@ -67,7 +67,7 @@ String date = (String) session.getAttribute("date");
 			%>
 		</ul>
 
-		人数:<input type="number" name="people" value="1" max="4" min="1" required >
+		人数:<input type="number" name="people" value="1" max="4" min="1" required>
 		<%
 		if (user != null || targetUser != null) {
 		%>
