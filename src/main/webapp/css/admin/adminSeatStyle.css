@@ -1,0 +1,88 @@
+.seat_main{
+    margin: 0 auto;
+    margin-top: 100px;
+    border-radius: 10px;
+    padding: 25px;
+    width: 1200px;
+    background-image: url("../assets/dairiseki.jpg");
+    background-repeat: repeat;
+    background-size: cover;
+}
+
+.seat_main_head {
+    display: flex;
+    margin-bottom: 25px;
+}
+
+.seat_main_head button {
+    display: flex;
+    float: right;
+    margin: auto 0 auto auto;
+    height: 36px;
+    width: 180px;
+    padding: 10px 15px 8px 15px;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 15.977px;
+    border-radius: 8px;
+    background: #030213;
+    color: white;
+}
+
+.seat_main_body {
+    display: flex;
+}
+
+.seat_main_body table,
+tr {
+    border: 1.25px solid rgba(0, 0, 0, 0.10);
+    width: 1200px;
+    border-collapse: collapse;
+}
+
+.seat_main_body td {
+    padding: 8px;
+    height: 50px;
+}
+.table-seat-status{
+    width: 150px;
+}
+.table-seat-delete{
+    text-align: center;
+    width: 150px;
+    padding:0 20px;
+}
+.active-btn {
+    display: flex;
+    height: 25px;
+    width: 80px;
+    padding: 2.242px 9.242px 4.219px 9.238px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    border: 1.25px solid rgba(0, 0, 0, 0.2);
+    background: #030213;
+    color: white;
+    cursor: pointer;
+}
+
+.passive-btn {
+    display: flex;
+    height: 25px;
+    width: 80px;
+    padding: 2.242px 9.242px 4.219px 9.238px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    border: 1.25px solid rgba(0, 0, 0, 0.2);
+    background: #D4183D;
+    color: white;
+    cursor: pointer;
+}
+.delete-btn {
+    height: 25px;
+    width: 50px;
+    border-radius: 10px;
+    border: #D1D5DC solid 1px;
+    background-color: white;
+}
