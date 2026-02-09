@@ -3,8 +3,8 @@ package model;
 public class Seat {
 	private int seatId;
 	private int seatNumber;
-	private int storeNumber;
-	private int isActive;
+	private Store store;
+	private boolean isActive;
 	
 	public int getSeatId() {
 		return seatId;
@@ -22,25 +22,25 @@ public class Seat {
 		this.seatNumber = seatNumber;
 	}
 	
-	public int getStoreNumber() {
-		return storeNumber;
+	public Store getStoreNumber() {
+		return store;
 	}
 
-	public void setStoreNumber(int storeNumber) {
-		this.storeNumber = storeNumber;
+	public void setStoreNumber(Store store) {
+		this.store = store;
 	}
 
-	public int getIsActive() {
+	public boolean getIsActive() {
 		return isActive;
 	}
 
-	public void setIsActive(int isActive) {
+	public void setIsActive(boolean isActive) {
 		this.isActive = isActive;
 	}
 
-	public Seat(int seatId , int storeNumber , int isActive) {
+	public Seat(int seatId , Store store , boolean isActive) {
 		this.seatId = seatId;
-		this.storeNumber = storeNumber;
+		this.store = store;
 		this.isActive = isActive;
 	}
 }

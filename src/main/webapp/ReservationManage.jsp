@@ -10,7 +10,7 @@ DateTimeFormatter timeFmt = DateTimeFormatter.ofPattern("HH:mm");
 List<Reservation> list = (List<Reservation>) session.getAttribute("ReservationHistoryList");
 List<Seat> seatList = (List<Seat>) session.getAttribute("Seat");
 
-// 表示する時間軸の定義
+// 表示する時間軸の定義（JS側でも共通で利用）
 String[] hours = {"20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30", "00:00", "00:30", "01:00",
 		"01:30", "02:00", "02:30", "03:00", "03:30", "04:00"};
 %>
@@ -24,13 +24,16 @@ String[] hours = {"20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00",
 <link rel="stylesheet" href="./css/admin/adminReservationStyle.css">
 <title>管理者予約管理</title>
 <style>
-	.reserved {
-    /* border の代わりに box-shadow を使う */
-    border: none !important; 
-    box-shadow: inset 0 0 0 1px rgb(0,0,0) !important;
+.reserved {
+	border: none !important;
+	box-shadow: inset 0 0 0 1px rgb(0, 0, 0) !important;
+}
+/* 削除成功時のフェードアウト用（オプション） */
+.fade-out {
+	opacity: 0;
+	transition: opacity 0.5s ease;
 }
 </style>
-
 </head>
 <body>
 	<header>
@@ -44,12 +47,12 @@ String[] hours = {"20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00",
 	</header>
 
 	<main class="main-content">
-		<%-- メッセージ表示エリア --%>
+		<%-- メッセージ表示エリア（HTMLミス修正済み） --%>
 		<%
 		String msg = (String) session.getAttribute("message");
 		if (msg != null) {
 		%>
-		<div>
+		<div
 			style="color: white; text-align: center; background: #333; padding: 10px; margin-bottom: 10px;">
 			<%=msg%>
 		</div>
@@ -62,9 +65,12 @@ String[] hours = {"20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00",
 			<label>予約スケジュール</label>
 			<button class="date-nav-btn" onclick="prevDay()">&lt;</button>
 			<input class="date-nav-btn" id="date-nav-input" type="date"
-				value="2025-11-15" onchange="changeDate(this.value)">
+				onchange="changeDate(this.value)">
 			<button class="date-nav-btn" onclick="nextDay()">&gt;</button>
 			<button class="date-nav-btn" id="date-nav-today" onclick="setToday()">今日</button>
+
+			<button class="date-nav-btn" onclick="refreshKeepDate()"id="date-nav-today" >更新</button>
+			<a href="AdminSeat.jsp" >席管理</a>
 		</div>
 
 		<table class="schedule-table">
@@ -72,10 +78,12 @@ String[] hours = {"20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00",
 				<tr class="time-header">
 					<th class="time-cell"></th>
 					<%
-					for (Seat s : seatList) {
+					if (seatList != null) {
+						for (Seat s : seatList) {
 					%>
 					<th>座席<%=s.getSeatNumber()%></th>
 					<%
+					}
 					}
 					%>
 				</tr>
@@ -87,11 +95,13 @@ String[] hours = {"20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00",
 				<tr>
 					<td class="time-cell"><%=h%></td>
 					<%
-					for (Seat s : seatList) {
+					if (seatList != null) {
+						for (Seat s : seatList) {
 					%>
-					<td class="reservation-cell "
-						data-seat="<%=s.getSeatId()%>" data-hour="<%=h%>" id="reservationIsEmpty"></td>
+					<td class="reservation-cell" data-seat="<%=s.getSeatId()%>"
+						data-hour="<%=h%>"></td>
 					<%
+					}
 					}
 					%>
 				</tr>
@@ -103,8 +113,8 @@ String[] hours = {"20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00",
 	</main>
 
 	<script>
-// JSPから渡されたデータをJS配列に変換
-const reservations = [
+// 1. JSPから渡されたデータを保持
+let reservations = [
     <%if (list != null) {
 	for (Reservation r : list) {%>
         {
@@ -119,41 +129,33 @@ const reservations = [
     <%}
 }%>
 ];
-//初期引数
 
-const hourList = ["20:00","20:30", "21:00","21:30", "22:00","22:30", "23:00","23:30", "00:00","00:30", "01:00","01:30", "02:00","02:30","03:00","03:30","04:00"];
-let currentDate = new Date(); // 初期値（運用に合わせてnew Date()に変更してください）
+// 時間軸配列
+const hourList = [<%for (int i = 0; i < hours.length; i++) {%>"<%=hours[i]%>"<%=i < hours.length - 1 ? "," : ""%><%}%>];
+let currentDate = new Date(); // ここは初期値。onloadで書き換わります
 
 function formatDate(d){
     return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
 }
 
-// 補助関数: 時間を分に変換（深夜対応）
-function getFixMin(timeStr) {
-    const [h, m] = timeStr.split(":").map(Number);
-    let total = h * 60 + m;
-    if (h < 12) total += 1440; // 深夜は24時間加算
-    return total;
+function refreshKeepDate() {
+    const selectedDate = document.getElementById("date-nav-input").value;
+    
+    // JSPを直接開くのではなく、Controllerを経由させる
+    // これにより、Java側で DBからの最新取得(execute) が走り、セッションが新しくなります
+    location.href = "AdminController?command=reservationManage&refDate=" + selectedDate;
 }
 
-function prevDay(){
-    currentDate.setDate(currentDate.getDate() - 1);
-    updateDateInput();
+function prevDay(){ currentDate.setDate(currentDate.getDate() - 1); updateDateInput(); }
+function nextDay(){ currentDate.setDate(currentDate.getDate() + 1); updateDateInput(); }
+function setToday(){ 
+    // 今日ボタンを押したときは、URLのパラメータを消してリロードするのが確実です
+    location.href = window.location.pathname;
 }
 
-function nextDay(){
-    currentDate.setDate(currentDate.getDate() + 1);
-    updateDateInput();
-}
-
-function setToday(){
-    currentDate = new Date();
-    updateDateInput();
-}
-
-function changeDate(val){
-    currentDate = new Date(val);
-    paintDay();
+function changeDate(val){ 
+    currentDate = new Date(val); 
+    paintDay(); 
 }
 
 function updateDateInput(){
@@ -162,77 +164,62 @@ function updateDateInput(){
     paintDay();
 }
 
+// 描画ロジック
 function paintDay() {
-	  const dateStr = formatDate(currentDate);
+    const dateStr = formatDate(currentDate);
+    document.querySelectorAll("td[data-seat]").forEach(td => {
+        td.innerHTML = "";
+        td.className = "reservation-cell";
+        td.rowSpan = 1;
+        td.style.display = ""; 
+    });
 
-	  // 一旦リセット
-	  document.querySelectorAll("td[data-seat]").forEach(td => {
-	    td.innerHTML = "";
-	    td.className = "reservation-cell";
-	    td.rowSpan = 1;
-	    td.style.display = ""; 
-	  });
+    const cellMap = {};
+    document.querySelectorAll("td[data-seat]").forEach(td => {
+        const key = td.getAttribute("data-seat") + "_" + td.getAttribute("data-hour");
+        cellMap[key] = td;
+    });
 
-	  const cellMap = {};
-	  document.querySelectorAll("td[data-seat]").forEach(td => {
-	    const key = td.getAttribute("data-seat") + "_" + td.getAttribute("data-hour");
-	    cellMap[key] = td;
-	  });
+    reservations.forEach((r, idx) => {
+        let bDate = r.date;
+        const startH = parseInt(r.start.split(":")[0]);
+        if (startH < 6) {
+            let d = new Date(r.date);
+            d.setDate(d.getDate() - 1);
+            bDate = formatDate(d);
+        }
 
-	  reservations.forEach((r, idx) => {
-	    // 【重要】営業日の判定
-	    // 深夜0時から5時までの予約は「前日の夜からの営業」とみなす
-	    let bDate = r.date;
-	    const startH = parseInt(r.start.split(":")[0]);
-	    if (startH < 6) {
-	      let d = new Date(r.date);
-	      d.setDate(d.getDate() - 1);
-	      bDate = formatDate(d);
-	    }
+        if (bDate !== dateStr) return;
 
-	    if (bDate !== dateStr) return;
+        const startIndex = hourList.indexOf(r.start);
+        const endIndex = hourList.indexOf(r.end);
+        if (startIndex === -1) return;
 
-	    // 時間の数値化
-	    const startMin = getFixMin(r.start);
-	    const endMin = getFixMin(r.end);
-	    const span = (endMin - startMin) / 30; // 30分1コマなので30で割る
+        const effectiveEndIndex = (endIndex === -1) ? hourList.length : endIndex;
+        const span = effectiveEndIndex - startIndex;
 
-	    const startCell = cellMap[r.seatId + "_" + r.start];
-	    if (startCell) {
-	      const colorClass = "color-" + (idx % 3);
-	      startCell.classList.add("reserved", colorClass);
-	      startCell.rowSpan = span; // ここで結合！
+        const startCell = cellMap[r.seatId + "_" + r.start];
+        if (startCell && span > 0) {
+            const colorClass = "color-" + (idx % 3);
+            startCell.classList.add("reserved", colorClass);
+            startCell.rowSpan = span;
 
-	      // 表示内容
-	      const diff = endMin - startMin;
-	      const courseText = diff >= 60 ? (diff / 60) + "時間" : diff + "分";
-	      startCell.innerHTML = `
-	        <div class="reservation-info" >
-	          <strong>\${r.name}</strong><br>
-	          \${courseText} / \${r.count}名
-	          <button type="button" class="delete-icon" onclick="deleteReservation('\${r.id}')">🗑️</button>
-	        </div>
-	      `;
-	      
+            startCell.innerHTML = `
+                <div class="reservation-info">
+                    <strong>\${r.name}</strong><br>
+                    \${r.count}名 / \${r.start}-\${r.end}
+                    <button type="button" class="delete-icon" onclick="deleteReservation('\${r.id}')">🗑️</button>
+                </div>
+            `;
 
-	      // 【重要】結合された下のセルを消すループ
-	      for (let i = 1; i < span; i++) {
-	        const currentTotalMin = startMin + (i * 30);
-	        
-	        // 分を "HH:mm" 形式の文字列に戻す
-	        let h = Math.floor(currentTotalMin / 60);
-	        if (h >= 24) h -= 24; // 24時なら00時、25時なら01時に変換
-	        const m = currentTotalMin % 60;
-	        const timeKey = String(h).padStart(2, '0') + ":" + String(m).padStart(2, '0');
-
-	        const hiddenCell = cellMap[r.seatId + "_" + timeKey];
-	        if (hiddenCell) {
-	          hiddenCell.style.display = "none"; // 結合された部分を隠して表のズレを防ぐ
-	        }
-	      }
-	    }
-	  });
-	}
+            for (let i = 1; i < span; i++) {
+                const nextTime = hourList[startIndex + i];
+                const hiddenCell = cellMap[r.seatId + "_" + nextTime];
+                if (hiddenCell) hiddenCell.style.display = "none";
+            }
+        }
+    });
+}
 
 function deleteReservation(reserveId) {
     if (!confirm('この予約を削除しますか？')) return;
@@ -247,15 +234,28 @@ function deleteReservation(reserveId) {
     })
     .then(response => {
         if (response.ok) {
-            location.reload(); // 削除後はリストを再取得するためリロード推奨
+            reservations = reservations.filter(r => r.id !== reserveId);
+            paintDay();
         } else {
             alert("削除に失敗しました。");
         }
     });
 }
 
-// 初回実行
-updateDateInput();
+// ★★★ ページ読み込み時の初期化処理（ここがキモ） ★★★
+window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const refDate = urlParams.get('refDate');
+
+    if (refDate) {
+        // URLに日付があればそれをセット
+        currentDate = new Date(refDate);
+    } else {
+        // なければ今日
+        currentDate = new Date();
+    }
+    updateDateInput();
+};
 </script>
 </body>
 </html>

@@ -32,6 +32,9 @@ import action.Reservation.ReservationHistoryAction;
 import action.Reservation.ReservationSeatAction;
 import action.Reservation.ReservationTimeAction;
 import action.Reservation.ReserveAction;
+import action.Seat.SeatAction;
+import action.Seat.SeatAddAction;
+import action.Seat.SeatEditAction;
 import action.Topics.TopicsAction;
 import action.Topics.TopicsAddAction;
 import action.Topics.TopicsDeleteAction;
@@ -105,6 +108,12 @@ public class AdminController extends HttpServlet {
 			ReservationTimeAction reservationTimeAction = new ReservationTimeAction();
 			List<LocalDateTime> list = reservationTimeAction.execute(req);
 			session.setAttribute("timeList", list);
+			break;
+		case "reservationManage":
+			nextPage = "ReservationManage.jsp";
+			ReservationHistoryAction action = new ReservationHistoryAction();
+			List<Reservation> reservationList = action.execute(req);
+			session.setAttribute("ReservationHistoryList", reservationList);
 			break;
 		}
 
@@ -441,6 +450,64 @@ public class AdminController extends HttpServlet {
 				session.setAttribute("errorMsg", "ステータス変更失敗");
 				nextPage = "Error.jsp";
 			}
+			break;
+		case "editSeat":
+			int seatId = Integer.parseInt(req.getParameter("SeatId"));
+			boolean active = Boolean.parseBoolean(req.getParameter("SeatActive"));
+
+			session.setAttribute("seatId", seatId);
+			session.setAttribute("seatActive", active);
+
+			SeatEditAction seatEditAction = new SeatEditAction();
+			success = seatEditAction.execute(req, resp);
+			if (success) {
+				SeatAction seatAction = new SeatAction();
+				List<Seat> seatList = seatAction.execute();
+				session.setAttribute("Seat", seatList);
+				session.setAttribute("message", "座席のステータスを変更しました！");
+				nextPage = "AdminSeat.jsp";
+			} else {
+				nextPage = "Error.jsp";
+				session.setAttribute("errorMsg", "席のステータス変更失敗");
+			}
+			break;
+		/*
+		case "deleteSeat" :
+			seatId = Integer.parseInt(req.getParameter("SeatId"));
+			session.setAttribute("seatId", seatId);
+			
+			SeatDeleteAction seatDeleteAction = new SeatDeleteAction();
+			success = seatDeleteAction.execute(req);
+			if(success) {
+				SeatAction seatAction = new SeatAction();
+				List<Seat> seatList = seatAction.execute();
+				session.setAttribute("Seat", seatList);
+				session.setAttribute("message", "座席を削除しました！");
+				nextPage = "AdminSeat.jsp";
+			}else {
+				nextPage = "Error.jsp";
+				session.setAttribute("errorMsg", "座席削除失敗");
+			}
+			break;
+		*/
+		case "addSeat":
+			SeatAction seatAction = new SeatAction();
+			List<Seat> seatList = seatAction.execute();
+			int seatCount = seatList.size();
+			session.setAttribute("seatCount", seatCount);
+			SeatAddAction seatAddAction = new SeatAddAction();
+			success = seatAddAction.execute(req);
+			if (success) {
+				seatAction = new SeatAction();
+				seatList = seatAction.execute();
+				session.setAttribute("Seat", seatList);
+				session.setAttribute("message", "座席を追加しました");
+				nextPage = "AdminSeat.jsp";
+			} else {
+				nextPage = "Error.jsp";
+				session.setAttribute("errorMsg", "座席の追加失敗");
+			}
+			break;
 		}
 
 		if (nextPage != null) {
