@@ -126,7 +126,9 @@ public class UserController extends HttpServlet {
 			reservationDateAction.execute(req);
 			nextPage = "ReservationDate.jsp";
 			break;
-		
+		case "goMain":
+			nextPage = "Main.jsp";
+			break;
 		default:
 			nextPage = "Error.jsp"; // 例としてエラーページを設定
 			session.setAttribute("errorMsg", "無効なGETコマンド: " + command);
