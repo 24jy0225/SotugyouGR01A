@@ -73,7 +73,7 @@ public class AdminController extends HttpServlet {
 			couponList = couponAction.execute(req);
 			session.setAttribute("couponList", couponList);
 			break;
-		case "Cource":
+		case "Course":
 			nextPage = "ReservationCourse.jsp";
 			String date = req.getParameter("date");
 			session.setAttribute("date", date);

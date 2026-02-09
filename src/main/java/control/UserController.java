@@ -59,7 +59,7 @@ public class UserController extends HttpServlet {
 		String nextPage = null;
 		HttpSession session = req.getSession();
 		switch (command) {
-		case "Cource":
+		case "Course":
 			nextPage = "ReservationCourse.jsp";
 			String date = req.getParameter("date");
 			session.setAttribute("date", date);

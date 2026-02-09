@@ -180,104 +180,125 @@ body {
 	</div>
 
 	<script>
-	document.addEventListener('DOMContentLoaded', function() {
-	    // 1. JavaのMapをJavaScriptのオブジェクトに変換
-	    const dbStatusData = {
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. JavaのMapをJavaScriptのオブジェクトに変換
+    const dbStatusData = {
     <%if (statusData != null && !statusData.isEmpty()) {
 	for (java.util.Map.Entry<String, String> entry : statusData.entrySet()) {%>
             "<%=entry.getKey()%>": "<%=entry.getValue()%>",
-    <%}
+        <%}
 }%>
-};
-// 確認用：ブラウザのF12コンソールにこれが出るか見てください
-console.log("受け取ったデータ:", dbStatusData);
+    };
+    // 確認用
+    console.log("受け取ったデータ:", dbStatusData);
 
-	    var calendarEl = document.getElementById('calendar');
-	    var calendar = new FullCalendar.Calendar(calendarEl, {
-	        initialView: 'dayGridMonth',
-	        locale: 'ja',
-	        height: 'auto',
-	        headerToolbar: { left: 'prev', center: 'title', right: 'next' },
-	        dayCellContent: function(arg) { return arg.date.getDate(); },
+    function formatDate(date) {
+        if (!date) return "";
+        // 日本時間に合わせた yyyy-mm-dd を確実に作る
+        const offset = date.getTimezoneOffset();
+        const d = new Date(date.getTime() - (offset * 60 * 1000));
+        return d.toISOString().split('T')[0];
+    }
 
-	        dayCellDidMount: function(info) {
-	            const today = new Date();
-	            const todayZero = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-	            const start = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
-	            const end = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 14);
-	            const cellDate = info.date;
-	            const dateStr = info.dateStr; // "yyyy-mm-dd"
-	            
-	            const frame = info.el.querySelector('.fc-daygrid-day-frame');
-	            const topElement = info.el.querySelector('.fc-daygrid-day-top');
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'ja',
+        height: 'auto',
+        headerToolbar: { left: 'prev', center: 'title', right: 'next' },
+        dayCellContent: function(arg) { return arg.date.getDate(); },
 
-	            let statusClass = "";
-	            let labelText = "";
+        // カレンダーのセルが描画される時の処理
+        dayCellDidMount: function(info) {
+            const today = new Date();
+            // 時間を00:00:00に揃えて日付のみで比較できるようにする
+            const todayZero = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            const start = new Date(todayZero); start.setDate(todayZero.getDate() + 1);
+            const end = new Date(todayZero); end.setDate(todayZero.getDate() + 14);
+            
+            const cellDate = new Date(info.date);
+            // 比較用に時間をリセット
+            const cellDateZero = new Date(cellDate.getFullYear(), cellDate.getMonth(), cellDate.getDate());
+            const dateStr = formatDate(cellDate); // "yyyy-mm-dd"
+            
+            const frame = info.el.querySelector('.fc-daygrid-day-frame');
+            const topElement = info.el.querySelector('.fc-daygrid-day-top');
 
-	            // A. 本日の判定
-	            if (cellDate.getTime() === todayZero.getTime()) {
-	                statusClass = 'is-today';
-	            } 
-	            // B. 予約可能期間（明日〜14日後）の判定
-	            else if (cellDate >= start && cellDate <= end) {
-	                // Mapからステータスを取得。2月7日なら "is-full" が入るはず
-	                statusClass = dbStatusData[dateStr] || "is-available";
-	                
-	                if (statusClass === 'is-full'){ 
-		                labelText = '満席';
-	                }else if (statusClass === 'is-warning'){
-		                 labelText = '残りわずか';
-	                }else{
-		                 labelText = '空席あり';
-	                }
-	                console.log(statusClass);
-		 	    } 
-	            // C. 過去または期間外
-	            else {
-	                frame.classList.add('is-disabled');
-	                return; // 描画不要な日はここで終了
-	            }
+            let statusClass = "is-available"; // デフォルトは緑
+            let labelText = "空席あり"; // デフォルトの文字
 
-	            // スタイルの適用とラベルの生成
-	            frame.classList.add(statusClass);
-	            const label = document.createElement('span');
-	            // CSSに合わせてクラス名を補正 (is-full -> status-full)
-	            label.className = 'status-label ' + statusClass.replace('is-', 'status-');
-	            label.innerText = labelText;
-	            topElement.appendChild(label);
-	        },
+            // A. 過去または期間外の判定（最優先）
+            if (cellDateZero < todayZero || cellDateZero > end) {
+                frame.classList.add('is-disabled');
+                return; // 描画不要な日はここで終了
+            }
 
-	        dateClick: function(info) {
-	            const clickedDate = info.date;
-	            const dateStr = info.dateStr;
-	            const today = new Date();
-	            const todayZero = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-	            const start = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
-	            const end = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 14);
+            // B. 本日の判定
+            if (cellDateZero.getTime() === todayZero.getTime()) {
+                statusClass = 'is-today';
+                labelText = '本日';
+                // ※もし本日も満席表示などをしたい場合は、ここに判定を追加します
+            } 
+            // C. 予約可能期間（明日〜14日後）の判定
+            else {
+                // ★修正ポイント：ロジックを整理しました
+                // 1. まず生のデータを取得
+                const status = dbStatusData[dateStr];
 
-	            if (clickedDate.getTime() === todayZero.getTime()) {
-	                alert("当日の予約はできません。");
-	                return;
-	            }
-	            if (clickedDate < start || clickedDate > end) {
-	                alert("予約できる日付は【明日から2週間以内】です。");
-	                return;
-	            }
-	            
-	            // 満席の場合は予約不可
-	            if (dbStatusData[dateStr] === 'is-full') {
-	                alert("申し訳ございません。この日は満席です。");
-	                return;
-	            }
+                // 2. データに基づいて色と文字を決定
+                if (status === 'is-full'){ 
+                    statusClass = 'is-full';
+                    labelText = '満席';
+                } else if (status === 'is-warning'){
+                    statusClass = 'is-warning';
+                    labelText = '残りわずか';
+                }
+                
+                
+            } 
 
-	            const action = "<%=action%>";
-	            const controller = (action === "ByUser") ? "UserController" : "AdminController";
-	            window.location.href = controller + "?date=" + info.dateStr + "&command=Cource";
-	        }
-	    });
+            // スタイルの適用とラベルの生成
+            frame.classList.add(statusClass);
+            const label = document.createElement('span');
+            // CSSに合わせてクラス名を補正 (is-full -> status-full)
+            label.className = 'status-label ' + statusClass.replace('is-', 'status-');
+            label.innerText = labelText;
+            topElement.appendChild(label);
+        },
 
-	    calendar.render();
-	});
+        // 日付クリック時の処理
+        dateClick: function(info) {
+            const clickedDate = info.date;
+            const dateStr = info.dateStr;
+            const today = new Date();
+            const todayZero = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            const start = new Date(todayZero); start.setDate(todayZero.getDate() + 1);
+            const end = new Date(todayZero); end.setDate(todayZero.getDate() + 14);
+            const clickedDateZero = new Date(clickedDate.getFullYear(), clickedDate.getMonth(), clickedDate.getDate());
+
+            if (clickedDateZero.getTime() === todayZero.getTime()) {
+                alert("当日の予約はできません。");
+                return;
+            }
+            if (clickedDateZero < start || clickedDateZero > end) {
+                alert("予約できる日付は【明日から2週間以内】です。");
+                return;
+            }
+            
+            // 満席の場合は予約不可
+            if (dbStatusData[dateStr] === 'is-full') {
+                alert("申し訳ございません。この日は満席です。");
+                return;
+            }
+
+            const action = "<%=action%>";
+            const controller = (action === "ByUser") ? "UserController" : "AdminController";
+            window.location.href = controller + "?date=" + info.dateStr + "&command=Course";
+        }
+    });
+
+    calendar.render();
+});
 </script>
 </body>
 </html>
