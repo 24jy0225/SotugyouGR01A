@@ -63,21 +63,25 @@ public class ReservationDao {
 	//----------------------------
 
 	public String generateReservationNumber(LocalDate date, Connection con) throws SQLException {
-		String dateStr = date.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-
-		String countSql = "SELECT COUNT(*) FROM 予約 WHERE reservation_date = ? ;";
-		try (PreparedStatement countStmt = con.prepareStatement(countSql)) {
-			countStmt.setDate(1, Date.valueOf(date));
-			try (ResultSet rs = countStmt.executeQuery()) {
-				int count = 0;
-				if (rs.next()) {
-					count = rs.getInt(1);
-				}
-				int sequence = count + 1;
-				String seqStr = String.format("%03d", sequence);
-				return "RES" + dateStr + seqStr;
-			}
-		}
+	    String dateStr = date.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+	    
+	    // COUNTではなく、その日の予約番号の末尾3桁の「最大値」を取得する
+	    // RIGHT(reservation_number, 3) で末尾3文字を取り出し、数値に変換して最大を探す
+	    String maxSql = "SELECT MAX(CAST(RIGHT(reservation_number, 3) AS UNSIGNED)) FROM 予約 WHERE reservation_date = ? ;";
+	    
+	    try (PreparedStatement maxStmt = con.prepareStatement(maxSql)) {
+	        maxStmt.setDate(1, Date.valueOf(date));
+	        try (ResultSet rs = maxStmt.executeQuery()) {
+	            int lastNumber = 0;
+	            if (rs.next()) {
+	                lastNumber = rs.getInt(1); // 最大値（例：31）を取得
+	            }
+	            
+	            int nextNumber = lastNumber + 1; // 最大値に+1する（例：32）
+	            String seqStr = String.format("%03d", nextNumber);
+	            return "RES" + dateStr + seqStr;
+	        }
+	    }
 	}
 
 	public List<Reservation> ReservationHistoryByUser(String userId) {
@@ -212,16 +216,14 @@ public class ReservationDao {
 
 					double occupancyRate = (double) reservedMinutes / totalCapacity;
 
-					if (occupancyRate >= 0.85) { // 0.9 から 0.85 に下げる。これで 0.895 は「赤」になります！
+					if (occupancyRate >= 0.95) {
 						statusMap.put(date, "is-full");
-					} else if (occupancyRate >= 0.5) { // 0.6 から 0.5 に下げる。これで少しの予約でも「黄色」になります
+					} else if (occupancyRate >= 0.75) {
 						statusMap.put(date, "is-warning");
 					} else {
 						statusMap.put(date, "is-available");
 					}
 
-					System.out.println("日付: " + date + " | 予約合計: " + reservedMinutes + "分 | 枠合計: " + totalCapacity
-							+ "分 | 占有率: " + occupancyRate + statusMap);
 				}
 			}
 		} catch (Exception e) {

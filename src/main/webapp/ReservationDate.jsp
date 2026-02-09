@@ -189,8 +189,6 @@ document.addEventListener('DOMContentLoaded', function() {
         <%}
 }%>
     };
-    // 確認用
-    console.log("受け取ったデータ:", dbStatusData);
 
     function formatDate(date) {
         if (!date) return "";
