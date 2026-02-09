@@ -5,6 +5,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import model.Photo;
 
 public class PhotoDao {
 	private Connection createConnection() throws Exception {
@@ -57,20 +61,22 @@ public class PhotoDao {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public String getFileNameById(int photoId) {
-	    String sql = "SELECT photo_file_name FROM 写真 WHERE photo_id = ?";
-	    try (Connection con = createConnection();
-	         PreparedStatement ps = con.prepareStatement(sql)) {
-	        ps.setInt(1, photoId);
-	        ResultSet rs = ps.executeQuery();
-	        if (rs.next()) {
-	            return rs.getString("photo_file_name");
-	        }
-	    } catch (Exception e) { e.printStackTrace(); }
-	    return null;
+		String sql = "SELECT photo_file_name FROM 写真 WHERE photo_id = ?";
+		try (Connection con = createConnection();
+				PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setInt(1, photoId);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return rs.getString("photo_file_name");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
-	
+
 	public boolean delete(int photoId) {
 		String sql = "DELETE FROM 写真 WHERE photo_id = ?";
 		try (Connection con = createConnection();
@@ -83,7 +89,25 @@ public class PhotoDao {
 			return false;
 		}
 	}
-	
-	
+
+	public List<Photo> findAll() {
+		List<Photo> list = new ArrayList<>();
+
+		String sql = "SELECT * FROM 写真 ;";
+		try (Connection con = createConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);) {
+			try (ResultSet rs = pstmt.executeQuery()) {
+				while (rs.next()) {
+					list.add(new Photo(rs.getInt("photo_id"),rs.getString("photo_category"),rs.getString("photo_file_name")));
+				}
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 
 }
