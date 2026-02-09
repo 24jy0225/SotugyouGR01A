@@ -80,6 +80,11 @@ body {
 
 .is-available {
 	background-color: #f0fdf4 !important;
+	border:2px solid lightgreen !important;
+}
+
+.is-available:hover{
+	transform:translateY(-5px);
 }
 
 .status-available {
@@ -92,6 +97,10 @@ body {
 	border: 2px solid #fdba74 !important;
 }
 
+.is-warning:hover{
+	transform:translateY(-5px);
+}
+
 .status-warning {
 	background-color: #ffedd5;
 	color: #ea580c;
@@ -100,6 +109,10 @@ body {
 .is-full {
 	background-color: #fee2e2 !important;
 	border: 2px solid #fca5a5 !important;
+}
+
+.is-full:hover{
+	transform:translateY(-5px);
 }
 
 .status-full {
@@ -158,7 +171,7 @@ body {
 		<div class="legend">
 			<div class="legend-item">
 				<div class="box"
-					style="background: #f0fdf4; border: 1px solid #d1fae5;"></div>
+					style="background: #f0fdf4; border: 1px solid lightgreen;"></div>
 				空席あり
 			</div>
 			<div class="legend-item">
