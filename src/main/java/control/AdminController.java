@@ -26,6 +26,7 @@ import action.Coupon.CouponEditAction;
 import action.Coupon.CouponUsageAction;
 import action.Coupon.CouponUseAction;
 import action.Design.DesignUpdateAction;
+import action.Photo.PhotoUpdateAction;
 import action.Reservation.ReservationConfirmAction;
 import action.Reservation.ReservationDeleteAction;
 import action.Reservation.ReservationHistoryAction;
@@ -274,11 +275,33 @@ public class AdminController extends HttpServlet {
 			session.setAttribute("category", category);
 			session.setAttribute("fileName", fileName);
 			String saveDir = "Z:\\卒業制作\\SotugyouGR01A\\src\\main\\webapp\\image\\photo";
+			
+			PhotoUpdateAction photoUpdateAction = new PhotoUpdateAction();
+			String oldFileName = photoUpdateAction.execute(req);
+					
+		    if (oldFileName != null && !oldFileName.isEmpty()) {
+		        File oldFile = new File(saveDir + File.separator + oldFileName);
+		        if (oldFile.exists()) {
+		            oldFile.delete(); // 物理ファイルを削除
+		        }
+		    }
+			
 			File dir = new File(saveDir);
 			if (!dir.exists()) {
 				dir.mkdirs();
 			}
 			String fullPath = saveDir + File.separator + fileName;
+
+			try {
+				part.write(fullPath);
+			} catch (IOException e) {
+				e.printStackTrace();
+				// 保存に失敗した場合はエラー処理
+				session.setAttribute("errorMsg", "ファイルの書き込みに失敗しました。");
+				resp.sendRedirect("Error.jsp");
+				return;
+			}
+
 			DesignUpdateAction designUpdateAction = new DesignUpdateAction();
 			designUpdateAction.execute(req, resp);
 			return;
