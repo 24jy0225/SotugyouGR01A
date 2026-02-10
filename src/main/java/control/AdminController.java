@@ -68,7 +68,12 @@ public class AdminController extends HttpServlet {
 		String nextPage = null;
 		HttpSession session = req.getSession();
 		String command = (String) req.getParameter("command");
+		if (command == null) {
+			resp.sendRedirect("AdminLogin.jsp");
+			return;
+		}
 		switch (command) {
+
 		case "editCoupon":
 			nextPage = "CouponManage.jsp";
 			List<Coupon> couponList = new ArrayList<>();
@@ -121,7 +126,7 @@ public class AdminController extends HttpServlet {
 			RequestDispatcher rd = req.getRequestDispatcher(nextPage);
 			rd.forward(req, resp);
 		} else {
-			resp.sendRedirect("AdminMain.jsp");
+			resp.sendRedirect("AdminLogin.jsp");
 		}
 	}
 
