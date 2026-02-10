@@ -24,6 +24,7 @@ import action.Reservation.ReservationHistoryAction;
 import action.Reservation.ReservationSeatAction;
 import action.Reservation.ReservationTimeAction;
 import action.Reservation.ReserveAction;
+import action.Topics.TopicsAction;
 import action.main.AuthenticateAction;
 import action.main.LoginAction;
 import action.main.PasswordResetAction;
@@ -35,6 +36,7 @@ import model.Photo;
 import model.Reservation;
 import model.Seat;
 import model.Store;
+import model.Topics;
 import model.User;
 
 /**
@@ -129,10 +131,13 @@ public class UserController extends HttpServlet {
 			nextPage = "ReservationDate.jsp";
 			break;
 		case "goMain":
+			TopicsAction topicsAction = new TopicsAction();
+			List<Topics> topicsList = topicsAction.execute();
 			PhotoAction photoAction = new PhotoAction();
 			List<Photo> photoList = photoAction.execute();
+			session.setAttribute("topicsList", topicsList);
 			session.setAttribute("photoList", photoList);
-			nextPage = "Main.jsp";
+			nextPage = "top.jsp";
 			break;
 		default:
 			nextPage = "Error.jsp"; // 例としてエラーページを設定
