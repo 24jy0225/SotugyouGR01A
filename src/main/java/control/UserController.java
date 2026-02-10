@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpSession;
 
 import action.Coupon.CouponUsageAction;
 import action.Coupon.CouponUseAction;
+import action.Photo.PhotoAction;
 import action.Reservation.ReservationConfirmAction;
 import action.Reservation.ReservationDateAction;
 import action.Reservation.ReservationHistoryAction;
@@ -30,6 +31,7 @@ import action.main.RegisterAction;
 import action.main.StoreAction;
 import dao.UserDao;
 import model.CouponUsage;
+import model.Photo;
 import model.Reservation;
 import model.Seat;
 import model.Store;
@@ -118,16 +120,18 @@ public class UserController extends HttpServlet {
 			}
 			break;
 		case "passwordReset":
-		    req.setAttribute("token", req.getParameter("token"));
-		    nextPage = "PasswordResetInput.jsp";
-		    break;
+			req.setAttribute("token", req.getParameter("token"));
+			nextPage = "PasswordResetInput.jsp";
+			break;
 		case "reservationDate":
 			ReservationDateAction reservationDateAction = new ReservationDateAction();
 			reservationDateAction.execute(req);
 			nextPage = "ReservationDate.jsp";
 			break;
 		case "goMain":
-			
+			PhotoAction photoAction = new PhotoAction();
+			List<Photo> photoList = photoAction.execute();
+			session.setAttribute("photoList", photoList);
 			nextPage = "Main.jsp";
 			break;
 		default:
