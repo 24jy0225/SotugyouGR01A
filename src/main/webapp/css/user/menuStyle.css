@@ -1,0 +1,444 @@
+main{
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+main .section-title-container{
+    margin: 100px auto;
+}
+.flavor-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+}
+.flavor-content img{
+    width: 30%;
+    margin: 0 auto;
+    border: 1px solid #e6b422;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    &:hover{
+        transform: scale(1.05);
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+    }
+}
+.drink-content {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 20px;
+}
+.drink-back{
+    background: url("../../image/assets/user/imgi_7_background-9.webp");
+    background-position: right bottom;
+    background-size: 1125px;
+    background-repeat: no-repeat;
+}
+.food-content{
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 20px;
+}
+.food-back{
+    background: linear-gradient(293deg, rgba(0, 0, 0, 0.00), #000 65.76%, #000 65.76%), url(../../image/assets/user/169.jpg);
+    background-position: right;
+    background-size: 1125px;
+    background-repeat: no-repeat;
+    z-index: 1;
+}
+/* 繧ｹ繝ｩ繧､繝�繝ｼ縺ｮ繝｡繧､繝ｳ繧ｳ繝ｳ繝�繝� */
+.slider-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* 逕ｻ蜒上ｒ讓ｪ縺ｫ荳ｦ縺ｹ繧九さ繝ｳ繝�繝� */
+.slider-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    /* 繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ縺ｮ騾溷ｺｦ縺ｨ蜍輔″譁ｹ繧定ｪｿ謨ｴ */
+}
+
+/* 蜷�逕ｻ蜒上い繧､繝�繝� */
+.slide-item {
+    min-width: 100%;
+    height: 700px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #2a2a2a;
+
+    border-radius: 15px;
+}
+
+.slide-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* 遏｢蜊ｰ繝懊ち繝ｳ */
+.arrow-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.arrow-button:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.arrow-button:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.prev-button {
+    left: 20px;
+}
+
+.next-button {
+    right: 20px;
+}
+
+/* 繝壹�ｼ繧ｸ繧､繝ｳ繧ｸ繧ｱ繝ｼ繧ｿ繝ｼ�ｼ医ラ繝�繝茨ｼ� */
+.dots-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.dot.active {
+    background-color: #fff;
+    width: 40px;
+    border-radius: 6px;
+}
+
+/* 繝壹�ｼ繧ｸ逡ｪ蜿ｷ陦ｨ遉ｺ */
+.page-info {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.7);
+}
+/* =========================== */
+/* 繝ｬ繧ｹ繝昴Φ繧ｷ繝門ｯｾ蠢� */
+/* =========================== */
+
+/* 繧ｿ繝悶Ξ繝�繝亥ｯｾ蠢� (1024px莉･荳�) */
+@media screen and (max-width: 1024px) {
+    .hero-section {
+        margin-bottom: 200px;
+    }
+    
+    main .section-title-container {
+        margin: 80px auto;
+    }
+    
+    .flavor-content {
+        padding: 45px 18px;
+    }
+    
+    .flavor-content img {
+        width: 85%;
+    }
+    
+    .drink-content {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 15px;
+    }
+    
+    .drink-back {
+        background-size: 900px;
+    }
+    
+    .food-content {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 15px;
+    }
+    
+    .food-back {
+        background-size: 900px;
+    }
+    
+    .slide-item {
+        height: 600px;
+    }
+    
+    .arrow-button {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+    
+    .prev-button {
+        left: 15px;
+    }
+    
+    .next-button {
+        right: 15px;
+    }
+}
+
+/* 繧ｹ繝槭�ｼ繝医ヵ繧ｩ繝ｳ蟇ｾ蠢� (768px莉･荳�) */
+@media screen and (max-width: 768px) {
+    .hero-section {
+        margin-bottom: 180px;
+    }
+    
+    main .section-title-container {
+        margin: 60px auto;
+    }
+    
+    .flavor-content {
+        padding: 40px 15px;
+    }
+    
+    .flavor-content img {
+        width: 90%;
+        padding: 8px;
+    }
+    
+    .drink-content {
+        max-width: 100%;
+        margin: 30px auto;
+        padding: 10px;
+    }
+    
+    .drink-back {
+        background-size: 600px;
+        background-position: center bottom;
+    }
+    
+    .food-content {
+        max-width: 100%;
+        margin: 30px auto;
+        padding: 10px;
+    }
+    
+    .food-back {
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.00), #000 50%, #000 50%), url(../../image/assets/user/169.jpg);
+        background-size: 600px;
+        background-position: center;
+    }
+    
+    .slider-wrapper {
+        border-radius: 10px;
+    }
+    
+    .slide-item {
+        height: 400px;
+        border-radius: 10px;
+    }
+
+    .arrow-button {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+
+    .prev-button {
+        left: 10px;
+    }
+
+    .next-button {
+        right: 10px;
+    }
+    
+    .dots-container {
+        gap: 10px;
+        margin-top: 20px;
+    }
+    
+    .dot {
+        width: 10px;
+        height: 10px;
+    }
+    
+    .dot.active {
+        width: 30px;
+    }
+    
+    .page-info {
+        font-size: 16px;
+        margin-top: 15px;
+    }
+}
+
+/* 蟆丞梛繧ｹ繝槭�ｼ繝医ヵ繧ｩ繝ｳ蟇ｾ蠢� (480px莉･荳�) */
+@media screen and (max-width: 480px) {
+    .hero-section {
+        margin-bottom: 150px;
+    }
+    
+    main .section-title-container {
+        margin: 40px auto;
+    }
+    
+    .flavor-content {
+        padding: 30px 10px;
+    }
+    
+    .flavor-content img {
+        width: 95%;
+        padding: 5px;
+        border-radius: 8px;
+    }
+    
+    .drink-content {
+        margin: 20px auto;
+        padding: 8px;
+    }
+    
+    .drink-back {
+        background-size: 400px;
+    }
+    
+    .food-content {
+        margin: 20px auto;
+        padding: 8px;
+    }
+    
+    .food-back {
+        background-size: 400px;
+    }
+    
+    .slider-wrapper {
+        border-radius: 8px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    }
+    
+    .slide-item {
+        height: 300px;
+        border-radius: 8px;
+    }
+    
+    .arrow-button {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    .prev-button {
+        left: 8px;
+    }
+    
+    .next-button {
+        right: 8px;
+    }
+    
+    .dots-container {
+        gap: 8px;
+        margin-top: 15px;
+    }
+    
+    .dot {
+        width: 8px;
+        height: 8px;
+    }
+    
+    .dot.active {
+        width: 24px;
+    }
+    
+    .page-info {
+        font-size: 14px;
+        margin-top: 12px;
+    }
+}
+
+/* 讌ｵ蟆上せ繝槭�ｼ繝医ヵ繧ｩ繝ｳ蟇ｾ蠢� (400px莉･荳�) */
+@media screen and (max-width: 400px) {
+    .hero-section {
+        margin-bottom: 120px;
+    }
+    
+    main .section-title-container {
+        margin: 30px auto;
+    }
+    
+    .flavor-content img {
+        width: 100%;
+    }
+    
+    .drink-back {
+        background-size: 350px;
+    }
+    
+    .food-back {
+        background-size: 350px;
+    }
+    
+    .slide-item {
+        height: 250px;
+    }
+    
+    .arrow-button {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+    }
+    
+    .prev-button {
+        left: 5px;
+    }
+    
+    .next-button {
+        right: 5px;
+    }
+    
+    .dots-container {
+        gap: 6px;
+        margin-top: 12px;
+    }
+    
+    .dot {
+        width: 7px;
+        height: 7px;
+    }
+    
+    .dot.active {
+        width: 20px;
+    }
+    
+    .page-info {
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,114 @@
+/* トピックスリスト */
+.topics_list {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 100px;
+}
+
+.topics_container {
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+    margin-top: 100px;
+}
+
+/* トピックアイテム */
+.topic_item {
+    display: flex;
+    gap: 80px;
+    align-items: flex-start;
+}
+
+/* トピック画像 */
+.topic_image {
+    flex-shrink: 0;
+    width: 350px;
+    height: auto;
+}
+
+.topic_image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 2px solid #e6b422;
+    display: block;
+}
+
+/* トピックコンテンツ */
+.topic_content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding-top: 30px;
+}
+
+.topic_title {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: #ffffff;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.topic_description {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    color: #ffffff;
+    line-height: 1.9;
+    margin: 0;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 1200px) {
+    .topics_list {
+        padding: 0 50px;
+    }
+    
+    .topic_item {
+        gap: 50px;
+    }
+    
+    .topic_image {
+        width: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .topics_list {
+        padding: 0 20px;
+    }
+    
+    .topics_container {
+        gap: 60px;
+    }
+    
+    .topic_item {
+        flex-direction: column;
+        gap: 30px;
+        align-items: center;
+    }
+    
+    .topic_image {
+        width: 100%;
+        max-width: 350px;
+        margin: 0 auto;
+    }
+    
+    .topic_content {
+        padding-top: 0;
+        text-align: center;
+        align-items: center;
+    }
+    
+    .topic_title {
+        text-align: center;
+    }
+    
+    .topic_description {
+        text-align: center;
+    }
+}

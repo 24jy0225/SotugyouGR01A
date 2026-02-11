@@ -1,15 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="model.User"%>
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="ja">
 
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="../assets/ロゴマーク_金色b.webp">
-<link rel="stylesheet" href="../css/style.css">
-<link rel="stylesheet" href="../css/loginStyle.css">
+<link rel="stylesheet" href="./css/user/style.css">
+<link rel="stylesheet" href="./css/user/loginStyle.css">
 <title>Login</title>
 </head>
 
@@ -17,16 +16,16 @@
 	<!-- ヘッダー -->
 	<header class="header" data-name="ヘッダー">
 		<div class="logos" id="logo" onclick="location.href='./top.html'">
-			<img src="../assets/ロゴタイプ_金色b.svg" alt="logo" class="logo">
+			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo" class="logo">
 		</div>
 		<nav class="nav-menu">
 			<a href="./whats_Shisha.html" class="nav-link">What's</a> <a
 				href="./how_to_Use.html" class="nav-link">Use</a> <a
-				href="./system-introduction.html" class="nav-link">System</a> <a
-				href="./menu.html" class="nav-link">Menu</a> <a href="./topics.html"
+				href="./system-introduction.jsp" class="nav-link">System</a> <a
+				href="./menu.jsp" class="nav-link">Menu</a> <a href="./topics.jsp"
 				class="nav-link">Topics</a> <a href="./contact.html"
 				class="nav-link">Contact</a> <a href="#" class="nav-link">Reservation</a>
-			<a href="./login.html" class="nav-link">Login</a>
+			<a href="./Login.jsp" class="nav-link">Login</a>
 		</nav>
 	</header>
 	<main>
@@ -86,4 +85,4 @@
 </body>
 
 </html>
-<script type="text/javascript" src="../javascript/logoScript.js"></script>
+<script type="text/javascript" src="./javascript/logoScript.js"></script>

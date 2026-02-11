@@ -16,24 +16,24 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Top - The Shisha Honjin</title>
 <link rel="icon" href="../assets/ロゴマーク_金色b.webp">
-<link rel="stylesheet" href="../css/mainstyles.css">
-<link rel="stylesheet" href="../css/top-styles.css">
+<link rel="stylesheet" href="./css/user/mainstyles.css">
+<link rel="stylesheet" href="./css/user/top-styles.css">
 </head>
 
 <body>
 	<!-- ヘッダー -->
 	<header class="header" data-name="ヘッダー">
-		<div class="logos" id="logo" onclick="location.href='./top.html'">
-			<img src="../assets/ロゴタイプ_金色b.svg" alt="logo" class="logo">
+		<div class="logos" id="logo" onclick="location.href='./top.jsp'">
+			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo" class="logo">
 		</div>
 		<nav class="nav-menu">
 			<a href="./whats_Shisha.html" class="nav-link">What's</a> <a
 				href="./how_to_Use.html" class="nav-link">Use</a> <a
-				href="./system-introduction.html" class="nav-link">System</a> <a
-				href="./menu.html" class="nav-link">Menu</a> <a href="./topics.html"
+				href="./system-introduction.jsp" class="nav-link">System</a> <a
+				href="./menu.html" class="nav-link">Menu</a> <a href="./topics.jsp"
 				class="nav-link">Topics</a> <a href="./contact.html"
 				class="nav-link">Contact</a> <a href="#" class="nav-link">Reservation</a>
-			<a href="./login.html" class="nav-link">Login</a>
+			<a href="./Login.jsp" class="nav-link">Login</a>
 		</nav>
 	</header>
 
@@ -42,10 +42,10 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 		<!-- ヒーローセクション -->
 		<div class="hero-section">
 			<div class="hero-background-image">
-				<img src="../assets/burning_coal.jpg" alt="シーシャの炭">
+				<img src="./image/assets/user/burning_coal.jpg" alt="シーシャの炭">
 			</div>
 			<div class="logo-image">
-				<img src="../assets/ロゴ完成_金色b.svg" alt="ロゴ">
+				<img src="./image/assets/user/ロゴ完成_金色b.svg" alt="ロゴ">
 			</div>
 		</div>
 
@@ -54,7 +54,7 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 			<h1 class="japanese-title">日本人に合ったシーシャを</h1>
 			<div class="japanese-content">
 				<div class="japanese-image">
-					<img src="../assets/シーシャ写真1.jpeg" alt="シーシャ">
+					<img src="./image/assets/user/シーシャ写真1.jpeg" alt="シーシャ">
 				</div>
 				<div class="japanese-text">
 					<p>日本人の感性に寄り添った空間設計と、きめ細やかなサービスをもって、日本人が求める「清潔感」「静けさ」「心地よい距離感」を大切にした店づくりを続け、「一人でも安心して過ごせる」「初めてでも気後れしない」「何度来ても新鮮な発見がある」、そんな居場所を世に出し続けています。
@@ -81,7 +81,7 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 					<p>タバコ特有の臭いや、肺へのストレスの要素をカットし、フルーツやスイーツなど、お好みに合わせたフレーバーのアレンジやアルコールの追加、冷やしシーシャなどのオプションも楽しめます。</p>
 				</div>
 				<div class="whats-image">
-					<img src="../assets/whatsshisha.jpeg" alt="シーシャ">
+					<img src="./image/assets/user/whatsshisha.jpeg" alt="シーシャ">
 				</div>
 			</div>
 			<div class="more-btn-container">
@@ -98,17 +98,17 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 			</div>
 			<div class="how-to-use-cards">
 				<div class="use-card">
-					<img src="../assets/imgi_73_shishen_frankfurt-1920w.jpeg"
+					<img src="./image/assets/user/imgi_73_shishen_frankfurt-1920w.jpeg"
 						alt="シーシャの選び方">
 					<p class="use-card-title">シーシャだけでも</p>
 				</div>
 				<div class="use-card">
-					<img src="../assets/imgi_29_bar_frankfurt-1920w.jpeg"
+					<img src="./image/assets/user/imgi_29_bar_frankfurt-1920w.jpeg"
 						alt="シーシャの楽しみ方">
 					<p class="use-card-title">シーシャとお酒で</p>
 				</div>
 				<div class="use-card">
-					<img src="../assets/imgi_5_maxsonmedia-9-2048x1365.jpeg"
+					<img src="./image/assets/user/imgi_5_maxsonmedia-9-2048x1365.jpeg"
 						alt="店舗の雰囲気">
 					<p class="use-card-title">お酒だけで</p>
 				</div>
@@ -131,9 +131,9 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 					<h2 class="system-subtitle">基本料金</h2>
 					<div class="system-prices">
 						<p>
-							<span class="price-label">ショートシーシャ(1時間)</span><br>
-							<span class="price-value">￥1,200(税込)</span><br>
-							<span class="price-label">レギュラーシーシャ(1.5時間)</span>
+							<span class="price-label">ショートシーシャ(1時間)</span><br> <span
+								class="price-value">￥1,200(税込)</span><br> <span
+								class="price-label">レギュラーシーシャ(1.5時間)</span>
 						</p>
 						<p class="price-value">￥1,800(税込)</p>
 						<p class="price-label">スペシャルシーシャ(2時間)</p>
@@ -150,8 +150,8 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 						<p>&nbsp;</p>
 						<p>
 							<span class="price-label">シーシャをご注文にならない場合<br>別途お通し代
-							</span><span class="price-value">￥300(税込)</span><br>
-							<span class="price-label">頂戴いたします。</span>
+							</span><span class="price-value">￥300(税込)</span><br> <span
+								class="price-label">頂戴いたします。</span>
 						</p>
 					</div>
 				</div>
@@ -172,7 +172,7 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 				<hr>
 			</div>
 			<div class="flavor-image">
-				<img src="../assets/flavar.png" alt="フレーバー">
+				<img src="./image/assets/user/flavar.png" alt="フレーバー">
 			</div>
 			<div class="more-btn-container">
 				<button class="more-btn">MORE</button>
@@ -188,7 +188,7 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 			</div>
 			<div class="drink-content">
 				<div class="drink-image">
-					<img src="../assets/imgi_42_drinks_frankfurt-9d10b135.jpg"
+					<img src="./image/assets/user/imgi_42_drinks_frankfurt-9d10b135.jpg"
 						alt="ドリンク">
 				</div>
 				<div class="drink-text">
@@ -216,7 +216,7 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 					<p>ご自分のシチュエーションに合わせてご注文ください</p>
 				</div>
 				<div class="food-image">
-					<img src="../assets/imgi_58_obstplatte_frankfurt.jpg" alt="フード">
+					<img src="./image/assets/user/imgi_58_obstplatte_frankfurt.jpg" alt="フード">
 				</div>
 			</div>
 			<div class="more-btn-container">
@@ -233,7 +233,8 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 			</div>
 			<div class="topics-cards">
 				<%
-				for (Topics t : topicsList) {
+				if (topicsList != null) {
+					for (Topics t : topicsList) {
 				%>
 				<div class="topic-card">
 					<div class="topic-card-header">
@@ -244,6 +245,9 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 							alt="トピック1">
 					</div>
 				</div>
+				<%
+					}
+				%>
 				<%
 				}
 				%>
@@ -258,7 +262,7 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 	<footer class="footer" data-name="フッター">
 		<div class="footer-content">
 			<div class="footer-logo">
-				<img src="../assets/ロゴ完成_金色b.svg" alt="フッターロゴ">
+				<img src="./image/assets/user/ロゴ完成_金色b.svg" alt="フッターロゴ">
 			</div>
 			<button class="footer-reservation-btn">ご予約</button>
 			<table class="footer-info">
@@ -308,4 +312,4 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 </body>
 
 </html>
-<script type="text/javascript" src="../javascript/logoScript.js"></script>
+<script type="text/javascript" src="./javascript/logoScript.js"></script>

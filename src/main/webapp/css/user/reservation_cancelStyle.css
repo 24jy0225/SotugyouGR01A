@@ -1,0 +1,187 @@
+main {
+    background-color: #000;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+.cancel-container {
+    background-color: #f5f5f5;
+    padding: 50px 60px;
+    max-width: 650px;
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 100px;
+}
+
+.cancel-page-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #000;
+}
+
+.cancel-description {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 40px;
+}
+
+.reservation-info {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 30px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.info-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #000;
+}
+
+.reservation-info tr {
+    gap: 12px;
+    font-size: 14px;
+    align-items: center;
+}
+.reservation-info td{
+    padding-top: 10px;
+}
+.reservation-info img{
+    padding: 0;
+    vertical-align: middle;
+}
+.info-row:last-child {
+    margin-bottom: 0;
+}
+
+.info-label {
+    color: #666;
+    min-width: 100px;
+}
+
+.info-value {
+    color: #000;
+    font-weight: 500;
+}
+
+.warning-box {
+    background-color: #fff9e6;
+    border: 1px solid #ffd966;
+    padding: 16px 20px;
+    margin-bottom: 30px;
+    border-radius: 6px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.warning-icon {
+    color: #ff9800;
+    font-size: 20px;
+    min-width: 20px;
+}
+
+.warning-text {
+    font-size: 13px;
+    color: #856404;
+    line-height: 1.6;
+}
+
+.cancel-submit-btn {
+    width: 100%;
+    padding: 16px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+.cancel-submit-btn:hover {
+    background-color: #c82333;
+}
+
+/* 確認モーダル */
+dialog {
+    background-color: #fff;
+    padding: 35px 40px;
+    max-width: 450px;
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    margin: 300px auto;
+    border: none;
+}
+.modal-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #000;
+}
+
+.modal-message {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.7;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.modal-btn {
+    flex: 1;
+    padding: 12px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.modal-btn-back {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #ddd;
+}
+
+.modal-btn-back:hover {
+    background-color: #f8f8f8;
+}
+
+.modal-btn-confirm {
+    background-color: #dc3545;
+    color: #fff;
+    border: 1px solid #dc3545;
+}
+
+.modal-btn-confirm:hover {
+    background-color: #c82333;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .cancel-container {
+        padding: 40px 30px;
+    }
+
+    dialog {
+        position: fixed;
+        top: 50%;
+        right: 50%;
+        transform: translate(50%, -50%);
+        max-width: 90%;
+    }
+}

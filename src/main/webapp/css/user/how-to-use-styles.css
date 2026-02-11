@@ -1,0 +1,370 @@
+/* How to Useページ専用スタイル */
+
+/* メインコンテンツにパディングを追加してヒーローセクションとの重なりを防ぐ */
+.how-to-use-main-content {
+	padding-top: 0; /* PC表示ではpadding-topなし */
+}
+
+/* How to Use セクション */
+.how-to-use-section {
+	width: 100%;
+	margin-top: 50px; /* ヒーローセクションとの適度な間隔 */
+}
+
+.section-subtitle {
+	text-align: center;
+	color: #FFF;
+	font-family: "Noto Sans JP";
+	font-size: 36px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+	letter-spacing: 3.6px;
+}
+
+/* 紹介文 */
+.intro-text {
+	margin: 50px auto;
+	width: 100%;
+	max-width: 1600px;
+	font-family: 'Noto Sans JP', sans-serif;
+	font-weight: 400;
+	font-size: 20px;
+	line-height: 45px;
+	color: #ffffff;
+	text-align: center;
+	letter-spacing: 2px;
+	padding: 0 199px;
+}
+
+.intro-text p {
+	margin-bottom: 0;
+}
+
+.intro-text strong {
+	font-weight: 700;
+}
+
+/* 利用方法セクション共通スタイル */
+.use-method-section {
+	position: relative;
+	width: 100%;
+	margin-bottom: 0;
+}
+
+.method-image {
+	position: absolute;
+	left: 580px;
+	width: 760px;
+	height: 495.58px;
+}
+
+.method-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+	pointer-events: none;
+}
+
+.method-content {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 100%;
+	max-width: 1521px;
+	text-align: center;
+}
+
+.method-title {
+	font-family: 'Noto Sans JP', sans-serif;
+	font-weight: 400;
+	font-size: 32px;
+	color: #ffffff;
+	text-decoration: underline;
+	text-underline-position: from-font;
+	text-align: center;
+	margin-bottom: 0;
+	letter-spacing: 2px;
+}
+
+.method-description {
+	font-family: 'Noto Sans JP', sans-serif;
+	font-weight: 400;
+	font-size: 20px;
+	line-height: 45px;
+	color: #ffffff;
+	text-align: center;
+	letter-spacing: 2px;
+	margin-top: 0;
+}
+
+.method-description p {
+	margin-bottom: 0;
+}
+
+/* Shisha & Alcohol セクション */
+.shisha-alcohol-section {
+	margin-top: 60px;
+	width: 100%;
+	height: 800px;
+}
+
+.shisha-alcohol-section .method-content {
+	top: 572px;
+}
+
+/* Shisha Only セクション */
+.shisha-only-section {
+	margin-top: 100px;
+	width: 100%;
+	height: 800px;
+}
+
+.shisha-only-section .method-image {
+	top: 0;
+}
+
+.shisha-only-section .method-content {
+	top: 572px;
+}
+
+/* Alcohol Only セクション */
+.alcohol-only-section {
+	height: 800px;
+	width: 100%;
+	margin-top: 100px;
+}
+
+.alcohol-only-section .method-image {
+	top: 0;
+}
+
+.alcohol-only-section .method-content {
+	top: 572px;
+}
+
+/* =========================== */
+/* レスポンシブ対応 */
+/* =========================== */
+
+/* タブレット対応 (1024px以下) */
+@media screen and (max-width: 1024px) {
+	.how-to-use-main-content {
+		padding-top: 700px;
+	}
+	.how-to-use-section {
+		margin-top: 0;
+	}
+	.section-subtitle {
+		font-size: 28px;
+		letter-spacing: 2.8px;
+	}
+
+	/* 紹介文 */
+	.intro-text {
+		margin: 40px auto;
+		font-size: 18px;
+		line-height: 38px;
+		padding: 0 80px;
+	}
+
+	/* 利用方法セクション */
+	.method-image {
+		left: 50%;
+		transform: translateX(-50%);
+		width: 600px;
+		height: 390px;
+	}
+	.method-title {
+		font-size: 28px;
+	}
+	.method-description {
+		font-size: 18px;
+		line-height: 38px;
+		padding: 0 60px;
+	}
+
+	/* Shisha & Alcohol セクション */
+	.shisha-alcohol-section {
+		height: 700px;
+		margin-top: 50px;
+	}
+	.shisha-alcohol-section .method-content {
+		top: 450px;
+	}
+
+	/* Shisha Only セクション */
+	.shisha-only-section {
+		height: 700px;
+		margin-top: 80px;
+	}
+	.shisha-only-section .method-content {
+		top: 450px;
+	}
+
+	/* Alcohol Only セクション */
+	.alcohol-only-section {
+		height: 700px;
+		margin-top: 80px;
+	}
+	.alcohol-only-section .method-content {
+		top: 450px;
+	}
+}
+
+/* スマートフォン対応 (768px以下) */
+@media screen and (max-width: 768px) {
+	.how-to-use-main-content {
+		padding-top: 500px;
+	}
+	.how-to-use-section {
+		margin-top: 0;
+	}
+	.section-subtitle {
+		font-size: 24px;
+		letter-spacing: 2.4px;
+	}
+
+	/* 紹介文 */
+	.intro-text {
+		margin: 30px auto;
+		font-size: 16px;
+		line-height: 32px;
+		padding: 0 30px;
+	}
+
+	/* 利用方法セクション */
+	.use-method-section {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-bottom: 60px;
+	}
+	.method-image {
+		position: relative;
+		left: auto;
+		transform: none;
+		width: 90%;
+		max-width: 500px;
+		height: auto;
+		aspect-ratio: 760/495.58;
+		margin: 0 auto 30px;
+	}
+	.method-content {
+		position: relative;
+		left: auto;
+		transform: none;
+		top: auto;
+		width: 100%;
+		padding: 0 20px;
+	}
+	.method-title {
+		font-size: 24px;
+		margin-bottom: 20px;
+	}
+	.method-description {
+		font-size: 16px;
+		line-height: 32px;
+		padding: 0 20px;
+	}
+
+	/* Shisha & Alcohol セクション */
+	.shisha-alcohol-section {
+		height: auto;
+		margin-top: 40px;
+		padding-bottom: 40px;
+	}
+	.shisha-alcohol-section .method-content {
+		top: auto;
+	}
+
+	/* Shisha Only セクション */
+	.shisha-only-section {
+		height: auto;
+		margin-top: 40px;
+		padding-bottom: 40px;
+	}
+	.shisha-only-section .method-image {
+		top: auto;
+	}
+	.shisha-only-section .method-content {
+		top: auto;
+	}
+
+	/* Alcohol Only セクション */
+	.alcohol-only-section {
+		height: auto;
+		margin-top: 40px;
+		padding-bottom: 40px;
+	}
+	.alcohol-only-section .method-image {
+		top: auto;
+	}
+	.alcohol-only-section .method-content {
+		top: auto;
+	}
+}
+
+/* 極小スマートフォン対応 (480px以下) */
+@media screen and (max-width: 480px) {
+	.how-to-use-main-content {
+		padding-top: 400px;
+	}
+	.section-subtitle {
+		font-size: 20px;
+		letter-spacing: 2px;
+	}
+
+	/* 紹介文 */
+	.intro-text {
+		margin: 25px auto;
+		font-size: 14px;
+		line-height: 28px;
+		padding: 0 20px;
+	}
+
+	/* 利用方法セクション */
+	.method-image {
+		width: 95%;
+	}
+	.method-title {
+		font-size: 20px;
+		margin-bottom: 15px;
+	}
+	.method-description {
+		font-size: 14px;
+		line-height: 28px;
+		padding: 0 15px;
+	}
+
+	/* セクション間隔調整 */
+	.shisha-alcohol-section, .shisha-only-section, .alcohol-only-section {
+		margin-top: 30px;
+		padding-bottom: 30px;
+	}
+}
+
+/* 極小スマートフォン対応 (400px以下) */
+@media screen and (max-width: 400px) {
+	.how-to-use-main-content {
+		padding-top: 350px;
+	}
+	.section-subtitle {
+		font-size: 18px;
+		letter-spacing: 1.8px;
+	}
+	.intro-text {
+		font-size: 13px;
+		line-height: 26px;
+		padding: 0 15px;
+	}
+	.method-title {
+		font-size: 18px;
+	}
+	.method-description {
+		font-size: 13px;
+		line-height: 26px;
+		padding: 0 10px;
+	}
+}

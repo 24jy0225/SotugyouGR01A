@@ -1,0 +1,82 @@
+main {
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 100px;
+}
+
+.complete-title {
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+    font-size: 48px;
+    font-weight: 400;
+    margin-bottom: 40px;
+    letter-spacing: 0.5px;
+}
+
+.complete-message {
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+    font-size: 64px;
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 10px;
+}
+
+/* スマートフォン対応 - レスポンシブデザイン */
+@media (max-width: 768px) {
+    body {
+        padding: 30px 20px;
+    }
+    
+    .complete-title {
+        font-size: 36px;
+        margin-bottom: 35px;
+        letter-spacing: 0.3px;
+    }
+    
+    .complete-message {
+        font-size: 48px;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 25px 15px;
+    }
+    
+    .complete-title {
+        font-size: 28px;
+        margin-bottom: 30px;
+        letter-spacing: 0.2px;
+        line-height: 1.3;
+    }
+    
+    .complete-message {
+        font-size: 40px;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 6px;
+    }
+}
+
+@media (max-width: 360px) {
+    .complete-title {
+        font-size: 24px;
+        margin-bottom: 25px;
+    }
+    
+    .complete-message {
+        font-size: 36px;
+    }
+}

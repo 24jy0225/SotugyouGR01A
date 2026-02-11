@@ -1,0 +1,156 @@
+main {
+    color: #FFFFFF;
+    min-height: 100vh;
+    padding: 10px 20px;
+}
+
+.container {
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+/* ステップインジケーター */
+.step_indicator {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.step_indicator h2 {
+    font-size: 18px;
+    font-weight: normal;
+    margin-bottom: 30px;
+    color: #FFFFFF;
+}
+
+.step_image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.step_image img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* コース選択エリア */
+.course_selection_area {
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    padding: 70px 150px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.course_selection_area h3 {
+    font-size: 20px;
+    color: #333333;
+    margin-bottom: 10px;
+    font-weight: normal;
+}
+
+.selected_date {
+    font-size: 14px;
+    color: #666666;
+    margin-bottom: 60px;
+    line-height: 1.6;
+    white-space: nowrap;
+}
+
+.course_cards {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.course_card {
+    background-color: #FFFFFF;
+    border: 1px solid #E0E0E0;
+    border-radius: 12px;
+    padding: 30px 40px;
+    width: 280px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.course_card:hover {
+    border-color: #6B6BFF;
+    box-shadow: 0 4px 12px rgba(107, 107, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.course_icon {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.course_icon img {
+    width: 60px;
+    height: 60px;
+}
+
+.course_card h4 {
+    font-size: 16px;
+    color: #333333;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.duration {
+    font-size: 14px;
+    color: #666666;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+.back_link {
+    display: inline-block;
+    color: #666666;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.back_link:hover {
+    color: #6B6BFF;
+}
+
+/* やり直しボタン */
+.restart_button {
+    display: block;
+    margin: 0 auto;
+    background-color: transparent;
+    color: #6B6BFF;
+    border: 2px solid #6B6BFF;
+    border-radius: 25px;
+    padding: 12px 35px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.restart_button:hover {
+    background-color: #6B6BFF;
+    color: #FFFFFF;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .course_selection_area {
+        padding: 30px 20px;
+    }
+    
+    .course_cards {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+    
+    .course_card {
+        width: 100%;
+        max-width: 280px;
+    }
+}
