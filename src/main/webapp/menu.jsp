@@ -48,7 +48,7 @@ List<Photo> photoList = (List<Photo>) session.getAttribute("photoList");
 		</div>
 		<div class="flavor-content">
 			<%
-			if (photoList != null) {
+			if (photoList.size() != 0) {
 				for (Photo p : photoList) {
 					if (p.getPhotoCategory() != "flavar") {
 				continue;
@@ -73,7 +73,7 @@ List<Photo> photoList = (List<Photo>) session.getAttribute("photoList");
 			<div class="drink-content">
 				<div class="slide-item" id="drinkSliderTrack">
 					<%
-					if (photoList != null) {
+					if (photoList.size() != 0) {
 						for (Photo p : photoList) {
 							if (p.getPhotoCategory() != "drink") {
 						continue;
@@ -102,7 +102,7 @@ List<Photo> photoList = (List<Photo>) session.getAttribute("photoList");
 				<div class="slider-wrapper">
 					<div class="slide-item" id="foodSliderTrack">
 						<%
-						if (photoList != null) {
+						if (photoList.size() != 0) {
 							for (Photo p : photoList) {
 								if (p.getPhotoCategory() != "food") {
 							continue;

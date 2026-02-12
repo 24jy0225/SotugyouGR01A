@@ -20,6 +20,7 @@ import action.Coupon.CouponUseAction;
 import action.Photo.PhotoAction;
 import action.Reservation.ReservationConfirmAction;
 import action.Reservation.ReservationDateAction;
+import action.Reservation.ReservationDeleteAction;
 import action.Reservation.ReservationHistoryAction;
 import action.Reservation.ReservationSeatAction;
 import action.Reservation.ReservationTimeAction;
@@ -55,7 +56,8 @@ public class UserController extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -139,6 +141,19 @@ public class UserController extends HttpServlet {
 			session.setAttribute("photoList", photoList);
 			nextPage = "top.jsp";
 			break;
+		case "cancel":
+			String reserveId = req.getParameter("reserveId");
+			session.setAttribute("reserveId", reserveId);
+			ReservationDeleteAction reservationDeleteAction = new ReservationDeleteAction();
+			if (reservationDeleteAction.execute(req)) {
+				resp.sendRedirect("ReservationCancelComplete.jsp");
+				return;
+			} else {
+				nextPage = "Error.jsp";
+				session.setAttribute("errorMsg", "cancelできませんでした");
+				break;
+			}
+
 		default:
 			nextPage = "Error.jsp"; // 例としてエラーページを設定
 			session.setAttribute("errorMsg", "無効なGETコマンド: " + command);
@@ -150,7 +165,8 @@ public class UserController extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub

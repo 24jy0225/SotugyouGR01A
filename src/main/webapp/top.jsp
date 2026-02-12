@@ -32,7 +32,7 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 				href="./system-introduction.jsp" class="nav-link">System</a> <a
 				href="./menu.html" class="nav-link">Menu</a> <a href="./topics.jsp"
 				class="nav-link">Topics</a> <a href="./contact.html"
-				class="nav-link">Contact</a> <a href="#" class="nav-link">Reservation</a>
+				class="nav-link">Contact</a> <a href="./ReservationDate.jsp" class="nav-link">Reservation</a>
 			<a href="./Login.jsp" class="nav-link">Login</a>
 		</nav>
 	</header>
@@ -233,7 +233,7 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 			</div>
 			<div class="topics-cards">
 				<%
-				if (topicsList != null) {
+				if (topicsList.size() != 0) {
 					for (Topics t : topicsList) {
 				%>
 				<div class="topic-card">

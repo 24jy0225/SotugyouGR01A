@@ -48,7 +48,7 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 		<div class="topics_list">
 			<div class="topics_container">
 				<%
-				if (topicsList != null) {
+				if (topicsList.size() != 0) {
 				%>
 				<%
 				for (Topics t : topicsList) {

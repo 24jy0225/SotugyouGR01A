@@ -46,7 +46,7 @@ List<Photo> photoList = (List<Photo>) session.getAttribute("photoList");
 		</div>
 		<div class="system-img">
 			<%
-			if (photoList != null) {
+			if (photoList.size() != 0) {
 				for (Photo p : photoList) {
 					if (p.getPhotoCategory() == "system") {
 			%>

@@ -38,14 +38,14 @@
 				<div class="form-group">
 					<label class="form-label" for="email">Email Address</label> <input
 						type="email" id="email" class="form-input" name="email"
-						placeholder="Placeholder">
+						placeholder="Placeholder" required>
 				</div>
 
 				<div class="form-group">
 					<label class="form-label" for="password">Password</label>
 					<div class="input-wrapper">
 						<input type="password" id="password" class="form-input"
-							name="password" placeholder="Placeholder text"> <span
+							name="password" placeholder="Placeholder text" required> <span
 							class="password-toggle" onclick="togglePassword()">不</span>
 					</div>
 					<p class="password-hint">パスワードは英字大文字・小文字・数字を含む8文字以上で入力してください。</p>
