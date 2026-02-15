@@ -27,6 +27,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+    pointer-events: none;
 }
 
 .step_image img {
@@ -93,11 +94,13 @@ main {
 .time_slot svg {
     width: 20px;
     height: 20px;
+    pointer-events: none;
 }
 
 .time_slot img {
     width: 20px;
     height: 20px;
+    pointer-events: none;
 }
 
 .time_slot span {
