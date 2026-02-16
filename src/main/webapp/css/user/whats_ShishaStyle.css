@@ -113,7 +113,7 @@
 .history-section .section-background-image {
     height: calc(100% + 98px);
     top: -98px;
-    background-image: url('../assets/imgi_17_Hookah-pipe-for-groups.jpeg');
+    background-image: url('../../image/assets/user/imgi_17_Hookah-pipe-for-groups.jpeg');
 }
 
 /* =========================== */
@@ -147,7 +147,7 @@
 .harm-section .section-background-image {
     height: calc(100% + 36px);
     top: -36px;
-    background-image: url('../assets/imgi_10_background-3.jpeg');
+    background-image: url('../../image/assets/user/imgi_10_background-3.jpeg');
 }
 
 /* =========================== */
