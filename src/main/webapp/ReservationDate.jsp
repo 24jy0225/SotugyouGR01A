@@ -204,7 +204,6 @@ Map<String, String> statusData = (Map<String, String>) request.getAttribute("sta
 					calendar.render();
 				});
 			</script>
-
 	<footer>
 		<p><small>&copy;The Shisha Honjin</small></p>
 	</footer>
