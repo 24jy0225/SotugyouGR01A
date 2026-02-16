@@ -137,6 +137,7 @@ tr {
     background-repeat: repeat;
     background-size: cover;
 }
+
 .color-gray {
     color: #717182;
     font-family: "Noto Sans JP";
@@ -149,16 +150,19 @@ tr {
     flex-direction: column;
     gap: 20px;
 }
+
 .coupon-form-div{
     display: flex;
     flex-direction: column;
 }
+
 .coupon-add input{
     background-color: white;
     border: #D1D5DC solid 1px;
     border-radius: 10px;
     height: 35px;
 }
+
 #coupon-submit{
     margin-top: 40px;
     background-color: black;

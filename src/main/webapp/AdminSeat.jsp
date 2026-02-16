@@ -47,7 +47,7 @@ List<Seat> seatList = (List<Seat>) session.getAttribute("Seat");
 					</td>
 				</tr>
 			</table>
-			<button onclick="addSeat()">座席追加</button>
+			<button onclick="addSeat()" class="">座席追加</button>
 		</div>
 		<div class="seat_main_body">
 			<table>
