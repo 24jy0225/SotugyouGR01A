@@ -18,20 +18,37 @@ User user = (User) session.getAttribute("LoginUser");
 		<div class="logos" id="logo" onclick="location.href='./top.jsp'">
 			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo" class="logo">
 		</div>
-		<nav class="nav-menu">
-			<a href="./whats_Shisha.jsp" class="nav-link">What's</a> 
-			<a href="./how_to_Use.jsp" class="nav-link">Use</a> 
-			<a href="./system-introduction.jsp" class="nav-link">System</a>
-			<a	href="./menu.jsp" class="nav-link">Menu</a> 
-			<a href="./topics.jsp" class="nav-link">Topics</a> 
-			<a href="./contact.jsp" class="nav-link">Contact</a>
-			<a href="UserController?command=reservationDate" class="nav-link">Reservation</a>
+		<button class="hamburger-menu" id="hamburgerBtn" aria-label="メニュー">
+            <img src="./image/assets/user/hamburger.svg" alt="メニュー">
+        </button>
+        <!-- PC用ナビゲーション -->
+        <nav class="nav-menu">
+            <a href="./whats_Shisha.html" class="nav-link">What's</a>
+            <a href="./how_to_Use.html" class="nav-link">Use</a>
+            <a href="./system-introduction.html" class="nav-link">System</a>
+            <a href="./menu.html" class="nav-link">Menu</a>
+            <a href="./topics.html" class="nav-link">Topics</a>
+            <a href="./contact.html" class="nav-link">Contact</a>
 			<%if (user != null) { %>
 				<a href="UserController?command=MyPage" class="nav-link">Member</a>
 			<% } else { %>
 				<a href="./Login.jsp" class="nav-link">Login</a>
 			<% } %>
-		</nav>
+        </nav>
+        <!-- スマホ用ナビゲーション -->
+        <nav class="mobile-nav" id="mobileNav">
+            <a href="./whats_Shisha.html" class="mobile-nav-link">What's</a>
+            <a href="./how_to_Use.html" class="mobile-nav-link">Use</a>
+            <a href="./system-introduction.html" class="mobile-nav-link">System</a>
+            <a href="./menu.html" class="mobile-nav-link">Menu</a>
+            <a href="./topics.html" class="mobile-nav-link">Topics</a>
+            <a href="./contact.html" class="mobile-nav-link">Contact</a>
+			<%if (user != null) { %>
+				<a href="UserController?command=MyPage" class="mobile-nav-link">Member</a>
+			<% } else { %>
+				<a href="./Login.jsp" class="mobile-nav-link">Login</a>
+			<% } %>
+        </nav>
 	</header>
 	
 	<main>
@@ -104,3 +121,4 @@ User user = (User) session.getAttribute("LoginUser");
 </body>
 </html>
 <script type="text/javascript" src="./javascript/logoScript.js"></script>
+<script type="text/javascript" src="../javascript/hamburgerMenu.js"></script>
