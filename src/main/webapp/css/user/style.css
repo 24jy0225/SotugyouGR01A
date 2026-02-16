@@ -1,0 +1,144 @@
+@import url("https://fonts.googleapis.com/css2?family=Italianno&family=Noto+Sans+JP:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background-color: #000000;
+    color: #ffffff;
+    overflow: scroll;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+html {
+    width: 100%;
+}
+
+.playfair-display {
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+}
+
+.italianno-regular {
+    font-family: "Italianno", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* セクション共通スタイル */
+.section {
+    position: relative;
+    width: 100%;
+    padding: 0;
+}
+
+.section-title {
+    font-family: 'Italianno', cursive;
+    font-size: 96px;
+    color: #e6b422;
+    text-align: center;
+    letter-spacing: 9.6px;
+    white-space: nowrap;
+    position: absolute;
+    margin: 0 auto;
+}
+
+/* ヘッダー */
+.header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 200px;
+    z-index: 9999;
+    background: linear-gradient(180deg, rgba(00, 00, 00, 1), rgba(00, 00, 00, 1), rgba(00, 00, 00, 0), rgba(00, 00, 00, 0));
+}
+.systemheader{
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 200px;
+    z-index: 9999;
+    background: linear-gradient(180deg, rgba(00, 00, 00, 1), rgba(00, 00, 00, 1), rgba(00, 00, 00, 0), rgba(00, 00, 00, 0));
+    text-align: end;
+}
+
+.logos {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: rgb(114, 65, 34);
+    text-align: center;
+    padding: 0px 20px;
+    width: 200px;
+    height: 200px;
+    transition: all 0.8s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;     /* 上下の真ん中 */
+    justify-content: center; /* 左右の真ん中 */
+}
+
+.logos.scrolled {
+    height: 110px;
+}
+.logos.scrolled .logo{
+    width: 200px;
+}
+
+.logo{
+    transition: all 0.8s ease;
+    width: 200px;
+    height: auto;
+}
+.logotype{
+    transition: all 0.8s ease;
+}
+.nav-menu {
+    position: absolute;
+    left: 277px;
+    top: 40px;
+    display: flex;
+    gap: 136px;
+    align-items: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: #e6b422;
+}
+.system-nav-menu {
+    position: absolute;
+    right: 84px;
+    top: 40px;
+    display: flex;
+    gap: 136px;
+    align-items: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: #e6b422;
+}
+
+.nav-link {
+    color: #e6b422;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity 0.3s;
+}
+
+.nav-link:hover {
+    opacity: 0.7;
+}
+footer{
+    width: 100%;
+    background-color: rgba(74, 85, 101, 1);
+    text-align: center;
+}

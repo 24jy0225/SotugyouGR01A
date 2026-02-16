@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Photo;
 import model.Topics;
 
 public class TopicsDao {
@@ -61,52 +62,58 @@ public class TopicsDao {
 		}
 	}
 
-	
-	
 	public int getPhotoIdByTopicsId(int topicsId) {
-	    int photoId = -1;
-	    String sql = "SELECT photo_id FROM お知らせ WHERE topics_id = ?";
+		int photoId = -1;
+		String sql = "SELECT photo_id FROM お知らせ WHERE topics_id = ?";
 
-	    try (Connection con = createConnection();
-	         PreparedStatement ps = con.prepareStatement(sql)) {
-	        
-	        ps.setInt(1, topicsId);
-	        
-	        try (ResultSet rs = ps.executeQuery()) {
-	            if (rs.next()) {
-	                photoId = rs.getInt("photo_id");
-	            }
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	    return photoId;
+		try (Connection con = createConnection();
+				PreparedStatement ps = con.prepareStatement(sql)) {
+
+			ps.setInt(1, topicsId);
+
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					photoId = rs.getInt("photo_id");
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return photoId;
 	}
 
 	public List<Topics> findAll() {
 		List<Topics> list = new ArrayList<>();
-		String sql = "SELECT * FROM お知らせ ";
-		try (Connection con = createConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql);) {
-			try (ResultSet rs = pstmt.executeQuery()) {
-				while (rs.next()) {
-					Topics topics = new Topics(
-							rs.getInt("topics_id"),
-							rs.getInt("photo_id"),
-							rs.getString("topics_title"),
-							rs.getString("topics_content"));
 
-					list.add(topics);
-				}
+		// 修正ポイント：p.photo_category を追加しました
+		String sql = "SELECT t.*, p.photo_file_name, p.photo_category FROM お知らせ t " +
+				"LEFT JOIN 写真 p ON t.photo_id = p.photo_id";
+
+		try (Connection con = createConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+
+			while (rs.next()) {
+				// これで photo_category がResultSetに含まれるのでエラーになりません
+				Photo photo = new Photo(
+						rs.getInt("photo_id"),
+						rs.getString("photo_category"),
+						rs.getString("photo_file_name"));
+
+				Topics topics = new Topics(
+						rs.getInt("topics_id"),
+						photo,
+						rs.getString("topics_title"),
+						rs.getString("topics_content"));
+
+				list.add(topics);
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return list;
 	}
-	
+
 	public boolean delete(int topicsId) {
 		String sql = "DELETE FROM お知らせ WHERE topics_id = ?";
 		try (Connection con = createConnection();
@@ -119,7 +126,5 @@ public class TopicsDao {
 			return false;
 		}
 	}
-	
-	
 
 }

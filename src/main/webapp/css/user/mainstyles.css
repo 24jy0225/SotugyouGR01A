@@ -1,0 +1,531 @@
+@import url("https://fonts.googleapis.com/css2?family=Italianno&family=Noto+Sans+JP:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+
+/* リセットとベーススタイル */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background-color: #000000;
+    color: #ffffff;
+    overflow-x: hidden;
+    width: 100%;
+}
+
+html {
+    width: 100%;
+}
+
+.playfair-display {
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+}
+
+.italianno-regular {
+    font-family: "Italianno", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+/* ヘッダー */
+.header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 200px;
+    z-index: 9999;
+    background: linear-gradient(180deg, rgba(00, 00, 00, 1), rgba(00, 00, 00, 1), rgba(00, 00, 00, 0), rgba(00, 00, 00, 0));
+}
+
+.logos {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: rgb(114, 65, 34);
+    text-align: center;
+    padding: 0px 20px;
+    width: 200px;
+    height: 200px;
+    transition: all 0.8s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;     /* 上下の真ん中 */
+    justify-content: center; /* 左右の真ん中 */
+}
+
+.logos.scrolled {
+    height: 110px;
+}
+.logos.scrolled .logo{
+    width: 200px;
+}
+
+.logo{
+    transition: all 0.8s ease;
+    width: 200px;
+    height: auto;
+}
+.logotype{
+    transition: all 0.8s ease;
+}
+.nav-menu {
+    position: absolute;
+    left: 277px;
+    top: 40px;
+    display: flex;
+    gap: 136px;
+    align-items: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: #e6b422;
+}
+
+.nav-link {
+    color: #e6b422;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity 0.3s;
+}
+
+.nav-link:hover {
+    opacity: 0.7;
+}
+/* ヒーローセクション */
+.hero-section {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 967px;
+}
+
+.hero-background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+}
+
+.hero-background-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    pointer-events: none;
+}
+
+.logo-image {
+    position: absolute;
+    margin: 0 auto;
+    top: 50%;
+    left: 40%;
+    transform: translateY(-50%);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    padding-left: 50px;
+    background-color: rgba(00, 00, 00, 0.6);
+}
+
+.logo-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    pointer-events: none;
+    pointer-events: none;
+}
+
+/* セクション共通スタイル */
+.section {
+    width: 100%;
+    padding: 0;
+}
+
+.section-title {
+    font-family: 'Italianno', cursive;
+    font-size: 96px;
+    color: #e6b422;
+    font-weight: 100;
+    text-align: center;
+    letter-spacing: 9.6px;
+    white-space: nowrap;
+    margin: 0px auto;
+}
+.section-title-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.section-title-container hr{
+    width: 400px;
+    height: 1px;
+    background-color: #e6b422;
+    border: none;
+    margin: 0;
+    margin-right: 100px;
+    margin-left: 100px;
+}
+footer{
+    margin-top: 410px;
+    display: flex;
+    width: 1920px;
+    height: 800px;
+    flex-direction: column;
+    position: relative;
+}
+.footer-content{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.footer-logo{
+    position: absolute;
+    left: 20%;
+    bottom: 38%;
+    transform: translateY(-50%);
+    width: 300px;
+    height: 300px;
+    aspect-ratio: 200 / 200;
+}
+.footer-content button{
+    position: absolute;
+    left: 866px;
+    width: 124px;
+    bottom: 65%;
+    height: 49px;
+    border: 1px solid #e6b422;
+    background-color: transparent;
+    color: #ffffff;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 32px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+.footer-content table{
+    position: absolute;
+    left: 56.35%;
+    right: 5.31%;
+    bottom: 50%;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 30px;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.footer-content .footer-info th{
+    font-weight: normal;
+    text-align: end;
+}
+.footer-content .footer-info td{
+    padding: 10px;
+}
+.footer-nav{
+    position: absolute;
+    left: 320px;
+    bottom: 40px;
+    display: flex;
+    gap: 174px;
+    align-items: center;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 24px;
+    color: #e6b422;
+}
+.footer-nav a{
+    color: #e6b422;
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity 0.3s;
+}
+.footer-nav a:hover{
+    opacity: 0.7;
+}
+.footer-copyright{
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Inter', sans-serif;
+    color: #ffffff;
+    text-align: center;
+    white-space: nowrap;
+    width: 100%;
+    background-color: rgba(74, 85, 101, 1);
+}
+/* =========================== */
+/* レスポンシブ対応 */
+/* =========================== */
+
+/* タブレット対応 (768px以下) */
+@media screen and (max-width: 1024px) {
+    /* ヘッダー */
+    .header {
+        height: 150px;
+    }
+    
+    .logos {
+        width: 150px;
+        height: 150px;
+        padding: 0 15px;
+    }
+    
+    .logos.scrolled {
+        height: 80px;
+    }
+    
+    .logos.scrolled .logo {
+        width: 150px;
+    }
+    
+    .logo {
+        width: 150px;
+    }
+    
+    .nav-menu {
+        left: 200px;
+        top: 30px;
+        gap: 60px;
+        font-size: 18px;
+        flex-wrap: wrap;
+    }
+    
+    /* ヒーローセクション */
+    .hero-section {
+        height: 700px;
+    }
+    
+    .logo-image {
+        left: 30%;
+        padding-left: 30px;
+    }
+    
+    /* セクションタイトル */
+    .section-title {
+        font-size: 72px;
+        letter-spacing: 7.2px;
+    }
+    
+    .section-title-container hr {
+        width: 200px;
+        margin-right: 50px;
+        margin-left: 50px;
+    }
+    
+    /* フッター */
+    footer {
+        margin-top: 300px;
+        width: 100%;
+        height: 700px;
+    }
+    
+    .footer-logo {
+        left: 10%;
+        width: 250px;
+        height: 250px;
+    }
+    
+    .footer-content button {
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 70%;
+        font-size: 28px;
+        width: 110px;
+        height: 45px;
+    }
+    
+    .footer-content table {
+        left: 10%;
+        right: 10%;
+        bottom: 35%;
+        font-size: 20px;
+        line-height: 26px;
+    }
+    
+    .footer-nav {
+        left: 10%;
+        gap: 80px;
+        font-size: 20px;
+    }
+    
+    .footer-nav a {
+        font-size: 20px;
+    }
+}
+
+/* スマートフォン対応 (480px以下) */
+@media screen and (max-width: 768px) {
+    /* ヘッダー */
+    .header {
+        height: 120px;
+    }
+    
+    .logos {
+        width: 100px;
+        height: 100px;
+        padding: 0 10px;
+    }
+    
+    .logos.scrolled {
+        height: 60px;
+    }
+    
+    .logos.scrolled .logo {
+        width: 100px;
+    }
+    
+    .logo {
+        width: 100px;
+    }
+    
+    .nav-menu {
+        left: 110px;
+        top: 10px;
+        gap: 15px;
+        font-size: 12px;
+        flex-wrap: wrap;
+        width: calc(100% - 120px);
+    }
+    
+    .nav-link {
+        font-size: 12px;
+    }
+    
+    /* ヒーローセクション */
+    .hero-section {
+        height: 500px;
+    }
+    
+    .logo-image {
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 15px;
+        padding-left: 15px;
+        max-width: 90%;
+    }
+    
+    .logo-image img {
+        max-width: 250px;
+    }
+    
+    /* セクションタイトル */
+    .section-title {
+        font-size: 48px;
+        letter-spacing: 4.8px;
+    }
+    
+    .section-title-container hr {
+        width: 50px;
+        margin-right: 20px;
+        margin-left: 20px;
+    }
+    
+    /* フッター */
+    footer {
+        margin-top: 150px;
+        height: auto;
+        min-height: 600px;
+        padding-bottom: 50px;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        padding-top: 30px;
+    }
+    
+    .footer-logo {
+        position: relative;
+        left: auto;
+        bottom: auto;
+        transform: none;
+        width: 200px;
+        height: 200px;
+        margin: 20px auto;
+    }
+    
+    .footer-content button {
+        position: relative;
+        left: auto;
+        bottom: auto;
+        transform: none;
+        margin: 20px auto;
+        font-size: 24px;
+        width: 100px;
+        height: 40px;
+    }
+    
+    .footer-content table {
+        position: relative;
+        left: auto;
+        right: auto;
+        bottom: auto;
+        margin: 20px auto;
+        font-size: 16px;
+        line-height: 22px;
+        padding: 0 20px;
+    }
+    
+    .footer-content .footer-info td {
+        padding: 5px;
+    }
+    
+    .footer-nav {
+        position: relative;
+        left: auto;
+        bottom: auto;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        font-size: 16px;
+        margin: 30px 20px 20px;
+        padding: 0 10px;
+    }
+    
+    .footer-nav a {
+        font-size: 16px;
+    }
+    
+    .footer-copyright {
+        position: relative;
+        margin-top: 20px;
+    }
+}
+
+/* 極小スマートフォン対応 (400px以下) */
+@media screen and (max-width: 400px) {
+    .nav-menu {
+        gap: 8px;
+        font-size: 10px;
+    }
+    
+    .section-title {
+        font-size: 36px;
+        letter-spacing: 3.6px;
+    }
+    
+    .section-title-container hr {
+        width: 30px;
+        margin-right: 15px;
+        margin-left: 15px;
+    }
+    
+    .footer-content table {
+        font-size: 14px;
+        line-height: 20px;
+    }
+}

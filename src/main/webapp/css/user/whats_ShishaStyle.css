@@ -1,0 +1,403 @@
+
+/* 繝｡繧､繝ｳ繧ｳ繝ｳ繝�繝ｳ繝� */
+.main-content {
+    position: relative;
+    width: 100%;
+    min-height: 8080px;
+    max-width: 1920px;
+    margin: 0 auto;
+    z-index: 1;
+}
+
+/* 繝偵�ｼ繝ｭ繝ｼ逕ｻ蜒� */
+.hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1079px;
+}
+
+.hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    pointer-events: none;
+}
+
+/* 繧ｻ繧ｯ繧ｷ繝ｧ繝ｳ蜈ｱ騾壹せ繧ｿ繧､繝ｫ */
+.section {
+    position: relative;
+    width: 100%;
+    padding: 0;
+}
+
+/* What's The Shisha 繧ｻ繧ｯ繧ｷ繝ｧ繝ｳ */
+.what-section {
+    position: absolute;
+    top: 1320px;
+    left: 0;
+    width: 100%;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.section-title {
+    font-family: 'Italianno', cursive;
+    font-size: 96px;
+    color: #e6b422;
+    text-align: center;
+    letter-spacing: 9.6px;
+    white-space: nowrap;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+    margin: 0;
+}
+
+.title-decoration {
+    width: 1521px;
+    height: 0;
+    position: absolute;
+    left: 199px;
+    top: 60px;
+    margin: 0;
+}
+
+.title-decoration::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -1px;
+    bottom: -8.5px;
+    background-image: url('assets/decoration-line.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.section-subtitle {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+    color: #ffffff;
+    text-align: center;
+    letter-spacing: 3.6px;
+    white-space: nowrap;
+    position: absolute;
+    left: 748px;
+    top: 128px;
+    margin: 0;
+}
+
+.section-content {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 45px;
+    color: #ffffff;
+    text-align: center;
+    letter-spacing: 2px;
+    max-width: 1521px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 225px;
+    width: calc(100% - 398px);
+    margin: 0;
+}
+
+.section-content p {
+    margin-bottom: 0;
+}
+
+/* 蟾ｦ蟇�縺帙そ繧ｯ繧ｷ繝ｧ繝ｳ */
+.section-title-left {
+    font-family: 'Italianno', cursive;
+    font-size: 64px;
+    color: #e6b422;
+    text-align: left;
+    letter-spacing: 6.4px;
+    margin-left: 199px;
+    margin-bottom: 80px;
+    margin-top: 0;
+    white-space: nowrap;
+    position: relative;
+}
+
+.section-subtitle-left {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: #ffffff;
+    text-align: left;
+    letter-spacing: 2.4px;
+    margin-left: 199px;
+    margin-bottom: 104px;
+    margin-top: 0;
+    white-space: nowrap;
+    position: relative;
+}
+
+.section-content-left {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 45px;
+    color: #ffffff;
+    text-align: left;
+    letter-spacing: 2px;
+    margin-left: 199px;
+    max-width: 1521px;
+    position: relative;
+}
+
+.section-content-left p {
+    margin-bottom: 0;
+}
+
+.section-content-left strong {
+    font-weight: 700;
+}
+
+/* History 繧ｻ繧ｯ繧ｷ繝ｧ繝ｳ */
+.history-section {
+    position: absolute;
+    top: 2445px;
+    left: 0;
+    width: 100%;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.section-background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1050px;
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.history-section .section-background-image {
+    top: -98px;
+}
+
+.harm-section .section-background-image {
+    top: -36px;
+    height: 1069px;
+}
+
+.section-background-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* How Shisha Works 繧ｻ繧ｯ繧ｷ繝ｧ繝ｳ */
+.how-section {
+    position: absolute;
+    top: 3394px;
+    left: 0;
+    width: 100%;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* The fascination of shisha 繧ｻ繧ｯ繧ｷ繝ｧ繝ｳ */
+.fascination-section {
+    position: absolute;
+    top: 4253px;
+    left: 0;
+    width: 100%;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.fascination-list {
+    max-width: 1521px;
+}
+
+/* The Harm of Shisha 繧ｻ繧ｯ繧ｷ繝ｧ繝ｳ */
+.harm-section {
+    position: absolute;
+    top: 5787px;
+    left: 0;
+    width: 100%;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* 繝輔ャ繧ｿ繝ｼ */
+.footer {
+    position: absolute;
+    top: 7000px;
+    left: 0;
+    width: 100%;
+    height: 1080px;
+    background-color: #000000;
+}
+
+.footer-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #4a5565;
+}
+
+.footer-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding-top: 125px;
+}
+
+.footer-logo {
+    position: absolute;
+    left: 20.63%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 200px;
+    height: 200px;
+    background-color: #ed8224;
+    aspect-ratio: 200 / 200;
+}
+
+.reservation-btn {
+    position: absolute;
+    left: 866px;
+    top: 369px;
+    width: 124px;
+    height: 49px;
+    border: 1px solid #e6b422;
+    background-color: transparent;
+    color: #ffffff;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 32px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.reservation-btn:hover {
+    background-color: #e6b422;
+    color: #000000;
+}
+
+.footer-info {
+    position: absolute;
+    left: 56.35%;
+    top: 12.13%;
+    right: 5.31%;
+    bottom: 39.26%;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 30px;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.footer-info p {
+    margin-bottom: 0;
+}
+
+.footer-nav {
+    position: absolute;
+    left: 320px;
+    top: 961px;
+    display: flex;
+    gap: 174px;
+    align-items: center;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 24px;
+    color: #e6b422;
+}
+
+.footer-nav-link {
+    color: #e6b422;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity 0.3s;
+}
+
+.footer-nav-link:hover {
+    opacity: 0.7;
+}
+
+.copyright {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Inter', sans-serif;
+    font-size: 32px;
+    color: #ffffff;
+    text-align: center;
+    white-space: nowrap;
+    width: 325px;
+}
+
+/* 繝ｬ繧ｹ繝昴Φ繧ｷ繝門ｯｾ蠢懶ｼ亥ｿ�隕√↓蠢懊§縺ｦ�ｼ� */
+@media (max-width: 1920px) {
+    .main-content {
+        min-height: auto;
+    }
+
+    .section-title {
+        font-size: 72px;
+    }
+
+    .section-title-left {
+        font-size: 48px;
+        margin-left: 100px;
+    }
+
+    .section-subtitle-left {
+        margin-left: 100px;
+    }
+
+    .section-content-left {
+        margin-left: 100px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .nav-menu {
+        gap: 60px;
+        font-size: 18px;
+    }
+
+    .section-title {
+        font-size: 56px;
+    }
+
+    .section-title-left {
+        font-size: 40px;
+        margin-left: 50px;
+    }
+
+    .section-subtitle-left {
+        margin-left: 50px;
+        font-size: 20px;
+    }
+
+    .section-content-left {
+        margin-left: 50px;
+        font-size: 18px;
+    }
+
+    .footer-nav {
+        gap: 60px;
+        font-size: 18px;
+    }
+}

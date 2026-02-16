@@ -17,12 +17,15 @@ import jakarta.servlet.http.HttpSession;
 
 import action.Coupon.CouponUsageAction;
 import action.Coupon.CouponUseAction;
+import action.Photo.PhotoAction;
 import action.Reservation.ReservationConfirmAction;
 import action.Reservation.ReservationDateAction;
+import action.Reservation.ReservationDeleteAction;
 import action.Reservation.ReservationHistoryAction;
 import action.Reservation.ReservationSeatAction;
 import action.Reservation.ReservationTimeAction;
 import action.Reservation.ReserveAction;
+import action.Topics.TopicsAction;
 import action.main.AuthenticateAction;
 import action.main.LoginAction;
 import action.main.PasswordResetAction;
@@ -30,9 +33,11 @@ import action.main.RegisterAction;
 import action.main.StoreAction;
 import dao.UserDao;
 import model.CouponUsage;
+import model.Photo;
 import model.Reservation;
 import model.Seat;
 import model.Store;
+import model.Topics;
 import model.User;
 
 /**
@@ -51,7 +56,8 @@ public class UserController extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -118,18 +124,36 @@ public class UserController extends HttpServlet {
 			}
 			break;
 		case "passwordReset":
-		    req.setAttribute("token", req.getParameter("token"));
-		    nextPage = "PasswordResetInput.jsp";
-		    break;
+			req.setAttribute("token", req.getParameter("token"));
+			nextPage = "PasswordResetInput.jsp";
+			break;
 		case "reservationDate":
 			ReservationDateAction reservationDateAction = new ReservationDateAction();
 			reservationDateAction.execute(req);
 			nextPage = "ReservationDate.jsp";
 			break;
 		case "goMain":
-			
-			nextPage = "Main.jsp";
+			TopicsAction topicsAction = new TopicsAction();
+			List<Topics> topicsList = topicsAction.execute();
+			PhotoAction photoAction = new PhotoAction();
+			List<Photo> photoList = photoAction.execute();
+			session.setAttribute("topicsList", topicsList);
+			session.setAttribute("photoList", photoList);
+			nextPage = "top.jsp";
 			break;
+		case "cancel":
+			String reserveId = req.getParameter("reserveId");
+			session.setAttribute("reserveId", reserveId);
+			ReservationDeleteAction reservationDeleteAction = new ReservationDeleteAction();
+			if (reservationDeleteAction.execute(req)) {
+				resp.sendRedirect("ReservationCancelComplete.jsp");
+				return;
+			} else {
+				nextPage = "Error.jsp";
+				session.setAttribute("errorMsg", "cancelできませんでした");
+				break;
+			}
+
 		default:
 			nextPage = "Error.jsp"; // 例としてエラーページを設定
 			session.setAttribute("errorMsg", "無効なGETコマンド: " + command);
@@ -141,7 +165,8 @@ public class UserController extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -187,7 +212,7 @@ public class UserController extends HttpServlet {
 					nextPage = after;
 					session.removeAttribute("afterLoginPage");
 				} else {
-					nextPage = "Main.jsp"; // 普通のログイン時
+					nextPage = "top.jsp"; // 普通のログイン時
 				}
 
 			} else {

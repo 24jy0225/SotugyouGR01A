@@ -1,0 +1,55 @@
+main .section-title-container{
+    margin: 30px auto;
+}
+
+.system-img {
+    width: 100%;
+    max-width: 800px;
+    aspect-ratio: 46/65;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.system-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* 大きめタブレット対応 (1024px以下) */
+@media screen and (max-width: 1024px) {
+    main {
+        padding-top: 700px; /* 1024px以下でのヒーローセクション高さ */
+    }
+}
+
+/* タブレット対応 (768px以下) */
+@media screen and (max-width: 768px) {
+    main {
+        padding-top: 700px; /* タブレットサイズのヒーローセクション高さ */
+    }
+    
+    main .section-title-container {
+        margin: 20px auto;
+    }
+    
+    .system-img {
+        max-width: 100%;
+        padding: 0 15px;
+    }
+}
+
+/* スマートフォン対応 (480px以下) */
+@media screen and (max-width: 480px) {
+    main {
+        padding-top: 500px; /* スマホサイズのヒーローセクション高さ */
+    }
+    
+    main .section-title-container {
+        margin: 15px auto;
+    }
+    
+    .system-img {
+        padding: 0 10px;
+    }
+}

@@ -1,0 +1,188 @@
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+    flex: 1;
+}
+
+.page-wrapper {
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 100px;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 50px;
+}
+
+.mail-sent-container {
+    border: 1px solid #fff;
+    padding: 60px 80px;
+    max-width: 100%;
+    width: 100%;
+}
+
+.main-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 40px;
+}
+
+.description {
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+.email-display {
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    padding: 14px;
+    text-align: center;
+    color: #333;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+.instruction {
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+.notice-box {
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 30px;
+    color: #333;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.notice-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.resend-button {
+    width: 100%;
+    padding: 14px;
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.resend-button:hover {
+    background-color: #f0f0f0;
+}
+
+/* スマートフォン対応 - レスポンシブデザイン */
+@media (max-width: 768px) {
+    body {
+        padding: 20px;
+    }
+    
+    .page-title {
+        font-size: 20px;
+        margin-bottom: 40px;
+    }
+    
+    .mail-sent-container {
+        padding: 40px 30px;
+        border: 1px solid #fff;
+    }
+    
+    .main-title {
+        font-size: 18px;
+        margin-bottom: 30px;
+    }
+    
+    .description {
+        font-size: 13px;
+        line-height: 1.7;
+        margin-bottom: 25px;
+    }
+    
+    .email-display {
+        padding: 12px;
+        font-size: 13px;
+        margin-bottom: 25px;
+    }
+    
+    .instruction {
+        font-size: 13px;
+        line-height: 1.7;
+        margin-bottom: 25px;
+    }
+    
+    .notice-box {
+        padding: 18px;
+        margin-bottom: 25px;
+        font-size: 12px;
+        line-height: 1.7;
+    }
+    
+    .notice-title {
+        margin-bottom: 8px;
+    }
+    
+    .resend-button {
+        padding: 13px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-title {
+        font-size: 18px;
+        margin-bottom: 35px;
+    }
+    
+    .mail-sent-container {
+        padding: 35px 25px;
+    }
+    
+    .main-title {
+        font-size: 17px;
+        margin-bottom: 25px;
+    }
+    
+    .description {
+        font-size: 12px;
+        margin-bottom: 20px;
+    }
+    
+    .email-display {
+        padding: 11px;
+        font-size: 12px;
+        margin-bottom: 20px;
+    }
+    
+    .instruction {
+        font-size: 12px;
+        margin-bottom: 20px;
+    }
+    
+    .notice-box {
+        padding: 16px;
+        margin-bottom: 20px;
+        font-size: 11px;
+    }
+    
+    .resend-button {
+        padding: 12px;
+        font-size: 12px;
+    }
+}

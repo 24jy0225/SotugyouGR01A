@@ -150,7 +150,7 @@ function prevDay(){ currentDate.setDate(currentDate.getDate() - 1); updateDateIn
 function nextDay(){ currentDate.setDate(currentDate.getDate() + 1); updateDateInput(); }
 function setToday(){ 
     // 今日ボタンを押したときは、URLのパラメータを消してリロードするのが確実です
-    location.href = window.location.pathname;
+	location.href = "AdminController?command=reservationManage";
 }
 
 function changeDate(val){ 
