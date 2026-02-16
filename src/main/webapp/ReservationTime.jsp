@@ -37,6 +37,7 @@ String buttonText = (user != null || ("ByAdmin".equals(action) && targetUser != 
 <link rel="stylesheet" href="./css/user/reservation_timeStyle.css">
 <link rel="icon" href="../assets/ロゴ完成_金色b.svg">
 <style>
+
 /* ラジオボタンをボタン形式のデザインにするための調整 */
 .time_slot_input {
 	display: none;
@@ -68,19 +69,32 @@ String buttonText = (user != null || ("ByAdmin".equals(action) && targetUser != 
 </style>
 </head>
 <body>
-	<!-- ヘッダー -->
-    <header class="systemheader" data-name="ヘッダー">
-        <div class="logos" id="logo" onclick="location.href='./top.html'">
-            <img src="../assets/ロゴタイプ_金色b.svg" alt="logo" class="logo">
-        </div>
-        <nav class="system-nav-menu">
-            <a href="./login.html" class="nav-link">Login</a>
-        </nav>
-    </header>
+	<header class="header" data-name="ヘッダー">
+	<% if(action.equals("ByUser")){ %>
+		<div class="logos" id="logo" onclick="location.href='./top.jsp'">
+			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo" class="logo">
+		</div>
+		<nav class="nav-menu">
+			<a href="./whats_Shisha.jsp" class="nav-link">What's</a> 
+			<a href="./how_to_Use.jsp" class="nav-link">Use</a> 
+			<a href="./system-introduction.jsp" class="nav-link">System</a>
+			<a	href="./menu.jsp" class="nav-link">Menu</a> 
+			<a href="./topics.jsp" class="nav-link">Topics</a> 
+			<a href="./contact.jsp" class="nav-link">Contact</a>
+			<a href="ReservationDate.jsp" class="nav-link">Reservation</a>
+			<%if (user != null) { %>
+				<a href="UserController?command=MyPage" class="nav-link">Member</a>
+			<% } else { %>
+				<a href="./Login.jsp" class="nav-link">Login</a>
+			<% } %>
+		</nav>
+	<% } %>
+	</header>
+	
 	<main>
 		<div class="container">
 			<div class="step_indicator">
-				<h2>予約登録システム</h2>
+				<h2>予約登録</h2>
 				<div class="step_image">
 					<img src="./image/assets/user/timepage.svg" alt="">
 				</div>

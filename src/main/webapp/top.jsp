@@ -3,11 +3,8 @@
 	import="model.Photo , java.util.* , model.Topics , model.User"%>
 <%
 List<Photo> photoList = (List<Photo>) session.getAttribute("photoList");
-%>
-<%
 List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
-%>
-<%
+
 User user = (User) session.getAttribute("LoginUser");
 String topImageName = "burning_coal.jpg";
 
@@ -47,7 +44,7 @@ if (photoList != null) {
 			<a	href="./menu.jsp" class="nav-link">Menu</a> 
 			<a href="./topics.jsp" class="nav-link">Topics</a> 
 			<a href="./contact.jsp" class="nav-link">Contact</a>
-			<a href="ReservationDate.jsp" class="nav-link">Reservation</a>
+			<a href="UserController?command=reservationDate" class="nav-link">Reservation</a>
 			<%if (user != null) { %>
 				<a href="UserController?command=MyPage" class="nav-link">Member</a>
 			<% } else { %>

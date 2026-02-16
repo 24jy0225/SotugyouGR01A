@@ -8,173 +8,23 @@ if (action == null)
 
 User user = (User) session.getAttribute("LoginUser");
 
-// Actionから渡されたステータスデータを受け取る
+// Actionから渡されたステータスデータ(席の状況)を受け取る
 Map<String, String> statusData = (Map<String, String>) request.getAttribute("statusData");
-
-
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>席予約</title>
 <link rel="stylesheet" href="./css/user/mainstyles.css">
 <script
-	src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
-
-<style>
-/* ページ全体のベース設定 */
-body {
-	background-color: #111;
-	margin: 0;
-	padding: 0;
-	font-family: "Helvetica Neue", Arial, sans-serif;
-	color: #fff;
-}
-
-/* レイアウト崩れ防止：メインコンテンツを中央に配置 */
-main {
-	display: block !important;
-	width: 100%;
-	padding: 20px 0;
-}
-
-.container {
-	max-width: 1200px;
-	margin: 0 auto;
-	padding: 0 20px;
-}
-
-/* --- ステップインジケーターのスタイル --- */
-.step_indicator {
-	text-align: center;
-	margin-bottom: 40px;
-	margin-top: 20px;
-}
-
-.step_indicator h2 {
-	font-size: 20px;
-	font-weight: normal;
-	margin-bottom: 20px;
-	color: #FFFFFF;
-}
-
-.step_image {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.step_image img {
-	max-width: 100%;
-	height: auto;
-}
-
-/* --- カレンダーのスタイル --- */
-#calendar-container {
-	max-width: 800px;
-	margin: 0 auto 40px;
-	background-color: #fff;
-	padding: 25px;
-	border-radius: 15px;
-	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-	color: #333;
-}
-
-/* フルカレンダー内部の調整 */
-.fc-daygrid-day-frame {
-	margin: 3px;
-	border-radius: 8px;
-	min-height: 90px !important;
-	background-color: #f9f9f9;
-	transition: 0.2s;
-}
-
-.fc-daygrid-day-top {
-	display: flex !important;
-	flex-direction: column !important;
-	align-items: center !important;
-	padding-top: 10px !important;
-}
-
-.status-label {
-	display: inline-block;
-	padding: 2px 8px;
-	font-size: 0.65em;
-	border-radius: 4px;
-	font-weight: bold;
-	margin-top: 4px;
-}
-
-/* 各ステータスの色 */
-.is-available {
-	background-color: #f0fdf4 !important;
-	border: 2px solid lightgreen !important;
-}
-
-.is-available:hover {
-	transform: translateY(-3px);
-}
-
-.status-available {
-	background-color: #d1fae5;
-	color: #059669;
-}
-
-.is-warning {
-	background-color: #fff7ed !important;
-	border: 2px solid #fdba74 !important;
-}
-
-.status-warning {
-	background-color: #ffedd5;
-	color: #ea580c;
-}
-
-.is-full {
-	background-color: #fee2e2 !important;
-	border: 2px solid #fca5a5 !important;
-}
-
-.status-full {
-	background-color: #fecaca;
-	color: #b91c1c;
-}
-
-.is-today {
-	background-color: #eff6ff !important;
-	border: 2px solid #3b82f6 !important;
-}
-
-.is-disabled {
-	background-color: #eeeeee !important;
-	opacity: 0.4;
-}
-
-.legend {
-	display: flex;
-	justify-content: center;
-	gap: 15px;
-	margin-top: 20px;
-	font-size: 0.8em;
-	color: #777;
-}
-
-.legend-item {
-	display: flex;
-	align-items: center;
-	gap: 5px;
-}
-
-.box {
-	width: 12px;
-	height: 12px;
-	border-radius: 2px;
-}
-</style>
+	src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'>
+</script>
 </head>
 <body>
 	<header class="header" data-name="ヘッダー">
+	<% if(action.equals("ByUser")){ %>
 		<div class="logos" id="logo" onclick="location.href='./top.jsp'">
 			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo" class="logo">
 		</div>
@@ -192,14 +42,15 @@ main {
 				<a href="./Login.jsp" class="nav-link">Login</a>
 			<% } %>
 		</nav>
+	<% } %>
 	</header>
 	
 	<main>
 		<div class="container">
 			<div class="step_indicator">
-				<h2>予約登録システム</h2>
+				<h2>予約登録</h2>
 				<div class="step_image">
-					<img src="./image/assets/user/coursepage.svg" alt="ステップ">
+					<img src="./image/assets/user/daypage.svg" alt="ステップ">
 				</div>
 			</div>
 
@@ -237,16 +88,18 @@ main {
 			document.addEventListener('DOMContentLoaded', function() {
 				// 1. JavaのMapをJavaScriptのオブジェクトに変換
 				const dbStatusData = {
-					<%if (statusData != null && !statusData.isEmpty()) {
-	for (java.util.Map.Entry<String, String> entry : statusData.entrySet()) {%>
-							"<%=entry.getKey()%>": "<%=entry.getValue()%>",
-							<%}
-}%>
+						<%if (statusData != null && !statusData.isEmpty()) { %>
+							<% for (java.util.Map.Entry<String, String> entry : statusData.entrySet()) { %>
+								"<%=entry.getKey()%>": "<%=entry.getValue()%>",
+							<% } %>
+						<% } %>
 					};
-					
+
+				 console.log("受け取ったデータ:", dbStatusData);
+				
 					function formatDate(date) {
 						if (!date) return "";
-						// 日本時間に合わせた yyyy-mm-dd を確実に作る
+						// 日本時間に合わせた yyyy-mm-dd
 						const offset = date.getTimezoneOffset();
 						const d = new Date(date.getTime() - (offset * 60 * 1000));
 						return d.toISOString().split('T')[0];
@@ -276,27 +129,25 @@ main {
 							const frame = info.el.querySelector('.fc-daygrid-day-frame');
 							const topElement = info.el.querySelector('.fc-daygrid-day-top');
 							
-							let statusClass = "is-available"; // デフォルトは緑
-							let labelText = "空席あり"; // デフォルトの文字
+							let statusClass = "is-available"; // 文字の初期値
+							let labelText = "空席あり"; // 色の初期値
 							
-							// A. 過去または期間外の判定（最優先）
+							// 可能期間外の判定
 							if (cellDateZero < todayZero || cellDateZero > end) {
 								frame.classList.add('is-disabled');
-								return; // 描画不要な日はここで終了
+								return;S
 							}
 							
-							// B. 本日の判定
+							// 本日の判定
 							if (cellDateZero.getTime() === todayZero.getTime()) {
 								statusClass = 'is-today';
 								labelText = '本日';
-								// ※もし本日も満席表示などをしたい場合は、ここに判定を追加します
 							} 
-							// C. 予約可能期間（明日〜14日後）の判定
+							
+							// 可能期間の判定
 							else {
-								// ★修正ポイント：ロジックを整理しました
-								// 1. まず生のデータを取得
 								const status = dbStatusData[dateStr];
-								
+								console.log(status);
 								// 2. データに基づいて色と文字を決定
 								if (status === 'is-full'){ 
 									statusClass = 'is-full';

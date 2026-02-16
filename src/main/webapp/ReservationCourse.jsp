@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="model.Store, java.util.*  "%>
+	pageEncoding="UTF-8" import="model.Store, java.util.*, model.User "%>
 <% 
 String action = (String)session.getAttribute("action"); 
 List<Store> storeList = (List<Store>)session.getAttribute("storeList");
@@ -9,8 +9,10 @@ if ("ByAdmin".equals(action)) {
     formAction = "AdminController";
 }
 
+User user = (User) session.getAttribute("LoginUser");
+
 String date =  (String)session.getAttribute("date");
-String formattedDate = "未選択";
+String formattedDate = "未選択"; //初期値
 
 if (date != null && date.contains("-")) {
     // "2026-02-16" を "-" で分割して配列にする
@@ -18,7 +20,6 @@ if (date != null && date.contains("-")) {
     // 配列の 0:年, 1:月, 2:日 を使って組み立て
     formattedDate = parts[0] + "年" + parts[1] + "月" + parts[2] + "日";
 }
-%>
 %>
 <!DOCTYPE html>
 <html lang="ja">
@@ -31,18 +32,32 @@ if (date != null && date.contains("-")) {
     <link rel="stylesheet" href="./css/user/reservation_courseStyle.css">
 </head>
 <body>
-    <header class="systemheader" data-name="ヘッダー">
-        <div class="logos" id="logo" onclick="location.href='./top.html'">
-            <img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo" class="logo">
-        </div>
-        <nav class="system-nav-menu">
-            <a href="./Login.jsp" class="nav-link">Login</a>
-        </nav>
-    </header>
+	<header class="header" data-name="ヘッダー">
+	<% if(action.equals("ByUser")){ %>
+		<div class="logos" id="logo" onclick="location.href='./top.jsp'">
+			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo" class="logo">
+		</div>
+		<nav class="nav-menu">
+			<a href="./whats_Shisha.jsp" class="nav-link">What's</a> 
+			<a href="./how_to_Use.jsp" class="nav-link">Use</a> 
+			<a href="./system-introduction.jsp" class="nav-link">System</a>
+			<a	href="./menu.jsp" class="nav-link">Menu</a> 
+			<a href="./topics.jsp" class="nav-link">Topics</a> 
+			<a href="./contact.jsp" class="nav-link">Contact</a>
+			<a href="ReservationDate.jsp" class="nav-link">Reservation</a>
+			<%if (user != null) { %>
+				<a href="UserController?command=MyPage" class="nav-link">Member</a>
+			<% } else { %>
+				<a href="./Login.jsp" class="nav-link">Login</a>
+			<% } %>
+		</nav>
+	<% } %>
+	</header>
+	
     <main>
         <div class="container">
             <div class="step_indicator">
-                <h2>予約登録システム</h2>
+            	<h2>予約登録</h2>
                 <div class="step_image">
                     <img src="./image/assets/user/coursepage.svg" alt="">
                 </div>

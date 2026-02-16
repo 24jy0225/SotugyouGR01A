@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="model.Photo , java.util.* , model.Topics , model.User"%>
 <%
+String action = (String)session.getAttribute("action"); 
 List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 User user = (User)session.getAttribute("LoginUser");
 %>
@@ -26,7 +27,7 @@ User user = (User)session.getAttribute("LoginUser");
 			<a	href="./menu.jsp" class="nav-link">Menu</a> 
 			<a href="./topics.jsp" class="nav-link">Topics</a> 
 			<a href="./contact.jsp" class="nav-link">Contact</a>
-			<a href="ReservationDate.jsp" class="nav-link">Reservation</a>
+			<a href="UserController?command=reservationDate" class="nav-link">Reservation</a>
 			<%if (user != null) { %>
 				<a href="UserController?command=MyPage" class="nav-link">Member</a>
 			<% } else { %>
