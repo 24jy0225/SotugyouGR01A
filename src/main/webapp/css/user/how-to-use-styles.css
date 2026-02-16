@@ -1,14 +1,14 @@
-/* How to Useƒy[ƒWê—pƒXƒ^ƒCƒ‹ */
+/* How to Useï¿½yï¿½[ï¿½Wï¿½ï¿½pï¿½Xï¿½^ï¿½Cï¿½ï¿½ */
 
-/* ƒƒCƒ“ƒRƒ“ƒeƒ“ƒc‚ÉƒpƒfƒBƒ“ƒO‚ğ’Ç‰Á‚µ‚Äƒq[ƒ[ƒZƒNƒVƒ‡ƒ“‚Æ‚Ìd‚È‚è‚ğ–h‚® */
+/* ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½Rï¿½ï¿½ï¿½eï¿½ï¿½ï¿½cï¿½Éƒpï¿½fï¿½Bï¿½ï¿½ï¿½Oï¿½ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½Äƒqï¿½[ï¿½ï¿½ï¿½[ï¿½Zï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Æ‚Ìdï¿½È‚ï¿½ï¿½hï¿½ï¿½ */
 .how-to-use-main-content {
-	padding-top: 0; /* PC•\¦‚Å‚Ípadding-top‚È‚µ */
+	padding-top: 0; /* PCï¿½\ï¿½ï¿½ï¿½Å‚ï¿½padding-topï¿½È‚ï¿½ */
 }
 
-/* How to Use ƒZƒNƒVƒ‡ƒ“ */
+/* How to Use ï¿½Zï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ */
 .how-to-use-section {
 	width: 100%;
-	margin-top: 50px; /* ƒq[ƒ[ƒZƒNƒVƒ‡ƒ“‚Æ‚Ì“K“x‚ÈŠÔŠu */
+	margin-top: 50px; /* ï¿½qï¿½[ï¿½ï¿½ï¿½[ï¿½Zï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Æ‚Ì“Kï¿½xï¿½ÈŠÔŠu */
 }
 
 .section-subtitle {
@@ -22,7 +22,7 @@
 	letter-spacing: 3.6px;
 }
 
-/* Ğ‰î•¶ */
+/* ï¿½Ğ‰î•¶ */
 .intro-text {
 	margin: 50px auto;
 	width: 100%;
@@ -45,7 +45,7 @@
 	font-weight: 700;
 }
 
-/* —˜—p•û–@ƒZƒNƒVƒ‡ƒ“‹¤’ÊƒXƒ^ƒCƒ‹ */
+/* ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½@ï¿½Zï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÊƒXï¿½^ï¿½Cï¿½ï¿½ */
 .use-method-section {
 	position: relative;
 	width: 100%;
@@ -103,7 +103,7 @@
 	margin-bottom: 0;
 }
 
-/* Shisha & Alcohol ƒZƒNƒVƒ‡ƒ“ */
+/* Shisha & Alcohol ï¿½Zï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ */
 .shisha-alcohol-section {
 	margin-top: 60px;
 	width: 100%;
@@ -114,7 +114,7 @@
 	top: 572px;
 }
 
-/* Shisha Only ƒZƒNƒVƒ‡ƒ“ */
+/* Shisha Only ï¿½Zï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ */
 .shisha-only-section {
 	margin-top: 100px;
 	width: 100%;
@@ -129,7 +129,7 @@
 	top: 572px;
 }
 
-/* Alcohol Only ƒZƒNƒVƒ‡ƒ“ */
+/* Alcohol Only ï¿½Zï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ */
 .alcohol-only-section {
 	height: 800px;
 	width: 100%;
@@ -145,14 +145,12 @@
 }
 
 /* =========================== */
-/* ƒŒƒXƒ|ƒ“ƒVƒu‘Î‰ */
+/* ï¿½ï¿½ï¿½Xï¿½|ï¿½ï¿½ï¿½Vï¿½uï¿½Î‰ï¿½ */
 /* =========================== */
 
-/* ƒ^ƒuƒŒƒbƒg‘Î‰ (1024pxˆÈ‰º) */
+/* ï¿½^ï¿½uï¿½ï¿½ï¿½bï¿½gï¿½Î‰ï¿½ (1024pxï¿½È‰ï¿½) */
 @media screen and (max-width: 1024px) {
-	.how-to-use-main-content {
-		padding-top: 700px;
-	}
+	
 	.how-to-use-section {
 		margin-top: 0;
 	}
@@ -161,7 +159,7 @@
 		letter-spacing: 2.8px;
 	}
 
-	/* Ğ‰î•¶ */
+	/* ï¿½Ğ‰î•¶ */
 	.intro-text {
 		margin: 40px auto;
 		font-size: 18px;
@@ -169,7 +167,7 @@
 		padding: 0 80px;
 	}
 
-	/* —˜—p•û–@ƒZƒNƒVƒ‡ƒ“ */
+	/* ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½@ï¿½Zï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ */
 	.method-image {
 		left: 50%;
 		transform: translateX(-50%);
@@ -185,7 +183,7 @@
 		padding: 0 60px;
 	}
 
-	/* Shisha & Alcohol ƒZƒNƒVƒ‡ƒ“ */
+	/* Shisha & Alcohol ï¿½Zï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ */
 	.shisha-alcohol-section {
 		height: 700px;
 		margin-top: 50px;
@@ -194,7 +192,7 @@
 		top: 450px;
 	}
 
-	/* Shisha Only ƒZƒNƒVƒ‡ƒ“ */
+	/* Shisha Only ï¿½Zï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ */
 	.shisha-only-section {
 		height: 700px;
 		margin-top: 80px;
@@ -203,7 +201,7 @@
 		top: 450px;
 	}
 
-	/* Alcohol Only ƒZƒNƒVƒ‡ƒ“ */
+	/* Alcohol Only ï¿½Zï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ */
 	.alcohol-only-section {
 		height: 700px;
 		margin-top: 80px;
@@ -213,11 +211,9 @@
 	}
 }
 
-/* ƒXƒ}[ƒgƒtƒHƒ“‘Î‰ (768pxˆÈ‰º) */
+/* ï¿½Xï¿½}ï¿½[ï¿½gï¿½tï¿½Hï¿½ï¿½ï¿½Î‰ï¿½ (768pxï¿½È‰ï¿½) */
 @media screen and (max-width: 768px) {
-	.how-to-use-main-content {
-		padding-top: 500px;
-	}
+	
 	.how-to-use-section {
 		margin-top: 0;
 	}
@@ -226,7 +222,7 @@
 		letter-spacing: 2.4px;
 	}
 
-	/* Ğ‰î•¶ */
+	/* ï¿½Ğ‰î•¶ */
 	.intro-text {
 		margin: 30px auto;
 		font-size: 16px;
@@ -234,7 +230,7 @@
 		padding: 0 30px;
 	}
 
-	/* —˜—p•û–@ƒZƒNƒVƒ‡ƒ“ */
+	/* ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½@ï¿½Zï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ */
 	.use-method-section {
 		display: flex;
 		flex-direction: column;
@@ -269,7 +265,7 @@
 		padding: 0 20px;
 	}
 
-	/* Shisha & Alcohol ƒZƒNƒVƒ‡ƒ“ */
+	/* Shisha & Alcohol ï¿½Zï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ */
 	.shisha-alcohol-section {
 		height: auto;
 		margin-top: 40px;
@@ -279,7 +275,7 @@
 		top: auto;
 	}
 
-	/* Shisha Only ƒZƒNƒVƒ‡ƒ“ */
+	/* Shisha Only ï¿½Zï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ */
 	.shisha-only-section {
 		height: auto;
 		margin-top: 40px;
@@ -292,7 +288,7 @@
 		top: auto;
 	}
 
-	/* Alcohol Only ƒZƒNƒVƒ‡ƒ“ */
+	/* Alcohol Only ï¿½Zï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ */
 	.alcohol-only-section {
 		height: auto;
 		margin-top: 40px;
@@ -306,17 +302,15 @@
 	}
 }
 
-/* ‹É¬ƒXƒ}[ƒgƒtƒHƒ“‘Î‰ (480pxˆÈ‰º) */
+/* ï¿½Éï¿½ï¿½Xï¿½}ï¿½[ï¿½gï¿½tï¿½Hï¿½ï¿½ï¿½Î‰ï¿½ (480pxï¿½È‰ï¿½) */
 @media screen and (max-width: 480px) {
-	.how-to-use-main-content {
-		padding-top: 400px;
-	}
+	
 	.section-subtitle {
 		font-size: 20px;
 		letter-spacing: 2px;
 	}
 
-	/* Ğ‰î•¶ */
+	/* ï¿½Ğ‰î•¶ */
 	.intro-text {
 		margin: 25px auto;
 		font-size: 14px;
@@ -324,7 +318,7 @@
 		padding: 0 20px;
 	}
 
-	/* —˜—p•û–@ƒZƒNƒVƒ‡ƒ“ */
+	/* ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½@ï¿½Zï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ */
 	.method-image {
 		width: 95%;
 	}
@@ -338,18 +332,16 @@
 		padding: 0 15px;
 	}
 
-	/* ƒZƒNƒVƒ‡ƒ“ŠÔŠu’²® */
+	/* ï¿½Zï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ÔŠuï¿½ï¿½ï¿½ï¿½ */
 	.shisha-alcohol-section, .shisha-only-section, .alcohol-only-section {
 		margin-top: 30px;
 		padding-bottom: 30px;
 	}
 }
 
-/* ‹É¬ƒXƒ}[ƒgƒtƒHƒ“‘Î‰ (400pxˆÈ‰º) */
+/* ï¿½Éï¿½ï¿½Xï¿½}ï¿½[ï¿½gï¿½tï¿½Hï¿½ï¿½ï¿½Î‰ï¿½ (400pxï¿½È‰ï¿½) */
 @media screen and (max-width: 400px) {
-	.how-to-use-main-content {
-		padding-top: 350px;
-	}
+	
 	.section-subtitle {
 		font-size: 18px;
 		letter-spacing: 1.8px;
