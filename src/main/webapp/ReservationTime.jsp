@@ -35,6 +35,7 @@ String buttonText = (user != null || ("ByAdmin".equals(action) && targetUser != 
 <title>予約登録システム - 時間選択</title>
 <link rel="stylesheet" href="./css/user/style.css">
 <link rel="stylesheet" href="./css/user/reservation_timeStyle.css">
+<link rel="icon" href="../assets/ロゴ完成_金色b.svg">
 <style>
 /* ラジオボタンをボタン形式のデザインにするための調整 */
 .time_slot_input {
@@ -67,6 +68,15 @@ String buttonText = (user != null || ("ByAdmin".equals(action) && targetUser != 
 </style>
 </head>
 <body>
+	<!-- ヘッダー -->
+    <header class="systemheader" data-name="ヘッダー">
+        <div class="logos" id="logo" onclick="location.href='./top.html'">
+            <img src="../assets/ロゴタイプ_金色b.svg" alt="logo" class="logo">
+        </div>
+        <nav class="system-nav-menu">
+            <a href="./login.html" class="nav-link">Login</a>
+        </nav>
+    </header>
 	<main>
 		<div class="container">
 			<div class="step_indicator">
@@ -146,7 +156,9 @@ String buttonText = (user != null || ("ByAdmin".equals(action) && targetUser != 
 			<button class="restart_button" onclick="location.href='./top.jsp'">最初からやり直す</button>
 		</div>
 	</main>
-
+	<footer>
+        <p><small>&copy;The Shisha Honjin</small></p>
+    </footer>
 	<script>
     // 時間が選ばれたら下の確認欄を更新するスクリプト
     const radioButtons = document.querySelectorAll('.time_slot_input');
@@ -177,3 +189,4 @@ String buttonText = (user != null || ("ByAdmin".equals(action) && targetUser != 
 </script>
 </body>
 </html>
+<script type="text/javascript" src="../javascript/logoScript.js"></script>

@@ -37,6 +37,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+    pointer-events: none;
 }
 
 .step_image img {
@@ -106,6 +107,7 @@ main {
 .seat_icon img {
     width: 45px;
     height: 45px;
+    pointer-events: none;
 }
 
 .seat_card h4 {
