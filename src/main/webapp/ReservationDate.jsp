@@ -17,6 +17,7 @@ Map<String, String> statusData = (Map<String, String>) request.getAttribute("sta
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>席予約</title>
+<link rel="stylesheet" href="./css/user/style.css">
 <link rel="stylesheet" href="./css/user/mainstyles.css">
 <script
 	src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'>
@@ -35,7 +36,7 @@ Map<String, String> statusData = (Map<String, String>) request.getAttribute("sta
 			<a	href="./menu.jsp" class="nav-link">Menu</a> 
 			<a href="./topics.jsp" class="nav-link">Topics</a> 
 			<a href="./contact.jsp" class="nav-link">Contact</a>
-			<a href="ReservationDate.jsp" class="nav-link">Reservation</a>
+			<a href="UserController?command=reservationDate" class="nav-link">Reservation</a>
 			<%if (user != null) { %>
 				<a href="UserController?command=MyPage" class="nav-link">Member</a>
 			<% } else { %>
@@ -203,11 +204,8 @@ Map<String, String> statusData = (Map<String, String>) request.getAttribute("sta
 					calendar.render();
 				});
 			</script>
-
 	<footer>
-		<p>
-			<small>&copy;The Shisha Honjin</small>
-		</p>
+		<p><small>&copy;The Shisha Honjin</small></p>
 	</footer>
 </body>
 </html>

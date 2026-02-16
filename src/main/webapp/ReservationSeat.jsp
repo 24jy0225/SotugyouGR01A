@@ -49,7 +49,7 @@ String formAction = "ByUser".equals(action) ? "UserController" : "AdminControlle
 			<a	href="./menu.jsp" class="nav-link">Menu</a> 
 			<a href="./topics.jsp" class="nav-link">Topics</a> 
 			<a href="./contact.jsp" class="nav-link">Contact</a>
-			<a href="ReservationDate.jsp" class="nav-link">Reservation</a>
+			<a href="UserController?command=reservationDate" class="nav-link">Reservation</a>
 			<%if (user != null) { %>
 				<a href="UserController?command=MyPage" class="nav-link">Member</a>
 			<% } else { %>
@@ -113,7 +113,7 @@ String formAction = "ByUser".equals(action) ? "UserController" : "AdminControlle
 					onclick="history.back(); return false;">← コース選択に戻る</a>
 			</div>
 
-			<button class="restart_button" onclick="location.href='./ReservationDate.jsp'">最初からやり直す</button>
+			<button class="restart_button" onclick="location.href='UserController?command=reservationDate'">最初からやり直す</button>
 		</div>
 	</main>
 	<footer>
