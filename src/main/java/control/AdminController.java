@@ -2,7 +2,6 @@ package control;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -26,7 +25,6 @@ import action.Coupon.CouponEditAction;
 import action.Coupon.CouponUsageAction;
 import action.Coupon.CouponUseAction;
 import action.Design.DesignUpdateAction;
-import action.Photo.PhotoUpdateAction;
 import action.Reservation.ReservationConfirmAction;
 import action.Reservation.ReservationDeleteAction;
 import action.Reservation.ReservationHistoryAction;
@@ -137,6 +135,7 @@ public class AdminController extends HttpServlet {
 		String command = (String) req.getParameter("command");
 		List<Reservation> reservationList = new ArrayList<>();
 		ReservationHistoryAction action = new ReservationHistoryAction();
+		boolean success;
 		if (command == null) {
 			resp.sendRedirect("AdminLogin.jsp");
 			return;
@@ -260,159 +259,98 @@ public class AdminController extends HttpServlet {
 		case "designUpdate":
 			Part part = req.getPart("image");
 			String category = req.getParameter("category");
+			
+			String fileName = System.currentTimeMillis() + "_" + part.getSubmittedFileName();
+			String saveDir = getServletContext().getRealPath("/image/photo");
+			String webPath = req.getContextPath() + "/image/photo/" + fileName;
+			
+			String localDir = "Z:\\卒業制作2\\SotugyouGR01A\\src\\main\\webapp\\image\\photo";
+			
+			try {
+		     
+		        File dir = new File(saveDir);
+		        if (!dir.exists()) dir.mkdirs();
+		        
+		        part.write(saveDir + File.separator + fileName);
 
-			// --- バリデーション ---
-			String contentType = part.getContentType();
+		     
+		        File localDirObj = new File(localDir);
+		        if (localDirObj.exists()) {
+		            java.nio.file.Path source = java.nio.file.Paths.get(saveDir + File.separator + fileName);
+		            java.nio.file.Path target = java.nio.file.Paths.get(localDir + File.separator + fileName);
+		            java.nio.file.Files.copy(source, target, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+		        }
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		        resp.sendRedirect("Error.jsp");
+		        return;
+		    }
+			
+			session.setAttribute("category", category);
+		    session.setAttribute("webPath", webPath);
+			
+		    DesignUpdateAction designUpdateAction = new DesignUpdateAction();
+		    designUpdateAction.execute(req, resp);
+		    return;
+			
+		case "topicsAdd":
+			Part topicsPart = req.getPart("image");
+			String topicsTitle = req.getParameter("topicsTitle");
+			String topicsContent = req.getParameter("topicsContent");
+
+			
+			String contentType = topicsPart.getContentType();
 			if (!contentType.startsWith("image/")) {
 				req.setAttribute("error", "画像ファイルのみアップロード可能です");
-				req.getRequestDispatcher("noticeAdd.jsp").forward(req, resp);
 				return;
 			}
-			if (part == null || part.getSize() == 0) {
-				resp.sendRedirect("PhotoAdd.jsp");
-				return;
-			}
-
-			// --- ファイル名生成 ---
-			String fileName = System.currentTimeMillis() + "_"
-					+ Paths.get(part.getSubmittedFileName()).getFileName().toString();
-
-			session.setAttribute("category", category);
-			session.setAttribute("fileName", fileName);
-
-			// =================================================================
-			// 画像保存処理（ダブル保存：Write once, Copy once）
-			// =================================================================
-
-			// 1. 【表示用】サーバーの実行フォルダ（ブラウザがすぐ見れる場所）
-			String realPath = getServletContext().getRealPath("/image/photo");
-			File realDirObj = new File(realPath);
-			if (!realDirObj.exists()) {
-				realDirObj.mkdirs();
-			}
-
-			// 2. 【保存用】プロジェクトのsrcフォルダ（Eclipse再起動しても消えない場所）
-			String localPath = "Z:\\卒業制作2\\SotugyouGR01A\\src\\main\\webapp\\image\\photo";
-			File localDirObj = new File(localPath);
-			if (!localDirObj.exists()) {
-				localDirObj.mkdirs();
-			}
-
-			try {
-				// A. まずサーバー（表示用）に書き込む（ここでpartが消費される）
-				String serverFullPath = realPath + File.separator + fileName;
-				part.write(serverFullPath);
-
-				// B. 書き込んだファイルを、Zドライブ（保存用）にコピーする
-				java.nio.file.Path source = java.nio.file.Paths.get(serverFullPath);
-				java.nio.file.Path target = java.nio.file.Paths.get(localPath + File.separator + fileName);
-				java.nio.file.Files.copy(source, target, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-
-				System.out.println("Design Update Success: " + fileName);
-
-			} catch (IOException e) {
-				e.printStackTrace();
-				session.setAttribute("errorMsg", "画像の保存に失敗しました。");
+			if (topicsPart == null || topicsPart.getSize() == 0) {
+				
 				resp.sendRedirect("Error.jsp");
 				return;
 			}
 
-			// =================================================================
-
-			// --- 古いファイルの削除処理 ---
-			PhotoUpdateAction photoUpdateAction = new PhotoUpdateAction();
-			String oldFileName = photoUpdateAction.execute(req);
-
-			// 古いファイルがあれば、両方の場所から削除する
-			if (oldFileName != null && !oldFileName.isEmpty()) {
-				File oldRealFile = new File(realPath + File.separator + oldFileName);
-				if (oldRealFile.exists())
-					oldRealFile.delete();
-
-				File oldLocalFile = new File(localPath + File.separator + oldFileName);
-				if (oldLocalFile.exists())
-					oldLocalFile.delete();
+			String tName = topicsPart.getSubmittedFileName();
+			String tExt = "";
+			int tDot = tName.lastIndexOf(".");
+			if (tDot >= 0) {
+				tExt = tName.substring(tDot).toLowerCase();
 			}
+			String tFileName = System.currentTimeMillis() + tExt;
 
-			// --- DB更新処理 ---
-			DesignUpdateAction designUpdateAction = new DesignUpdateAction();
-			designUpdateAction.execute(req, resp);
-			return;
+			String tSaveDir = getServletContext().getRealPath("/image/photo");
+			String tWebPath = req.getContextPath() + "/image/photo/" + tFileName;
+			String tLocalDir = "Z:\\卒業制作2\\SotugyouGR01A\\src\\main\\webapp\\image\\photo";
 
-		case "topicsAdd":
-			Part topicsPart = req.getPart("image");
-			contentType = topicsPart.getContentType();
-			String topicsTitle = req.getParameter("topicsTitle");
-			String topicsContent = req.getParameter("topicsContent");
-
-			// 1. バリデーション
-			if (!contentType.startsWith("image/")) {
-				req.setAttribute("error", "画像ファイルのみアップロード可能です");
-				req.getRequestDispatcher("NoticeAdd.jsp").forward(req, resp);
-				return;
-			}
-			if (topicsPart == null || topicsPart.getSize() == 0) {
-				resp.sendRedirect("PhotoAdd.jsp");
-				return;
-			}
-
-			// 2. ファイル名生成 & セッションセット
-			session.setAttribute("topicsTitle", topicsTitle);
-			session.setAttribute("topicsContent", topicsContent);
-
-			fileName = System.currentTimeMillis() + "_"
-					+ Paths.get(topicsPart.getSubmittedFileName()).getFileName().toString();
-			session.setAttribute("fileName", fileName);
-
-			// =================================================================
-			// 画像保存処理（ダブル保存）
-			// =================================================================
-
-			// A. 表示用パス（サーバーの一時フォルダ：ブラウザですぐ見るため）
-			String serverSaveDir = getServletContext().getRealPath("/image/photo");
-			File serverDirObj = new File(serverSaveDir);
-			if (!serverDirObj.exists()) {
-				serverDirObj.mkdirs();
-			}
-
-			// B. 保存用パス（Zドライブのsrcフォルダ：消えないようにするため）
-			String localSaveDir = "Z:\\卒業制作2\\SotugyouGR01A\\src\\main\\webapp\\image\\photo";
-			localDirObj = new File(localSaveDir);
-			if (!localDirObj.exists()) {
-				localDirObj.mkdirs();
-			}
-
+			
 			try {
-				// 1. まずサーバー（表示用）に書き込む
-				String serverFullPath = serverSaveDir + File.separator + fileName;
-				topicsPart.write(serverFullPath);
+				
+				File dir = new File(tSaveDir);
+				if (!dir.exists()) dir.mkdirs();
+				
+				topicsPart.write(tSaveDir + File.separator + tFileName);
 
-				// 2. 書き込んだファイルを、Zドライブ（保存用）にコピーする
-				java.nio.file.Path source = java.nio.file.Paths.get(serverFullPath);
-				java.nio.file.Path target = java.nio.file.Paths.get(localSaveDir + File.separator + fileName);
-				java.nio.file.Files.copy(source, target, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-
-				System.out.println("Topics Upload Success: " + fileName);
-
+				File localDirObj = new File(tLocalDir);
+				if (localDirObj.exists()) {
+					java.nio.file.Path source = java.nio.file.Paths.get(tSaveDir + File.separator + tFileName);
+					java.nio.file.Path target = java.nio.file.Paths.get(tLocalDir + File.separator + tFileName);
+					java.nio.file.Files.copy(source, target, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
-				// エラーでもDB登録へ進むか、ここで止めるかは要件次第ですが、一旦エラーページへ
 				session.setAttribute("errorMsg", "画像の保存に失敗しました");
 				resp.sendRedirect("Error.jsp");
 				return;
 			}
-			// =================================================================
 
-			// 3. Action呼び出し（DB登録など）
+			session.setAttribute("topicsTitle", topicsTitle);
+			session.setAttribute("topicsContent", topicsContent);
+			session.setAttribute("webPath", tWebPath); 
+
 			TopicsAddAction topicsAddAction = new TopicsAddAction();
-			boolean success = topicsAddAction.execute(req, resp);
+			success = topicsAddAction.execute(req, resp);
 
-			// 4. リスト更新と遷移
-			List<Topics> topicsList = new ArrayList<>();
-			TopicsAction topicsAction = new TopicsAction();
-			topicsList = topicsAction.execute();
-			session.setAttribute("topicsList", topicsList);
-
+			
 			if (success) {
 				resp.setStatus(HttpServletResponse.SC_OK);
 			} else {
@@ -425,15 +363,18 @@ public class AdminController extends HttpServlet {
 			session.setAttribute("topicsId", topicsId);
 			TopicsDeleteAction topicsDeleteAction = new TopicsDeleteAction();
 			success = topicsDeleteAction.execute(req);
-			topicsAction = new TopicsAction();
-			topicsList = topicsAction.execute();
+			
+			TopicsAction topicsAction = new TopicsAction();
+			List<Topics> topicsList = topicsAction.execute();
 			session.setAttribute("topicsList", topicsList);
+			
 			if (success) {
 				resp.setStatus(HttpServletResponse.SC_OK);
 			} else {
 				resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			}
 			return;
+			
 
 		case "userDetail": // customerDetail -> userDetail
 			String userId = req.getParameter("userId");

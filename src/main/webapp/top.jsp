@@ -62,7 +62,7 @@ if (photoList != null) {
 		<div class="hero-section">
 			<div class="hero-background-image">
 				<img
-					src="${pageContext.request.contextPath}/image/photo/<%= topImageName %>"
+					src="<%= topImageName %>"
 					alt="シーシャの炭">
 			</div>
 			<div class="logo-image">

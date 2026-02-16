@@ -33,11 +33,11 @@ public class TopicsAddAction extends HttpServlet {
 		HttpSession session = req.getSession();
 		String topicsTitle = (String) session.getAttribute("topicsTitle");
 		String topicsContent = (String) session.getAttribute("topicsContent");
-		String fileName = (String) session.getAttribute("fileName");
+		String webPath = (String) session.getAttribute("webPath");
 
 		try {
 			TopicsDao dao = new TopicsDao();
-			int photoId = dao.insertPhoto(fileName);
+			int photoId = dao.insertPhoto(webPath);
 
 			if (photoId != -1) {
 				dao.insertTopic(photoId, topicsTitle, topicsContent);
