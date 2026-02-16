@@ -26,6 +26,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+    pointer-events: none;
 }
 
 .step_image img {
@@ -90,6 +91,7 @@ main {
 .course_icon img {
     width: 60px;
     height: 60px;
+    pointer-events: none;
 }
 
 .course_card h4 {

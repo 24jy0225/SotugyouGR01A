@@ -1,0 +1,186 @@
+/* 予約完了画面のスタイル */
+
+/* システムタイトル */
+.system-title {
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 40px;
+}
+
+.system-title h1 {
+    font-size: 24px;
+    font-weight: 400;
+    color: #ffffff;
+    letter-spacing: 2px;
+}
+
+/* ステップインジケーター（画像版） */
+.step_image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 60px;
+    pointer-events: none;
+}
+
+.step_image img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* 予約完了カード */
+.completion-card {
+    max-width: 600px;
+    width: 85%;
+    background-color: #f5f5f5;
+    border-radius: 20px;
+    padding: 50px 40px;
+    margin: 0 auto 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* チェックアイコン */
+.check-icon-wrapper {
+    width: 80px;
+    height: 80px;
+    background-color: #d4f4dd;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.check-icon-wrapper img {
+    width: 40px;
+    height: 40px;
+    pointer-events: none;
+}
+
+/* 完了メッセージ */
+.completion-message {
+    font-size: 20px;
+    color: #4caf50;
+    font-weight: 500;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+/* 予約詳細 */
+.reservation-details {
+    background-color: #e8e8e8;
+    padding: 25px 40px;
+    border-radius: 12px;
+    margin-bottom: 35px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.detail-item {
+    font-size: 16px;
+    color: #333333;
+    margin: 10px 0;
+    text-align: center;
+}
+
+/* お礼メッセージ */
+.thank-you-message {
+    text-align: center;
+}
+
+.thank-you-message p {
+    font-size: 14px;
+    color: #333333;
+    margin: 6px 0;
+    line-height: 1.6;
+}
+
+/* レスポンシブ対応 */
+@media screen and (max-width: 768px) {
+    .system-title {
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    .system-title h1 {
+        font-size: 18px;
+    }
+
+    .step_image {
+        margin-bottom: 40px;
+    }
+
+    .completion-card {
+        width: 90%;
+        padding: 40px 30px;
+        margin-bottom: 60px;
+    }
+
+    .check-icon-wrapper {
+        width: 70px;
+        height: 70px;
+        margin-bottom: 20px;
+    }
+
+    .check-icon-wrapper img {
+        width: 35px;
+        height: 35px;
+    }
+
+    .completion-message {
+        font-size: 18px;
+        margin-bottom: 30px;
+    }
+
+    .reservation-details {
+        padding: 20px 30px;
+        margin-bottom: 25px;
+    }
+
+    .detail-item {
+        font-size: 14px;
+        margin: 8px 0;
+    }
+
+    .thank-you-message p {
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .system-title h1 {
+        font-size: 16px;
+    }
+
+    .completion-card {
+        padding: 35px 25px;
+    }
+
+    .check-icon-wrapper {
+        width: 60px;
+        height: 60px;
+    }
+
+    .check-icon-wrapper img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .completion-message {
+        font-size: 16px;
+    }
+
+    .reservation-details {
+        padding: 18px 25px;
+    }
+
+    .detail-item {
+        font-size: 13px;
+    }
+
+    .thank-you-message p {
+        font-size: 12px;
+    }
+}
