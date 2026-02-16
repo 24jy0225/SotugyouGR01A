@@ -1,99 +1,30 @@
+/* =========================== */
+/* What's Shisha ページ専用スタイル */
+/* =========================== */
 
-/* 繝｡繧､繝ｳ繧ｳ繝ｳ繝�繝ｳ繝� */
-.main-content {
-    position: relative;
-    width: 100%;
-    min-height: 8080px;
-    max-width: 1920px;
-    margin: 0 auto;
-    z-index: 1;
-}
-
-/* 繝偵�ｼ繝ｭ繝ｼ逕ｻ蜒� */
-.hero-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 1079px;
-}
-
-.hero-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    pointer-events: none;
-}
-
-/* 繧ｻ繧ｯ繧ｷ繝ｧ繝ｳ蜈ｱ騾壹せ繧ｿ繧､繝ｫ */
-.section {
-    position: relative;
-    width: 100%;
-    padding: 0;
-}
-
-/* What's The Shisha 繧ｻ繧ｯ繧ｷ繝ｧ繝ｳ */
+/* =========================== */
+/* What's The Shisha セクション */
+/* =========================== */
 .what-section {
-    position: absolute;
-    top: 1320px;
-    left: 0;
     width: 100%;
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 140px 0 160px;
+    position: relative;
 }
 
-.section-title {
-    font-family: 'Italianno', cursive;
-    font-size: 96px;
-    color: #e6b422;
-    text-align: center;
-    letter-spacing: 9.6px;
-    white-space: nowrap;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 0;
-    margin: 0;
-}
+/* section-titleとsection-title-containerはmainstyles.cssで定義済みなので使いまわす */
 
-.title-decoration {
-    width: 1521px;
-    height: 0;
-    position: absolute;
-    left: 199px;
-    top: 60px;
-    margin: 0;
-}
-
-.title-decoration::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: -1px;
-    bottom: -8.5px;
-    background-image: url('assets/decoration-line.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-.section-subtitle {
+.what-section .section-subtitle {
     font-family: 'Noto Sans JP', sans-serif;
     font-weight: 700;
     font-size: 36px;
     color: #ffffff;
     text-align: center;
     letter-spacing: 3.6px;
-    white-space: nowrap;
-    position: absolute;
-    left: 748px;
-    top: 128px;
-    margin: 0;
+    margin-top: 64px;
+    margin-bottom: 97px;
 }
 
-.section-content {
+.what-section .section-content {
     font-family: 'Noto Sans JP', sans-serif;
     font-weight: 400;
     font-size: 20px;
@@ -102,30 +33,24 @@
     text-align: center;
     letter-spacing: 2px;
     max-width: 1521px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 225px;
-    width: calc(100% - 398px);
+    margin: 0 auto;
+    padding: 0 199px;
+}
+
+.what-section .section-content p {
     margin: 0;
 }
 
-.section-content p {
-    margin-bottom: 0;
-}
-
-/* 蟾ｦ蟇�縺帙そ繧ｯ繧ｷ繝ｧ繝ｳ */
+/* =========================== */
+/* 左寄せセクション共通スタイル */
+/* =========================== */
 .section-title-left {
     font-family: 'Italianno', cursive;
     font-size: 64px;
     color: #e6b422;
     text-align: left;
     letter-spacing: 6.4px;
-    margin-left: 199px;
-    margin-bottom: 80px;
-    margin-top: 0;
-    white-space: nowrap;
-    position: relative;
+    margin: 0 0 80px 199px;
 }
 
 .section-subtitle-left {
@@ -135,11 +60,7 @@
     color: #ffffff;
     text-align: left;
     letter-spacing: 2.4px;
-    margin-left: 199px;
-    margin-bottom: 104px;
-    margin-top: 0;
-    white-space: nowrap;
-    position: relative;
+    margin: 0 0 104px 199px;
 }
 
 .section-content-left {
@@ -151,253 +72,276 @@
     text-align: left;
     letter-spacing: 2px;
     margin-left: 199px;
-    max-width: 1521px;
-    position: relative;
+    margin-right: 199px;
+    max-width: calc(100% - 398px);
 }
 
 .section-content-left p {
-    margin-bottom: 0;
+    margin: 0;
 }
 
 .section-content-left strong {
     font-weight: 700;
 }
 
-/* History 繧ｻ繧ｯ繧ｷ繝ｧ繝ｳ */
-.history-section {
-    position: absolute;
-    top: 2445px;
-    left: 0;
-    width: 100%;
-    padding-top: 0;
-    padding-bottom: 0;
-}
-
+/* 背景画像付きセクション共通 */
 .section-background-image {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 1050px;
+    height: 100%;
     opacity: 0.6;
     pointer-events: none;
     z-index: -1;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* =========================== */
+/* History セクション */
+/* =========================== */
+.history-section {
+    width: 100%;
+    padding: 140px 0 200px;
+    position: relative;
+    min-height: 800px;
 }
 
 .history-section .section-background-image {
+    height: calc(100% + 98px);
     top: -98px;
+    background-image: url('../assets/imgi_17_Hookah-pipe-for-groups.jpeg');
+}
+
+/* =========================== */
+/* How Shisha Works セクション */
+/* =========================== */
+.how-section {
+    width: 100%;
+    padding: 140px 0 200px;
+    position: relative;
+}
+
+/* =========================== */
+/* The fascination of shisha セクション */
+/* =========================== */
+.fascination-section {
+    width: 100%;
+    padding: 140px 0 200px;
+    position: relative;
+}
+
+/* =========================== */
+/* The Harm of Shisha セクション */
+/* =========================== */
+.harm-section {
+    width: 100%;
+    padding: 140px 0 200px;
+    position: relative;
+    min-height: 900px;
 }
 
 .harm-section .section-background-image {
+    height: calc(100% + 36px);
     top: -36px;
-    height: 1069px;
+    background-image: url('../assets/imgi_10_background-3.jpeg');
 }
 
-.section-background-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-}
+/* =========================== */
+/* レスポンシブ対応 */
+/* =========================== */
 
-/* How Shisha Works 繧ｻ繧ｯ繧ｷ繝ｧ繝ｳ */
-.how-section {
-    position: absolute;
-    top: 3394px;
-    left: 0;
-    width: 100%;
-    padding-top: 0;
-    padding-bottom: 0;
-}
-
-/* The fascination of shisha 繧ｻ繧ｯ繧ｷ繝ｧ繝ｳ */
-.fascination-section {
-    position: absolute;
-    top: 4253px;
-    left: 0;
-    width: 100%;
-    padding-top: 0;
-    padding-bottom: 0;
-}
-
-.fascination-list {
-    max-width: 1521px;
-}
-
-/* The Harm of Shisha 繧ｻ繧ｯ繧ｷ繝ｧ繝ｳ */
-.harm-section {
-    position: absolute;
-    top: 5787px;
-    left: 0;
-    width: 100%;
-    padding-top: 0;
-    padding-bottom: 0;
-}
-
-/* 繝輔ャ繧ｿ繝ｼ */
-.footer {
-    position: absolute;
-    top: 7000px;
-    left: 0;
-    width: 100%;
-    height: 1080px;
-    background-color: #000000;
-}
-
-.footer-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 50px;
-    background-color: #4a5565;
-}
-
-.footer-content {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    padding-top: 125px;
-}
-
-.footer-logo {
-    position: absolute;
-    left: 20.63%;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 200px;
-    height: 200px;
-    background-color: #ed8224;
-    aspect-ratio: 200 / 200;
-}
-
-.reservation-btn {
-    position: absolute;
-    left: 866px;
-    top: 369px;
-    width: 124px;
-    height: 49px;
-    border: 1px solid #e6b422;
-    background-color: transparent;
-    color: #ffffff;
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 32px;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.reservation-btn:hover {
-    background-color: #e6b422;
-    color: #000000;
-}
-
-.footer-info {
-    position: absolute;
-    left: 56.35%;
-    top: 12.13%;
-    right: 5.31%;
-    bottom: 39.26%;
-    font-family: 'Noto Sans JP', sans-serif;
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 30px;
-    color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.footer-info p {
-    margin-bottom: 0;
-}
-
-.footer-nav {
-    position: absolute;
-    left: 320px;
-    top: 961px;
-    display: flex;
-    gap: 174px;
-    align-items: center;
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 24px;
-    color: #e6b422;
-}
-
-.footer-nav-link {
-    color: #e6b422;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: opacity 0.3s;
-}
-
-.footer-nav-link:hover {
-    opacity: 0.7;
-}
-
-.copyright {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-family: 'Inter', sans-serif;
-    font-size: 32px;
-    color: #ffffff;
-    text-align: center;
-    white-space: nowrap;
-    width: 325px;
-}
-
-/* 繝ｬ繧ｹ繝昴Φ繧ｷ繝門ｯｾ蠢懶ｼ亥ｿ�隕√↓蠢懊§縺ｦ�ｼ� */
-@media (max-width: 1920px) {
-    .main-content {
-        min-height: auto;
+/* 大画面対応 (1920px以下) */
+@media screen and (max-width: 1920px) {
+    .section-title-left {
+        font-size: 56px;
+        letter-spacing: 5.6px;
     }
+}
 
-    .section-title {
-        font-size: 72px;
+/* タブレット対応 (1024px以下) */
+@media screen and (max-width: 1024px) {
+    /* What's The Shisha セクション */
+    .what-section {
+        padding: 100px 0 120px;
     }
-
+    
+    .what-section .section-subtitle {
+        font-size: 28px;
+        letter-spacing: 2.8px;
+        margin-top: 48px;
+        margin-bottom: 72px;
+    }
+    
+    .what-section .section-content {
+        font-size: 18px;
+        line-height: 40px;
+        padding: 0 100px;
+    }
+    
+    /* 左寄せセクション */
     .section-title-left {
         font-size: 48px;
+        letter-spacing: 4.8px;
         margin-left: 100px;
+        margin-bottom: 60px;
     }
-
+    
     .section-subtitle-left {
+        font-size: 20px;
+        letter-spacing: 2px;
         margin-left: 100px;
+        margin-bottom: 80px;
     }
-
+    
     .section-content-left {
+        font-size: 18px;
+        line-height: 40px;
         margin-left: 100px;
+        margin-right: 100px;
+        max-width: calc(100% - 200px);
+    }
+    
+    /* その他セクション */
+    .history-section,
+    .how-section,
+    .fascination-section,
+    .harm-section {
+        padding: 100px 0 150px;
+    }
+    
+    .history-section {
+        min-height: 700px;
+    }
+    
+    .harm-section {
+        min-height: 800px;
     }
 }
 
-@media (max-width: 1200px) {
-    .nav-menu {
-        gap: 60px;
-        font-size: 18px;
+/* スマートフォン対応 (768px以下) */
+@media screen and (max-width: 768px) {
+    /* What's The Shisha セクション */
+    .what-section {
+        padding: 80px 0 100px;
     }
-
-    .section-title {
-        font-size: 56px;
+    
+    .what-section .section-subtitle {
+        font-size: 24px;
+        letter-spacing: 2.4px;
+        margin-top: 40px;
+        margin-bottom: 60px;
     }
-
+    
+    .what-section .section-content {
+        font-size: 16px;
+        line-height: 36px;
+        padding: 0 30px;
+    }
+    
+    /* 左寄せセクション */
     .section-title-left {
-        font-size: 40px;
-        margin-left: 50px;
+        font-size: 36px;
+        letter-spacing: 3.6px;
+        margin-left: 30px;
+        margin-bottom: 40px;
     }
-
+    
     .section-subtitle-left {
-        margin-left: 50px;
-        font-size: 20px;
+        font-size: 18px;
+        letter-spacing: 1.8px;
+        margin-left: 30px;
+        margin-bottom: 60px;
     }
-
+    
     .section-content-left {
-        margin-left: 50px;
-        font-size: 18px;
+        font-size: 16px;
+        line-height: 36px;
+        margin-left: 30px;
+        margin-right: 30px;
+        max-width: calc(100% - 60px);
     }
+    
+    /* その他セクション */
+    .history-section,
+    .how-section,
+    .fascination-section,
+    .harm-section {
+        padding: 80px 0 100px;
+    }
+    
+    .history-section {
+        min-height: 600px;
+    }
+    
+    .harm-section {
+        min-height: 700px;
+    }
+    
+    /* 背景画像の調整 */
+    .history-section .section-background-image,
+    .harm-section .section-background-image {
+        height: 100%;
+        top: 0;
+    }
+}
 
-    .footer-nav {
-        gap: 60px;
-        font-size: 18px;
+/* 極小スマートフォン対応 (400px以下) */
+@media screen and (max-width: 400px) {
+    .what-section {
+        padding: 60px 0 80px;
+    }
+    
+    .what-section .section-subtitle {
+        font-size: 20px;
+        letter-spacing: 2px;
+        margin-top: 30px;
+        margin-bottom: 50px;
+    }
+    
+    .what-section .section-content {
+        font-size: 14px;
+        line-height: 32px;
+        padding: 0 20px;
+    }
+    
+    .section-title-left {
+        font-size: 28px;
+        letter-spacing: 2.8px;
+        margin-left: 20px;
+        margin-bottom: 30px;
+    }
+    
+    .section-subtitle-left {
+        font-size: 16px;
+        letter-spacing: 1.6px;
+        margin-left: 20px;
+        margin-bottom: 50px;
+    }
+    
+    .section-content-left {
+        font-size: 14px;
+        line-height: 32px;
+        margin-left: 20px;
+        margin-right: 20px;
+        max-width: calc(100% - 40px);
+    }
+    
+    .history-section,
+    .how-section,
+    .fascination-section,
+    .harm-section {
+        padding: 60px 0 80px;
+    }
+    
+    .history-section {
+        min-height: 500px;
+    }
+    
+    .harm-section {
+        min-height: 600px;
     }
 }
