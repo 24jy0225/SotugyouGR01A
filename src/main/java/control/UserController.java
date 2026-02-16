@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import jakarta.servlet.RequestDispatcher;
@@ -137,6 +138,14 @@ public class UserController extends HttpServlet {
 			List<Topics> topicsList = topicsAction.execute();
 			PhotoAction photoAction = new PhotoAction();
 			List<Photo> photoList = photoAction.execute();
+			Collections.reverse(topicsList);
+			List<Topics> top4List = new ArrayList<>();
+			int limit = Math.min(4, topicsList.size());
+	        
+	        for (int i = 0; i < limit; i++) {
+	            top4List.add(topicsList.get(i));
+	        }
+	        session.setAttribute("top4List", top4List);
 			session.setAttribute("topicsList", topicsList);
 			session.setAttribute("photoList", photoList);
 			nextPage = "top.jsp";

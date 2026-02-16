@@ -3,17 +3,26 @@
 	import="model.Photo , java.util.* , model.Topics , model.User"%>
 <%
 List<Photo> photoList = (List<Photo>) session.getAttribute("photoList");
-List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
+List<Topics> topicsList = (List<Topics>) session.getAttribute("top4List");
 
 User user = (User) session.getAttribute("LoginUser");
-String topImageName = "burning_coal.jpg";
-
+String topImageName = "./image/assets/user/burning_coal.jpg";
+String flavor = "./image/assets/user/flavar.png";
 //2. リストを回して "top" カテゴリを探す
 if (photoList != null) {
 	for (Photo p : photoList) {
 		// "top" と p.getPhotoCategory() が一致するかチェック
 		if ("top".equals(p.getPhotoCategory())) {
 	topImageName = p.getPhotoFileName(); // ファイル名を取得
+	break; // 見つかったらループを抜ける
+		}
+	}
+}
+if (photoList != null) {
+	for (Photo p : photoList) {
+		// "top" と p.getPhotoCategory() が一致するかチェック
+		if ("flavor".equals(p.getPhotoCategory())) {
+	flavor = p.getPhotoFileName(); // ファイル名を取得
 	break; // 見つかったらループを抜ける
 		}
 	}
@@ -190,7 +199,7 @@ if (photoList != null) {
 				<hr>
 			</div>
 			<div class="flavor-image">
-				<img src="./image/assets/user/flavar.png" alt="フレーバー">
+				<img src="<%= flavor %>" alt="フレーバー">
 			</div>
 			<div class="more-btn-container">
 				<button class="more-btn">MORE</button>
@@ -262,7 +271,7 @@ if (photoList != null) {
 						<p><%=t.getTopicsTitle()%></p>
 					</div>
 					<div class="topic-card-image">
-						<img src="./image/photo/<%=t.getPhotoId().getPhotoFileName()%>"
+						<img src="<%=t.getPhotoId().getPhotoFileName()%>"
 							alt="トピック1">
 					</div>
 				</div>
@@ -274,7 +283,7 @@ if (photoList != null) {
 				%>
 			</div>
 			<div class="more-btn-container">
-				<button class="more-btn">MORE</button>
+				<button class="more-btn" onclick="location.href='topics.jsp'">MORE</button>
 			</div>
 		</section>
 	</main>

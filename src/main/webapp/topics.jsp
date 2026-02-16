@@ -62,7 +62,7 @@ User user = (User)session.getAttribute("LoginUser");
 				<!-- トピック1 -->
 				<div class="topic_item">
 					<div class="topic_image">
-						<img src="./image/photo/<%=t.getPhotoId().getPhotoFileName()%>"
+						<img src="<%=t.getPhotoId().getPhotoFileName()%>"
 							alt="特定期間お得な予約イベント">
 					</div>
 					<div class="topic_content">
