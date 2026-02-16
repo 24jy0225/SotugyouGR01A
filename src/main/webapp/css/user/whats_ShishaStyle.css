@@ -111,9 +111,10 @@
 }
 
 .history-section .section-background-image {
-    height: calc(100% + 98px);
-    top: -98px;
-    background-image: url('../../image/assets/user/imgi_17_Hookah-pipe-for-groups.jpeg');
+    width: 110%;
+    top: 0px;
+    background-position: right;
+    background-image: url('../assets/imgi_17_Hookah-pipe-for-groups.jpeg');
 }
 
 /* =========================== */
@@ -147,7 +148,7 @@
 .harm-section .section-background-image {
     height: calc(100% + 36px);
     top: -36px;
-    background-image: url('../../image/assets/user/imgi_10_background-3.jpeg');
+    background-image: url('../assets/imgi_10_background-3.jpeg');
 }
 
 /* =========================== */
@@ -282,10 +283,15 @@
     }
     
     /* 背景画像の調整 */
-    .history-section .section-background-image,
+    .history-section .section-background-image{
+        height: 100%;
+        top: 0;
+        background-position: 60% 0;
+    }
     .harm-section .section-background-image {
         height: 100%;
         top: 0;
+        background-position: 0 0;
     }
 }
 
