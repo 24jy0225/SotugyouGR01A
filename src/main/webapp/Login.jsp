@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="model.User"%>
+<% User user = (User)session.getAttribute("LoginUser"); %>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -15,7 +16,7 @@
 <body>
 	<!-- ヘッダー -->
 	<header class="header" data-name="ヘッダー">
-		<div class="logos" id="logo" onclick="location.href='./top.html'">
+		<div class="logos" id="logo" onclick="location.href='./top.jsp'">
 			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo" class="logo">
 		</div>
 		<nav class="nav-menu">
@@ -24,7 +25,7 @@
 				href="./system-introduction.jsp" class="nav-link">System</a> <a
 				href="./menu.jsp" class="nav-link">Menu</a> <a href="./topics.jsp"
 				class="nav-link">Topics</a> <a href="./contact.html"
-				class="nav-link">Contact</a> <a href="#" class="nav-link">Reservation</a>
+				class="nav-link">Contact</a> <a href="ReservationDate.jsp" class="nav-link">Reservation</a>
 			<a href="./Login.jsp" class="nav-link">Login</a>
 		</nav>
 	</header>

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="model.Store, java.util.*"%>
+	pageEncoding="UTF-8" import="model.Store, java.util.*  "%>
 <% 
 String action = (String)session.getAttribute("action"); 
 List<Store> storeList = (List<Store>)session.getAttribute("storeList");
@@ -8,6 +8,17 @@ String formAction = "UserController";
 if ("ByAdmin".equals(action)) {
     formAction = "AdminController";
 }
+
+String date =  (String)session.getAttribute("date");
+String formattedDate = "未選択";
+
+if (date != null && date.contains("-")) {
+    // "2026-02-16" を "-" で分割して配列にする
+    String[] parts = date.split("-");
+    // 配列の 0:年, 1:月, 2:日 を使って組み立て
+    formattedDate = parts[0] + "年" + parts[1] + "月" + parts[2] + "日";
+}
+%>
 %>
 <!DOCTYPE html>
 <html lang="ja">
@@ -39,7 +50,7 @@ if ("ByAdmin".equals(action)) {
 
             <div class="course_selection_area">
                 <h3>コースを選択してください</h3>
-                <p class="selected_date">選択日:12月25日(木)</p>
+                <p class="selected_date">選択日:<%= formattedDate %></p>
                 
                 <form action="<%= formAction %>" method="get">
                     <div style="margin-bottom: 20px; text-align: center;">
@@ -99,7 +110,7 @@ if ("ByAdmin".equals(action)) {
                 <a href="#" class="back_link" onclick="history.back(); return false;">← 日付選択に戻る</a>
             </div>
 
-            <button class="restart_button" onclick="location.href='./top.jsp'">最初からやり直す</button>
+            <button class="restart_button" onclick="location.href='./ReservationDate.jsp'">最初からやり直す</button>
         </div>
     </main>
     <footer>

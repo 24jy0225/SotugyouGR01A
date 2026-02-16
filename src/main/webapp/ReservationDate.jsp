@@ -1,34 +1,79 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.Map"%>
+	pageEncoding="UTF-8" import="java.util.Map , model.User"%>
 <%
 // セッションから権限を取得
 String action = (String) session.getAttribute("action");
 if (action == null)
 	action = "ByUser";
 
+User user = (User) session.getAttribute("LoginUser");
+
 // Actionから渡されたステータスデータを受け取る
 Map<String, String> statusData = (Map<String, String>) request.getAttribute("statusData");
+
+
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>席予約</title>
+<link rel="stylesheet" href="./css/user/mainstyles.css">
 <script
 	src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
 
 <style>
-/* CSSは変更なし */
+/* ページ全体のベース設定 */
 body {
 	background-color: #111;
 	margin: 0;
 	padding: 0;
 	font-family: "Helvetica Neue", Arial, sans-serif;
+	color: #fff;
 }
 
+/* レイアウト崩れ防止：メインコンテンツを中央に配置 */
+main {
+	display: block !important;
+	width: 100%;
+	padding: 20px 0;
+}
+
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 20px;
+}
+
+/* --- ステップインジケーターのスタイル --- */
+.step_indicator {
+	text-align: center;
+	margin-bottom: 40px;
+	margin-top: 20px;
+}
+
+.step_indicator h2 {
+	font-size: 20px;
+	font-weight: normal;
+	margin-bottom: 20px;
+	color: #FFFFFF;
+}
+
+.step_image {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.step_image img {
+	max-width: 100%;
+	height: auto;
+}
+
+/* --- カレンダーのスタイル --- */
 #calendar-container {
 	max-width: 800px;
-	margin: 40px auto;
+	margin: 0 auto 40px;
 	background-color: #fff;
 	padding: 25px;
 	border-radius: 15px;
@@ -36,10 +81,7 @@ body {
 	color: #333;
 }
 
-.fc-daygrid-day {
-	border: none !important;
-}
-
+/* フルカレンダー内部の調整 */
 .fc-daygrid-day-frame {
 	margin: 3px;
 	border-radius: 8px;
@@ -51,22 +93,8 @@ body {
 .fc-daygrid-day-top {
 	display: flex !important;
 	flex-direction: column !important;
-	justify-content: center !important;
 	align-items: center !important;
-	padding-top: 15px !important;
-}
-
-.fc-daygrid-day-number {
-	float: none !important;
-	padding: 0 !important;
-	font-size: 1.1em;
-	color: #333;
-	font-weight: bold;
-	margin-bottom: 4px;
-}
-
-.fc-day-today {
-	background-color: #ffffff !important;
+	padding-top: 10px !important;
 }
 
 .status-label {
@@ -78,13 +106,14 @@ body {
 	margin-top: 4px;
 }
 
+/* 各ステータスの色 */
 .is-available {
 	background-color: #f0fdf4 !important;
-	border:2px solid lightgreen !important;
+	border: 2px solid lightgreen !important;
 }
 
-.is-available:hover{
-	transform:translateY(-5px);
+.is-available:hover {
+	transform: translateY(-3px);
 }
 
 .status-available {
@@ -97,10 +126,6 @@ body {
 	border: 2px solid #fdba74 !important;
 }
 
-.is-warning:hover{
-	transform:translateY(-5px);
-}
-
 .status-warning {
 	background-color: #ffedd5;
 	color: #ea580c;
@@ -109,10 +134,6 @@ body {
 .is-full {
 	background-color: #fee2e2 !important;
 	border: 2px solid #fca5a5 !important;
-}
-
-.is-full:hover{
-	transform:translateY(-5px);
 }
 
 .status-full {
@@ -128,16 +149,6 @@ body {
 .is-disabled {
 	background-color: #eeeeee !important;
 	opacity: 0.4;
-}
-
-.fc-toolbar-title {
-	font-size: 1.2em !important;
-	color: #444;
-}
-
-.fc-button-primary {
-	background-color: #374151 !important;
-	border: none !important;
 }
 
 .legend {
@@ -164,53 +175,80 @@ body {
 </head>
 <body>
 	<!-- ヘッダー -->
-    <header class="systemheader" data-name="ヘッダー">
-        <div class="logos" id="logo" onclick="location.href='./top.html'">
-            <img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo" class="logo">
-        </div>
-        <nav class="system-nav-menu">
-            <a href="./login.html" class="nav-link">Login</a>
-        </nav>
-    </header>
+	<header class="header" data-name="ヘッダー">
+		<div class="logos" id="logo" onclick="location.href='./top.jsp'">
+			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo"
+				class="logo">
+		</div>
+		<nav class="nav-menu">
+			<a href="./whats_Shisha.jsp" class="nav-link">What's</a> <a
+				href="./how_to_Use.jsp" class="nav-link">Use</a> <a
+				href="./system-introduction.jsp" class="nav-link">System</a> <a
+				href="./menu.jsp" class="nav-link">Menu</a> <a href="./topics.jsp"
+				class="nav-link">Topics</a> <a href="./contact.jsp"
+				class="nav-link">Contact</a> <a href="./ReservationDate.jsp"
+				class="nav-link">Reservation</a>
+			<%
+			if (user != null) {
+			%>
+			<a href="UserController?command=MyPage" class="nav-link">Member</a>
+			<%
+			} else {
+			%>
+			<a href="./Login.jsp" class="nav-link">Login</a>
+			<%
+			}
+			%>
+		</nav>
+	</header>
 	<main>
-		
-		<div id="calendar-container">
-			<h3 style="text-align: center; margin-bottom: 20px;">日付を選択してください</h3>
-			<div id='calendar'></div>
-			
-			<div class="legend">
-				<div class="legend-item">
-					<div class="box"
-					style="background: #f0fdf4; border: 1px solid lightgreen;"></div>
-					空席あり
+		<div class="container">
+			<div class="step_indicator">
+				<h2>予約登録システム</h2>
+				<div class="step_image">
+					<img src="./image/assets/user/coursepage.svg" alt="ステップ">
 				</div>
-				<div class="legend-item">
-					<div class="box"
-					style="background: #fff7ed; border: 1px solid #fdba74;"></div>
-					残りわずか
-				</div>
-				<div class="legend-item">
-					<div class="box"
-					style="background: #fee2e2; border: 1px solid #fca5a5;"></div>
-					満席
-				</div>
-				<div class="legend-item">
-					<div class="box"
-					style="background: #eff6ff; border: 1px solid #3b82f6;"></div>
-					本日(予約不可)
+			</div>
+
+			<div id="calendar-container">
+				<h3 style="text-align: center; margin-bottom: 20px;">日付を選択してください</h3>
+				<div id='calendar'></div>
+
+				<div class="legend">
+					<div class="legend-item">
+						<div class="box"
+							style="background: #f0fdf4; border: 1px solid lightgreen;"></div>
+						空席あり
+					</div>
+					<div class="legend-item">
+						<div class="box"
+							style="background: #fff7ed; border: 1px solid #fdba74;"></div>
+						残りわずか
+					</div>
+					<div class="legend-item">
+						<div class="box"
+							style="background: #fee2e2; border: 1px solid #fca5a5;"></div>
+						満席
+					</div>
+					<div class="legend-item">
+						<div class="box"
+							style="background: #eff6ff; border: 1px solid #3b82f6;"></div>
+						本日(予約不可)
+					</div>
 				</div>
 			</div>
 		</div>
-		
-		<script>
+	</main>
+
+	<script>
 			document.addEventListener('DOMContentLoaded', function() {
 				// 1. JavaのMapをJavaScriptのオブジェクトに変換
 				const dbStatusData = {
 					<%if (statusData != null && !statusData.isEmpty()) {
-						for (java.util.Map.Entry<String, String> entry : statusData.entrySet()) {%>
+	for (java.util.Map.Entry<String, String> entry : statusData.entrySet()) {%>
 							"<%=entry.getKey()%>": "<%=entry.getValue()%>",
 							<%}
-						}%>
+}%>
 					};
 					
 					function formatDate(date) {
@@ -322,10 +360,11 @@ body {
 				});
 			</script>
 
-	</main>
-    <footer>
-        <p><small>&copy;The Shisha Honjin</small></p>
-    </footer>
+	<footer>
+		<p>
+			<small>&copy;The Shisha Honjin</small>
+		</p>
+	</footer>
 </body>
 </html>
 <script type="text/javascript" src="./javascript/logoScript.js"></script>

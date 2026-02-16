@@ -43,11 +43,11 @@ if (photoList != null) {
 				class="logo">
 		</div>
 		<nav class="nav-menu">
-			<a href="./whats_Shisha.html" class="nav-link">What's</a> <a
-				href="./how_to_Use.html" class="nav-link">Use</a> <a
+			<a href="./whats_Shisha.jsp" class="nav-link">What's</a> <a
+				href="./how_to_Use.jsp" class="nav-link">Use</a> <a
 				href="./system-introduction.jsp" class="nav-link">System</a> <a
 				href="./menu.jsp" class="nav-link">Menu</a> <a href="./topics.jsp"
-				class="nav-link">Topics</a> <a href="./contact.html"
+				class="nav-link">Topics</a> <a href="./contact.jsp"
 				class="nav-link">Contact</a> <a href="./ReservationDate.jsp"
 				class="nav-link">Reservation</a>
 			<%

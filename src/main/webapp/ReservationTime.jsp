@@ -153,7 +153,7 @@ String buttonText = (user != null || ("ByAdmin".equals(action) && targetUser != 
 					onclick="history.back(); return false;">← 席選択に戻る</a>
 			</div>
 
-			<button class="restart_button" onclick="location.href='./top.jsp'">最初からやり直す</button>
+			<button class="restart_button" onclick="location.href='./ReservationDate.jsp'">最初からやり直す</button>
 		</div>
 	</main>
 	<footer>
