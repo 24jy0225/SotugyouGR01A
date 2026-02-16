@@ -8,19 +8,18 @@ if (action == null)
 
 List<LocalDateTime> slots = (List<LocalDateTime>) session.getAttribute("timeList");
 if (slots == null)
-	slots = new ArrayList<>(); // Null落ち防止
+	slots = new ArrayList<>();
 
 String date = (String) session.getAttribute("date");
 if (date == null)
 	date = "未選択";
 
-String course = (String) session.getAttribute("course");
-if (course == null)
-	course = "0"; // JavaScript計算用に0を入れておく
+// 一旦Objectで受けてから、nullなら0を代入（これでコンパイルエラーが消えます）
+Object courseObj = session.getAttribute("Course");
+int course = (courseObj != null) ? (int) courseObj : 0;
 
-String seatId = (String) session.getAttribute("seatId");
-if (seatId == null)
-	seatId = "-";
+Object seatObj = session.getAttribute("seatId");
+int seatId = (seatObj != null) ? (int) seatObj : 0;
 
 User user = (User) session.getAttribute("LoginUser");
 User targetUser = (User) session.getAttribute("targetUser");
@@ -149,31 +148,32 @@ String buttonText = (user != null || ("ByAdmin".equals(action) && targetUser != 
 	</main>
 
 	<script>
-        // 時間が選ばれたら下の確認欄を更新するスクリプト
-        const radioButtons = document.querySelectorAll('.time_slot_input');
-        const startDisplay = document.getElementById('display-start-time');
-        const endDisplay = document.getElementById('display-end-time');
-        const courseMinutes = <%=course != null ? course : "0"%>;
+    // 時間が選ばれたら下の確認欄を更新するスクリプト
+    const radioButtons = document.querySelectorAll('.time_slot_input');
+    const startDisplay = document.getElementById('display-start-time');
+    const endDisplay = document.getElementById('display-end-time');
+    
+    // ここを修正：Java側ですでに数値になっているので、そのまま出力するだけ
+    const courseMinutes = <%=course%>;
 
-        radioButtons.forEach(radio => {
-            radio.addEventListener('change', () => {
-                const startTimeStr = radio.getAttribute('data-display');
-                startDisplay.textContent = startTimeStr;
+    radioButtons.forEach(radio => {
+        radio.addEventListener('change', () => {
+            const startTimeStr = radio.getAttribute('data-display');
+            startDisplay.textContent = startTimeStr;
 
-                // 終了時間の計算
-                if (startTimeStr) {
-                    const [hours, minutes] = startTimeStr.split(':').map(Number);
-                    const startDate = new Date();
-                    startDate.setHours(hours, minutes, 0);
-                    
-                    const endDate = new Date(startDate.getTime() + courseMinutes * 60000);
-                    const endHours = String(endDate.getHours()).padStart(2, '0');
-                    const endMinutes = String(endDate.getMinutes()).padStart(2, '0');
-                    
-                    endDisplay.textContent = endHours + ':' + endMinutes;
-                }
-            });
+            if (startTimeStr) {
+                const [hours, minutes] = startTimeStr.split(':').map(Number);
+                const startDate = new Date();
+                startDate.setHours(hours, minutes, 0);
+                
+                const endDate = new Date(startDate.getTime() + courseMinutes * 60000);
+                const endHours = String(endDate.getHours()).padStart(2, '0');
+                const endMinutes = String(endDate.getMinutes()).padStart(2, '0');
+                
+                endDisplay.textContent = endHours + ':' + endMinutes;
+            }
         });
-    </script>
+    });
+</script>
 </body>
 </html>
