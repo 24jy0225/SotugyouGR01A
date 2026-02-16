@@ -1,18 +1,26 @@
 @import url("https://fonts.googleapis.com/css2?family=Italianno&family=Noto+Sans+JP:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
 
-/* ƒŠƒZƒbƒg‚Æƒx[ƒXƒXƒ^ƒCƒ‹ */
+/* ï¿½ï¿½ï¿½Zï¿½bï¿½gï¿½Æƒxï¿½[ï¿½Xï¿½Xï¿½^ï¿½Cï¿½ï¿½ */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+main {
+	display: block !important;
+	width: 100%;
+	padding: 20px 0;
+}
+
 body {
-    font-family: 'Noto Sans JP', sans-serif;
+    font-family: "Helvetica Neue", Arial, 'Noto Sans JP', sans-serif;
     background-color: #000000;
     color: #ffffff;
     overflow-x: hidden;
     width: 100%;
+	margin: 0;
+	padding: 0;
 }
 
 html {
@@ -31,7 +39,7 @@ html {
     font-weight: 400;
     font-style: normal;
 }
-/* ƒwƒbƒ_[ */
+/* ï¿½wï¿½bï¿½_ï¿½[ */
 .header {
     position: sticky;
     top: 0;
@@ -53,8 +61,8 @@ html {
     transition: all 0.8s ease;
     cursor: pointer;
     display: flex;
-    align-items: center;     /* ã‰º‚Ì^‚ñ’† */
-    justify-content: center; /* ¶‰E‚Ì^‚ñ’† */
+    align-items: center;     /* ï¿½ã‰ºï¿½Ì^ï¿½ï¿½ */
+    justify-content: center; /* ï¿½ï¿½ï¿½Eï¿½Ì^ï¿½ï¿½ */
 }
 
 .logos.scrolled {
@@ -94,7 +102,7 @@ html {
 .nav-link:hover {
     opacity: 0.7;
 }
-/* ƒq[ƒ[ƒZƒNƒVƒ‡ƒ“ */
+/* ï¿½qï¿½[ï¿½ï¿½ï¿½[ï¿½Zï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ */
 .hero-section {
     top: 0;
     left: 0;
@@ -144,7 +152,7 @@ html {
     pointer-events: none;
 }
 
-/* ƒZƒNƒVƒ‡ƒ“‹¤’ÊƒXƒ^ƒCƒ‹ */
+/* ï¿½Zï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÊƒXï¿½^ï¿½Cï¿½ï¿½ */
 .section {
     width: 100%;
     padding: 0;
@@ -268,12 +276,12 @@ footer{
     background-color: rgba(74, 85, 101, 1);
 }
 /* =========================== */
-/* ƒŒƒXƒ|ƒ“ƒVƒu‘Î‰ */
+/* ï¿½ï¿½ï¿½Xï¿½|ï¿½ï¿½ï¿½Vï¿½uï¿½Î‰ï¿½ */
 /* =========================== */
 
-/* ƒ^ƒuƒŒƒbƒg‘Î‰ (768pxˆÈ‰º) */
+/* ï¿½^ï¿½uï¿½ï¿½ï¿½bï¿½gï¿½Î‰ï¿½ (768pxï¿½È‰ï¿½) */
 @media screen and (max-width: 1024px) {
-    /* ƒwƒbƒ_[ */
+    /* ï¿½wï¿½bï¿½_ï¿½[ */
     .header {
         height: 150px;
     }
@@ -304,7 +312,7 @@ footer{
         flex-wrap: wrap;
     }
     
-    /* ƒq[ƒ[ƒZƒNƒVƒ‡ƒ“ */
+    /* ï¿½qï¿½[ï¿½ï¿½ï¿½[ï¿½Zï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ */
     .hero-section {
         height: 700px;
     }
@@ -314,7 +322,7 @@ footer{
         padding-left: 30px;
     }
     
-    /* ƒZƒNƒVƒ‡ƒ“ƒ^ƒCƒgƒ‹ */
+    /* ï¿½Zï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½^ï¿½Cï¿½gï¿½ï¿½ */
     .section-title {
         font-size: 72px;
         letter-spacing: 7.2px;
@@ -326,7 +334,7 @@ footer{
         margin-left: 50px;
     }
     
-    /* ƒtƒbƒ^[ */
+    /* ï¿½tï¿½bï¿½^ï¿½[ */
     footer {
         margin-top: 300px;
         width: 100%;
@@ -367,9 +375,9 @@ footer{
     }
 }
 
-/* ƒXƒ}[ƒgƒtƒHƒ“‘Î‰ (480pxˆÈ‰º) */
+/* ï¿½Xï¿½}ï¿½[ï¿½gï¿½tï¿½Hï¿½ï¿½ï¿½Î‰ï¿½ (480pxï¿½È‰ï¿½) */
 @media screen and (max-width: 768px) {
-    /* ƒwƒbƒ_[ */
+    /* ï¿½wï¿½bï¿½_ï¿½[ */
     .header {
         height: 120px;
     }
@@ -405,7 +413,7 @@ footer{
         font-size: 12px;
     }
     
-    /* ƒq[ƒ[ƒZƒNƒVƒ‡ƒ“ */
+    /* ï¿½qï¿½[ï¿½ï¿½ï¿½[ï¿½Zï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ */
     .hero-section {
         height: 500px;
     }
@@ -422,7 +430,7 @@ footer{
         max-width: 250px;
     }
     
-    /* ƒZƒNƒVƒ‡ƒ“ƒ^ƒCƒgƒ‹ */
+    /* ï¿½Zï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½^ï¿½Cï¿½gï¿½ï¿½ */
     .section-title {
         font-size: 48px;
         letter-spacing: 4.8px;
@@ -434,7 +442,7 @@ footer{
         margin-left: 20px;
     }
     
-    /* ƒtƒbƒ^[ */
+    /* ï¿½tï¿½bï¿½^ï¿½[ */
     footer {
         margin-top: 150px;
         height: auto;
@@ -506,7 +514,7 @@ footer{
     }
 }
 
-/* ‹É¬ƒXƒ}[ƒgƒtƒHƒ“‘Î‰ (400pxˆÈ‰º) */
+/* ï¿½Éï¿½ï¿½Xï¿½}ï¿½[ï¿½gï¿½tï¿½Hï¿½ï¿½ï¿½Î‰ï¿½ (400pxï¿½È‰ï¿½) */
 @media screen and (max-width: 400px) {
     .nav-menu {
         gap: 8px;
@@ -528,4 +536,145 @@ footer{
         font-size: 14px;
         line-height: 20px;
     }
+}
+
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 20px;
+}
+
+/* --- ã‚¹ãƒ†ãƒƒãƒ—ã‚¤ãƒ³ã‚¸ã‚±ãƒ¼ã‚¿ãƒ¼ã®ã‚¹ã‚¿ã‚¤ãƒ« --- */
+.step_indicator {
+	text-align: center;
+	margin-bottom: 40px;
+	margin-top: 20px;
+}
+
+.step_indicator h2 {
+	font-size: 20px;
+	font-weight: normal;
+	margin-bottom: 20px;
+	color: #FFFFFF;
+}
+
+.step_image {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.step_image img {
+	max-width: 100%;
+	height: auto;
+}
+
+/* --- ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã®ã‚¹ã‚¿ã‚¤ãƒ« --- */
+#calendar-container {
+	max-width: 800px;
+	margin: 0 auto 40px;
+	background-color: #fff;
+	padding: 25px;
+	border-radius: 15px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+	color: #333;
+}
+
+/* ãƒ•ãƒ«ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼å†…éƒ¨ã®èª¿æ•´ */
+.fc-daygrid-day-frame {
+	margin: 3px;
+	border-radius: 8px;
+	min-height: 90px !important;
+	background-color: #f9f9f9;
+	transition: 0.2s;
+}
+
+.fc-daygrid-day-top {
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: center !important;
+	padding-top: 10px !important;
+}
+
+.status-label {
+	display: inline-block;
+	padding: 2px 8px;
+	font-size: 0.65em;
+	border-radius: 4px;
+	font-weight: bold;
+	margin-top: 4px;
+}
+
+/* å„ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã®è‰² */
+.is-available {
+	background-color: #f0fdf4 !important;
+	border: 2px solid lightgreen !important;
+}
+
+.is-available:hover {
+	transform: translateY(-3px);
+}
+
+.status-available {
+	background-color: #d1fae5;
+	color: #059669;
+}
+
+.is-warning {
+	background-color: #fff7ed !important;
+	border: 2px solid #fdba74 !important;
+}
+
+.is-warning:hover{
+	transform:translateY(-5px);
+}
+
+.status-warning {
+	background-color: #ffedd5;
+	color: #ea580c;
+}
+
+.is-full {
+	background-color: #fee2e2 !important;
+	border: 2px solid #fca5a5 !important;
+}
+
+.is-full:hover{
+	transform:translateY(-5px);
+}
+
+.status-full {
+	background-color: #fecaca;
+	color: #b91c1c;
+}
+
+.is-today {
+	background-color: #eff6ff !important;
+	border: 2px solid #3b82f6 !important;
+}
+
+.is-disabled {
+	background-color: #eeeeee !important;
+	opacity: 0.4;
+}
+
+.legend {
+	display: flex;
+	justify-content: center;
+	gap: 15px;
+	margin-top: 20px;
+	font-size: 0.8em;
+	color: #777;
+}
+
+.legend-item {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+
+.box {
+	width: 12px;
+	height: 12px;
+	border-radius: 2px;
 }

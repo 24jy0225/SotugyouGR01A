@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
-	import="java.util.List, java.util.ArrayList, model.Seat"%>
+	import="java.util.List, java.util.ArrayList, model.Seat, model.User"%>
 <%
 String action = (String) session.getAttribute("action");
 List<Seat> seatList = (List<Seat>) session.getAttribute("Seat");
 String date = (String) session.getAttribute("date");
+
+User user = (User) session.getAttribute("LoginUser");
 
 // 送信先の判定
 String formAction = "ByUser".equals(action) ? "UserController" : "AdminController";
@@ -35,18 +37,31 @@ String formAction = "ByUser".equals(action) ? "UserController" : "AdminControlle
 </style>
 </head>
 <body>
-	<header class="systemheader" data-name="ヘッダー">
-		<div class="logos" id="logo" onclick="location.href='./top.html'">
-			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo" class="logo">
+	<header class="header" data-name="ヘッダー">
+	<% if(action.equals("ByUser")){ %>
+		<div class="logos" id="logo" onclick="location.href='./top.jsp'">
+			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo" class="logo">
 		</div>
-		<nav class="system-nav-menu">
-			<a href="./login.html" class="nav-link">Login</a>
+		<nav class="nav-menu">
+			<a href="./whats_Shisha.jsp" class="nav-link">What's</a> 
+			<a href="./how_to_Use.jsp" class="nav-link">Use</a> 
+			<a href="./system-introduction.jsp" class="nav-link">System</a>
+			<a	href="./menu.jsp" class="nav-link">Menu</a> 
+			<a href="./topics.jsp" class="nav-link">Topics</a> 
+			<a href="./contact.jsp" class="nav-link">Contact</a>
+			<a href="ReservationDate.jsp" class="nav-link">Reservation</a>
+			<%if (user != null) { %>
+				<a href="UserController?command=MyPage" class="nav-link">Member</a>
+			<% } else { %>
+				<a href="./Login.jsp" class="nav-link">Login</a>
+			<% } %>
 		</nav>
+	<% } %>
 	</header>
 	<main>
 		<div class="container">
 			<div class="step_indicator">
-				<h2>予約登録システム</h2>
+				<h2>予約登録</h2>
 				<div class="step_image">
 					<img src="./image/assets/user/seatpage.svg" alt="">
 				</div>
