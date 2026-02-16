@@ -40,7 +40,7 @@ DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
 			<div class="complete-container">
 				<div class="success-message">
-					予約のキャンセルが完了しました。キャンセル確認メールをお送りしました。</div>
+					予約のキャンセルが完了しました。</div>
 
 				<table class="reservation-info">
 					<tr>

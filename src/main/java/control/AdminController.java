@@ -259,53 +259,44 @@ public class AdminController extends HttpServlet {
 		case "designUpdate":
 			Part part = req.getPart("image");
 			String category = req.getParameter("category");
-			
+
 			String fileName = System.currentTimeMillis() + "_" + part.getSubmittedFileName();
 			String saveDir = getServletContext().getRealPath("/image/photo");
 			String webPath = req.getContextPath() + "/image/photo/" + fileName;
-			
-			String localDir = "Z:\\卒業制作2\\SotugyouGR01A\\src\\main\\webapp\\image\\photo";
-			
-			try {
-		     
-		        File dir = new File(saveDir);
-		        if (!dir.exists()) dir.mkdirs();
-		        
-		        part.write(saveDir + File.separator + fileName);
 
-		     
-		        File localDirObj = new File(localDir);
-		        if (localDirObj.exists()) {
-		            java.nio.file.Path source = java.nio.file.Paths.get(saveDir + File.separator + fileName);
-		            java.nio.file.Path target = java.nio.file.Paths.get(localDir + File.separator + fileName);
-		            java.nio.file.Files.copy(source, target, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-		        }
-		    } catch (IOException e) {
-		        e.printStackTrace();
-		        resp.sendRedirect("Error.jsp");
-		        return;
-		    }
-			
+			try {
+
+				File dir = new File(saveDir);
+				if (!dir.exists())
+					dir.mkdirs();
+
+				part.write(saveDir + File.separator + fileName);
+
+			} catch (IOException e) {
+				e.printStackTrace();
+				resp.sendRedirect("Error.jsp");
+				return;
+			}
+
 			session.setAttribute("category", category);
-		    session.setAttribute("webPath", webPath);
-			
-		    DesignUpdateAction designUpdateAction = new DesignUpdateAction();
-		    designUpdateAction.execute(req, resp);
-		    return;
-			
+			session.setAttribute("webPath", webPath);
+
+			DesignUpdateAction designUpdateAction = new DesignUpdateAction();
+			designUpdateAction.execute(req, resp);
+			return;
+
 		case "topicsAdd":
 			Part topicsPart = req.getPart("image");
 			String topicsTitle = req.getParameter("topicsTitle");
 			String topicsContent = req.getParameter("topicsContent");
 
-			
 			String contentType = topicsPart.getContentType();
 			if (!contentType.startsWith("image/")) {
 				req.setAttribute("error", "画像ファイルのみアップロード可能です");
 				return;
 			}
 			if (topicsPart == null || topicsPart.getSize() == 0) {
-				
+
 				resp.sendRedirect("Error.jsp");
 				return;
 			}
@@ -320,22 +311,15 @@ public class AdminController extends HttpServlet {
 
 			String tSaveDir = getServletContext().getRealPath("/image/photo");
 			String tWebPath = req.getContextPath() + "/image/photo/" + tFileName;
-			String tLocalDir = "Z:\\卒業制作2\\SotugyouGR01A\\src\\main\\webapp\\image\\photo";
 
-			
 			try {
-				
+
 				File dir = new File(tSaveDir);
-				if (!dir.exists()) dir.mkdirs();
-				
+				if (!dir.exists())
+					dir.mkdirs();
+
 				topicsPart.write(tSaveDir + File.separator + tFileName);
 
-				File localDirObj = new File(tLocalDir);
-				if (localDirObj.exists()) {
-					java.nio.file.Path source = java.nio.file.Paths.get(tSaveDir + File.separator + tFileName);
-					java.nio.file.Path target = java.nio.file.Paths.get(tLocalDir + File.separator + tFileName);
-					java.nio.file.Files.copy(source, target, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-				}
 			} catch (IOException e) {
 				e.printStackTrace();
 				session.setAttribute("errorMsg", "画像の保存に失敗しました");
@@ -345,12 +329,11 @@ public class AdminController extends HttpServlet {
 
 			session.setAttribute("topicsTitle", topicsTitle);
 			session.setAttribute("topicsContent", topicsContent);
-			session.setAttribute("webPath", tWebPath); 
+			session.setAttribute("webPath", tWebPath);
 
 			TopicsAddAction topicsAddAction = new TopicsAddAction();
 			success = topicsAddAction.execute(req, resp);
 
-			
 			if (success) {
 				resp.setStatus(HttpServletResponse.SC_OK);
 			} else {
@@ -363,18 +346,17 @@ public class AdminController extends HttpServlet {
 			session.setAttribute("topicsId", topicsId);
 			TopicsDeleteAction topicsDeleteAction = new TopicsDeleteAction();
 			success = topicsDeleteAction.execute(req);
-			
+
 			TopicsAction topicsAction = new TopicsAction();
 			List<Topics> topicsList = topicsAction.execute();
 			session.setAttribute("topicsList", topicsList);
-			
+
 			if (success) {
 				resp.setStatus(HttpServletResponse.SC_OK);
 			} else {
 				resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			}
 			return;
-			
 
 		case "userDetail": // customerDetail -> userDetail
 			String userId = req.getParameter("userId");

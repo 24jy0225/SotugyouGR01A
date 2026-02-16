@@ -16,7 +16,7 @@ Map<String, String> statusData = (Map<String, String>) request.getAttribute("sta
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>席予約a</title>
+<title>席予約</title>
 <link rel="stylesheet" href="./css/user/style.css">
 <link rel="stylesheet" href="./css/user/mainstyles.css">
 <script

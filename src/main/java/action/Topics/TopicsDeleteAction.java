@@ -35,11 +35,6 @@ public class TopicsDeleteAction {
 					serverFile.delete();
 				}
 
-				String localSaveDir = "Z:\\卒業制作2\\SotugyouGR01A\\src\\main\\webapp\\image\\photo";
-				File localFile = new File(localSaveDir + File.separator + fileName);
-				if (localFile.exists()) {
-					localFile.delete();
-				}
 			}
 		}
 

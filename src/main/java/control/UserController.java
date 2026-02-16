@@ -19,9 +19,9 @@ import jakarta.servlet.http.HttpSession;
 import action.Coupon.CouponUsageAction;
 import action.Coupon.CouponUseAction;
 import action.Photo.PhotoAction;
+import action.Reservation.ReservationCancelAction;
 import action.Reservation.ReservationConfirmAction;
 import action.Reservation.ReservationDateAction;
-import action.Reservation.ReservationDeleteAction;
 import action.Reservation.ReservationHistoryAction;
 import action.Reservation.ReservationSeatAction;
 import action.Reservation.ReservationTimeAction;
@@ -153,8 +153,10 @@ public class UserController extends HttpServlet {
 		case "cancel":
 			String reserveId = req.getParameter("reserveId");
 			session.setAttribute("reserveId", reserveId);
-			ReservationDeleteAction reservationDeleteAction = new ReservationDeleteAction();
-			if (reservationDeleteAction.execute(req)) {
+			ReservationCancelAction reservationCancelAction = new ReservationCancelAction();
+			Reservation r = reservationCancelAction.execute(req);
+			if (r != null) {
+				session.setAttribute("cancelReserve", r);
 				resp.sendRedirect("ReservationCancelComplete.jsp");
 				return;
 			} else {

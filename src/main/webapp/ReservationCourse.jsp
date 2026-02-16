@@ -83,7 +83,7 @@ if (date != null && date.contains("-")) {
 
                     <div class="course_cards">
                         <label style="display: block; cursor: pointer;">
-                            <input type="radio" name="course" value="60" style="display:none;" checked>
+                            <input type="submit" name="course" value="60" style="display:none;" checked>
                             <div class="course_card">
                                 <div class="course_icon">
                                     <img src="./image/assets/user/courseicon.svg" alt="時計">
@@ -94,7 +94,7 @@ if (date != null && date.contains("-")) {
                         </label>
 
                         <label style="display: block; cursor: pointer;">
-                            <input type="radio" name="course" value="90" style="display:none;">
+                            <input type="submit" name="course" value="90" style="display:none;">
                             <div class="course_card">
                                 <div class="course_icon">
                                     <img src="./image/assets/user/courseicon.svg" alt="時計">
@@ -105,7 +105,7 @@ if (date != null && date.contains("-")) {
                         </label>
 
                         <label style="display: block; cursor: pointer;">
-                            <input type="radio" name="course" value="120" style="display:none;">
+                            <input type="submit" name="course" value="120" style="display:none;">
                             <div class="course_card">
                                 <div class="course_icon">
                                     <img src="./image/assets/user/courseicon.svg" alt="時計">
@@ -117,9 +117,6 @@ if (date != null && date.contains("-")) {
                     </div>
 
                     <input type="hidden" name="command" value="Seat">
-                    <div style="text-align: center; margin-top: 20px;">
-                        <input type="submit" value="次に進む" class="restart_button" style="background-color: #d4af37; color: white; border: none; width: 200px;">
-                    </div>
                 </form>
 
                 <a href="#" class="back_link" onclick="history.back(); return false;">← 日付選択に戻る</a>

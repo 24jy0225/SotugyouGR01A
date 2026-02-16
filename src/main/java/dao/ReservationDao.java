@@ -30,6 +30,86 @@ public class ReservationDao {
 		}
 	}
 
+	public Reservation cancel(String reservationId) {
+
+		Connection con = null;
+		Reservation cancelledReservation = null;
+
+		String selectSql = "SELECT * FROM 予約 WHERE reservation_number = ? ;";
+
+		String copySql = "INSERT INTO キャンセル履歴 (reservation_number, reservation_people, reservation_date, member_id, member_name, seat_id, start_time, end_time, cancel_date) "
+				+ "SELECT reservation_number, reservation_people, reservation_date, member_id, member_name, seat_id, start_time, end_time, NOW() "
+				+ "FROM 予約 WHERE reservation_number = ? ;";
+		String deleteSql = "DELETE FROM 予約 WHERE reservation_number = ? ;";
+
+		try {
+			con = createConnection();
+			con.setAutoCommit(false); // トランザクション開始
+
+			try (PreparedStatement selectPstmt = con.prepareStatement(selectSql)) {
+				selectPstmt.setString(1, reservationId);
+				try (ResultSet rs = selectPstmt.executeQuery()) {
+					if (rs.next()) {
+						LocalDate date = rs.getObject("reservation_date", LocalDate.class);
+						LocalDateTime start = rs.getTimestamp("start_time").toLocalDateTime();
+						LocalDateTime end = rs.getTimestamp("end_time").toLocalDateTime();
+
+						cancelledReservation = new Reservation(
+								rs.getString("reservation_number"),
+								rs.getInt("reservation_people"),
+								date,
+								rs.getString("member_id"),
+								rs.getInt("seat_id"),
+								start,
+								end,
+								rs.getString("member_name"));
+					} else {
+						con.rollback();
+						return null;
+					}
+				}
+			}
+
+			try (PreparedStatement copyPstmt = con.prepareStatement(copySql)) {
+				copyPstmt.setString(1, reservationId);
+				copyPstmt.executeUpdate();
+			}
+
+			try (PreparedStatement deletePstmt = con.prepareStatement(deleteSql)) {
+				deletePstmt.setString(1, reservationId);
+				int result = deletePstmt.executeUpdate();
+
+				if (result == 1) {
+					con.commit();
+					return cancelledReservation;
+				} else {
+					con.rollback();
+					return null;
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+			if (con != null) {
+				try {
+					con.rollback();
+				} catch (SQLException ex) {
+					ex.printStackTrace();
+				}
+			}
+			return null;
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
 	public boolean insert(Reservation r) {
 		String sql = "INSERT INTO 予約(reservation_number , reservation_people , reservation_date , member_id , member_name , seat_id , start_time , end_time) VALUES(?,?,?,?,?,?,?,?) ;";
 		try (Connection con = createConnection();
@@ -63,25 +143,25 @@ public class ReservationDao {
 	//----------------------------
 
 	public String generateReservationNumber(LocalDate date, Connection con) throws SQLException {
-	    String dateStr = date.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-	    
-	    // COUNTではなく、その日の予約番号の末尾3桁の「最大値」を取得する
-	    // RIGHT(reservation_number, 3) で末尾3文字を取り出し、数値に変換して最大を探す
-	    String maxSql = "SELECT MAX(CAST(RIGHT(reservation_number, 3) AS UNSIGNED)) FROM 予約 WHERE reservation_date = ? ;";
-	    
-	    try (PreparedStatement maxStmt = con.prepareStatement(maxSql)) {
-	        maxStmt.setDate(1, Date.valueOf(date));
-	        try (ResultSet rs = maxStmt.executeQuery()) {
-	            int lastNumber = 0;
-	            if (rs.next()) {
-	                lastNumber = rs.getInt(1); // 最大値（例：31）を取得
-	            }
-	            
-	            int nextNumber = lastNumber + 1; // 最大値に+1する（例：32）
-	            String seqStr = String.format("%03d", nextNumber);
-	            return "RES" + dateStr + seqStr;
-	        }
-	    }
+		String dateStr = date.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+
+		// COUNTではなく、その日の予約番号の末尾3桁の「最大値」を取得する
+		// RIGHT(reservation_number, 3) で末尾3文字を取り出し、数値に変換して最大を探す
+		String maxSql = "SELECT MAX(CAST(RIGHT(reservation_number, 3) AS UNSIGNED)) FROM 予約 WHERE reservation_date = ? ;";
+
+		try (PreparedStatement maxStmt = con.prepareStatement(maxSql)) {
+			maxStmt.setDate(1, Date.valueOf(date));
+			try (ResultSet rs = maxStmt.executeQuery()) {
+				int lastNumber = 0;
+				if (rs.next()) {
+					lastNumber = rs.getInt(1); // 最大値（例：31）を取得
+				}
+
+				int nextNumber = lastNumber + 1; // 最大値に+1する（例：32）
+				String seqStr = String.format("%03d", nextNumber);
+				return "RES" + dateStr + seqStr;
+			}
+		}
 	}
 
 	public List<Reservation> ReservationHistoryByUser(String userId) {
