@@ -9,6 +9,7 @@ User user = (User)session.getAttribute("LoginUser");
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="./image/assets/user/ロゴマーク_金色b.webp">
 <link rel="stylesheet" href="./css/user/mainstyles.css">
 <link rel="stylesheet" href="./css/user/system-introductionStyle.css">
 <title>system</title>
