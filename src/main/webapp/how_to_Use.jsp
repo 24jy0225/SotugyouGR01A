@@ -16,31 +16,23 @@ User user = (User) session.getAttribute("LoginUser");
 </head>
 
 <body>
-	<!-- ヘッダー -->
 	<header class="header" data-name="ヘッダー">
 		<div class="logos" id="logo" onclick="location.href='./top.jsp'">
-			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo"
-				class="logo">
+			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo" class="logo">
 		</div>
 		<nav class="nav-menu">
-			<a href="./whats_Shisha.jsp" class="nav-link">What's</a> <a
-				href="./how_to_Use.jsp" class="nav-link">Use</a> <a
-				href="./system-introduction.jsp" class="nav-link">System</a> <a
-				href="./menu.jsp" class="nav-link">Menu</a> <a href="./topics.jsp"
-				class="nav-link">Topics</a> <a href="./contact.jsp"
-				class="nav-link">Contact</a> <a href="./ReservationDate.jsp"
-				class="nav-link">Reservation</a>
-			<%
-			if (user != null) {
-			%>
-			<a href="UserController?command=MyPage" class="nav-link">Member</a>
-			<%
-			} else {
-			%>
-			<a href="./Login.jsp" class="nav-link">Login</a>
-			<%
-			}
-			%>
+			<a href="./whats_Shisha.jsp" class="nav-link">What's</a> 
+			<a href="./how_to_Use.jsp" class="nav-link">Use</a> 
+			<a href="./system-introduction.jsp" class="nav-link">System</a>
+			<a	href="./menu.jsp" class="nav-link">Menu</a> 
+			<a href="./topics.jsp" class="nav-link">Topics</a> 
+			<a href="./contact.jsp" class="nav-link">Contact</a>
+			<a href="ReservationDate.jsp" class="nav-link">Reservation</a>
+			<%if (user != null) { %>
+				<a href="UserController?command=MyPage" class="nav-link">Member</a>
+			<% } else { %>
+				<a href="./Login.jsp" class="nav-link">Login</a>
+			<% } %>
 		</nav>
 	</header>
 
