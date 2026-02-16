@@ -1,12 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="model.Photo , java.util.* , model.Topics"%>
+	pageEncoding="UTF-8"
+	import="model.Photo , java.util.* , model.Topics , model.User"%>
 <%
 List<Photo> photoList = (List<Photo>) session.getAttribute("photoList");
 %>
 <%
 List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 %>
+<%
+User user = (User) session.getAttribute("LoginUser");
+String topImageName = "burning_coal.jpg";
 
+//2. リストを回して "top" カテゴリを探す
+if (photoList != null) {
+	for (Photo p : photoList) {
+		// "top" と p.getPhotoCategory() が一致するかチェック
+		if ("top".equals(p.getPhotoCategory())) {
+	topImageName = p.getPhotoFileName(); // ファイル名を取得
+	break; // 見つかったらループを抜ける
+		}
+	}
+}
+%>
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -24,16 +39,28 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 	<!-- ヘッダー -->
 	<header class="header" data-name="ヘッダー">
 		<div class="logos" id="logo" onclick="location.href='./top.jsp'">
-			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo" class="logo">
+			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo"
+				class="logo">
 		</div>
 		<nav class="nav-menu">
 			<a href="./whats_Shisha.html" class="nav-link">What's</a> <a
 				href="./how_to_Use.html" class="nav-link">Use</a> <a
 				href="./system-introduction.jsp" class="nav-link">System</a> <a
-				href="./menu.html" class="nav-link">Menu</a> <a href="./topics.jsp"
+				href="./menu.jsp" class="nav-link">Menu</a> <a href="./topics.jsp"
 				class="nav-link">Topics</a> <a href="./contact.html"
-				class="nav-link">Contact</a> <a href="./ReservationDate.jsp" class="nav-link">Reservation</a>
+				class="nav-link">Contact</a> <a href="./ReservationDate.jsp"
+				class="nav-link">Reservation</a>
+			<%
+			if (user != null) {
+			%>
+			<a href="UserController?command=MyPage" class="nav-link">Member</a>
+			<%
+			} else {
+			%>
 			<a href="./Login.jsp" class="nav-link">Login</a>
+			<%
+			}
+			%>
 		</nav>
 	</header>
 
@@ -42,7 +69,9 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 		<!-- ヒーローセクション -->
 		<div class="hero-section">
 			<div class="hero-background-image">
-				<img src="./image/assets/user/burning_coal.jpg" alt="シーシャの炭">
+				<img
+					src="${pageContext.request.contextPath}/image/photo/<%= topImageName %>"
+					alt="シーシャの炭">
 			</div>
 			<div class="logo-image">
 				<img src="./image/assets/user/ロゴ完成_金色b.svg" alt="ロゴ">
@@ -188,7 +217,8 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 			</div>
 			<div class="drink-content">
 				<div class="drink-image">
-					<img src="./image/assets/user/imgi_42_drinks_frankfurt-9d10b135.jpg"
+					<img
+						src="./image/assets/user/imgi_42_drinks_frankfurt-9d10b135.jpg"
 						alt="ドリンク">
 				</div>
 				<div class="drink-text">
@@ -216,7 +246,8 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 					<p>ご自分のシチュエーションに合わせてご注文ください</p>
 				</div>
 				<div class="food-image">
-					<img src="./image/assets/user/imgi_58_obstplatte_frankfurt.jpg" alt="フード">
+					<img src="./image/assets/user/imgi_58_obstplatte_frankfurt.jpg"
+						alt="フード">
 				</div>
 			</div>
 			<div class="more-btn-container">
@@ -233,7 +264,8 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 			</div>
 			<div class="topics-cards">
 				<%
-				if (topicsList.size() != 0) {
+				// リストが存在するか(nullじゃないか)を先にチェックする
+				if (topicsList != null && topicsList.size() != 0) {
 					for (Topics t : topicsList) {
 				%>
 				<div class="topic-card">
@@ -241,12 +273,12 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 						<p><%=t.getTopicsTitle()%></p>
 					</div>
 					<div class="topic-card-image">
-						<img src="image/photo/<%=t.getPhotoId().getPhotoFileName()%>"
+						<img src="./image/photo/<%=t.getPhotoId().getPhotoFileName()%>"
 							alt="トピック1">
 					</div>
 				</div>
 				<%
-					}
+				}
 				%>
 				<%
 				}

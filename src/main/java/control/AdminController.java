@@ -260,6 +260,8 @@ public class AdminController extends HttpServlet {
 		case "designUpdate":
 			Part part = req.getPart("image");
 			String category = req.getParameter("category");
+
+			// --- バリデーション ---
 			String contentType = part.getContentType();
 			if (!contentType.startsWith("image/")) {
 				req.setAttribute("error", "画像ファイルのみアップロード可能です");
@@ -270,38 +272,69 @@ public class AdminController extends HttpServlet {
 				resp.sendRedirect("PhotoAdd.jsp");
 				return;
 			}
+
+			// --- ファイル名生成 ---
 			String fileName = System.currentTimeMillis() + "_"
 					+ Paths.get(part.getSubmittedFileName()).getFileName().toString();
+
 			session.setAttribute("category", category);
 			session.setAttribute("fileName", fileName);
-			String saveDir = "Z:\\卒業制作\\SotugyouGR01A\\src\\main\\webapp\\image\\photo";
-			
-			PhotoUpdateAction photoUpdateAction = new PhotoUpdateAction();
-			String oldFileName = photoUpdateAction.execute(req);
-					
-		    if (oldFileName != null && !oldFileName.isEmpty()) {
-		        File oldFile = new File(saveDir + File.separator + oldFileName);
-		        if (oldFile.exists()) {
-		            oldFile.delete(); // 物理ファイルを削除
-		        }
-		    }
-			
-			File dir = new File(saveDir);
-			if (!dir.exists()) {
-				dir.mkdirs();
+
+			// =================================================================
+			// 画像保存処理（ダブル保存：Write once, Copy once）
+			// =================================================================
+
+			// 1. 【表示用】サーバーの実行フォルダ（ブラウザがすぐ見れる場所）
+			String realPath = getServletContext().getRealPath("/image/photo");
+			File realDirObj = new File(realPath);
+			if (!realDirObj.exists()) {
+				realDirObj.mkdirs();
 			}
-			String fullPath = saveDir + File.separator + fileName;
+
+			// 2. 【保存用】プロジェクトのsrcフォルダ（Eclipse再起動しても消えない場所）
+			String localPath = "Z:\\卒業制作2\\SotugyouGR01A\\src\\main\\webapp\\image\\photo";
+			File localDirObj = new File(localPath);
+			if (!localDirObj.exists()) {
+				localDirObj.mkdirs();
+			}
 
 			try {
-				part.write(fullPath);
+				// A. まずサーバー（表示用）に書き込む（ここでpartが消費される）
+				String serverFullPath = realPath + File.separator + fileName;
+				part.write(serverFullPath);
+
+				// B. 書き込んだファイルを、Zドライブ（保存用）にコピーする
+				java.nio.file.Path source = java.nio.file.Paths.get(serverFullPath);
+				java.nio.file.Path target = java.nio.file.Paths.get(localPath + File.separator + fileName);
+				java.nio.file.Files.copy(source, target, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+
+				System.out.println("Design Update Success: " + fileName);
+
 			} catch (IOException e) {
 				e.printStackTrace();
-				// 保存に失敗した場合はエラー処理
-				session.setAttribute("errorMsg", "ファイルの書き込みに失敗しました。");
+				session.setAttribute("errorMsg", "画像の保存に失敗しました。");
 				resp.sendRedirect("Error.jsp");
 				return;
 			}
 
+			// =================================================================
+
+			// --- 古いファイルの削除処理 ---
+			PhotoUpdateAction photoUpdateAction = new PhotoUpdateAction();
+			String oldFileName = photoUpdateAction.execute(req);
+
+			// 古いファイルがあれば、両方の場所から削除する
+			if (oldFileName != null && !oldFileName.isEmpty()) {
+				File oldRealFile = new File(realPath + File.separator + oldFileName);
+				if (oldRealFile.exists())
+					oldRealFile.delete();
+
+				File oldLocalFile = new File(localPath + File.separator + oldFileName);
+				if (oldLocalFile.exists())
+					oldLocalFile.delete();
+			}
+
+			// --- DB更新処理 ---
 			DesignUpdateAction designUpdateAction = new DesignUpdateAction();
 			designUpdateAction.execute(req, resp);
 			return;
@@ -311,6 +344,8 @@ public class AdminController extends HttpServlet {
 			contentType = topicsPart.getContentType();
 			String topicsTitle = req.getParameter("topicsTitle");
 			String topicsContent = req.getParameter("topicsContent");
+
+			// 1. バリデーション
 			if (!contentType.startsWith("image/")) {
 				req.setAttribute("error", "画像ファイルのみアップロード可能です");
 				req.getRequestDispatcher("NoticeAdd.jsp").forward(req, resp);
@@ -320,24 +355,64 @@ public class AdminController extends HttpServlet {
 				resp.sendRedirect("PhotoAdd.jsp");
 				return;
 			}
+
+			// 2. ファイル名生成 & セッションセット
 			session.setAttribute("topicsTitle", topicsTitle);
 			session.setAttribute("topicsContent", topicsContent);
+
 			fileName = System.currentTimeMillis() + "_"
 					+ Paths.get(topicsPart.getSubmittedFileName()).getFileName().toString();
 			session.setAttribute("fileName", fileName);
-			saveDir = "Z:\\卒業制作\\SotugyouGR01A\\src\\main\\webapp\\image\\photo";
-			dir = new File(saveDir);
-			if (!dir.exists()) {
-				dir.mkdirs();
+
+			// =================================================================
+			// 画像保存処理（ダブル保存）
+			// =================================================================
+
+			// A. 表示用パス（サーバーの一時フォルダ：ブラウザですぐ見るため）
+			String serverSaveDir = getServletContext().getRealPath("/image/photo");
+			File serverDirObj = new File(serverSaveDir);
+			if (!serverDirObj.exists()) {
+				serverDirObj.mkdirs();
 			}
-			fullPath = saveDir + File.separator + fileName;
-			topicsPart.write(fullPath);
+
+			// B. 保存用パス（Zドライブのsrcフォルダ：消えないようにするため）
+			String localSaveDir = "Z:\\卒業制作2\\SotugyouGR01A\\src\\main\\webapp\\image\\photo";
+			localDirObj = new File(localSaveDir);
+			if (!localDirObj.exists()) {
+				localDirObj.mkdirs();
+			}
+
+			try {
+				// 1. まずサーバー（表示用）に書き込む
+				String serverFullPath = serverSaveDir + File.separator + fileName;
+				topicsPart.write(serverFullPath);
+
+				// 2. 書き込んだファイルを、Zドライブ（保存用）にコピーする
+				java.nio.file.Path source = java.nio.file.Paths.get(serverFullPath);
+				java.nio.file.Path target = java.nio.file.Paths.get(localSaveDir + File.separator + fileName);
+				java.nio.file.Files.copy(source, target, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+
+				System.out.println("Topics Upload Success: " + fileName);
+
+			} catch (IOException e) {
+				e.printStackTrace();
+				// エラーでもDB登録へ進むか、ここで止めるかは要件次第ですが、一旦エラーページへ
+				session.setAttribute("errorMsg", "画像の保存に失敗しました");
+				resp.sendRedirect("Error.jsp");
+				return;
+			}
+			// =================================================================
+
+			// 3. Action呼び出し（DB登録など）
 			TopicsAddAction topicsAddAction = new TopicsAddAction();
 			boolean success = topicsAddAction.execute(req, resp);
+
+			// 4. リスト更新と遷移
 			List<Topics> topicsList = new ArrayList<>();
 			TopicsAction topicsAction = new TopicsAction();
 			topicsList = topicsAction.execute();
 			session.setAttribute("topicsList", topicsList);
+
 			if (success) {
 				resp.setStatus(HttpServletResponse.SC_OK);
 			} else {
@@ -545,4 +620,5 @@ public class AdminController extends HttpServlet {
 			resp.sendRedirect("AdminMain.jsp");
 		}
 	}
+
 }

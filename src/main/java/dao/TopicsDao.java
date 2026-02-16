@@ -84,8 +84,9 @@ public class TopicsDao {
 
 	public List<Topics> findAll() {
 		List<Topics> list = new ArrayList<>();
-		// JOINを使って写真テーブルの情報も一緒に取得する
-		String sql = "SELECT t.*, p.photo_file_name FROM お知らせ t " +
+
+		// 修正ポイント：p.photo_category を追加しました
+		String sql = "SELECT t.*, p.photo_file_name, p.photo_category FROM お知らせ t " +
 				"LEFT JOIN 写真 p ON t.photo_id = p.photo_id";
 
 		try (Connection con = createConnection();
@@ -93,8 +94,10 @@ public class TopicsDao {
 				ResultSet rs = pstmt.executeQuery()) {
 
 			while (rs.next()) {
-				// 1. Photoオブジェクトを生成して値をセット
-				Photo photo = new Photo(rs.getInt("photo_id"), rs.getString("photo_category"),
+				// これで photo_category がResultSetに含まれるのでエラーになりません
+				Photo photo = new Photo(
+						rs.getInt("photo_id"),
+						rs.getString("photo_category"),
 						rs.getString("photo_file_name"));
 
 				Topics topics = new Topics(

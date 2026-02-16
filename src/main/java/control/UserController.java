@@ -212,7 +212,7 @@ public class UserController extends HttpServlet {
 					nextPage = after;
 					session.removeAttribute("afterLoginPage");
 				} else {
-					nextPage = "Main.jsp"; // 普通のログイン時
+					nextPage = "top.jsp"; // 普通のログイン時
 				}
 
 			} else {

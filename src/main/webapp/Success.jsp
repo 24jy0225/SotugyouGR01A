@@ -13,7 +13,7 @@ User user = (User)session.getAttribute("LoginUser");
 <% if(session.getAttribute("afterLoginPage") != null){%>
 	<button onclick="location.href='Login.jsp'">ログイン画面</button>
 <% }else{ %>
-	<button onclick="location.href='Main.jsp'">ホームに戻る</button>
+	<button onclick="location.href='top.jsp'">ホームに戻る</button>
 <% } %>
 </body>
 </html>

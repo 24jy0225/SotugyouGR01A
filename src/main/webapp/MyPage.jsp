@@ -43,8 +43,8 @@ if (couponUsageList == null)
 				href="./system-introduction.html" class="nav-link">System</a> <a
 				href="./menu.jsp" class="nav-link">Menu</a> <a href="./topics.jsp"
 				class="nav-link">Topics</a> <a href="./contact.html"
-				class="nav-link">Contact</a> <a href="./reservation_course.jsp"
-				class="nav-link">Reservation</a> <a href="./login.jsp"
+				class="nav-link">Contact</a> <a href="./ReservationDate.jsp"
+				class="nav-link">Reservation</a> <a href="./Login.jsp"
 				class="nav-link">Login</a>
 		</nav>
 	</header>
