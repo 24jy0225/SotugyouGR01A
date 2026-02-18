@@ -279,7 +279,7 @@ public class UserController extends HttpServlet {
 			session.setAttribute("Reservation", reservation);
 			ReserveAction action = new ReserveAction();
 			if (action.execute(req)) {
-				nextPage = "ReservationSuccess.jsp";
+				nextPage = "ReservationCompleted.jsp";
 			} else {
 				nextPage = "Error.jsp";
 				req.setAttribute("errorMsg", "予約失敗");
