@@ -12,6 +12,7 @@ User user = (User)session.getAttribute("LoginUser");
 <link rel="icon" href="./image/assets/user/ロゴマーク_金色b.webp">
 <link rel="stylesheet" href="./css/user/mainstyles.css">
 <link rel="stylesheet" href="./css/user/system-introductionStyle.css">
+<link rel="stylesheet" href="./css/user/hamburgerStyle.css">
 <title>system</title>
 </head>
 <body>
@@ -122,3 +123,4 @@ User user = (User)session.getAttribute("LoginUser");
 </body>
 </html>
 <script type="text/javascript" src="./javascript/logoScript.js"></script>
+<script type="text/javascript" src="./javascript/Hamburgermenu.js"></script>

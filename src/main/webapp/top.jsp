@@ -36,9 +36,10 @@ if (photoList != null) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Top - The Shisha Honjin</title>
-<link rel="icon" href="../assets/ロゴマーク_金色b.webp">
+<link rel="icon" href="./image/assets/user/ロゴマーク_金色b.webp">
 <link rel="stylesheet" href="./css/user/mainstyles.css">
 <link rel="stylesheet" href="./css/user/top-styles.css">
+<link rel="stylesheet" href="./css/user/hamburgerStyle.css">
 </head>
 
 <body>
@@ -343,3 +344,4 @@ if (photoList != null) {
 
 </html>
 <script type="text/javascript" src="./javascript/logoScript.js"></script>
+<script type="text/javascript" src="./javascript/Hamburgermenu.js"></script>

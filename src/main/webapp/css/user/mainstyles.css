@@ -542,28 +542,3 @@ footer{
 	margin: 0 auto;
 	padding: 0 20px;
 }
-
-/* --- ステップインジケーターのスタイル --- */
-.step_indicator {
-	text-align: center;
-	margin-bottom: 40px;
-	margin-top: 20px;
-}
-
-.step_indicator h2 {
-	font-size: 20px;
-	font-weight: normal;
-	margin-bottom: 20px;
-	color: #FFFFFF;
-}
-
-.step_image {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.step_image img {
-	max-width: 100%;
-	height: auto;
-}

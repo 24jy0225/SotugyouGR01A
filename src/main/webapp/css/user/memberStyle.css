@@ -7,7 +7,7 @@ main {
         "member-reservation member-reservation-list";
     grid-template-columns: 900px 900px;
     grid-template-rows: auto auto;
-    margin-top: 100px;
+    
 }
 
 .member-info {

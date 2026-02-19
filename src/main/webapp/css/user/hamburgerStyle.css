@@ -1,4 +1,4 @@
-/* ハンバーガーメニューボタン */
+/* ハンバーガーメニュースタイル */
 .hamburger-menu {
     display: none; /* PC画面では非表示 */
     position: absolute;
@@ -40,6 +40,7 @@
 }
 
 .mobile-nav.active {
+	display: block;
     right: 0; /* 開いた状態 */
 }
 
