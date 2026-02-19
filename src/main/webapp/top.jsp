@@ -218,7 +218,7 @@ if (photoList != null) {
 				<hr>
 			</div>
 			<div class="flavor-image">
-				<img src="<%= flavor %>" alt="フレーバー">
+				<img src="./image/assets/user/flavar.png" alt="フレーバー">
 			</div>
 			<div class="more-btn-container">
 				<button class="more-btn">MORE</button>
