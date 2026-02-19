@@ -10,7 +10,7 @@ User user = (User) session.getAttribute("LoginUser");
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="./css/user/mainstyles.css">
-<link rel="stylesheet" href="./css/user/contactStyle.css">
+<link rel="stylesheet" href="./css/user/hamburgerStyle.css">
 <link rel="icon" href="./image/assets/user/ロゴマーク_金色b.webp">
 <title>contact</title>
 </head>
