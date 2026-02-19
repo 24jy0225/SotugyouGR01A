@@ -233,3 +233,4 @@ String buttonText = (user != null || ("ByAdmin".equals(action) && targetUser != 
 </script>
 </html>
 <script type="text/javascript" src="../javascript/logoScript.js"></script>
+<script type="text/javascript" src="./javascript/Hamburgermenu.js"></script>

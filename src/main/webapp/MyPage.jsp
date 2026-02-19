@@ -219,3 +219,4 @@ if (couponUsageList == null)
 </body>
 </html>
 <script type="text/javascript" src="./javascript/logoScript.js"></script>
+<script type="text/javascript" src="./javascript/Hamburgermenu.js"></script>
