@@ -32,6 +32,7 @@ import action.main.LoginAction;
 import action.main.PasswordResetAction;
 import action.main.RegisterAction;
 import action.main.StoreAction;
+import action.main.UserInfoEditAction;
 import dao.UserDao;
 import model.CouponUsage;
 import model.Photo;
@@ -266,7 +267,7 @@ public class UserController extends HttpServlet {
 				session.setAttribute("Reservation", reservation);
 				ReserveAction action = new ReserveAction();
 				if (action.execute(req)) {
-					
+
 					nextPage = "ReservationCompleted.jsp";
 				} else {
 					nextPage = "Error.jsp";
@@ -311,17 +312,45 @@ public class UserController extends HttpServlet {
 			resp.sendRedirect("PasswordReset.jsp");
 			return;
 		case "passwordResetInput":
+			session = req.getSession();
 			String token = req.getParameter("token");
 			String newPass = req.getParameter("password");
-			UserDao dao = new UserDao();
-			if (dao.updatePassword(token, newPass)) {
-				nextPage = "Success.jsp";
-				req.setAttribute("alertMsg", "Password Reset Completed");
+			String confirm = req.getParameter("confirmPassword");
+			if (newPass != null && newPass.equals(confirm)) {
+				UserDao dao = new UserDao();
+				if (dao.updatePassword(token, newPass)) {
+					nextPage = "PasswordResetCompleted.jsp";
+					session.setAttribute("alertMsg", "Password Reset Completed");
+				} else {
+					nextPage = "Error.jsp";
+					session.setAttribute("errorMsg", "有効期限切れか、不正なアクセスです。");
+				}
 			} else {
-				nextPage = "Error.jsp";
-				req.setAttribute("errorMsg", "有効期限切れか、不正なアクセスです。");
+				session.setAttribute("message", "パスワードが一致しませんでした。");
+				resp.sendRedirect("PasswordResetInput.jsp");
+				return;
 			}
 			break;
+		case "userInfoEdit":
+			session = req.getSession();
+			String email = req.getParameter("email");
+			String tel = req.getParameter("tel");
+			String name = req.getParameter("name");
+			session.setAttribute("email", email);
+			session.setAttribute("tel", tel);
+			session.setAttribute("name", name);
+			UserInfoEditAction userInfoEditAction = new UserInfoEditAction();
+			user = userInfoEditAction.execute(req);
+			if (user != null) {
+				session.setAttribute("LoginUser", user);
+				session.setAttribute("message", "会員情報を変更しました！");
+				resp.sendRedirect("UserInfoEdit.jsp");
+				return;
+			} else {
+				session.setAttribute("errorMsg", "変更失敗");
+				nextPage = "Error.jsp";
+				break;
+			}
 		default:
 			nextPage = "Error.jsp";
 			req.setAttribute("errorMsg", "不正なポストコマンド: " + command);

@@ -204,51 +204,80 @@ public class UserDao {
 			return false;
 		}
 	}
-	
-	public boolean reissueToken(String email , String newToken) {
-		String sql = "UPDATE 会員 SET url_token = ?, token_expire = DATE_ADD(NOW(), INTERVAL 1 DAY) "
-	               + "WHERE member_email_address = ? AND authenticate = 0";
 
-	    try (Connection con = createConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+	public boolean reissueToken(String email, String newToken) {
+		String sql = "UPDATE 会員 SET url_token = ?, token_expire = DATE_ADD(NOW(), INTERVAL 1 DAY) "
+				+ "WHERE member_email_address = ? AND authenticate = 0";
+
+		try (Connection con = createConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, newToken);
 			pstmt.setString(2, email);
-	        
-	        int count = pstmt.executeUpdate();
-	        // 1件更新できれば成功（メアドが存在し、かつ仮登録だった）
-	        return count == 1;
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return false;
-	    }
+
+			int count = pstmt.executeUpdate();
+			// 1件更新できれば成功（メアドが存在し、かつ仮登録だった）
+			return count == 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
-	
+
 	public boolean setPasswordResetToken(String email, String token) {
-	    String sql = "UPDATE 会員 SET url_token = ?, token_expire = DATE_ADD(NOW(), INTERVAL 30 MINUTE) "
-	               + "WHERE member_email_address = ?";
-	    // パスワード再設定はセキュリティ上、期限を短め（30分など）にするのが一般的です。
+		String sql = "UPDATE 会員 SET url_token = ?, token_expire = DATE_ADD(NOW(), INTERVAL 30 MINUTE) "
+				+ "WHERE member_email_address = ?";
+		// パスワード再設定はセキュリティ上、期限を短め（30分など）にするのが一般的です。
 
-	    try (Connection con = createConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-	        pstmt.setString(1, token);
-	        pstmt.setString(2, email);
-	        return pstmt.executeUpdate() == 1;
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return false;
-	    }
+		try (Connection con = createConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, token);
+			pstmt.setString(2, email);
+			return pstmt.executeUpdate() == 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
-	
-	public boolean updatePassword(String token, String newPassword) {
-	    String sql = "UPDATE 会員 SET member_password = ?, url_token = NULL "
-	               + "WHERE url_token = ? AND token_expire > NOW()";
 
-	    try (Connection con = createConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-	        pstmt.setString(1, newPassword);
-	        pstmt.setString(2, token);
-	        return pstmt.executeUpdate() == 1;
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return false;
-	    }
+	public boolean updatePassword(String token, String newPassword) {
+		String sql = "UPDATE 会員 SET member_password = ?, url_token = NULL "
+				+ "WHERE url_token = ? AND token_expire > NOW() ";
+
+		try (Connection con = createConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, newPassword);
+			pstmt.setString(2, token);
+
+			return pstmt.executeUpdate() == 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public User update(String userId, String name, String tel, String email) {
+		String updateSql = "UPDATE 会員 SET member_name = ?, member_tel = ?, member_email_address = ? WHERE member_id = ?";
+		try (Connection con = createConnection()) {
+			// 1. 更新処理を実行
+			try (PreparedStatement pstmt = con.prepareStatement(updateSql)) {
+				pstmt.setString(1, name);
+				pstmt.setString(2, tel);
+				pstmt.setString(3, email);
+				pstmt.setString(4, userId);
+
+				int result = pstmt.executeUpdate();
+
+				// 2. 更新が成功したら、最新のデータを取得して返す
+				if (result == 1) {
+					// クラス内の既存メソッド findById を再利用して最新のUserを読み込む
+					// findByIdの中で予約数やクーポン数も集計されているため、整合性が保てます
+					return findById(userId);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null; // 更新失敗、または対象ユーザーが存在しない場合
+
 	}
 
 }
