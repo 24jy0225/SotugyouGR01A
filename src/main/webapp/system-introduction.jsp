@@ -3,6 +3,16 @@
 <%
 List<Photo> photoList = (List<Photo>) session.getAttribute("photoList");
 User user = (User)session.getAttribute("LoginUser");
+String system = "./image/assets/user/SystemMenu.jpg";
+if (photoList != null) {
+	for (Photo p : photoList) {
+		
+		if ("system".equals(p.getPhotoCategory())) {
+	system = p.getPhotoFileName(); // ファイル名を取得
+	break; 
+		}
+	}
+}
 %>
 <!DOCTYPE html>
 <html lang="ja">
@@ -51,22 +61,7 @@ User user = (User)session.getAttribute("LoginUser");
 			<hr>
 		</div>
 		<div class="system-img">
-			<%
-			if (photoList.size() != 0) {
-				for (Photo p : photoList) {
-					if (p.getPhotoCategory() == "system") {
-			%>
-			<img src="./image/photo/<%=p.getPhotoFileName()%>" alt="">
-			<%
-			}
-			}
-			} else {
-			%>
-			<img src="./image/assets/user/CSシステム通常800_Menu_2505-1_page-0001.jpg"
-				alt="">
-			<%
-			}
-			%>
+			<img src="<%= system %>" alt="">
 		</div>
 	</main>
 	<!-- フッター -->

@@ -309,8 +309,8 @@ public class UserController extends HttpServlet {
 			} else {
 				req.setAttribute("alertMsg", "メール送信に失敗しました。アドレスが正しいか確認してください。");
 			}
-			resp.sendRedirect("PasswordReset.jsp");
-			return;
+			nextPage = "PasswordReset.jsp";
+			break;
 		case "passwordResetInput":
 			session = req.getSession();
 			String token = req.getParameter("token");
@@ -320,7 +320,6 @@ public class UserController extends HttpServlet {
 				UserDao dao = new UserDao();
 				if (dao.updatePassword(token, newPass)) {
 					nextPage = "PasswordResetCompleted.jsp";
-					session.setAttribute("alertMsg", "Password Reset Completed");
 				} else {
 					nextPage = "Error.jsp";
 					session.setAttribute("errorMsg", "有効期限切れか、不正なアクセスです。");

@@ -41,18 +41,7 @@ String action = (String) session.getAttribute("action");
 			%>
 		</nav>
 	</header>
-	<%
-	String msg = (String) request.getAttribute("alertMsg");
-	if (msg != null) {
-	%>
-	<div
-		style="color: white; text-align: center; background: #333; padding: 10px; margin-bottom: 10px;">
-		<%=msg%>
-	</div>
-	<%
-	request.removeAttribute("alertMsg");
-	}
-	%>
+	
 	<main>
 
 		<div class="modal-container">

@@ -5,6 +5,36 @@ List<Photo> photoList = (List<Photo>) session.getAttribute("photoList");
 %>
 <%
 User user = (User) session.getAttribute("LoginUser");
+String drink = "./image/assets/user/menu/alcoholdrink1.webp";
+String flavor = "./image/assets/user/フレーバーメニュー.webp";
+String food = "./image/assets/user/menu/food1.webp";
+if (photoList != null) {
+	for (Photo p : photoList) {
+
+		if ("flavor".equals(p.getPhotoCategory())) {
+	flavor = p.getPhotoFileName(); // ファイル名を取得
+	break;
+		}
+	}
+}
+if (photoList != null) {
+	for (Photo p : photoList) {
+
+		if ("drink".equals(p.getPhotoCategory())) {
+	drink = p.getPhotoFileName(); // ファイル名を取得
+	break;
+		}
+	}
+}
+if (photoList != null) {
+	for (Photo p : photoList) {
+
+		if ("food".equals(p.getPhotoCategory())) {
+	food = p.getPhotoFileName(); // ファイル名を取得
+	break;
+		}
+	}
+}
 %>
 <!DOCTYPE html>
 <html lang="ja">
@@ -22,24 +52,30 @@ User user = (User) session.getAttribute("LoginUser");
 <body>
 	<header class="header" data-name="ヘッダー">
 		<div class="logos" id="logo" onclick="location.href='./top.jsp'">
-			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo" class="logo">
+			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo"
+				class="logo">
 		</div>
 		<nav class="nav-menu">
-			<a href="./whats_Shisha.jsp" class="nav-link">What's</a> 
-			<a href="./how_to_Use.jsp" class="nav-link">Use</a> 
-			<a href="./system-introduction.jsp" class="nav-link">System</a>
-			<a	href="./menu.jsp" class="nav-link">Menu</a> 
-			<a href="./topics.jsp" class="nav-link">Topics</a> 
-			<a href="./contact.jsp" class="nav-link">Contact</a>
+			<a href="./whats_Shisha.jsp" class="nav-link">What's</a> <a
+				href="./how_to_Use.jsp" class="nav-link">Use</a> <a
+				href="./system-introduction.jsp" class="nav-link">System</a> <a
+				href="./menu.jsp" class="nav-link">Menu</a> <a href="./topics.jsp"
+				class="nav-link">Topics</a> <a href="./contact.jsp" class="nav-link">Contact</a>
 			<a href="ReservationDate.jsp" class="nav-link">Reservation</a>
-			<%if (user != null) { %>
-				<a href="UserController?command=MyPage" class="nav-link">Member</a>
-			<% } else { %>
-				<a href="./Login.jsp" class="nav-link">Login</a>
-			<% } %>
+			<%
+			if (user != null) {
+			%>
+			<a href="UserController?command=MyPage" class="nav-link">Member</a>
+			<%
+			} else {
+			%>
+			<a href="./Login.jsp" class="nav-link">Login</a>
+			<%
+			}
+			%>
 		</nav>
 	</header>
-	
+
 	<main>
 		<div class="hero-section">
 			<div class="hero-background-image">
@@ -55,22 +91,7 @@ User user = (User) session.getAttribute("LoginUser");
 			<hr>
 		</div>
 		<div class="flavor-content">
-			<%
-			if (photoList.size() != 0) {
-				for (Photo p : photoList) {
-					if (p.getPhotoCategory() != "flavar") {
-				continue;
-					}
-			%>
-			<img src="./image/photo/<%=p.getPhotoFileName()%>" alt="flavor">
-			<%
-			}
-			} else {
-			%>
-			<img src="./image/assets/user/フレーバーメニュー.webp" alt="flavor">
-			<%
-			}
-			%>
+			<img src="<%=flavor%>" alt="flavor">
 		</div>
 		<div class="section-title-container">
 			<hr>
@@ -80,22 +101,7 @@ User user = (User) session.getAttribute("LoginUser");
 		<div class="drink-back">
 			<div class="drink-content">
 				<div class="slide-item" id="drinkSliderTrack">
-					<%
-					if (photoList.size() != 0) {
-						for (Photo p : photoList) {
-							if (p.getPhotoCategory() != "drink") {
-						continue;
-							}
-					%>
-					<img src="./image/photo<%=p.getPhotoFileName()%>" alt="">
-					<%
-					}
-					} else {
-					%>
-					<img src="./image/assets/user/menu/alcoholdrink1.webp" alt="">
-					<%
-					}
-					%>
+					<img src="<%=drink%>" alt="">
 				</div>
 			</div>
 		</div>
@@ -109,22 +115,9 @@ User user = (User) session.getAttribute("LoginUser");
 			<div class="food-content">
 				<div class="slider-wrapper">
 					<div class="slide-item" id="foodSliderTrack">
-						<%
-						if (photoList.size() != 0) {
-							for (Photo p : photoList) {
-								if (p.getPhotoCategory() != "food") {
-							continue;
-								}
-						%>
-						<img src="./image/photo/<%=p.getPhotoFileName()%>" alt="">
-						<%
-						}
-						} else {
-						%>
-						<img src="./image/assets/user/menu/food1.webp" alt="">
-						<%
-						}
-						%>
+
+						<img src="<%=food%>" alt="">
+
 					</div>
 				</div>
 			</div>

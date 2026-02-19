@@ -30,7 +30,7 @@
 						<option value="" disabled selected>変更内容を選択</option>
 						<option value="system">system</option>
 						<option value="top">top</option>
-						<option value="flavar">flavar</option>
+						<option value="flavor">flavor</option>
 						<option value="drink">drink</option>
 						<option value="food">food</option>
 					</select>
