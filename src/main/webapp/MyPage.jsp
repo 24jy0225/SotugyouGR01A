@@ -103,7 +103,7 @@ if (couponUsageList == null)
 				</p>
 			</div>
 			<a href="UserInfoEdit.jsp" class="member-information">会員情報変更はこちら</a>
-			<a href="UserController?command=passwordEdit" class="member-information">パスワード変更はこちら</a>
+			<a href="PasswordReset.jsp" class="member-information">パスワード変更はこちら</a>
 		</div>
 
 		<div class="member-couponlist">

@@ -17,7 +17,7 @@ public class PasswordResetAction {
 		if (dao.setPasswordResetToken(email, token)) {
 			String requestURL = req.getRequestURL().toString();
 			String baseURL = requestURL.substring(0, requestURL.lastIndexOf("/"));
-			String resetURL = baseURL + "/UserController?command=passwordResetForm&token=" + token;
+			String resetURL = baseURL + "/UserController?command=passwordReset&token=" + token;
 
 			MailUtil.send(email, resetURL);
 

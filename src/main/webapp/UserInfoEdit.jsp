@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="model.User , java.util.*"%>
+<%
+User user = (User) session.getAttribute("LoginUser");
+String action = (String) session.getAttribute("action");
+%>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -7,21 +11,56 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="../assets/ロゴマーク_金色b.webp">
-<link rel="stylesheet" href="../css/style.css">
-<link rel="stylesheet" href="../css/member-editStyle.css">
+<link rel="stylesheet" href="./css/user/style.css">
+<link rel="stylesheet" href="./css/user/member-editStyle.css">
 <title>会員情報の変更</title>
 </head>
 
 <body>
-	<!-- ヘッダー -->
-	<header class="systemheader" data-name="ヘッダー">
-		<div class="logos" id="logo" onclick="location.href='./top.html'">
-			<img src="../assets/ロゴタイプ_金色b.svg" alt="logo" class="logo">
+	<header class="header" data-name="ヘッダー">
+		<%
+		if (action.equals("ByUser")) {
+		%>
+		<div class="logos" id="logo" onclick="location.href='./top.jsp'">
+			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo"
+				class="logo">
 		</div>
-		<nav class="system-nav-menu">
-			<a href="./login.html" class="nav-link">Login</a>
+		<nav class="nav-menu">
+			<a href="./whats_Shisha.jsp" class="nav-link">What's</a> <a
+				href="./how_to_Use.jsp" class="nav-link">Use</a> <a
+				href="./system-introduction.jsp" class="nav-link">System</a> <a
+				href="./menu.jsp" class="nav-link">Menu</a> <a href="./topics.jsp"
+				class="nav-link">Topics</a> <a href="./contact.jsp" class="nav-link">Contact</a>
+			<a href="UserController?command=reservationDate" class="nav-link">Reservation</a>
+			<%
+			if (user != null) {
+			%>
+			<a href="UserController?command=MyPage" class="nav-link">Member</a>
+			<%
+			} else {
+			%>
+			<a href="./Login.jsp" class="nav-link">Login</a>
+			<%
+			}
+			%>
 		</nav>
+		<%
+		}
+		%>
 	</header>
+	<%
+	String msg = (String) session.getAttribute("message");
+	if (msg != null) {
+	%>
+	<div
+		style="color: green; font-weight: bold; border: 1px solid green; padding: 10px; margin-bottom: 10px;">
+		<%=msg%>
+	</div>
+	<%
+	// 一度表示したら消す（そうしないと、ずっと表示され続けてしまうため）
+	session.removeAttribute("message");
+	}
+	%>
 	<main>
 
 		<div class="content-wrapper">
@@ -36,38 +75,35 @@
 				</div>
 				<p class="section-description">会員情報の確認と変更ができます</p>
 
-				<form>
+				<form action="UserController" method="post">
 					<div class="form-group">
 						<label class="form-label" for="name">氏名</label> <input type="text"
-							id="name" class="form-input" placeholder="山田 太郎">
-					</div>
-
-					<div class="form-group">
-						<label class="form-label" for="furigana">フリガナ</label> <input
-							type="text" id="furigana" class="form-input"
-							placeholder="ヤマダ タロウ">
+							id="name" name="name" class="form-input"
+							value="<%=user.getName()%>">
 					</div>
 
 					<div class="form-group">
 						<label class="form-label" for="email">メールアドレス</label> <input
-							type="email" id="email" class="form-input"
-							placeholder="yamada.taro@example.com">
+							type="email" id="email" name="email" class="form-input"
+							value="<%=user.getUserEmail()%>">
 					</div>
 
 					<div class="form-group">
 						<label class="form-label" for="phone">電話番号</label> <input
-							type="tel" id="phone" class="form-input"
-							placeholder="090-1234-5678">
+							type="tel" id="phone" name="tel" class="form-input"
+							value="<%=user.getUserTel()%>">
 					</div>
 
 					<div class="button-group">
 						<button type="submit" class="btn btn-save">
 							<span>保存する</span>
 						</button>
-						<button type="button" class="btn btn-cancel">
-							<span class="icon">✕</span> <span>キャンセル</span>
+						<button class="btn btn-cancel" type="button"
+							onclick="location.href='UserController?command=MyPage'">
+							<span>MyPageに戻る</span>
 						</button>
 					</div>
+					<input type="hidden" name="command" value="userInfoEdit">
 				</form>
 			</div>
 		</div>

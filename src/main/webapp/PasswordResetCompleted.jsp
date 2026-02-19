@@ -1,0 +1,56 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" import="model.User"%>
+<%
+User user = (User) session.getAttribute("LoginUser");
+String action = (String) session.getAttribute("action");
+%>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../assets/ロゴマーク_金色b.webp">
+<link rel="stylesheet" href="./css/user/style.css">
+<link rel="stylesheet"
+	href="./css/user/password-reset-completeStyle.css">
+<title>パスワードリセット完了</title>
+</head>
+<body>
+	<header class="header" data-name="ヘッダー">
+		<div class="logos" id="logo" onclick="location.href='./top.jsp'">
+			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo"
+				class="logo">
+		</div>
+		<nav class="nav-menu">
+			<a href="./whats_Shisha.jsp" class="nav-link">What's</a> <a
+				href="./how_to_Use.jsp" class="nav-link">Use</a> <a
+				href="./system-introduction.jsp" class="nav-link">System</a> <a
+				href="./menu.jsp" class="nav-link">Menu</a> <a href="./topics.jsp"
+				class="nav-link">Topics</a> <a href="./contact.jsp" class="nav-link">Contact</a>
+			<a href="UserController?command=reservationDate" class="nav-link">Reservation</a>
+			<%
+			if (user != null) {
+			%>
+			<a href="UserController?command=MyPage" class="nav-link">Member</a>
+			<%
+			} else {
+			%>
+			<a href="./Login.jsp" class="nav-link">Login</a>
+			<%
+			}
+			%>
+		</nav>
+	</header>
+	<main>
+
+		<h1 class="complete-title">Password Reset</h1>
+		<p class="complete-message">Completed</p>
+	</main>
+	<footer>
+		<p>
+			<small>&copy;The Shisha Honjin</small>
+		</p>
+	</footer>
+</body>
+</html>
+<script type="text/javascript" src="../javascript/logoScript.js"></script>
