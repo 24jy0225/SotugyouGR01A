@@ -26,6 +26,7 @@ import action.Coupon.CouponUsageAction;
 import action.Coupon.CouponUseAction;
 import action.Design.DesignUpdateAction;
 import action.Reservation.ReservationConfirmAction;
+import action.Reservation.ReservationDateAction;
 import action.Reservation.ReservationDeleteAction;
 import action.Reservation.ReservationHistoryAction;
 import action.Reservation.ReservationSeatAction;
@@ -358,7 +359,7 @@ public class AdminController extends HttpServlet {
 			}
 			return;
 
-		case "userDetail": // customerDetail -> userDetail
+		case "userDetail": 
 			String userId = req.getParameter("userId");
 			session.setAttribute("userId", userId);
 			UserDetailAction userDetailAction = new UserDetailAction();
@@ -392,7 +393,9 @@ public class AdminController extends HttpServlet {
 			}
 			break;
 
-		case "Confirm":
+		case "Reserve":
+			session = req.getSession();
+
 			String selectTime = req.getParameter("selectedTime");
 			String peopleStr = req.getParameter("people");
 			if (selectTime != null) {
@@ -404,29 +407,26 @@ public class AdminController extends HttpServlet {
 				int people = Integer.parseInt(peopleStr);
 				session.setAttribute("people", people);
 			}
+
 			User targetUser = (User) session.getAttribute("targetUser");
 			if (targetUser != null) {
-				nextPage = "Confirm.jsp";
+				ReservationConfirmAction reservationConfirmAction = new ReservationConfirmAction();
+				Reservation reservation = reservationConfirmAction.execute(req);
+				session.setAttribute("Reservation", reservation);
+				ReserveAction reserveAction = new ReserveAction();
+				if (reserveAction.execute(req)) {
+					reservationList = action.execute(req);
+					session.setAttribute("ReservationHistoryList", reservationList);
+					nextPage = "ReservationCompleted.jsp";
+				} else {
+					nextPage = "Error.jsp";
+					session.setAttribute("errorMsg", "予約失敗");
+				}
 			} else {
 				session.setAttribute("errorMsg", "セッション切れ");
 				nextPage = "Error.jsp";
 			}
-			break;
 
-		case "Reserve":
-			session = req.getSession();
-			ReservationConfirmAction reservationConfirmAction = new ReservationConfirmAction();
-			Reservation reservation = reservationConfirmAction.execute(req);
-			session.setAttribute("Reservation", reservation);
-			ReserveAction reserveAction = new ReserveAction();
-			if (reserveAction.execute(req)) {
-				reservationList = action.execute(req);
-				session.setAttribute("ReservationHistoryList", reservationList);
-				nextPage = "ReservationSuccess.jsp";
-			} else {
-				nextPage = "Error.jsp";
-				session.setAttribute("errorMsg", "予約失敗");
-			}
 			break;
 
 		case "makeUserReserve": // customerReserve -> userReserve
@@ -437,6 +437,8 @@ public class AdminController extends HttpServlet {
 			userDetailAction = new UserDetailAction();
 			user = userDetailAction.execute(req);
 			session.setAttribute("targetUser", user);
+			ReservationDateAction reservationDateAction = new ReservationDateAction();
+			reservationDateAction.execute(req);
 			break;
 
 		case "deleteUserReserve": // customerDeleteReserve -> userDeleteReserve

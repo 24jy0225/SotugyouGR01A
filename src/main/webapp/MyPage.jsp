@@ -83,8 +83,8 @@ if (couponUsageList == null)
 					<%=(user.getUserTel() == null || user.getUserTel().isEmpty()) ? "未登録" : user.getUserTel()%>
 				</p>
 			</div>
-			<a href="./member-edit.jsp" class="member-information">会員情報変更はこちら</a>
-			<a href="./new-password.jsp" class="member-information">パスワード変更はこちら</a>
+			<a href="UserInfoEdit.jsp" class="member-information">会員情報変更はこちら</a>
+			<a href="UserController?command=passwordEdit" class="member-information">パスワード変更はこちら</a>
 		</div>
 
 		<div class="member-couponlist">

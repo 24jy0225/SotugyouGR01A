@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
-	import="model.Reservation , java.time.format.DateTimeFormatter , java.time.LocalDate , java.time.temporal.ChronoUnit"%>
+	import="model.Reservation , model.User , java.time.format.DateTimeFormatter , java.time.LocalDate , java.time.temporal.ChronoUnit"%>
 <%
+String action = (String)session.getAttribute("action");
+User user = (User)session.getAttribute("LoginUser");
 Reservation r = (Reservation) session.getAttribute("Reservation");
 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy年MM月dd日");
 DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -18,13 +20,26 @@ DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 </head>
 <body>
 	<!-- ヘッダー -->
-	<header class="systemheader" data-name="ヘッダー">
-		<div class="logos" id="logo" onclick="location.href='./top.html'">
-			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo" class="logo">
+	<header class="header" data-name="ヘッダー">
+	<% if(action.equals("ByUser")){ %>
+		<div class="logos" id="logo" onclick="location.href='./top.jsp'">
+			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo" class="logo">
 		</div>
-		<nav class="system-nav-menu">
-			<a href="./login.html" class="nav-link">Login</a>
+		<nav class="nav-menu">
+			<a href="./whats_Shisha.jsp" class="nav-link">What's</a> 
+			<a href="./how_to_Use.jsp" class="nav-link">Use</a> 
+			<a href="./system-introduction.jsp" class="nav-link">System</a>
+			<a href="./menu.jsp" class="nav-link">Menu</a> 
+			<a href="./topics.jsp" class="nav-link">Topics</a> 
+			<a href="./contact.jsp" class="nav-link">Contact</a>
+			<a href="UserController?command=reservationDate" class="nav-link">Reservation</a>
+			<%if (user != null) { %>
+				<a href="UserController?command=MyPage" class="nav-link">Member</a>
+			<% } else { %>
+				<a href="./Login.jsp" class="nav-link">Login</a>
+			<% } %>
 		</nav>
+	<% } %>
 	</header>
 	<main>
 		<!-- 予約登録システムタイトル -->
@@ -57,7 +72,13 @@ DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 					時間:<%=r.getStartDateTime().format(timeFormatter)%>〜
 				</p>
 			</div>
-
+			<div>
+				<% if(action.equals("ByUser")){%>
+				<button onclick="location.href='UserController?command=MyPage'">MyPageへ</button>
+				<% }else{ %>
+				<a href="UserDetails.jsp">顧客情報画面に戻る</a>
+				<% } %>
+			</div>
 			<div class="thank-you-message">
 				<p>ご予約ありがとうございます。</p>
 				<p>当日お待ちしております。</p>

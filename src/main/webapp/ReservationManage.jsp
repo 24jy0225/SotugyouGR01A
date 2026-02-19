@@ -167,6 +167,10 @@ function updateDateInput(){
 // 描画ロジック
 function paintDay() {
     const dateStr = formatDate(currentDate);
+
+    const now = new Date();
+    const realToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    
     document.querySelectorAll("td[data-seat]").forEach(td => {
         td.innerHTML = "";
         td.className = "reservation-cell";
@@ -198,6 +202,14 @@ function paintDay() {
         const effectiveEndIndex = (endIndex === -1) ? hourList.length : endIndex;
         const span = effectiveEndIndex - startIndex;
 
+        const parts = r.date.split('-');
+        const resDate = new Date(parts[0], parts[1] - 1, parts[2]);
+
+        let deleteBtnHtml = "";
+        if (resDate >= realToday) {
+            deleteBtnHtml = `<button type="button" class="delete-icon" onclick="deleteReservation('\${r.id}')">🗑️</button>`;
+        }
+
         const startCell = cellMap[r.seatId + "_" + r.start];
         if (startCell && span > 0) {
             const colorClass = "color-" + (idx % 3);
@@ -207,8 +219,8 @@ function paintDay() {
             startCell.innerHTML = `
                 <div class="reservation-info">
                     <strong>\${r.name}</strong><br>
-                    \${r.count}名 / \${r.start}-\${r.end}
-                    <button type="button" class="delete-icon" onclick="deleteReservation('\${r.id}')">🗑️</button>
+                    \${r.count}名 / \${r.start}-\${r.end} 
+                    \${deleteBtnHtml}
                 </div>
             `;
 

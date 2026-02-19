@@ -141,11 +141,11 @@ public class UserController extends HttpServlet {
 			Collections.reverse(topicsList);
 			List<Topics> top4List = new ArrayList<>();
 			int limit = Math.min(4, topicsList.size());
-	        
-	        for (int i = 0; i < limit; i++) {
-	            top4List.add(topicsList.get(i));
-	        }
-	        session.setAttribute("top4List", top4List);
+
+			for (int i = 0; i < limit; i++) {
+				top4List.add(topicsList.get(i));
+			}
+			session.setAttribute("top4List", top4List);
 			session.setAttribute("topicsList", topicsList);
 			session.setAttribute("photoList", photoList);
 			nextPage = "top.jsp";
@@ -239,7 +239,8 @@ public class UserController extends HttpServlet {
 				session.invalidate();
 			}
 			break;
-		case "Confirm":
+		case "Reserve":
+
 			session = req.getSession();
 
 			String selectTime = req.getParameter("selectedTime");
@@ -260,29 +261,21 @@ public class UserController extends HttpServlet {
 
 			if (loginUser != null) {
 				// ログイン済み
-				nextPage = "Confirm.jsp";
-
+				ReservationConfirmAction reservationConfirmAction = new ReservationConfirmAction();
+				Reservation reservation = reservationConfirmAction.execute(req);
+				session.setAttribute("Reservation", reservation);
+				ReserveAction action = new ReserveAction();
+				if (action.execute(req)) {
+					
+					nextPage = "ReservationCompleted.jsp";
+				} else {
+					nextPage = "Error.jsp";
+					req.setAttribute("errorMsg", "予約失敗");
+				}
 			} else {
 				// 未ログイン → ログイン後に戻る画面を保存
-				session.setAttribute("afterLoginPage", "Confirm.jsp");
+				session.setAttribute("afterLoginPage", "ReservationTime.jsp");
 				nextPage = "Login.jsp";
-			}
-
-			break;
-		case "Reserve":
-
-			session = req.getSession();
-
-			ReservationConfirmAction reservationConfirmAction = new ReservationConfirmAction();
-			Reservation reservation = reservationConfirmAction.execute(req);
-
-			session.setAttribute("Reservation", reservation);
-			ReserveAction action = new ReserveAction();
-			if (action.execute(req)) {
-				nextPage = "ReservationCompleted.jsp";
-			} else {
-				nextPage = "Error.jsp";
-				req.setAttribute("errorMsg", "予約失敗");
 			}
 
 			break;

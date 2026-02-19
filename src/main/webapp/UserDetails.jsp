@@ -81,7 +81,8 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 			<p>今後の予約</p>
 			<%
 			for (Reservation r : reservationList) {
-				if (r.getUserId() != user.getUserId() && r.getStartDateTime().isBefore(today.atStartOfDay())) {
+				if (r.getUserId() != user.getUserId() && r.getStartDateTime().isBefore(today.atStartOfDay())
+				|| r.getCancelDate() != null) {
 					continue;
 				}
 				java.time.LocalDateTime start = r.getStartDateTime();
@@ -119,7 +120,8 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 			<p>過去の予約</p>
 			<%
 			for (Reservation r : reservationList) {
-				if (r.getUserId() != user.getUserId() && r.getStartDateTime().isAfter(today.atStartOfDay())) {
+				if (r.getUserId() != user.getUserId() && r.getStartDateTime().isAfter(today.atStartOfDay())
+				|| r.getCancelDate() != null) {
 					continue;
 				}
 				java.time.LocalDateTime start = r.getStartDateTime();
@@ -138,6 +140,38 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 						<td class="reservation-days"><%=year%>年</td>
 						<td class="reservation-days"><%=month%>月</td>
 						<td class="reservation-days  reservation-day"><%=day%>日</td>
+						<td class="reservation-starttime"><%=startTimeStr%></td>
+						<td class="reservation-timebr">~</td>
+						<td class="reservation-endtime"><%=endTimeStr%></td>
+						<td class="reservation-width"><%=r.getReservePeople()%>名</td>
+						<td class="reservation-width">座席<%=r.getSeatId()%></td>
+					</tr>
+				</table>
+			</div>
+			<%
+			}
+			%>
+			<p>キャンセルした予約</p>
+			<%
+			for (Reservation r : reservationList) {
+				if (!r.getUserId().equals(user.getUserId()) || r.getCancelDate() == null) {
+					continue;
+				}
+				java.time.LocalDateTime start = r.getStartDateTime();
+				java.time.LocalDateTime end = r.getEndDateTime();
+				year = start.getYear();
+				month = start.getMonthValue();
+				day = start.getDayOfMonth();
+				String startTimeStr = start.format(timeFmt);
+				String endTimeStr = end.format(timeFmt);
+			%>
+			<div class="customer-reservation-info">
+				<table class="customer-details-reservation-table">
+					<tr>
+						<td class="reservation-days"><%=r.getCancelDate().format(dateFmt)%>年</td>
+						<td class="reservation-days"><%=year%>年</td>
+						<td class="reservation-days"><%=month%>月</td>
+						<td class="reservation-days reservation-day"><%=day%>日</td>
 						<td class="reservation-starttime"><%=startTimeStr%></td>
 						<td class="reservation-timebr">~</td>
 						<td class="reservation-endtime"><%=endTimeStr%></td>
@@ -170,97 +204,109 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 						continue;
 					}
 				%>
-				<% if (!c.getCoupon().getEndDate().isBefore(today)) { %>
+				<%
+				if (!c.getCoupon().getEndDate().isBefore(today)) {
+				%>
 				<div class="coupon-active">
-				<%}else{ %>
-				<div class="coupon-expired">
-				<%} %>
-					<img src="./image/assets/coupon.png" class="coupon-img">
-					<table>
-						<tr>
-							<td class="coupon-value"><%=c.getCoupon().getCouponName()%></td>
-						</tr>
-						<tr>
-							<td class="coupon-value"><%=c.getCoupon().getCouponId()%></td>
-							<td class="expiration-date">有効期限</td>
-						</tr>
-						<tr>
-							<td class="coupon-value"><%=c.getCoupon().getCouponContent()%></td>
-							<td class="coupon-start"><%=c.getCoupon().getStartDate()%></td>
-							<td class="coupon-br">~</td>
-							<td class="coupon-end"><%=c.getCoupon().getEndDate()%></td>
-						</tr>
-					</table>
 					<%
-					if (!c.getCoupon().getEndDate().isBefore(today)) {
+					} else {
 					%>
-					<div class="coupon-content"
-						onclick="changeCouponFlag('<%=c.getCoupon().getCouponId()%>','<%=c.getUserId()%>','true')">
-						<button class="coupon-btn">使用状態にする</button>
+					<div class="coupon-expired">
+						<%
+						}
+						%>
+						<img src="./image/assets/coupon.png" class="coupon-img">
+						<table>
+							<tr>
+								<td class="coupon-value"><%=c.getCoupon().getCouponName()%></td>
+							</tr>
+							<tr>
+								<td class="coupon-value"><%=c.getCoupon().getCouponId()%></td>
+								<td class="expiration-date">有効期限</td>
+							</tr>
+							<tr>
+								<td class="coupon-value"><%=c.getCoupon().getCouponContent()%></td>
+								<td class="coupon-start"><%=c.getCoupon().getStartDate()%></td>
+								<td class="coupon-br">~</td>
+								<td class="coupon-end"><%=c.getCoupon().getEndDate()%></td>
+							</tr>
+						</table>
+						<%
+						if (!c.getCoupon().getEndDate().isBefore(today)) {
+						%>
+						<div class="coupon-content"
+							onclick="changeCouponFlag('<%=c.getCoupon().getCouponId()%>','<%=c.getUserId()%>','true')">
+							<button class="coupon-btn">使用状態にする</button>
+						</div>
+						<%
+						}
+						%>
 					</div>
 					<%
 					}
 					%>
 				</div>
-				<%
-				}
-				%>
-			</div>
 
-			<p>使用済みクーポン</p>
-			<div class="coupon-list">
-				<%
-				for (CouponUsage c : couponUsageList) {
-					if (c.isCouponUsage() != false) {
-						continue;
-					}
-				%>
-				<% if (!c.getCoupon().getEndDate().isBefore(today)) { %>
-				<div class="coupon-inactive">
-				<%}else{ %>
-				<div class="coupon-expired">
-				<%} %>
-					<img src="./image/assets/coupon.png" class="coupon-img">
-					<table>
-						<tr>
-							<td class="coupon-value"><%=c.getCoupon().getCouponName()%></td>
-						</tr>
-						<tr>
-							<td class="coupon-value"><%=c.getCoupon().getCouponId()%></td>
-							<td class="expiration-date">有効期限</td>
-						</tr>
-						<tr>
-							<td class="coupon-value"><%=c.getCoupon().getCouponContent()%></td>
-							<td class="coupon-start"><%=c.getCoupon().getStartDate()%></td>
-							<td class="coupon-br">~</td>
-							<td class="coupon-end"><%=c.getCoupon().getEndDate()%></td>
-						</tr>
-					</table>
+				<p>使用済みクーポン</p>
+				<div class="coupon-list">
+					<%
+					for (CouponUsage c : couponUsageList) {
+						if (c.isCouponUsage() != false) {
+							continue;
+						}
+					%>
 					<%
 					if (!c.getCoupon().getEndDate().isBefore(today)) {
 					%>
-					<div class="coupon-content">
-						<button class="coupon-btn"
-							onclick="changeCouponFlag('<%=c.getCoupon().getCouponId()%>','<%=c.getUserId()%>','false')">未使用状態にする</button>
+					<div class="coupon-inactive">
+						<%
+						} else {
+						%>
+						<div class="coupon-expired">
+							<%
+							}
+							%>
+							<img src="./image/assets/coupon.png" class="coupon-img">
+							<table>
+								<tr>
+									<td class="coupon-value"><%=c.getCoupon().getCouponName()%></td>
+								</tr>
+								<tr>
+									<td class="coupon-value"><%=c.getCoupon().getCouponId()%></td>
+									<td class="expiration-date">有効期限</td>
+								</tr>
+								<tr>
+									<td class="coupon-value"><%=c.getCoupon().getCouponContent()%></td>
+									<td class="coupon-start"><%=c.getCoupon().getStartDate()%></td>
+									<td class="coupon-br">~</td>
+									<td class="coupon-end"><%=c.getCoupon().getEndDate()%></td>
+								</tr>
+							</table>
+							<%
+							if (!c.getCoupon().getEndDate().isBefore(today)) {
+							%>
+							<div class="coupon-content">
+								<button class="coupon-btn"
+									onclick="changeCouponFlag('<%=c.getCoupon().getCouponId()%>','<%=c.getUserId()%>','false')">未使用状態にする</button>
+							</div>
+							<%
+							}
+							%>
+						</div>
+						<%
+						}
+						%>
 					</div>
-					<%
-					}
-					%>
+
 				</div>
-				<%
-				}
-				%>
-			</div>
+				<form id="editUserForm" action="AdminController" method="POST">
+					<input type="hidden" name="command" id="targetCommand"> <input
+						type="hidden" name="userId" id="targetUserId"> <input
+						type="hidden" name="couponId" id="targetCouponId"> <input
+						type="hidden" name="reservationId" id="targetReservationId">
+					<input type="hidden" name="couponUsage" id="targetCouponUsage">
 
-		</div>
-		<form id="editUserForm" action="AdminController" method="POST">
-			<input type="hidden" name="command" id="targetCommand"> <input
-				type="hidden" name="userId" id="targetUserId"> <input
-				type="hidden" name="couponId" id="targetCouponId"> <input
-				type="hidden" name="reservationId" id="targetReservationId">
-			<input type="hidden" name="couponUsage" id="targetCouponUsage">
-
-		</form>
+				</form>
 	</main>
 	<script type="text/javascript">
 		function deleteUser(userId) {

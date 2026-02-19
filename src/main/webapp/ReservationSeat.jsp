@@ -88,8 +88,7 @@ String formAction = "ByUser".equals(action) ? "UserController" : "AdminControlle
 								</div>
 								<h4>
 									席
-									<%=seat.getSeatId()%></h4>
-								<p class="availability">空き</p>
+									<%=seat.getSeatNumber()%></h4>
 							</div>
 						</button>
 						<%

@@ -18,7 +18,7 @@ Map<String, String> statusData = (Map<String, String>) request.getAttribute("sta
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>席予約</title>
 <link rel="stylesheet" href="./css/user/style.css">
-<link rel="stylesheet" href="./css/user/mainstyles.css">
+<link rel="stylesheet" href="./css/user/Reservation_DateStyle.css">
 <script
 	src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'>
 </script>

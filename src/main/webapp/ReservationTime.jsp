@@ -70,27 +70,37 @@ String buttonText = (user != null || ("ByAdmin".equals(action) && targetUser != 
 </head>
 <body>
 	<header class="header" data-name="ヘッダー">
-	<% if(action.equals("ByUser")){ %>
+		<%
+		if (action.equals("ByUser")) {
+		%>
 		<div class="logos" id="logo" onclick="location.href='./top.jsp'">
-			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo" class="logo">
+			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo"
+				class="logo">
 		</div>
 		<nav class="nav-menu">
-			<a href="./whats_Shisha.jsp" class="nav-link">What's</a> 
-			<a href="./how_to_Use.jsp" class="nav-link">Use</a> 
-			<a href="./system-introduction.jsp" class="nav-link">System</a>
-			<a	href="./menu.jsp" class="nav-link">Menu</a> 
-			<a href="./topics.jsp" class="nav-link">Topics</a> 
-			<a href="./contact.jsp" class="nav-link">Contact</a>
+			<a href="./whats_Shisha.jsp" class="nav-link">What's</a> <a
+				href="./how_to_Use.jsp" class="nav-link">Use</a> <a
+				href="./system-introduction.jsp" class="nav-link">System</a> <a
+				href="./menu.jsp" class="nav-link">Menu</a> <a href="./topics.jsp"
+				class="nav-link">Topics</a> <a href="./contact.jsp" class="nav-link">Contact</a>
 			<a href="UserController?command=reservationDate" class="nav-link">Reservation</a>
-			<%if (user != null) { %>
-				<a href="UserController?command=MyPage" class="nav-link">Member</a>
-			<% } else { %>
-				<a href="./Login.jsp" class="nav-link">Login</a>
-			<% } %>
+			<%
+			if (user != null) {
+			%>
+			<a href="UserController?command=MyPage" class="nav-link">Member</a>
+			<%
+			} else {
+			%>
+			<a href="./Login.jsp" class="nav-link">Login</a>
+			<%
+			}
+			%>
 		</nav>
-	<% } %>
+		<%
+		}
+		%>
 	</header>
-	
+
 	<main>
 		<div class="container">
 			<div class="step_indicator">
@@ -114,12 +124,12 @@ String buttonText = (user != null || ("ByAdmin".equals(action) && targetUser != 
 				</div>
 
 				<form action="<%=formAction%>" method="post" id="reservationForm">
-					<input type="hidden" name="command" value="Confirm">
+					<input type="hidden" name="command" value="Reserve">
 
 					<div class="time_slots">
 						<%
 						DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-						if (slots != null) {
+						if (slots != null && !slots.isEmpty()) {
 							for (LocalDateTime timeSlot : slots) {
 								String timeStr = timeSlot.format(timeFormatter);
 						%>
@@ -132,6 +142,14 @@ String buttonText = (user != null || ("ByAdmin".equals(action) && targetUser != 
 						</label>
 						<%
 						}
+						} else {
+						%>
+						<div class="no-slots-message"
+							style="color: #ff4d4d; text-align: center; padding: 20px; grid-column: 1/-1;">
+							<p>申し訳ございません。選択された条件で予約可能な時間枠がありません。</p>
+							<p>別の日付、コース、または席を選択し直してください。</p>
+						</div>
+						<%
 						}
 						%>
 					</div>
@@ -159,7 +177,13 @@ String buttonText = (user != null || ("ByAdmin".equals(action) && targetUser != 
 								終了予定時間:<span id="display-end-time">--:--</span>
 							</p>
 						</div>
+						<%
+						if (!slots.isEmpty() && slots != null) {
+						%>
 						<button type="submit" class="confirm_button"><%=buttonText%></button>
+						<%
+						}
+						%>
 					</div>
 				</form>
 
@@ -167,13 +191,18 @@ String buttonText = (user != null || ("ByAdmin".equals(action) && targetUser != 
 					onclick="history.back(); return false;">← 席選択に戻る</a>
 			</div>
 
-			<button class="restart_button" onclick="location.href='UserController?command=reservationDate'">最初からやり直す</button>
+			<button class="restart_button"
+				onclick="location.href='UserController?command=reservationDate'">最初からやり直す</button>
 		</div>
 	</main>
 	<footer>
-        <p><small>&copy;The Shisha Honjin</small></p>
-    </footer>
-	<script>
+		<p>
+			<small>&copy;The Shisha Honjin</small>
+		</p>
+	</footer>
+	
+</body>
+<script>
     // 時間が選ばれたら下の確認欄を更新するスクリプト
     const radioButtons = document.querySelectorAll('.time_slot_input');
     const startDisplay = document.getElementById('display-start-time');
@@ -201,6 +230,5 @@ String buttonText = (user != null || ("ByAdmin".equals(action) && targetUser != 
         });
     });
 </script>
-</body>
 </html>
 <script type="text/javascript" src="../javascript/logoScript.js"></script>

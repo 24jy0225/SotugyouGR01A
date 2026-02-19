@@ -1,0 +1,110 @@
+
+/* --- カレンダーのスタイル --- */
+#calendar-container {
+	max-width: 800px;
+	margin: 0 auto 40px;
+	background-color: #fff;
+	padding: 25px;
+	border-radius: 15px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+	color: #333;
+}
+
+/* フルカレンダー内部の調整 */
+.fc-daygrid-day-frame {
+	margin: 3px;
+	border-radius: 8px;
+	min-height: 90px !important;
+	background-color: #f9f9f9;
+	transition: 0.2s;
+}
+
+.fc-daygrid-day-top {
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: center !important;
+	padding-top: 10px !important;
+}
+
+.status-label {
+	display: inline-block;
+	padding: 2px 8px;
+	font-size: 0.65em;
+	border-radius: 4px;
+	font-weight: bold;
+	margin-top: 4px;
+}
+
+/* 各ステータスの色 */
+.is-available {
+	background-color: #f0fdf4 !important;
+	border: 2px solid lightgreen !important;
+}
+
+.is-available:hover {
+	transform: translateY(-3px);
+}
+
+.status-available {
+	background-color: #d1fae5;
+	color: #059669;
+}
+
+.is-warning {
+	background-color: #fff7ed !important;
+	border: 2px solid #fdba74 !important;
+}
+
+.is-warning:hover{
+	transform:translateY(-5px);
+}
+
+.status-warning {
+	background-color: #ffedd5;
+	color: #ea580c;
+}
+
+.is-full {
+	background-color: #fee2e2 !important;
+	border: 2px solid #fca5a5 !important;
+}
+
+.is-full:hover{
+	transform:translateY(-5px);
+}
+
+.status-full {
+	background-color: #fecaca;
+	color: #b91c1c;
+}
+
+.is-today {
+	background-color: #eff6ff !important;
+	border: 2px solid #3b82f6 !important;
+}
+
+.is-disabled {
+	background-color: #eeeeee !important;
+	opacity: 0.4;
+}
+
+.legend {
+	display: flex;
+	justify-content: center;
+	gap: 15px;
+	margin-top: 20px;
+	font-size: 0.8em;
+	color: #777;
+}
+
+.legend-item {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+
+.box {
+	width: 12px;
+	height: 12px;
+	border-radius: 2px;
+}

@@ -12,7 +12,16 @@ public class Reservation {
 	private LocalDateTime startDateTime;
 	private LocalDateTime endDateTime;
 	private String userName;
+	private LocalDate cancelDate;
 	
+
+	public LocalDate getCancelDate() {
+		return cancelDate;
+	}
+
+	public void setCancelDate(LocalDate cancelDate) {
+		this.cancelDate = cancelDate;
+	}
 
 	public String getUserName() {
 		return userName;

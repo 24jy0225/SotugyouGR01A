@@ -53,6 +53,7 @@ public class ReservationDao {
 						LocalDate date = rs.getObject("reservation_date", LocalDate.class);
 						LocalDateTime start = rs.getTimestamp("start_time").toLocalDateTime();
 						LocalDateTime end = rs.getTimestamp("end_time").toLocalDateTime();
+						LocalDate cancelDate = rs.getObject("cancel_date", LocalDate.class);
 
 						cancelledReservation = new Reservation(
 								rs.getString("reservation_number"),
@@ -63,6 +64,7 @@ public class ReservationDao {
 								start,
 								end,
 								rs.getString("member_name"));
+						cancelledReservation.setCancelDate(cancelDate);
 					} else {
 						con.rollback();
 						return null;
@@ -165,16 +167,32 @@ public class ReservationDao {
 	}
 
 	public List<Reservation> ReservationHistoryByUser(String userId) {
-		String sql = "SELECT * FROM 予約 WHERE member_id = ? ;";
+		// UNION ALL を使って2つのテーブルを結合する
+		// 予約テーブルには cancel_date がないので、NULLをダミー列として追加します
+		String sql = "SELECT reservation_number, reservation_people, reservation_date, member_id, seat_id, start_time, end_time, member_name, NULL AS cancel_date "
+				+
+				"FROM 予約 WHERE member_id = ? " +
+				"UNION ALL " +
+				"SELECT reservation_number, reservation_people, reservation_date, member_id, seat_id, start_time, end_time, member_name, cancel_date "
+				+
+				"FROM キャンセル履歴 WHERE member_id = ? " +
+				"ORDER BY reservation_date DESC, start_time DESC;"; // 日付の新しい順に並び替え
+
 		List<Reservation> list = new ArrayList<>();
+
 		try (Connection con = createConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+			// プレースホルダが2つ（予約用とキャンセル履歴用）あるので、両方にセット
 			pstmt.setString(1, userId);
+			pstmt.setString(2, userId);
+
 			try (ResultSet rs = pstmt.executeQuery()) {
 				while (rs.next()) {
 					LocalDate date = rs.getObject("reservation_date", LocalDate.class);
-					LocalDateTime start = rs.getObject("start_time", LocalDateTime.class);
-					LocalDateTime end = rs.getObject("end_time", LocalDateTime.class);
+					LocalDateTime start = rs.getTimestamp("start_time").toLocalDateTime();
+					LocalDateTime end = rs.getTimestamp("end_time").toLocalDateTime();
+
 					Reservation r = new Reservation(
 							rs.getString("reservation_number"),
 							rs.getInt("reservation_people"),
@@ -185,8 +203,13 @@ public class ReservationDao {
 							end,
 							rs.getString("member_name"));
 
-					list.add(r);
+					// cancel_date列を取得し、存在すればセットする
+					Date cancelSqlDate = rs.getDate("cancel_date");
+					if (cancelSqlDate != null) {
+						r.setCancelDate(cancelSqlDate.toLocalDate());
+					}
 
+					list.add(r);
 				}
 			}
 		} catch (SQLException e) {
@@ -194,21 +217,26 @@ public class ReservationDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (list.isEmpty()) {
-			return null;
-		}
-		return list;
+
+		// リストが空でも null ではなく空のリストを返すほうが、呼び出し元で for文が回せるので一般的ですが、
+		// 既存のコードの仕様に合わせて empty チェックを行っています。
+		return list.isEmpty() ? null : list;
 	}
 
 	public List<Reservation> ReservationHistoryAll() {
 		List<Reservation> list = new ArrayList<>();
 
+		// 1. 予約テーブル（現在有効な予約）を取得。cancel_date は NULL として定義。
+		// 2. キャンセル履歴テーブルを取得。
+		// 3. 全体を日付順（降順）で結合。
 		String sql = "SELECT r.reservation_number, r.reservation_people, r.reservation_date, " +
-				"r.start_time, r.end_time, r.seat_id, " +
-				"m.member_id, m.member_name " +
+				"r.start_time, r.end_time, r.seat_id, r.member_id, r.member_name, NULL AS cancel_date " +
 				"FROM 予約 r " +
-				"JOIN 会員 m ON r.member_id = m.member_id " +
-				"ORDER BY r.reservation_date, r.start_time ;";
+				"UNION ALL " +
+				"SELECT c.reservation_number, c.reservation_people, c.reservation_date, " +
+				"c.start_time, c.end_time, c.seat_id, c.member_id, c.member_name, c.cancel_date " +
+				"FROM キャンセル履歴 c " +
+				"ORDER BY reservation_date DESC, start_time DESC;";
 
 		try (Connection con = createConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
@@ -217,7 +245,6 @@ public class ReservationDao {
 			while (rs.next()) {
 				LocalDate date = rs.getObject("reservation_date", LocalDate.class);
 				LocalDateTime start = rs.getTimestamp("start_time").toLocalDateTime();
-
 				LocalDateTime end = rs.getTimestamp("end_time").toLocalDateTime();
 
 				Reservation r = new Reservation(
@@ -229,6 +256,13 @@ public class ReservationDao {
 						start,
 						end,
 						rs.getString("member_name"));
+
+				// キャンセル日が入っている場合はセットする
+				Date cancelSqlDate = rs.getDate("cancel_date");
+				if (cancelSqlDate != null) {
+					r.setCancelDate(cancelSqlDate.toLocalDate());
+				}
+
 				list.add(r);
 			}
 
