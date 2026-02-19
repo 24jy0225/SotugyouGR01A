@@ -32,7 +32,10 @@ User user = (User) session.getAttribute("LoginUser");
 			<a href="./contact.jsp" class="nav-link">Contact</a>
 			<a href="UserController?command=reservationDate" class="nav-link">Reservation</a>
 			<%if (user != null) { %>
-				<a href="UserController?command=MyPage" class="nav-link">Member</a>
+				<div class="nav-member-group">
+					<a href="UserController?command=MyPage" class="nav-link">Member</a>
+					<a href="UserController?command=logout" class="nav-logout-link">logout</a>
+				</div>
 			<% } else { %>
 				<a href="./Login.jsp" class="nav-link">Login</a>
 			<% } %>
@@ -48,6 +51,7 @@ User user = (User) session.getAttribute("LoginUser");
 			<a href="UserController?command=reservationDate" class="mobile-nav-link">Reservation</a>
 			<%if (user != null) { %>
 				<a href="UserController?command=MyPage" class="mobile-nav-link">Member</a>
+				<a href="UserController?command=logout" class="mobile-nav-link mobile-nav-logout">Logout</a>
 			<% } else { %>
 				<a href="./Login.jsp" class="mobile-nav-link">Login</a>
 			<% } %>

@@ -41,7 +41,8 @@ if (date != null && date.contains("-")) {
 		<button class="hamburger-menu" id="hamburgerBtn" aria-label="メニュー">
             <img src="./image/assets/user/hamburger.svg" alt="メニュー">
         </button>
-		<nav class="nav-menu">
+		<!-- PC用ナビゲーション -->
+        <nav class="nav-menu">
 			<a href="./whats_Shisha.jsp" class="nav-link">What's</a> 
 			<a href="./how_to_Use.jsp" class="nav-link">Use</a> 
 			<a href="./system-introduction.jsp" class="nav-link">System</a>
@@ -50,12 +51,15 @@ if (date != null && date.contains("-")) {
 			<a href="./contact.jsp" class="nav-link">Contact</a>
 			<a href="UserController?command=reservationDate" class="nav-link">Reservation</a>
 			<%if (user != null) { %>
-				<a href="UserController?command=MyPage" class="nav-link">Member</a>
+				<div class="nav-member-group">
+					<a href="UserController?command=MyPage" class="nav-link">Member</a>
+					<a href="UserController?command=logout" class="nav-logout-link">logout</a>
+				</div>
 			<% } else { %>
 				<a href="./Login.jsp" class="nav-link">Login</a>
 			<% } %>
 		</nav>
-		<!-- スマホ用ナビゲーション -->
+        <!-- スマホ用ナビゲーション -->
         <nav class="mobile-nav" id="mobileNav">
             <a href="./whats_Shisha.jsp" class="mobile-nav-link">What's</a> 
 			<a href="./how_to_Use.jsp" class="mobile-nav-link">Use</a> 
@@ -66,6 +70,7 @@ if (date != null && date.contains("-")) {
 			<a href="UserController?command=reservationDate" class="mobile-nav-link">Reservation</a>
 			<%if (user != null) { %>
 				<a href="UserController?command=MyPage" class="mobile-nav-link">Member</a>
+				<a href="UserController?command=logout" class="mobile-nav-link mobile-nav-logout">Logout</a>
 			<% } else { %>
 				<a href="./Login.jsp" class="mobile-nav-link">Login</a>
 			<% } %>

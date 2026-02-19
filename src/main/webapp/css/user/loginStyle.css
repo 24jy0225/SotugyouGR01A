@@ -1,3 +1,6 @@
+body {
+    justify-content: flex-start;
+}
 main{
     display: flex;
     text-align: center;
@@ -133,7 +136,7 @@ main{
 .signup-link a:hover {
     text-decoration: underline;
 }
-/* ƒXƒ}[ƒgƒtƒHƒ“‘Î‰ - ƒŒƒXƒ|ƒ“ƒVƒuƒfƒUƒCƒ“ */
+/* ï¿½Xï¿½}ï¿½[ï¿½gï¿½tï¿½Hï¿½ï¿½ï¿½Î‰ï¿½ - ï¿½ï¿½ï¿½Xï¿½|ï¿½ï¿½ï¿½Vï¿½uï¿½fï¿½Uï¿½Cï¿½ï¿½ */
 @media (max-width: 768px) {
     body {
         padding: 20px;
