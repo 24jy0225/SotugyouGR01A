@@ -233,7 +233,7 @@ public class UserController extends HttpServlet {
 			}
 
 			break;
-		case "Logaut":
+		case "logout":
 			nextPage = "Main.jsp";
 			session = req.getSession();
 			if (session != null) {
