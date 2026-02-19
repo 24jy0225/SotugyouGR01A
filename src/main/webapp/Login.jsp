@@ -96,20 +96,6 @@ User user = (User)session.getAttribute("LoginUser");
 		</div>
 	</main>
 
-	<script>
-		function togglePassword() {
-			const passwordInput = document.getElementById('password');
-			const passwordToggle = document.querySelector('.password-toggle');
-
-			if (passwordInput.type === 'password') {
-				passwordInput.type = 'text';
-				passwordToggle.textContent = '可';
-			} else {
-				passwordInput.type = 'password';
-				passwordToggle.textContent = '不';
-			}
-		}
-	</script>
 </body>
 
 </html>
