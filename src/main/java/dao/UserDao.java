@@ -110,15 +110,17 @@ public class UserDao {
 	}
 
 	public List<User> findAll() {
-		String sql = """
-				   SELECT *,
-				     (SELECT COUNT(*) FROM 予約 WHERE 予約.member_id = 会員.member_id AND 予約.reservation_date >= CURDATE()) AS res_count,
-				     (SELECT COUNT(*) FROM クーポン利用 WHERE クーポン利用.member_id = 会員.member_id) AS coup_count
-				   FROM 会員
-				""";
+		// SQLの条件を「予約テーブルにある（＝未キャンセル）」かつ「今日以降」に設定
+		String sql = "SELECT *, " +
+				"(SELECT COUNT(*) FROM 予約 WHERE 予約.member_id = 会員.member_id AND 予約.reservation_date >= CURDATE()) AS res_count, "
+				+
+				"(SELECT COUNT(*) FROM クーポン利用 WHERE クーポン利用.member_id = 会員.member_id) AS coup_count " +
+				"FROM 会員";
+
 		List<User> list = new ArrayList<>();
 		try (Connection con = createConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
+
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				User user = new User();
@@ -128,15 +130,16 @@ public class UserDao {
 				user.setName(rs.getString("member_name"));
 				user.setUserTel(rs.getString("member_tel"));
 				user.setRegistDate(rs.getDate("registration_time"));
+
+				// ここで件数をセット
 				user.setReserveCount(rs.getInt("res_count"));
 				user.setCouponCount(rs.getInt("coup_count"));
+
 				list.add(user);
 			}
 			return list;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
 		} catch (Exception e) {
+			// 何が起きているかコンソールで確認するために必ず printStackTrace
 			e.printStackTrace();
 			return null;
 		}
@@ -144,10 +147,14 @@ public class UserDao {
 
 	public User findById(String userId) {
 		String sql = """
-				   SELECT *,
-				     (SELECT COUNT(*) FROM 予約 WHERE 予約.member_id = 会員.member_id AND 予約.reservation_date >= CURDATE()) AS res_count,
-				     (SELECT COUNT(*) FROM クーポン利用 WHERE クーポン利用.member_id = 会員.member_id) AS coup_count
-				   FROM 会員 WHERE member_id = ?
+				     SELECT *,
+				     (SELECT COUNT(*) FROM 予約
+				      WHERE 予約.member_id = 会員.member_id
+				      AND 予約.reservation_date >= NOW()) AS res_count,
+				     (SELECT COUNT(*) FROM クーポン利用
+				      WHERE クーポン利用.member_id = 会員.member_id) AS coup_count
+				   FROM 会員
+				   WHERE member_id = ?
 				""";
 		try (Connection con = createConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {

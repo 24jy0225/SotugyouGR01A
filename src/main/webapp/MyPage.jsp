@@ -165,7 +165,7 @@ if (couponUsageList == null)
 			<%
 			} else {
 			for (Reservation res : reservationList) {
-				if(res.getReserveDate().isBefore(today)){ continue; }
+				if(res.getReserveDate().isBefore(today) || res.getCancelDate() != null){ continue; }
 			%>
 			<div class="member-reservation">
 				<table>

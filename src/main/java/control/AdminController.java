@@ -447,7 +447,13 @@ public class AdminController extends HttpServlet {
 			ReservationDeleteAction reservationDeleteAction = new ReservationDeleteAction();
 			success = reservationDeleteAction.execute(req);
 			if (success) {
-				reservationList = action.execute(req);
+				userAction= new UserAction();
+				userDetailAction = new UserDetailAction();
+				userList = userAction.execute(req);
+				user = userDetailAction.execute(req);
+				reservationList = action.execute(req);				
+				session.setAttribute("UserList", userList);
+				session.setAttribute("targetUser", user);
 				session.setAttribute("ReservationHistoryList", reservationList);
 				nextPage = "UserDetails.jsp"; // CustomerDetails.jsp -> UserDetails.jsp
 			} else {

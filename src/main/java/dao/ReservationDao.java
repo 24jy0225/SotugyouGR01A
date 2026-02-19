@@ -53,7 +53,6 @@ public class ReservationDao {
 						LocalDate date = rs.getObject("reservation_date", LocalDate.class);
 						LocalDateTime start = rs.getTimestamp("start_time").toLocalDateTime();
 						LocalDateTime end = rs.getTimestamp("end_time").toLocalDateTime();
-						LocalDate cancelDate = rs.getObject("cancel_date", LocalDate.class);
 
 						cancelledReservation = new Reservation(
 								rs.getString("reservation_number"),
@@ -64,7 +63,7 @@ public class ReservationDao {
 								start,
 								end,
 								rs.getString("member_name"));
-						cancelledReservation.setCancelDate(cancelDate);
+						cancelledReservation.setCancelDate(LocalDate.now());
 					} else {
 						con.rollback();
 						return null;

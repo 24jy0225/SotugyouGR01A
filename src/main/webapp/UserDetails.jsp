@@ -81,8 +81,8 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 			<p>今後の予約</p>
 			<%
 			for (Reservation r : reservationList) {
-				if (r.getUserId() != user.getUserId() && r.getStartDateTime().isBefore(today.atStartOfDay())
-				|| r.getCancelDate() != null) {
+				if (!r.getUserId().equals(user.getUserId()) || r.getCancelDate() != null
+				|| r.getStartDateTime().isBefore(java.time.LocalDateTime.now())) {
 					continue;
 				}
 				java.time.LocalDateTime start = r.getStartDateTime();
@@ -120,8 +120,8 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 			<p>過去の予約</p>
 			<%
 			for (Reservation r : reservationList) {
-				if (r.getUserId() != user.getUserId() && r.getStartDateTime().isAfter(today.atStartOfDay())
-				|| r.getCancelDate() != null) {
+				if (!r.getUserId().equals(user.getUserId()) || r.getCancelDate() != null
+				|| r.getStartDateTime().isAfter(java.time.LocalDateTime.now())) {
 					continue;
 				}
 				java.time.LocalDateTime start = r.getStartDateTime();

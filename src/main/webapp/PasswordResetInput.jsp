@@ -41,7 +41,7 @@ String action = (String) session.getAttribute("action");
 			%>
 		</nav>
 	</header>
-	
+
 	<main>
 
 		<div class="modal-container">
@@ -51,8 +51,7 @@ String action = (String) session.getAttribute("action");
 			<h2 class="modal-title">新しいパスワードを設定</h2>
 			<p class="modal-description">新しいパスワードを入力してください</p>
 
-			<form method="post" action="UserController" id="passwordForm"
-				onsubmit="return validatePassword()">
+			<form method="post" action="UserController" id="passwordForm">
 				<div class="form-group">
 					<label class="form-label" for="new-password">新しいパスワード</label>
 					<div class="input-wrapper">
@@ -70,35 +69,42 @@ String action = (String) session.getAttribute("action");
 							id="confirm-password" name="confirmPassword" class="form-input"
 							placeholder="パスワードを再入力" required>
 					</div>
-					<p id="error-msg" class="error-message">パスワードが一致しません</p>
 				</div>
 
 				<button type="submit" class="btn-submit">パスワードを再設定</button>
 				<input type="hidden" name="command" value="passwordResetInput">
 				<input type="hidden" name="token" value="${token}">
 			</form>
+		</div>
 	</main>
 	<script>
-		function validatePassword() {
-			const pass = document.getElementById("new-password").value;
-			const confirm = document.getElementById("confirm-password").value;
-			const errorMsg = document.getElementById("error-msg");
+		document.addEventListener("DOMContentLoaded", function() {
+			const form = document.getElementById("passwordForm");
+			const passInput = document.getElementById("new-password");
+			const confirmInput = document.getElementById("confirm-password");
 
-			// 前後の空白を削除して比較（念のため）
-			if (pass.trim() !== confirm.trim()) {
-				errorMsg.style.display = "block"; // エラー表示
-				return false;
-			}
+			form.addEventListener("submit", function(event) {
+				const pass = passInput.value;
+				const confirm = confirmInput.value;
 
-			// 8文字以上などのルールもJSでチェックしておくと親切です
-			if (pass.length < 8) {
-				alert("パスワードは8文字以上で入力してください。");
-				return false;
-			}
+				// 1. 一致チェック
+				if (pass !== confirm) {
+					event.preventDefault(); // 送信中止
+					alert("パスワードが一致しません！");
+					return false;
+				}
 
-			errorMsg.style.display = "none";
-			return true;
-		}
+				// 2. 文字数チェック
+				if (pass.length < 8) {
+					event.preventDefault(); // 送信中止
+					alert("パスワードは8文字以上で入力してください。");
+					return false;
+				}
+
+				// 成功時はそのまま送信される
+				console.log("送信を開始します...");
+			});
+		});
 	</script>
 </body>
 </html>

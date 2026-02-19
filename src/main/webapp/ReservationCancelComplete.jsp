@@ -88,13 +88,13 @@ DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 				</table>
 
 				<button type="button" class="return-btn"
-					onclick="location.href='./MyPage.jsp'">メンバーズ画面に戻る</button>
+					onclick="location.href='UserController?command=MyPage'">メンバーズ画面に戻る</button>
 			</div>
 		</div>
 		<%
 		} else {
 		%>
-		<button class="return-btn" onclick="location.href='./MyPage.jsp'">MyPageに戻る</button>
+		<button class="return-btn" onclick="location.href='UserController?command=MyPage'">MyPageに戻る</button>
 		<%
 		}
 		%>
