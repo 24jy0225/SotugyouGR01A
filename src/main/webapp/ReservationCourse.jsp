@@ -38,6 +38,9 @@ if (date != null && date.contains("-")) {
 		<div class="logos" id="logo" onclick="location.href='./top.jsp'">
 			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo" class="logo">
 		</div>
+		<button class="hamburger-menu" id="hamburgerBtn" aria-label="メニュー">
+            <img src="./image/assets/user/hamburger.svg" alt="メニュー">
+        </button>
 		<nav class="nav-menu">
 			<a href="./whats_Shisha.jsp" class="nav-link">What's</a> 
 			<a href="./how_to_Use.jsp" class="nav-link">Use</a> 
@@ -52,6 +55,21 @@ if (date != null && date.contains("-")) {
 				<a href="./Login.jsp" class="nav-link">Login</a>
 			<% } %>
 		</nav>
+		<!-- スマホ用ナビゲーション -->
+        <nav class="mobile-nav" id="mobileNav">
+            <a href="./whats_Shisha.jsp" class="mobile-nav-link">What's</a> 
+			<a href="./how_to_Use.jsp" class="mobile-nav-link">Use</a> 
+			<a href="./system-introduction.jsp" class="mobile-nav-link">System</a>
+			<a	href="./menu.jsp" class="mobile-nav-link">Menu</a> 
+			<a href="./topics.jsp" class="mobile-nav-link">Topics</a> 
+			<a href="./contact.jsp" class="mobile-nav-link">Contact</a>
+			<a href="UserController?command=reservationDate" class="mobile-nav-link">Reservation</a>
+			<%if (user != null) { %>
+				<a href="UserController?command=MyPage" class="mobile-nav-link">Member</a>
+			<% } else { %>
+				<a href="./Login.jsp" class="mobile-nav-link">Login</a>
+			<% } %>
+        </nav>
 	<% } %>
 	</header>
 	
