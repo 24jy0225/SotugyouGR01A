@@ -11,7 +11,7 @@ User user = (User) session.getAttribute("LoginUser");
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="./css/user/mainstyles.css">
 <link rel="stylesheet" href="./css/user/contactStyle.css">
-<link rel="icon" href="../assets/ロゴマーク_金色b.webp">
+<link rel="icon" href="./image/assets/user/ロゴマーク_金色b.webp">
 <title>contact</title>
 </head>
 <body>
@@ -24,26 +24,28 @@ User user = (User) session.getAttribute("LoginUser");
         </button>
         <!-- PC用ナビゲーション -->
         <nav class="nav-menu">
-            <a href="./whats_Shisha.html" class="nav-link">What's</a>
-            <a href="./how_to_Use.html" class="nav-link">Use</a>
-            <a href="./system-introduction.html" class="nav-link">System</a>
-            <a href="./menu.html" class="nav-link">Menu</a>
-            <a href="./topics.html" class="nav-link">Topics</a>
-            <a href="./contact.html" class="nav-link">Contact</a>
+			<a href="./whats_Shisha.jsp" class="nav-link">What's</a> 
+			<a href="./how_to_Use.jsp" class="nav-link">Use</a> 
+			<a href="./system-introduction.jsp" class="nav-link">System</a>
+			<a	href="./menu.jsp" class="nav-link">Menu</a> 
+			<a href="./topics.jsp" class="nav-link">Topics</a> 
+			<a href="./contact.jsp" class="nav-link">Contact</a>
+			<a href="UserController?command=reservationDate" class="nav-link">Reservation</a>
 			<%if (user != null) { %>
 				<a href="UserController?command=MyPage" class="nav-link">Member</a>
 			<% } else { %>
 				<a href="./Login.jsp" class="nav-link">Login</a>
 			<% } %>
-        </nav>
+		</nav>
         <!-- スマホ用ナビゲーション -->
         <nav class="mobile-nav" id="mobileNav">
-            <a href="./whats_Shisha.html" class="mobile-nav-link">What's</a>
-            <a href="./how_to_Use.html" class="mobile-nav-link">Use</a>
-            <a href="./system-introduction.html" class="mobile-nav-link">System</a>
-            <a href="./menu.html" class="mobile-nav-link">Menu</a>
-            <a href="./topics.html" class="mobile-nav-link">Topics</a>
-            <a href="./contact.html" class="mobile-nav-link">Contact</a>
+            <a href="./whats_Shisha.jsp" class="mobile-nav-link">What's</a> 
+			<a href="./how_to_Use.jsp" class="mobile-nav-link">Use</a> 
+			<a href="./system-introduction.jsp" class="mobile-nav-link">System</a>
+			<a	href="./menu.jsp" class="mobile-nav-link">Menu</a> 
+			<a href="./topics.jsp" class="mobile-nav-link">Topics</a> 
+			<a href="./contact.jsp" class="mobile-nav-link">Contact</a>
+			<a href="UserController?command=reservationDate" class="mobile-nav-link">Reservation</a>
 			<%if (user != null) { %>
 				<a href="UserController?command=MyPage" class="mobile-nav-link">Member</a>
 			<% } else { %>
@@ -119,7 +121,7 @@ User user = (User) session.getAttribute("LoginUser");
 			<small>&copy;The Shisha Honjin</small>
 		</p>
 	</footer>
+<script type="text/javascript" src="./javascript/Hamburgermenu.js"></script>
 <script type="text/javascript" src="./javascript/logoScript.js"></script>
-<script type="text/javascript" src="./javascript/hamburgerMenu.js"></script>
 </body>
 </html>
