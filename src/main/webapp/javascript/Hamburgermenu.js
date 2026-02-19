@@ -37,11 +37,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (mobileNav.classList.contains('active')) {
             body.style.overflow = 'hidden';
             // アイコンを開いた状態に変更
-            hamburgerIcon.src = './image/assets/user/hamburgerOpen.svg';
+            hamburgerIcon.src = '../image/assets/user/hamburgerOpen.svg';
         } else {
             body.style.overflow = '';
             // アイコンを閉じた状態に変更
-            hamburgerIcon.src = './image/assets/user/hamburger.svg';
+            hamburgerIcon.src = '../image/assets/user/hamburger.svg';
         }
     }
     

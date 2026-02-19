@@ -119,7 +119,7 @@ User user = (User) session.getAttribute("LoginUser");
 			<small>&copy;The Shisha Honjin</small>
 		</p>
 	</footer>
+<script type="text/javascript" src="./javascript/logoScript.js"></script>
+<script type="text/javascript" src="./javascript/hamburgerMenu.js"></script>
 </body>
 </html>
-<script type="text/javascript" src="./javascript/logoScript.js"></script>
-<script type="text/javascript" src="../javascript/hamburgerMenu.js"></script>
