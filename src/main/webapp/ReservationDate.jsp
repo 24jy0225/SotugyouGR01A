@@ -19,33 +19,45 @@ Map<String, String> statusData = (Map<String, String>) request.getAttribute("sta
 <title>席予約</title>
 <link rel="stylesheet" href="./css/user/style.css">
 <link rel="stylesheet" href="./css/user/Reservation_DateStyle.css">
+<link rel="stylesheet" href="./css/user/hamburgerStyle.css">
+<link rel="icon" href="./image/assets/user/ロゴマーク_金色b.webp">
 <script
 	src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'>
 </script>
 </head>
 <body>
 	<header class="header" data-name="ヘッダー">
-	<% if(action.equals("ByUser")){ %>
+		<%
+		if (action.equals("ByUser")) {
+		%>
 		<div class="logos" id="logo" onclick="location.href='./top.jsp'">
-			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo" class="logo">
+			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo"
+				class="logo">
 		</div>
 		<nav class="nav-menu">
-			<a href="./whats_Shisha.jsp" class="nav-link">What's</a> 
-			<a href="./how_to_Use.jsp" class="nav-link">Use</a> 
-			<a href="./system-introduction.jsp" class="nav-link">System</a>
-			<a	href="./menu.jsp" class="nav-link">Menu</a> 
-			<a href="./topics.jsp" class="nav-link">Topics</a> 
-			<a href="./contact.jsp" class="nav-link">Contact</a>
+			<a href="./whats_Shisha.jsp" class="nav-link">What's</a> <a
+				href="./how_to_Use.jsp" class="nav-link">Use</a> <a
+				href="./system-introduction.jsp" class="nav-link">System</a> <a
+				href="./menu.jsp" class="nav-link">Menu</a> <a href="./topics.jsp"
+				class="nav-link">Topics</a> <a href="./contact.jsp" class="nav-link">Contact</a>
 			<a href="UserController?command=reservationDate" class="nav-link">Reservation</a>
-			<%if (user != null) { %>
-				<a href="UserController?command=MyPage" class="nav-link">Member</a>
-			<% } else { %>
-				<a href="./Login.jsp" class="nav-link">Login</a>
-			<% } %>
+			<%
+			if (user != null) {
+			%>
+			<a href="UserController?command=MyPage" class="nav-link">Member</a>
+			<%
+			} else {
+			%>
+			<a href="./Login.jsp" class="nav-link">Login</a>
+			<%
+			}
+			%>
 		</nav>
-	<% } %>
+		<%
+		}
+		%>
 	</header>
-	
+
 	<main>
 		<div class="container">
 			<div class="step_indicator">
@@ -89,11 +101,11 @@ Map<String, String> statusData = (Map<String, String>) request.getAttribute("sta
 			document.addEventListener('DOMContentLoaded', function() {
 				// 1. JavaのMapをJavaScriptのオブジェクトに変換
 				const dbStatusData = {
-						<%if (statusData != null && !statusData.isEmpty()) { %>
-							<% for (java.util.Map.Entry<String, String> entry : statusData.entrySet()) { %>
+						<%if (statusData != null && !statusData.isEmpty()) {%>
+							<%for (java.util.Map.Entry<String, String> entry : statusData.entrySet()) {%>
 								"<%=entry.getKey()%>": "<%=entry.getValue()%>",
-							<% } %>
-						<% } %>
+							<%}%>
+						<%}%>
 					};
 
 				 console.log("受け取ったデータ:", dbStatusData);
@@ -205,7 +217,9 @@ Map<String, String> statusData = (Map<String, String>) request.getAttribute("sta
 				});
 			</script>
 	<footer>
-		<p><small>&copy;The Shisha Honjin</small></p>
+		<p>
+			<small>&copy;The Shisha Honjin</small>
+		</p>
 	</footer>
 </body>
 </html>

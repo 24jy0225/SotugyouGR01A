@@ -25,9 +25,10 @@ if (couponUsageList == null)
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" href="./image/assets/user/ロゴタイプ_金色b.svg">
+<link rel="icon" href="./image/assets/user/ロゴマーク_金色b.webp">
 <link rel="stylesheet" href="./css/user/style.css">
 <link rel="stylesheet" href="./css/user/memberStyle.css">
+<link rel="stylesheet" href="./css/user/hamburgerStyle.css">
 <title>マイページ - member</title>
 </head>
 

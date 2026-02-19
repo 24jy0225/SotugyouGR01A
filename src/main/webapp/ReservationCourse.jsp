@@ -30,6 +30,7 @@ if (date != null && date.contains("-")) {
     <link rel="icon" href="./image/assets/user/ロゴ完成_金色b.svg">
     <link rel="stylesheet" href="./css/user/style.css">
     <link rel="stylesheet" href="./css/user/reservation_courseStyle.css">
+    <link rel="stylesheet" href="./css/user/hamburgerStyle.css">
 </head>
 <body>
 	<header class="header" data-name="ヘッダー">

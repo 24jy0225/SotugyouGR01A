@@ -16,6 +16,7 @@ DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 <link rel="icon" href="./image/assets/user/ロゴ完成_金色b.svg">
 <link rel="stylesheet" href="./css/user/style.css">
 <link rel="stylesheet" href="./css/user/reservation_completedStyle.css">
+<link rel="stylesheet" href="./css/user/hamburgerStyle.css">
 <title>予約完了 - The Shisha Honjin</title>
 </head>
 <body>

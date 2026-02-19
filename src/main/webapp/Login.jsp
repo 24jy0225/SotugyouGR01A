@@ -13,6 +13,7 @@ User user = (User)session.getAttribute("LoginUser");
 <link rel="icon" href="../assets/ロゴマーク_金色b.webp">
 <link rel="stylesheet" href="./css/user/style.css">
 <link rel="stylesheet" href="./css/user/loginStyle.css">
+<link rel="stylesheet" href="./css/user/hamburgerStyle.css">
 <title>Login</title>
 </head>
 

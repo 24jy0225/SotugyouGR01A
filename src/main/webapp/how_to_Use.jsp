@@ -14,6 +14,7 @@ User user = (User) session.getAttribute("LoginUser");
 <link rel="icon" href="../assets/ロゴマーク_金色b.webp">
 <link rel="stylesheet" href="./css/user/mainstyles.css">
 <link rel="stylesheet" href="./css/user/how-to-use-styles.css">
+<link rel="stylesheet" href="./css/user/hamburgerStyle.css">
 </head>
 
 <body>

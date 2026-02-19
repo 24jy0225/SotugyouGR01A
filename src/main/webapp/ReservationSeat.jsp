@@ -20,6 +20,7 @@ String formAction = "ByUser".equals(action) ? "UserController" : "AdminControlle
 <link rel="icon" href="./image/assets/user/ロゴマーク_金色b.webp">
 <link rel="stylesheet" href="./css/user/style.css">
 <link rel="stylesheet" href="./css/user/reservation_seatStyle.css">
+<link rel="stylesheet" href="./css/user/hamburgerStyle.css">
 <style>
 .seat_submit_btn {
 	background: none;

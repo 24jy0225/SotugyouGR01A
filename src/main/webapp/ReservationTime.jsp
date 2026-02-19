@@ -36,6 +36,7 @@ String buttonText = (user != null || ("ByAdmin".equals(action) && targetUser != 
 <link rel="stylesheet" href="./css/user/style.css">
 <link rel="stylesheet" href="./css/user/reservation_timeStyle.css">
 <link rel="icon" href="../assets/ロゴ完成_金色b.svg">
+<link rel="stylesheet" href="./css/user/hamburgerStyle.css">
 <style>
 
 /* ラジオボタンをボタン形式のデザインにするための調整 */
