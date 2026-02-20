@@ -34,22 +34,6 @@ public class Reservation {
 		this.endDateTime = endDateTime;
 		this.userName = userName;
 	}
-	
-	public LocalDate getCancelDate() {
-		return cancelDate;
-	}
-
-	public void setCancelDate(LocalDate cancelDate) {
-		this.cancelDate = cancelDate;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
 
 	public String getReserveId() {
 		return reserveId;
@@ -67,20 +51,28 @@ public class Reservation {
 		this.reservePeople = reservePeople;
 	}
 
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
 	public LocalDate getReserveDate() {
 		return reserveDate;
 	}
 
 	public void setReserveDate(LocalDate reserveDate) {
 		this.reserveDate = reserveDate;
+	}
+	
+	public String getUserId() {
+		return userId;
+	}
+	
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	
+	public String getUserName() {
+		return userName;
+	}
+	
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public int getSeatId() {
@@ -105,5 +97,13 @@ public class Reservation {
 
 	public void setEndDateTime(LocalDateTime endDateTime) {
 		this.endDateTime = endDateTime;
+	}
+	
+	public LocalDate getCancelDate() {
+		return cancelDate;
+	}
+	
+	public void setCancelDate(LocalDate cancelDate) {
+		this.cancelDate = cancelDate;
 	}
 }
