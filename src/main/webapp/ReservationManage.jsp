@@ -70,7 +70,7 @@ String[] hours = {"20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00",
 			<button class="date-nav-btn" id="date-nav-today" onclick="setToday()">今日</button>
 
 			<button class="date-nav-btn" onclick="refreshKeepDate()"id="date-nav-today" >更新</button>
-			<a href="AdminSeat.jsp" >席管理</a>
+			<button class="date-nav-btn" onclick="location.href='AdminSeat.jsp'"id="seatcontrol">座席管理</button>
 		</div>
 
 		<table class="schedule-table">
