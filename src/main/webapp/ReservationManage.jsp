@@ -71,6 +71,7 @@ String[] hours = {"20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00",
 
 			<button class="date-nav-btn" onclick="refreshKeepDate()"id="date-nav-today" >更新</button>
 			<button class="date-nav-btn" onclick="location.href='AdminSeat.jsp'"id="seatcontrol">座席管理</button>
+			<p>＊予約追加の場合は顧客管理で顧客を選択して顧客詳細から追加して下さい</p>
 		</div>
 
 		<table class="schedule-table">
