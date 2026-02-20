@@ -6,6 +6,7 @@ const shopImages = [
     './image/assets/user/shopimg4.jpeg',
     './image/assets/user/shopimg5.jpg',
     './image/assets/user/shopimg6.jpg',
+	'./image/assets/user/shopimg7.jpeg'
 ];
 
 // 店舗写真の代替テキスト
