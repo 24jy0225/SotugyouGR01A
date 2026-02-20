@@ -41,8 +41,8 @@ String[] hours = {"20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00",
 			<button onclick="location.href='ReservationManage.jsp'">予約管理</button>
 			<button onclick="location.href='UserManage.jsp'">顧客管理</button>
 			<button onclick="location.href='CouponManage.jsp'">クーポン管理</button>
-			<button onclick="location.href='DesignCustom.jsp'">お知らせ管理</button>
-			<button onclick="location.href='TopicsManage.jsp'">Webサイト管理</button>
+			<button onclick="location.href='TopicsManage.jsp'">お知らせ管理</button>
+			<button onclick="location.href='DesignCustom.jsp'">Webサイト管理</button>
 		</nav>
 	</header>
 
@@ -70,7 +70,8 @@ String[] hours = {"20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00",
 			<button class="date-nav-btn" id="date-nav-today" onclick="setToday()">今日</button>
 
 			<button class="date-nav-btn" onclick="refreshKeepDate()"id="date-nav-today" >更新</button>
-			<a href="AdminSeat.jsp" >席管理</a>
+			<button class="date-nav-btn" onclick="location.href='AdminSeat.jsp'"id="seatcontrol">座席管理</button>
+			<p>＊予約追加の場合は顧客管理で顧客を選択して顧客詳細から追加して下さい</p>
 		</div>
 
 		<table class="schedule-table">

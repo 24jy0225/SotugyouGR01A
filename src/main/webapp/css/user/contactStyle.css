@@ -1,0 +1,139 @@
+/* ========================================
+   店舗写真スライダー
+======================================== */
+.shop-content {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+/* スライダーのメインコンテナ（共通利用） */
+.shop-content .slider-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* 画像を横に並べるコンテナ（共通利用） */
+.shop-content .slider-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+/* 各画像アイテム（共通利用） */
+.shop-content .slide-item {
+    min-width: 100%;
+    height: 700px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #2a2a2a;
+}
+
+.shop-content .slide-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* 矢印ボタン（共通利用） */
+.shop-content .arrow-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.shop-content .arrow-button:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.shop-content .arrow-button:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.shop-content .prev-button {
+    left: 20px;
+}
+
+.shop-content .next-button {
+    right: 20px;
+}
+
+/* ページインジケーター（ドット）（共通利用） */
+.shop-content .dots-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.shop-content .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.shop-content .dot:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.shop-content .dot.active {
+    background-color: #fff;
+    width: 40px;
+    border-radius: 6px;
+}
+
+/* ページ番号表示（共通利用） */
+.shop-content .page-info {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.7);
+}
+.shopTitle{
+    margin-top: 50px;
+    text-align: center;
+    font-size: 32px;
+    color: #fff;
+    margin-bottom: 20px;
+}
+/* スマホ対応 */
+@media (max-width: 768px) {
+    .shop-content .slide-item {
+        height: 500px;
+    }
+
+    .shop-content .arrow-button {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+
+    .shop-content .prev-button {
+        left: 10px;
+    }
+
+    .shop-content .next-button {
+        right: 10px;
+    }
+}

@@ -41,6 +41,10 @@
 #date-nav-today {
     width: 70px;
 }
+#seatcontrol{
+	width: 120px;
+}
+
 
 .action-buttons {
     display: flex;

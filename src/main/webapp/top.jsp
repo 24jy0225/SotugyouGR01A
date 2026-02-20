@@ -276,7 +276,16 @@ if (photoList != null) {
 				<button class="more-btn">MORE</button>
 			</div>
 		</section>
-
+		<section class="smartphone-only">
+            <a href=""><img src="./image/assets/user//smartphoneimg-login.png" alt="smartphoneimg-login"></a>
+            <a href=""><img src="./image/assets/user/smartphoneimg-whats.png" alt="smartphoneimg-whats"></a>
+            <a href=""><img src="./image/assets/user/smartphoneimg-howto.png" alt="smartphoneimg-howto"></a>
+            <a href=""><img src="./image/assets/user/smartphoneimg-system.png" alt="smartphoneimg-system"></a>
+            <a href=""><img src="./image/assets/user/smartphoneimg-menu.png" alt="smartphoneimg-menu"></a>
+            <a href=""><img src="./image/assets/user/smartphoneimg-topics.png" alt="smartphoneimg-topics"></a>
+            <a href=""><img src="./image/assets/user/smartphoneimg-contact.png" alt="smartphoneimg-contact"></a>
+            <a href=""><img src="./image/assets/user/smartphoneimg-reservation.png" alt="smartphoneimg-reservation"></a>
+        </section>
 		<!-- Topics セクション -->
 		<section class="section topics-section">
 			<div class="section-title-container">

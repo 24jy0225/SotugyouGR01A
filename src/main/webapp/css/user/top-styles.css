@@ -1,5 +1,5 @@
-/* Top繝壹�ｼ繧ｸ蟆ら畑繧ｹ繧ｿ繧､繝ｫ */
-/* 譌･譛ｬ莠ｺ縺ｫ蜷医▲縺溘す繝ｼ繧ｷ繝｣ 繧ｻ繧ｯ繧ｷ繝ｧ繝ｳ */
+/* Topページ専用スタイル */
+/* 日本人に合ったシーシャ セクション */
 .japanese-section {
     top: 967px;
     left: 0;
@@ -59,11 +59,11 @@
     margin-bottom: 0;
 }
 
-/* What's the shisha 繧ｻ繧ｯ繧ｷ繝ｧ繝ｳ */
+/* What's the shisha セクション */
 .whats-section {
     width: 1920px;
     height: 860px;
-    background-image: url(../../image/assets/user/smorkback.svg);
+    background-image: url(../assets/../assets/smorkback.svg);
     background-size: cover;
     background-repeat: no-repeat;
     position: relative;
@@ -107,7 +107,7 @@
     object-position: center;   
 }
 
-/* How to Use 繧ｻ繧ｯ繧ｷ繝ｧ繝ｳ */
+/* How to Use セクション */
 .how-to-use-section {
     width: 100%;
     height: 920px;
@@ -186,7 +186,7 @@
     margin: 0;
 }
 
-/* System 繧ｻ繧ｯ繧ｷ繝ｧ繝ｳ */
+/* System セクション */
 .system-section {
     width: 100%;
     height: 920px;
@@ -260,7 +260,7 @@
     text-align: center;
 }
 
-/* Flavor 繧ｻ繧ｯ繧ｷ繝ｧ繝ｳ */
+/* Flavor セクション */
 .flavor-section {
     width: 100%;
     height: 800px;
@@ -282,7 +282,7 @@
     object-position: center;
 }
 
-/* Drink 繧ｻ繧ｯ繧ｷ繝ｧ繝ｳ */
+/* Drink セクション */
 .drink-section {
     width: 100%;
     height: 400px;
@@ -329,7 +329,7 @@
     margin-bottom: 0;
 }
 
-/* Food 繧ｻ繧ｯ繧ｷ繝ｧ繝ｳ */
+/* Food セクション */
 .food-section {
     width: 100%;
     height: 400px;
@@ -374,7 +374,7 @@
     object-position: center;
 }
 
-/* Topics 繧ｻ繧ｯ繧ｷ繝ｧ繝ｳ */
+/* Topics セクション */
 .topics-section {
     width: 100%;
     padding-top: 0;
@@ -456,7 +456,7 @@
     object-position: center;
 }
 
-/* MORE繝懊ち繝ｳ */
+/* MOREボタン */
 .more-btn-container {
     transform: translateX(-50%);
     margin-bottom: 0;
@@ -507,4 +507,651 @@
 .more-btn:hover {
     background-color: #e6b422;
     color: #000000;
+}
+.smartphone-only {
+    display: none;
+}
+/* =========================== */
+/* レスポンシブ対応 */
+/* =========================== */
+
+/* タブレット対応 (1024px以下) */
+@media screen and (max-width: 1024px) {
+    /* 日本人に合ったシーシャ セクション */
+    .japanese-section {
+        padding-top: 80px;
+    }
+
+    .japanese-title {
+        font-size: 30px;
+        white-space: nowrap;
+        padding: 0 20px;
+    }
+
+    .japanese-content {
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+        padding: 0 30px;
+    }
+
+    .japanese-image {
+        margin-top: 80px;
+        width: 300px;
+        height: 375px;
+    }
+
+    .japanese-text {
+        margin-top: 40px;
+        margin-left: 0;
+        width: 100%;
+        max-width: 700px;
+        font-size: 16px;
+        line-height: 28px;
+        text-align: center;
+    }
+
+    /* What's the shisha セクション */
+    .whats-section {
+        width: 100%;
+        height: auto;
+        padding-bottom: 80px;
+        background-size: cover;
+        margin-top: 120px;
+    }
+
+    .whats-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+        padding: 0 30px;
+    }
+
+    .whats-text {
+        width: 100%;
+        max-width: 700px;
+        font-size: 16px;
+        line-height: 28px;
+    }
+
+    .whats-image {
+        width: 400px;
+        height: 460px;
+    }
+
+    /* How to Use セクション */
+    .how-to-use-section {
+        width: 100%;
+        height: auto;
+        margin-top: 120px;
+        padding-bottom: 80px;
+    }
+
+    .how-to-use-cards {
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+        padding: 0 30px;
+        gap: 30px;
+    }
+
+    .use-card {
+        position: relative !important;
+        left: auto !important;
+        width: 100%;
+        max-width: 500px;
+        height: auto;
+    }
+
+    .use-card:nth-child(1),
+    .use-card:nth-child(2),
+    .use-card:nth-child(3) {
+        left: auto;
+    }
+
+    .use-card img {
+        height: auto;
+        aspect-ratio: 457/298;
+    }
+
+    .use-card-title {
+        font-size: 20px;
+        margin-top: 10px;
+    }
+
+    .use-description {
+        font-size: 18px;
+        margin-top: 20px;
+        white-space: normal;
+        padding: 0 20px;
+    }
+
+    .how-to-use-section .more-btn-container {
+        position: relative;
+        margin-top: 30px;
+    }
+
+    /* System セクション */
+    .system-section {
+        width: 100%;
+        height: auto;
+        padding-bottom: 80px;
+        margin-top: 100px;
+    }
+
+    .system-content {
+        height: auto;
+        padding: 0 20px;
+    }
+
+    .system-subtitle {
+        font-size: 22px;
+    }
+
+    .system-prices {
+        font-size: 16px;
+        line-height: 30px;
+    }
+
+    .system-charge-content {
+        font-size: 16px;
+        line-height: 30px;
+    }
+
+    .system-detail-link {
+        font-size: 20px;
+    }
+
+    .system-section .more-btn-container {
+        position: relative;
+        margin-top: 20px;
+    }
+
+    /* Flavor セクション */
+    .flavor-section {
+        width: 100%;
+        height: auto;
+        padding-bottom: 80px;
+        margin-top: 100px;
+    }
+
+    .flavor-image {
+        width: 90%;
+        max-width: 1000px;
+        height: auto;
+    }
+
+    .flavor-image img {
+        height: auto;
+        aspect-ratio: 1309/490;
+    }
+
+    .flavor-section .more-btn-container {
+        position: relative;
+        margin-top: 40px;
+    }
+
+    /* Drink セクション */
+    .drink-section {
+        width: 100%;
+        height: auto;
+        padding-bottom: 80px;
+        margin-top: 80px;
+    }
+
+    .drink-content {
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .drink-image {
+        position: relative;
+        left: auto;
+        top: auto;
+        width: 300px;
+        height: 250px;
+        margin: 20px auto;
+    }
+
+    .drink-text {
+        width: 90%;
+        max-width: 700px;
+        font-size: 16px;
+        line-height: 32px;
+    }
+
+    .drink-section .more-btn-container {
+        position: relative;
+        margin-top: 20px;
+    }
+
+    /* Food セクション */
+    .food-section {
+        width: 100%;
+        height: auto;
+        padding-bottom: 80px;
+        margin-top: 80px;
+    }
+
+    .food-content {
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .food-text {
+        width: 90%;
+        max-width: 700px;
+        font-size: 16px;
+        line-height: 32px;
+    }
+
+    .food-image {
+        position: relative;
+        left: auto;
+        top: auto;
+        width: 300px;
+        height: 200px;
+        margin: 20px auto;
+    }
+
+    .food-section .more-btn-container {
+        position: relative;
+        margin-top: 20px;
+    }
+
+    /* Topics セクション */
+    .topics-section .section-title-container {
+        margin-top: 100px;
+    }
+
+    .topics-cards {
+        height: auto;
+        flex-wrap: wrap;
+        margin-top: 60px;
+        gap: 30px;
+        padding: 0 30px;
+        justify-content: center;
+    }
+
+    .topic-card {
+        position: relative !important;
+        left: auto !important;
+        width: 280px;
+    }
+
+    .topic-card:nth-child(1),
+    .topic-card:nth-child(2),
+    .topic-card:nth-child(3),
+    .topic-card:nth-child(4) {
+        position: relative;
+        left: auto;
+    }
+
+    .topic-card-header {
+        height: 80px;
+    }
+
+    .topic-card-header p {
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .topic-card-image {
+        height: 400px;
+    }
+
+    .topics-section .more-btn-container {
+        position: relative;
+        margin-top: 60px;
+    }
+
+    /* MOREボタン共通 */
+    .more-btn-container {
+        position: relative;
+        left: auto;
+        transform: none;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+/* スマートフォン対応 (768px以下) */
+@media screen and (max-width: 768px) {
+    /* ヒーローセクション */
+    .hero-section {
+        height: 100vh;
+        min-height: 600px;
+        margin-bottom: 0;
+    }
+
+    .hero-background-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .hero-background-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 80% center;
+    }
+
+    .logo-image {
+        left: 50%;
+        right: auto;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        padding-left: 30px;
+        max-width: 75%;
+        border-radius: 10px;
+    }
+
+    .logo-image img {
+        max-width: 200px;
+    }
+
+    /* 日本人に合ったシーシャ セクション */
+    .japanese-section {
+        padding-top: 60px;
+    }
+
+    .japanese-title {
+        font-size: 20px;
+        margin-top: 0;
+        white-space: nowrap;
+    }
+
+    .japanese-content {
+        padding: 0 20px;
+    }
+
+    .japanese-image {
+        margin-top: 40px;
+        width: 250px;
+        height: 312px;
+    }
+
+    .japanese-text {
+        margin-top: 30px;
+        font-size: 14px;
+        line-height: 24px;
+        letter-spacing: 1px;
+    }
+
+    /* What's the shisha セクション */
+    .whats-section {
+        padding-bottom: 60px;
+        margin-top: 100px;
+    }
+
+    .whats-section .section-title-container {
+        margin-top: 10px;
+    }
+
+    .whats-content {
+        gap: 30px;
+        padding: 0 20px;
+    }
+
+    .whats-text {
+        font-size: 14px;
+        line-height: 24px;
+    }
+
+    .whats-image {
+        width: 90%;
+        max-width: 350px;
+        height: auto;
+        aspect-ratio: 550/635;
+    }
+
+    /* How to Use セクション */
+    .how-to-use-section {
+        margin-top: 100px;
+        padding-bottom: 60px;
+    }
+
+    .how-to-use-cards {
+        padding: 0 20px;
+        gap: 25px;
+        margin-top: 50px;
+    }
+
+    .use-card {
+        max-width: 100%;
+    }
+
+    .use-card-title {
+        font-size: 18px;
+    }
+
+    .use-description {
+        font-size: 16px;
+    }
+
+    /* System セクション */
+    .system-section {
+        padding-bottom: 60px;
+        margin-top: 80px;
+    }
+
+    .system-subtitle {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .system-prices {
+        font-size: 14px;
+        line-height: 28px;
+    }
+
+    .system-charge-content {
+        font-size: 14px;
+        line-height: 28px;
+    }
+
+    .system-detail-link {
+        font-size: 18px;
+    }
+
+    /* Flavor セクション */
+    .flavor-section {
+        padding-bottom: 60px;
+        margin-top: 80px;
+    }
+
+    .flavor-image {
+        width: 95%;
+    }
+
+    /* Drink セクション - 背景画像風 */
+    .drink-section {
+        padding-bottom: 60px;
+        margin-top: 60px;
+    }
+
+    .drink-content {
+        position: relative;
+    }
+
+    .drink-image {
+        width: 100%;
+        height: 250px;
+        border: none;
+    }
+
+    .drink-text {
+        font-size: 14px;
+        line-height: 28px;
+        width: 90%;
+        letter-spacing: 1.5px;
+    }
+
+    /* Food セクション - 背景画像風 */
+    .food-section {
+        padding-bottom: 60px;
+        margin-top: 60px;
+    }
+
+    .food-content {
+        position: relative;
+    }
+
+    .food-image {
+        width: 100%;
+        height: 220px;
+        border: none;
+    }
+
+    .food-text {
+        font-size: 14px;
+        line-height: 28px;
+        width: 90%;
+        letter-spacing: 1.5px;
+    }
+
+    /* Topics セクション */
+    .topics-section .section-title-container {
+        margin-top: 60px;
+    }
+
+    .topics-cards {
+        margin-top: 40px;
+        gap: 25px;
+        padding: 0 20px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .topic-card {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .topic-card-header {
+        height: 70px;
+    }
+
+    .topic-card-header p {
+        font-size: 14px;
+        line-height: 22px;
+    }
+
+    .topic-card-image {
+        height: 400px;
+    }
+
+    .topics-section .more-btn-container {
+        margin-top: 40px;
+    }
+
+    /* MOREボタン */
+    .more-btn {
+        width: 110px;
+        height: 44px;
+        font-size: 20px;
+    }
+    .smartphone-only {
+        display: flex;
+        text-align: center;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .smartphone-only a {
+        display: block;
+    }
+    .smartphone-only img:hover {
+        opacity: 0.6;
+    }
+}
+
+/* 極小スマートフォン対応 (400px以下) */
+@media screen and (max-width: 400px) {
+    .hero-section {
+        min-height: 500px;
+    }
+
+    .logo-image {
+        max-width: 80%;
+        padding: 15px;
+        padding-left: 25px;
+    }
+
+    .logo-image img {
+        max-width: 160px;
+    }
+
+    .japanese-title {
+        font-size: 16px;
+        white-space: nowrap;
+    }
+
+    .japanese-image {
+        width: 200px;
+        height: 250px;
+    }
+
+    .japanese-text {
+        font-size: 13px;
+        line-height: 22px;
+    }
+
+    .whats-text {
+        font-size: 13px;
+        line-height: 22px;
+    }
+
+    .whats-image {
+        max-width: 280px;
+    }
+
+    .use-card-title {
+        font-size: 16px;
+    }
+
+    .use-description {
+        font-size: 14px;
+    }
+
+    .system-prices {
+        font-size: 13px;
+        line-height: 26px;
+    }
+
+    .system-charge-content {
+        font-size: 13px;
+        line-height: 26px;
+    }
+
+    .drink-text {
+        font-size: 13px;
+        line-height: 26px;
+    }
+
+    .food-text {
+        font-size: 13px;
+        line-height: 26px;
+    }
+
+    .topic-card {
+        max-width: 260px;
+    }
+
+    .topic-card-image {
+        height: 350px;
+    }
+
+    .more-btn {
+        width: 100px;
+        height: 40px;
+        font-size: 18px;
+    }
 }
