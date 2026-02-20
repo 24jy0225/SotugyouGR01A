@@ -10,6 +10,10 @@ public class Coupon {
 	private LocalDate endDate;
 	private boolean isActive;
 
+	public Coupon() {
+		
+	}
+	
 	public Coupon(String couponId, String couponName, String couponContent, LocalDate startDate, LocalDate endDate, boolean isActive) {
 		this.couponId = couponId;
 		this.couponName = couponName;
@@ -18,7 +22,6 @@ public class Coupon {
 		this.endDate = endDate;
 		this.isActive = isActive;
 	}
-	public Coupon() {}
 
 	public String getCouponId() {
 		return couponId;

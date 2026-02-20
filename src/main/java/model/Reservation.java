@@ -8,13 +8,33 @@ public class Reservation {
 	private int reservePeople;
 	private LocalDate reserveDate;
 	private String userId;
+	private String userName;
 	private int seatId;
 	private LocalDateTime startDateTime;
 	private LocalDateTime endDateTime;
-	private String userName;
 	private LocalDate cancelDate;
 	
-
+	public Reservation(int reservePeople, LocalDate reserveDate, String userId, int seatId, LocalDateTime startDateTime, LocalDateTime endDateTime ,String userName) {
+		this.reservePeople = reservePeople;
+		this.reserveDate = reserveDate;
+		this.userId = userId;
+		this.seatId = seatId;
+		this.startDateTime = startDateTime;
+		this.endDateTime = endDateTime;
+		this.userName = userName;
+	}
+	
+	public Reservation(String reserveId, int reservePeople, LocalDate reserveDate, String userId, int seatId, LocalDateTime startDateTime, LocalDateTime endDateTime ,String userName ) {
+		this.reserveId = reserveId;
+		this.reservePeople = reservePeople;
+		this.reserveDate = reserveDate;
+		this.userId = userId;
+		this.seatId = seatId;
+		this.startDateTime = startDateTime;
+		this.endDateTime = endDateTime;
+		this.userName = userName;
+	}
+	
 	public LocalDate getCancelDate() {
 		return cancelDate;
 	}
@@ -86,26 +106,4 @@ public class Reservation {
 	public void setEndDateTime(LocalDateTime endDateTime) {
 		this.endDateTime = endDateTime;
 	}
-
-	public Reservation(int reservePeople, LocalDate reserveDate, String userId, int seatId, LocalDateTime startDateTime, LocalDateTime endDateTime ,String userName) {
-		this.reservePeople = reservePeople;
-		this.reserveDate = reserveDate;
-		this.userId = userId;
-		this.seatId = seatId;
-		this.startDateTime = startDateTime;
-		this.endDateTime = endDateTime;
-		this.userName = userName;
-	}
-	public Reservation(String reserveId, int reservePeople, LocalDate reserveDate, String userId, int seatId, LocalDateTime startDateTime, LocalDateTime endDateTime ,String userName ) {
-		this.reserveId = reserveId;
-		this.reservePeople = reservePeople;
-		this.reserveDate = reserveDate;
-		this.userId = userId;
-		this.seatId = seatId;
-		this.startDateTime = startDateTime;
-		this.endDateTime = endDateTime;
-		this.userName = userName;
-		
-	}
-
 }

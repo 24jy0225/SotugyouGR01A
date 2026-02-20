@@ -40,6 +40,7 @@ public class ReservationDao {
 		String copySql = "INSERT INTO キャンセル履歴 (reservation_number, reservation_people, reservation_date, member_id, member_name, seat_id, start_time, end_time, cancel_date) "
 				+ "SELECT reservation_number, reservation_people, reservation_date, member_id, member_name, seat_id, start_time, end_time, NOW() "
 				+ "FROM 予約 WHERE reservation_number = ? ;";
+		
 		String deleteSql = "DELETE FROM 予約 WHERE reservation_number = ? ;";
 
 		try {

@@ -5,6 +5,12 @@ public class CouponUsage {
 	private Coupon coupon;
 	private boolean couponUsage;
 	
+	public CouponUsage(String userId, Coupon coupon, boolean couponUsage) {
+		this.userId = userId;
+		this.coupon = coupon;
+		this.couponUsage = couponUsage;
+	}
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -21,12 +27,6 @@ public class CouponUsage {
 		return couponUsage;
 	}
 	public void setCouponUsage(boolean couponUsage) {
-		this.couponUsage = couponUsage;
-	}
-	
-	public CouponUsage(String userId, Coupon coupon, boolean couponUsage) {
-		this.userId = userId;
-		this.coupon = coupon;
 		this.couponUsage = couponUsage;
 	}
 }

@@ -6,6 +6,12 @@ public class Seat {
 	private Store store;
 	private boolean isActive;
 	
+	public Seat(int seatId , Store store , boolean isActive) {
+		this.seatId = seatId;
+		this.store = store;
+		this.isActive = isActive;
+	}
+	
 	public int getSeatId() {
 		return seatId;
 	}
@@ -22,11 +28,11 @@ public class Seat {
 		this.seatNumber = seatNumber;
 	}
 	
-	public Store getStoreNumber() {
+	public Store getStore() {
 		return store;
 	}
 
-	public void setStoreNumber(Store store) {
+	public void setStore(Store store) {
 		this.store = store;
 	}
 
@@ -35,12 +41,6 @@ public class Seat {
 	}
 
 	public void setIsActive(boolean isActive) {
-		this.isActive = isActive;
-	}
-
-	public Seat(int seatId , Store store , boolean isActive) {
-		this.seatId = seatId;
-		this.store = store;
 		this.isActive = isActive;
 	}
 }

@@ -5,6 +5,13 @@ public class Photo {
 	private String photoCategory;
 	private String photoFileName;
 
+	public Photo(int photoId, String photoCategory, String photoFileName) {
+		this.photoId = photoId;
+		this.photoCategory = photoCategory;
+		this.photoFileName = photoFileName;
+		
+	}
+	
 	public int getPhotoId() {
 		return photoId;
 	}
@@ -27,12 +34,5 @@ public class Photo {
 
 	public void setPhotoFileName(String photoFileName) {
 		this.photoFileName = photoFileName;
-	}
-
-	public Photo(int photoId, String photoCategory, String photoFileName) {
-		this.photoId = photoId;
-		this.photoCategory = photoCategory;
-		this.photoFileName = photoFileName;
-
 	}
 }

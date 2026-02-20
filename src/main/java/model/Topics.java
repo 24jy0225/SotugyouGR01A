@@ -6,6 +6,13 @@ public class Topics {
 	private String topicsTitle;
 	private String topicsContent;
 
+	public Topics(int topicsId, Photo photo, String topicsTitle, String topicsContent) {
+		this.topicsId = topicsId;
+		this.photo = photo;
+		this.topicsTitle = topicsTitle;
+		this.topicsContent = topicsContent;
+	}
+	
 	public int getTopicsId() {
 		return topicsId;
 	}
@@ -37,12 +44,4 @@ public class Topics {
 	public void setTopicsContent(String topicsContent) {
 		this.topicsContent = topicsContent;
 	}
-
-	public Topics(int topicsId, Photo photo, String topicsTitle, String topicsContent) {
-		this.topicsId = topicsId;
-		this.photo = photo;
-		this.topicsTitle = topicsTitle;
-		this.topicsContent = topicsContent;
-	}
-
 }
