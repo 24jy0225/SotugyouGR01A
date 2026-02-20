@@ -1,11 +1,11 @@
 // ★★★ 店舗写真のパス設定 ★★★
 const shopImages = [
-    '../assets/shopimg1.jpeg',
-    '../assets/shopimg2.jpg',
-    '../assets/shopimg3.webp',
-    '../assets/shopimg4.jpeg',
-    '../assets/shopimg5.jpg',
-    '../assets/shopimg6.jpg',
+    './image/assets/user/shopimg1.jpeg',
+    './image/assets/user/shopimg2.jpg',
+    './image/assets/user/shopimg3.webp',
+    './image/assets/user/shopimg4.jpeg',
+    './image/assets/user/shopimg5.jpg',
+    './image/assets/user/shopimg6.jpg',
 ];
 
 // 店舗写真の代替テキスト
