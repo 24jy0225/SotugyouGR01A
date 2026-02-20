@@ -11,6 +11,7 @@ User user = (User) session.getAttribute("LoginUser");
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="./css/user/mainstyles.css">
 <link rel="stylesheet" href="./css/user/hamburgerStyle.css">
+<link rel="stylesheet" href="./css/user/contactStyle.css">
 <link rel="icon" href="./image/assets/user/ロゴマーク_金色b.webp">
 <title>contact</title>
 </head>
@@ -72,7 +73,21 @@ User user = (User) session.getAttribute("LoginUser");
 			<h1 class="section-title">Contact Us</h1>
 			<hr>
 		</div>
-
+		<h2 class="shopTitle">Shop Images</h2>
+        <div class="shop-content">
+            <div class="slider-wrapper">
+                <div class="slider-track" id="shopSliderTrack"></div>
+                
+                <button class="arrow-button prev-button" id="shopPrevBtn">❮</button>
+                <button class="arrow-button next-button" id="shopNextBtn">❯</button>
+            </div>
+            
+            <div class="dots-container" id="shopDotsContainer"></div>
+            
+            <div class="page-info">
+                <span id="shopCurrentPage">1</span> / <span id="shopTotalPages">0</span>
+            </div>
+        </div>
 	</main>
 	<!-- フッター -->
 	<footer class="footer" data-name="フッター">
@@ -127,5 +142,6 @@ User user = (User) session.getAttribute("LoginUser");
 	</footer>
 <script type="text/javascript" src="./javascript/Hamburgermenu.js"></script>
 <script type="text/javascript" src="./javascript/logoScript.js"></script>
+<script type="text/javascript" src="./javascript/shopScript.js"></script>
 </body>
 </html>
