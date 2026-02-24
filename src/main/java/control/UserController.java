@@ -343,25 +343,32 @@ public class UserController extends HttpServlet {
 			}
 			break;
 		case "userInfoEdit":
+			//次やるところ
 			session = req.getSession();
 			String email = req.getParameter("email");
+			String preEmail = req.getParameter("preEmail");
 			String tel = req.getParameter("tel");
 			String name = req.getParameter("name");
 			session.setAttribute("email", email);
 			session.setAttribute("tel", tel);
 			session.setAttribute("name", name);
-			UserInfoEditAction userInfoEditAction = new UserInfoEditAction();
-			user = userInfoEditAction.execute(req);
-			if (user != null) {
-				session.setAttribute("LoginUser", user);
-				session.setAttribute("message", "会員情報を変更しました！");
-				resp.sendRedirect("UserInfoEdit.jsp");
-				return;
-			} else {
-				session.setAttribute("errorMsg", "変更失敗");
-				nextPage = "Error.jsp";
-				break;
+			if(preEmail.equals(email)) {
+				UserInfoEditAction userInfoEditAction = new UserInfoEditAction();
+				user = userInfoEditAction.execute(req);
+				if (user != null) {
+					session.setAttribute("LoginUser", user);
+					session.setAttribute("message", "会員情報を変更しました！");
+					resp.sendRedirect("UserInfoEdit.jsp");
+					return;
+				} else {
+					session.setAttribute("errorMsg", "変更失敗");
+					nextPage = "Error.jsp";
+					break;
+				}				
+			}else if(!preEmail.equals(email)) {
+				nextPage = "Login.jsp";
 			}
+			break;
 		default:
 			nextPage = "Error.jsp";
 			req.setAttribute("errorMsg", "不正なポストコマンド: " + command);
