@@ -232,11 +232,12 @@ if (couponUsageList == null)
 				</table>
 				<button class="reservation-cancel"
 					onclick="location.href='UserController?command=cancelConfirm&reserveId=<%=res.getReserveId()%>'">キャンセルする</button>
-				<%
+			</div>
+					<%
 				}
 				}
 				%>
-			</div>
+		/div>
 	</main>
 
 	<form id="useForm" action="UserController" method="POST"
