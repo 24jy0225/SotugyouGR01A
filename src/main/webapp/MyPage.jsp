@@ -217,8 +217,6 @@ if (couponUsageList == null)
 						<td class="reservation-numbertitle">予約番号：</td>
 						<td><%=res.getReserveId()%></td>
 					</tr>
-				</table>
-				<table>
 					<tr>
 						<td>座席番号</td>
 						<td>開始時間</td>

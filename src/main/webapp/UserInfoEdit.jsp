@@ -102,7 +102,8 @@ String action = (String) session.getAttribute("action");
 							onclick="location.href='UserController?command=MyPage'">
 							<span>MyPageに戻る</span>
 						</button>
-					</div>
+					</div>					
+					<input type="hidden" name="preEmail" value="<%= user.getUserEmail() %>">
 					<input type="hidden" name="command" value="userInfoEdit">
 				</form>
 			</div>
