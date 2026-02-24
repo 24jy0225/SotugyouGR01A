@@ -20,8 +20,8 @@ List<Seat> seatList = (List<Seat>) session.getAttribute("Seat");
 			<button onclick="location.href='ReservationManage.jsp'">予約管理</button>
 			<button onclick="location.href='UserManage.jsp'">顧客管理</button>
 			<button onclick="location.href='CouponManage.jsp'">クーポン管理</button>
-			<button onclick="location.href='DesignCustom.jsp'">お知らせ管理</button>
-			<button onclick="location.href='TopicsManage.jsp'">Webサイト管理</button>
+			<button onclick="location.href='TopicsManage.jsp'">お知らせ管理</button>
+			<button onclick="location.href='DesignCustom.jsp'">Webサイト管理</button>
 		</nav>
 	</header>
 	<%
