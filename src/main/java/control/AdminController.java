@@ -236,8 +236,8 @@ public class AdminController extends HttpServlet {
 			}
 
 		case "deleteCoupon":
-			couponId = req.getParameter("couponNumber");
-			session.setAttribute("couponNumber", couponId);
+			couponId = req.getParameter("couponId");
+			session.setAttribute("couponId", couponId);
 			CouponDeleteAction couponDeleteAction = new CouponDeleteAction();
 			flag = couponDeleteAction.execute(req);
 			List<Coupon> couponList = new ArrayList<>();

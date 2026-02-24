@@ -91,19 +91,6 @@ if (couponUsageList == null)
 	</header>
 
 	<main>
-		<%
-		if (msg != null) {
-		%>
-		<div
-			style="color: #d4af37; font-weight: bold; border: 1px solid #d4af37; padding: 15px; margin: 20px auto; max-width: 800px; text-align: center; background: rgba(212, 175, 55, 0.1);">
-			<%=msg%>
-		</div>
-		<%
-		session.removeAttribute("message");
-		%>
-		<%
-		}
-		%>
 
 		<div class="member-info">
 			<div class="member-content">
@@ -133,8 +120,8 @@ if (couponUsageList == null)
 					LocalDate startDate = usage.getCoupon().getStartDate();
 					LocalDate endDate = usage.getCoupon().getEndDate();
 					// 期限外または非アクティブならスキップ
-					if (today.isBefore(startDate) || today.isAfter(endDate) || usage.getCoupon().getIsActive()) {
-				continue;
+					if (today.isBefore(startDate) || today.isAfter(endDate) || !usage.getCoupon().getIsActive() || !usage.isCouponUsage()) {
+						continue;
 					}
 					hasValidCoupon = true;
 			%>
@@ -220,7 +207,6 @@ if (couponUsageList == null)
 	<div class="coupon-box">
 		<div class="coupon-label">クーポン</div>
 		<div id="modal-coupon-name" class="coupon-name">クーポン名</div>
-		<div class="coupon-discount">CONFIRM</div>
 	</div>
 	<div class="button-group">
 		<button type="button" class="btn btn-use" id="finalConfirmButton">使用する</button>
