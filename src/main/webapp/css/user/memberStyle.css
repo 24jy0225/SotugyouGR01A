@@ -30,9 +30,11 @@ main {
 }
 .member-information a{
     color: white;
-
 }
 
+.member-information a:hover{
+    color: #E06B2F;
+}
 .member-couponlist {
     display: flex;
     flex-direction: column;

@@ -177,19 +177,27 @@ if (couponUsageList == null)
 				}
 			%>
 			<div class="member-reservation">
-				<table>
-					<tr>
-						<td class="reservation-numbertitle">予約番号：</td>
-						<td><%=res.getReserveId()%></td>
-						<td><%=res.getReserveDate()%>
-						  <%=res.getStartDateTime().format(timeFormatter)%>～<%=res.getEndDateTime().format(timeFormatter)%></td>
-						<td>席番号：<%=res.getSeatId()%></td>
-						<td><%=res.getReservePeople()%>名</td>
-					</tr>
-				</table>
-				<button class="reservation-cancel"
-					onclick="location.href='UserController?command=cancelConfirm&reserveId=<%=res.getReserveId()%>'">キャンセルする</button>
-			</div>
+                <table>
+                    <tr>
+                        <td><%=res.getReserveDate()%></td>
+                        <td><%=res.getReservePeople()%>名</td>
+                        <td class="reservation-numbertitle">予約番号：</td>
+                        <td><%=res.getReserveId()%></td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td>座席番号</td>
+                        <td>開始時間</td>
+                        <td>終了時間</td>
+                    </tr>
+                    <tr>
+                        <td><%=res.getSeatId()%></td>
+                        <td><%=res.getStartDateTime().format(timeFormatter)%></td>
+                        <td><%=res.getEndDateTime().format(timeFormatter)%></td>
+                    </tr>
+                </table>
+                <button class="reservation-cancel" onclick="location.href='UserController?command=cancelConfirm&reserveId=<%=res.getReserveId()%>'">キャンセルする</button>
 			<%
 			}
 			}
