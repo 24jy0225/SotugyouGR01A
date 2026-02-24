@@ -79,43 +79,58 @@ String buttonText = (user != null || ("ByAdmin".equals(action) && targetUser != 
 				class="logo">
 		</div>
 		<button class="hamburger-menu" id="hamburgerBtn" aria-label="メニュー">
-            <img src="./image/assets/user/hamburger.svg" alt="メニュー">
-        </button>
+			<img src="./image/assets/user/hamburger.svg" alt="メニュー">
+		</button>
 		<!-- PC用ナビゲーション -->
-        <nav class="nav-menu">
-			<a href="./whats_Shisha.jsp" class="nav-link">What's</a> 
-			<a href="./how_to_Use.jsp" class="nav-link">Use</a> 
-			<a href="./system-introduction.jsp" class="nav-link">System</a>
-			<a	href="./menu.jsp" class="nav-link">Menu</a> 
-			<a href="./topics.jsp" class="nav-link">Topics</a> 
-			<a href="./contact.jsp" class="nav-link">Contact</a>
+		<nav class="nav-menu">
+			<a href="./whats_Shisha.jsp" class="nav-link">What's</a> <a
+				href="./how_to_Use.jsp" class="nav-link">Use</a> <a
+				href="./system-introduction.jsp" class="nav-link">System</a> <a
+				href="./menu.jsp" class="nav-link">Menu</a> <a href="./topics.jsp"
+				class="nav-link">Topics</a> <a href="./contact.jsp" class="nav-link">Contact</a>
 			<a href="UserController?command=reservationDate" class="nav-link">Reservation</a>
-			<%if (user != null) { %>
-				<div class="nav-member-group">
-					<a href="UserController?command=MyPage" class="nav-link">Member</a>
-					<a href="UserController?command=logout" class="nav-logout-link">logout</a>
-				</div>
-			<% } else { %>
-				<a href="./Login.jsp" class="nav-link">Login</a>
-			<% } %>
+			<%
+			if (user != null) {
+			%>
+			<div class="nav-member-group">
+				<a href="UserController?command=MyPage" class="nav-link">Member</a>
+				<a href="UserController?command=logout" class="nav-logout-link">logout</a>
+			</div>
+			<%
+			} else {
+			%>
+			<a href="./Login.jsp" class="nav-link">Login</a>
+			<%
+			}
+			%>
 		</nav>
-        <!-- スマホ用ナビゲーション -->
-        <nav class="mobile-nav" id="mobileNav">
-            <a href="./whats_Shisha.jsp" class="mobile-nav-link">What's</a> 
-			<a href="./how_to_Use.jsp" class="mobile-nav-link">Use</a> 
-			<a href="./system-introduction.jsp" class="mobile-nav-link">System</a>
-			<a	href="./menu.jsp" class="mobile-nav-link">Menu</a> 
-			<a href="./topics.jsp" class="mobile-nav-link">Topics</a> 
-			<a href="./contact.jsp" class="mobile-nav-link">Contact</a>
-			<a href="UserController?command=reservationDate" class="mobile-nav-link">Reservation</a>
-			<%if (user != null) { %>
-				<a href="UserController?command=MyPage" class="mobile-nav-link">Member</a>
-				<a href="UserController?command=logout" class="mobile-nav-link mobile-nav-logout">Logout</a>
-			<% } else { %>
-				<a href="./Login.jsp" class="mobile-nav-link">Login</a>
-			<% } %>
-        </nav>
-		<% } %>
+		<!-- スマホ用ナビゲーション -->
+		<nav class="mobile-nav" id="mobileNav">
+			<a href="./whats_Shisha.jsp" class="mobile-nav-link">What's</a> <a
+				href="./how_to_Use.jsp" class="mobile-nav-link">Use</a> <a
+				href="./system-introduction.jsp" class="mobile-nav-link">System</a>
+			<a href="./menu.jsp" class="mobile-nav-link">Menu</a> <a
+				href="./topics.jsp" class="mobile-nav-link">Topics</a> <a
+				href="./contact.jsp" class="mobile-nav-link">Contact</a> <a
+				href="UserController?command=reservationDate"
+				class="mobile-nav-link">Reservation</a>
+			<%
+			if (user != null) {
+			%>
+			<a href="UserController?command=MyPage" class="mobile-nav-link">Member</a>
+			<a href="UserController?command=logout"
+				class="mobile-nav-link mobile-nav-logout">Logout</a>
+			<%
+			} else {
+			%>
+			<a href="./Login.jsp" class="mobile-nav-link">Login</a>
+			<%
+			}
+			%>
+		</nav>
+		<%
+		}
+		%>
 	</header>
 
 	<main>
@@ -145,10 +160,18 @@ String buttonText = (user != null || ("ByAdmin".equals(action) && targetUser != 
 
 					<div class="time_slots">
 						<%
-						DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 						if (slots != null && !slots.isEmpty()) {
 							for (LocalDateTime timeSlot : slots) {
-								String timeStr = timeSlot.format(timeFormatter);
+								int hour = timeSlot.getHour();
+								int minute = timeSlot.getMinute();
+								String timeStr;
+
+								// ★ 0時〜4時台の場合は +24 して「24:00〜28:59」表記にする
+								if (hour < 5) {
+							timeStr = String.format("%02d:%02d", hour + 24, minute);
+								} else {
+							timeStr = String.format("%02d:%02d", hour, minute);
+								}
 						%>
 						<label> <input type="radio" name="selectedTime"
 							value="<%=timeSlot%>" class="time_slot_input"
@@ -217,15 +240,13 @@ String buttonText = (user != null || ("ByAdmin".equals(action) && targetUser != 
 			<small>&copy;The Shisha Honjin</small>
 		</p>
 	</footer>
-	
+
 </body>
 <script>
-    // 時間が選ばれたら下の確認欄を更新するスクリプト
     const radioButtons = document.querySelectorAll('.time_slot_input');
     const startDisplay = document.getElementById('display-start-time');
     const endDisplay = document.getElementById('display-end-time');
     
-    // ここを修正：Java側ですでに数値になっているので、そのまま出力するだけ
     const courseMinutes = <%=course%>;
 
     radioButtons.forEach(radio => {
@@ -234,15 +255,19 @@ String buttonText = (user != null || ("ByAdmin".equals(action) && targetUser != 
             startDisplay.textContent = startTimeStr;
 
             if (startTimeStr) {
+                // "25:30" などの文字列を数値(hour: 25, minute: 30)に分割
                 const [hours, minutes] = startTimeStr.split(':').map(Number);
-                const startDate = new Date();
-                startDate.setHours(hours, minutes, 0);
                 
-                const endDate = new Date(startDate.getTime() + courseMinutes * 60000);
-                const endHours = String(endDate.getHours()).padStart(2, '0');
-                const endMinutes = String(endDate.getMinutes()).padStart(2, '0');
+                // ★ 24時間超過表記を維持するため、JSのDateを使わずに「分」だけで計算する
+                const totalMinutes = (hours * 60) + minutes + courseMinutes;
                 
-                endDisplay.textContent = endHours + ':' + endMinutes;
+                const endHours = Math.floor(totalMinutes / 60);
+                const endMinutes = totalMinutes % 60;
+                
+                // 0埋めして表示（例: 25:30 + 120分 = 27:30）
+                endDisplay.textContent = 
+                    String(endHours).padStart(2, '0') + ':' + 
+                    String(endMinutes).padStart(2, '0');
             }
         });
     });
