@@ -93,23 +93,23 @@ if (couponUsageList == null)
 	<main>
 
 		<div class="member-info">
-			<div class="member-content">
-				<p>
-					Name / 会員番号:<%=user.getUserId()%></p>
-				<p class="member-data"><%=user.getName()%></p>
+			<div class="member-inner">
+				<div>
+					<p>Name / 会員番号:<%=user.getUserId()%></p>
+					<p class="member-data"><%=user.getName()%></p>
+				</div>
+				<div>
+					<p>Mail address</p>
+					<p class="member-data"><%=user.getUserEmail()%></p>
+				</div>
+				<div>
+					<p>tel number</p>
+					<p class="member-data">
+						<%=(user.getUserTel() == null || user.getUserTel().isEmpty()) ? "未登録" : user.getUserTel()%></p>
+				</div>
+				<p class="member-information"><a href="UserInfoEdit.jsp">会員情報変更はこちら</a></p>
+            	<p class="member-information"><a href="PasswordReset.jsp">パスワード変更はこちら</a></p>
 			</div>
-			<div class="member-content">
-				<p>Mail address</p>
-				<p class="member-data"><%=user.getUserEmail()%></p>
-			</div>
-			<div class="member-content">
-				<p>tel number</p>
-				<p class="member-data">
-					<%=(user.getUserTel() == null || user.getUserTel().isEmpty()) ? "未登録" : user.getUserTel()%>
-				</p>
-			</div>
-			<a href="UserInfoEdit.jsp" class="member-information">会員情報変更はこちら</a>
-			<a href="PasswordReset.jsp" class="member-information">パスワード変更はこちら</a>
 		</div>
 
 		<div class="member-couponlist">
