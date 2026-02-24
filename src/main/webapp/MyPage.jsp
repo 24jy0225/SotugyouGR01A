@@ -8,7 +8,7 @@ User user = (User) session.getAttribute("LoginUser");
 List<Reservation> reservationList = (List<Reservation>) session.getAttribute("reservationHistory");
 List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("couponList");
 String msg = (String) session.getAttribute("message");
-DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
 // Nullガード句（画面確認用）
 if (user == null) {
 	user = new User(); // 本来はRedirectすべきですが、確認用に空オブジェクトを作成
@@ -120,8 +120,9 @@ if (couponUsageList == null)
 					LocalDate startDate = usage.getCoupon().getStartDate();
 					LocalDate endDate = usage.getCoupon().getEndDate();
 					// 期限外または非アクティブならスキップ
-					if (today.isBefore(startDate) || today.isAfter(endDate) || !usage.getCoupon().getIsActive() || !usage.isCouponUsage()) {
-						continue;
+					if (today.isBefore(startDate) || today.isAfter(endDate) || !usage.getCoupon().getIsActive()
+					|| !usage.isCouponUsage()) {
+				continue;
 					}
 					hasValidCoupon = true;
 			%>
@@ -171,18 +172,44 @@ if (couponUsageList == null)
 			<p style="color: #fff; padding: 20px;">現在ご予約はありません。</p>
 			<%
 			} else {
+
 			for (Reservation res : reservationList) {
-				if (res.getReserveDate().isBefore(today) || res.getCancelDate() != null) {
+				// ★開始時間・終了時間を取得
+				java.time.LocalDateTime startDt = res.getStartDateTime();
+				java.time.LocalDateTime endDt = res.getEndDateTime();
+
+				// 過去の予約やキャンセル済みはスキップ
+				if (startDt.toLocalDate().isBefore(today) || res.getCancelDate() != null) {
 					continue;
 				}
+
+				// --- 開始時間の24時間表記ロジック ---
+				int sHour = startDt.getHour();
+				int sMinute = startDt.getMinute();
+				java.time.LocalDate displayDate = startDt.toLocalDate();
+
+				// 0〜4時の場合は日付を1日戻し、時間を+24する
+				if (sHour < 5) {
+					displayDate = displayDate.minusDays(1);
+					sHour += 24;
+				}
+				String dateStr = displayDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+				String startStr = String.format("%02d:%02d", sHour, sMinute);
+
+				// --- 終了時間の24時間表記ロジック ---
+				int eHour = endDt.getHour();
+				int eMinute = endDt.getMinute();
+				if (eHour < 5) {
+					eHour += 24; // 終了時間も同様に+24する
+				}
+				String endStr = String.format("%02d:%02d", eHour, eMinute);
 			%>
 			<div class="member-reservation">
 				<table>
 					<tr>
 						<td class="reservation-numbertitle">予約番号：</td>
 						<td><%=res.getReserveId()%></td>
-						<td><%=res.getReserveDate()%>
-						  <%=res.getStartDateTime().format(timeFormatter)%>～<%=res.getEndDateTime().format(timeFormatter)%></td>
+						<td><%=dateStr%> <%=startStr%>～<%=endStr%></td>
 						<td>席番号：<%=res.getSeatId()%></td>
 						<td><%=res.getReservePeople()%>名</td>
 					</tr>
