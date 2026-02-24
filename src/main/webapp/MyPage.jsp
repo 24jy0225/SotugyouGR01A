@@ -8,7 +8,7 @@ User user = (User) session.getAttribute("LoginUser");
 List<Reservation> reservationList = (List<Reservation>) session.getAttribute("reservationHistory");
 List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("couponList");
 String msg = (String) session.getAttribute("message");
-
+DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 // Nullガード句（画面確認用）
 if (user == null) {
 	user = new User(); // 本来はRedirectすべきですが、確認用に空オブジェクトを作成
@@ -179,10 +179,12 @@ if (couponUsageList == null)
 			<div class="member-reservation">
 				<table>
 					<tr>
-						<td><%=res.getReserveDate()%></td>
-						<td><%=res.getReservePeople()%>名</td>
 						<td class="reservation-numbertitle">予約番号：</td>
 						<td><%=res.getReserveId()%></td>
+						<td><%=res.getReserveDate()%>
+						  <%=res.getStartDateTime().format(timeFormatter)%>～<%=res.getEndDateTime().format(timeFormatter)%></td>
+						<td>席番号：<%=res.getSeatId()%></td>
+						<td><%=res.getReservePeople()%>名</td>
 					</tr>
 				</table>
 				<button class="reservation-cancel"
