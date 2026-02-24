@@ -237,7 +237,7 @@ if (couponUsageList == null)
 				}
 				}
 				%>
-		/div>
+		
 	</main>
 
 	<form id="useForm" action="UserController" method="POST"
