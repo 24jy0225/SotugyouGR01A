@@ -92,7 +92,7 @@ if (date != null && date.contains("-")) {
                 <p class="selected_date">選択日:<%= formattedDate %></p>
                 
                 <form action="<%= formAction %>" method="get">
-                    <div style="margin-bottom: 20px; text-align: center;">
+                    <div class="storeSerect">
                         <label for="store">店舗選択：</label>
                         <select name="storeNumber" id="store" required>
                             <% if(storeList != null) { 

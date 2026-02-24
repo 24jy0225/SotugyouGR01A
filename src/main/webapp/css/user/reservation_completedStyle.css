@@ -102,6 +102,7 @@
 	font-family: 'Noto Sans JP', sans-serif;
 	border-radius: 4px;
 	border: #4caf50 solid 1px;
+	cursor: pointer;
 }
 /* レスポンシブ対応 */
 @media screen and (max-width: 768px) {
