@@ -1,3 +1,12 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"
+	import="java.util.*, model.User, model.Reservation, java.time.LocalDate, java.time.format.DateTimeFormatter , java.time.temporal.ChronoUnit"%>
+<% 
+User user = (User) session.getAttribute("LoginUser");
+Reservation r = (Reservation)session.getAttribute("findReserve");
+DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy年MM月dd日");
+DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+%>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -72,7 +81,7 @@
                         予約番号:
                     </td>
                     <td class="info-value">
-                        RES-2025-001
+                        <%= r.getReserveId() %>
                     </td>
                 </tr>
                 <tr>
@@ -81,7 +90,7 @@
                         <span class="info-label">予約者名:</span>
                     </td>
                     <td class="info-value">
-                        山田 太郎
+                        <%= r.getUserName() %>
                     </td>
                 </tr>
                 <tr>
@@ -90,7 +99,7 @@
                         <span class="info-label">予約人数:</span>
                     </td>
                     <td class="info-value">
-                        2名
+                        <%= r.getReservePeople() %>名
                     </td>
                 </tr>
                 <tr>
@@ -99,7 +108,7 @@
                         <span class="info-label">日付:</span>
                     </td>
                     <td class="info-value">
-                        2025年11月25日
+                        <%= r.getReserveDate().format(formatter) %>
                     </td>
                 </tr>
                 <tr>
@@ -108,7 +117,7 @@
                         <span class="info-label">開始時間:</span>
                     </td>
                     <td class="info-value">
-                        19:00
+                        <%= r.getStartDateTime().format(timeFormatter) %>
                     </td>
                 </tr>
                 <tr>
@@ -117,7 +126,7 @@
                         <span class="info-label">終了時間:</span>
                     </td>
                     <td class="info-value">
-                        21:00
+                        <%= r.getEndDateTime().format(timeFormatter) %>
                     </td>
                 </tr>
                 <tr>
@@ -126,7 +135,7 @@
                         <span class="info-label">コース:</span>
                     </td>
                     <td class="info-value">
-                        スペシャルコース
+                        <%=ChronoUnit.MINUTES.between(r.getStartDateTime(), r.getEndDateTime())%>分
                     </td>
                 </tr>
                 <tr>
@@ -135,7 +144,7 @@
                         <span class="info-label">座席:</span>
                     </td>
                     <td class="info-value">
-                        座席2
+                        座席<%= r.getSeatId() %>
                     </td>
                 </tr>
             </table>
@@ -144,7 +153,7 @@
                 <p class="warning-text">キャンセルポリシー: 予約日の2日前以降のキャンセルには、キャンセル料が発生する場合があります。</p>
             </div>
 
-            <button type="button" class="cancel-submit-btn" id="openBtn">予約をキャンセルする</button>
+            <button type="button" class="cancel-submit-btn" id="openBtn" >予約をキャンセルする</button>
         </div>
     </main>
     <footer>
@@ -178,6 +187,7 @@
         // 「はい」ボタンの処理
         confirmBtn.addEventListener('click', () => {
             modal.close();
+            location.href = 'UserController?command=cancel&reserveId=<%=r.getReserveId()%>';
         });
     </script>
 </body>

@@ -301,6 +301,36 @@ public class ReservationDao {
 		}
 		return false;
 	}
+	public Reservation findByRid(String reserveId) {
+		String sql = "SELECT * FROM 予約 WHERE reservation_number = ? ;";
+		try (Connection con = createConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, reserveId);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				while (rs.next()) {
+					LocalDate date = rs.getObject("reservation_date", LocalDate.class);
+					LocalDateTime start = rs.getTimestamp("start_time").toLocalDateTime();
+					LocalDateTime end = rs.getTimestamp("end_time").toLocalDateTime();
+
+					Reservation r = new Reservation(
+							rs.getString("reservation_number"),
+							rs.getInt("reservation_people"),
+							date,
+							rs.getString("member_id"),
+							rs.getInt("seat_id"),
+							start,
+							end,
+							rs.getString("member_name"));
+					return r;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	public java.util.Map<String, String> getMonthlyStatus(LocalDate startMonth, LocalDate endMonth) {
 		java.util.Map<String, String> statusMap = new java.util.HashMap<>();

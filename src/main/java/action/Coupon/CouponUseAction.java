@@ -1,5 +1,7 @@
 package action.Coupon;
 
+import java.util.List;
+
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -7,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import dao.CouponDao;
+import model.CouponUsage;
 import model.User;
 
 /**
@@ -35,12 +38,15 @@ public class CouponUseAction extends HttpServlet {
 			}
 			User user = (User) session.getAttribute("LoginUser");
 			String userId = user.getUserId();
-			String couponId = req.getParameter("couponId");
+			String couponId = (String)session.getAttribute("couponId"); 
 			CouponDao dao = new CouponDao();
 			// 1. DBのフラグを 0 に更新
 			boolean success = dao.useCoupon(userId, couponId);
 
 			if (success) {
+				CouponDao cDao = new CouponDao();
+				List<CouponUsage> couponList = cDao.findById(userId);
+				session.setAttribute("couponList", couponList);
 				// 2. 完了メッセージをセットして再表示（リダイレクトがおすすめ）
 				session.setAttribute("message", "クーポンを使用しました！");
 				resp.sendRedirect("UserController?command=MyPage");

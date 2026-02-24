@@ -26,6 +26,7 @@ import action.Reservation.ReservationHistoryAction;
 import action.Reservation.ReservationSeatAction;
 import action.Reservation.ReservationTimeAction;
 import action.Reservation.ReserveAction;
+import action.Reservation.ReserveFindAction;
 import action.Topics.TopicsAction;
 import action.main.AuthenticateAction;
 import action.main.LoginAction;
@@ -151,11 +152,19 @@ public class UserController extends HttpServlet {
 			session.setAttribute("photoList", photoList);
 			nextPage = "top.jsp";
 			break;
-		case "cancel":
+		case "cancelConfirm":
+			nextPage = "reservation_cancel.jsp";
 			String reserveId = req.getParameter("reserveId");
 			session.setAttribute("reserveId", reserveId);
+			ReserveFindAction reservationFindAction = new ReserveFindAction();
+			Reservation r = reservationFindAction.execute(req);
+			session.setAttribute("findReserve", r);
+			break;
+		case "cancel":
+			reserveId = req.getParameter("reserveId");
+			session.setAttribute("cancelReserveId", reserveId);
 			ReservationCancelAction reservationCancelAction = new ReservationCancelAction();
-			Reservation r = reservationCancelAction.execute(req);
+			r = reservationCancelAction.execute(req);
 			if (r != null) {
 				session.setAttribute("cancelReserve", r);
 				resp.sendRedirect("ReservationCancelComplete.jsp");
@@ -165,6 +174,13 @@ public class UserController extends HttpServlet {
 				session.setAttribute("errorMsg", "cancelできませんでした");
 				break;
 			}
+		case "logout":
+			nextPage = "index.jsp";
+			session = req.getSession();
+			if (session != null) {
+				session.invalidate();
+			}
+			break;
 
 		default:
 			nextPage = "Error.jsp"; // 例としてエラーページを設定
@@ -233,13 +249,6 @@ public class UserController extends HttpServlet {
 			}
 
 			break;
-		case "logout":
-			nextPage = "Main.jsp";
-			session = req.getSession();
-			if (session != null) {
-				session.invalidate();
-			}
-			break;
 		case "Reserve":
 
 			session = req.getSession();
@@ -290,6 +299,9 @@ public class UserController extends HttpServlet {
 			break;
 		case "useCoupon":
 			try {
+				session = req.getSession();
+				String couponId = req.getParameter("couponNumber");
+				session.setAttribute("couponId", couponId);
 				CouponUseAction useAction = new CouponUseAction();
 				useAction.execute(req, resp);
 

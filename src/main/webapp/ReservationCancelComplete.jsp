@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
-	import="model.Reservation , java.time.format.DateTimeFormatter , java.time.LocalDate , java.time.temporal.ChronoUnit"%>
+	import="model.User , model.Reservation , java.time.format.DateTimeFormatter , java.time.LocalDate , java.time.temporal.ChronoUnit"%>
 <%
 Reservation r = (Reservation) session.getAttribute("cancelReserve");
 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy年MM月dd日");
 DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+User user = (User) session.getAttribute("LoginUser");
 %>
 <!DOCTYPE html>
 <html lang="ja">

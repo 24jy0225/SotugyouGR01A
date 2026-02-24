@@ -21,7 +21,7 @@ public class ReservationCancelAction {
 		case "ByAdmin":
 			reserveId = (String) session.getAttribute("id");
 		case "ByUser":
-			reserveId = (String) session.getAttribute("reserveId");
+			reserveId = (String) session.getAttribute("cancelReserveId");
 			return dao.cancel(reserveId);
 		}
 		return null;
