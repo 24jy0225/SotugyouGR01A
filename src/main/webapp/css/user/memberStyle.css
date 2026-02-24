@@ -35,6 +35,9 @@ main {
 .member-information a:hover{
     color: #E06B2F;
 }
+.member-information a:visited{
+    color: white;
+}
 .member-couponlist {
     display: flex;
     flex-direction: column;
