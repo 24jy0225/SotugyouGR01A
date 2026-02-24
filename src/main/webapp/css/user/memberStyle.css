@@ -13,13 +13,11 @@ main {
 .member-info {
     display: flex;
     flex-direction: column;
-    border: 2px solid rebeccapurple;
 }
 .member-inner{
     display: flex;
     flex-direction: column;
     gap: 20px;
-    border: 1px blue solid;
     margin: 0 auto;
 }
 
