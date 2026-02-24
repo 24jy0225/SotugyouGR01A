@@ -40,7 +40,7 @@ public class ReservationDao {
 		String copySql = "INSERT INTO キャンセル履歴 (reservation_number, reservation_people, reservation_date, member_id, member_name, seat_id, start_time, end_time, cancel_date) "
 				+ "SELECT reservation_number, reservation_people, reservation_date, member_id, member_name, seat_id, start_time, end_time, NOW() "
 				+ "FROM 予約 WHERE reservation_number = ? ;";
-		
+
 		String deleteSql = "DELETE FROM 予約 WHERE reservation_number = ? ;";
 
 		try {
@@ -147,19 +147,25 @@ public class ReservationDao {
 	public String generateReservationNumber(LocalDate date, Connection con) throws SQLException {
 		String dateStr = date.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
-		// COUNTではなく、その日の予約番号の末尾3桁の「最大値」を取得する
-		// RIGHT(reservation_number, 3) で末尾3文字を取り出し、数値に変換して最大を探す
-		String maxSql = "SELECT MAX(CAST(RIGHT(reservation_number, 3) AS UNSIGNED)) FROM 予約 WHERE reservation_date = ? ;";
+		// UNIONを使って、予約テーブルとキャンセル履歴の両方から最大値を取得する
+		String maxSql = "SELECT MAX(seq) FROM (" +
+				"  SELECT CAST(RIGHT(reservation_number, 3) AS UNSIGNED) AS seq FROM 予約 WHERE reservation_date = ? " +
+				"  UNION ALL " +
+				"  SELECT CAST(RIGHT(reservation_number, 3) AS UNSIGNED) AS seq FROM キャンセル履歴 WHERE reservation_date = ?"
+				+
+				") AS combined";
 
 		try (PreparedStatement maxStmt = con.prepareStatement(maxSql)) {
 			maxStmt.setDate(1, Date.valueOf(date));
+			maxStmt.setDate(2, Date.valueOf(date)); // 履歴側にも日付をセット
+
 			try (ResultSet rs = maxStmt.executeQuery()) {
 				int lastNumber = 0;
 				if (rs.next()) {
-					lastNumber = rs.getInt(1); // 最大値（例：31）を取得
+					lastNumber = rs.getInt(1);
 				}
 
-				int nextNumber = lastNumber + 1; // 最大値に+1する（例：32）
+				int nextNumber = lastNumber + 1;
 				String seqStr = String.format("%03d", nextNumber);
 				return "RES" + dateStr + seqStr;
 			}
@@ -301,6 +307,7 @@ public class ReservationDao {
 		}
 		return false;
 	}
+
 	public Reservation findByRid(String reserveId) {
 		String sql = "SELECT * FROM 予約 WHERE reservation_number = ? ;";
 		try (Connection con = createConnection();
