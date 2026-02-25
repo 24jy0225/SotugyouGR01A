@@ -4,7 +4,7 @@
 <%
 String action = (String)session.getAttribute("action");
 User user = (User)session.getAttribute("LoginUser");
-Reservation r = (Reservation) session.getAttribute("Reservation");
+Reservation r = (Reservation) session.getAttribute("cancelReserve");
 
 // --- 24時間表記の計算ロジック ---
 java.time.LocalDateTime startDt = r.getStartDateTime();
