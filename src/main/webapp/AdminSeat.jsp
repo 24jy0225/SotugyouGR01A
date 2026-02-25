@@ -61,7 +61,7 @@ List<Seat> seatList = (List<Seat>) session.getAttribute("Seat");
 				%>
 				<tr>
 					<td><%=s.getSeatNumber()%></td>
-					<td><%=s.getStoreNumber().getStoreName()%></td>
+					<td><%=s.getStore().getStoreName()%></td>
 					<%
 					if (s.getIsActive() == true) {
 					%>

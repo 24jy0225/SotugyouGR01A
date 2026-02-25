@@ -84,6 +84,10 @@ main{
     font-size: 13px;
 }
 
+.form-options a:hover{
+	color: #E06B2F;
+}
+
 .remember-me {
     display: flex;
     align-items: center;
@@ -134,6 +138,7 @@ main{
 }
 
 .signup-link a:hover {
+	color: #E06B2F;
     text-decoration: underline;
 }
 /* �X�}�[�g�t�H���Ή� - ���X�|���V�u�f�U�C�� */

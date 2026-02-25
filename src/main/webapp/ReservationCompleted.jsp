@@ -5,8 +5,30 @@
 String action = (String)session.getAttribute("action");
 User user = (User)session.getAttribute("LoginUser");
 Reservation r = (Reservation) session.getAttribute("Reservation");
-DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy年MM月dd日");
-DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
+// --- 24時間表記の計算ロジック ---
+java.time.LocalDateTime startDt = r.getStartDateTime();
+java.time.LocalDateTime endDt = r.getEndDateTime();
+
+int sHour = startDt.getHour();
+int sMinute = startDt.getMinute();
+java.time.LocalDate displayDate = startDt.toLocalDate();
+
+// 0〜4時の場合は日付を1日戻し、時間を+24する
+if (sHour < 5) {
+	displayDate = displayDate.minusDays(1);
+	sHour += 24;
+}
+String dateStr = displayDate.format(DateTimeFormatter.ofPattern("yyyy年MM月dd日"));
+String startStr = String.format("%02d:%02d", sHour, sMinute);
+
+// 終了時間の計算
+int eHour = endDt.getHour();
+int eMinute = endDt.getMinute();
+if (eHour < 5) {
+	eHour += 24;
+}
+String endStr = String.format("%02d:%02d", eHour, eMinute);
 %>
 <!DOCTYPE html>
 <html lang="ja">
@@ -85,7 +107,7 @@ DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
 			<div class="reservation-details">
 				<p class="detail-item">
-					日付:<%=r.getStartDateTime().format(formatter)%></p>
+					日付:<%=dateStr%></p>
 				<p class="detail-item">
 					コース:<%=ChronoUnit.MINUTES.between(r.getStartDateTime(), r.getEndDateTime())%>分
 				</p>
@@ -93,7 +115,7 @@ DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 					席番号:<%=r.getSeatId()%>番
 				</p>
 				<p class="detail-item">
-					時間:<%=r.getStartDateTime().format(timeFormatter)%>〜
+					時間:<%=startStr%>〜<%=endStr%>
 				</p>
 			</div>
 			<div>

@@ -11,8 +11,8 @@ List<Reservation> list = (List<Reservation>) session.getAttribute("ReservationHi
 List<Seat> seatList = (List<Seat>) session.getAttribute("Seat");
 
 // 表示する時間軸の定義（JS側でも共通で利用）
-String[] hours = {"20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30", "00:00", "00:30", "01:00",
-		"01:30", "02:00", "02:30", "03:00", "03:30", "04:00"};
+String[] hours = {"20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30", "24:00", "24:30", "25:00",
+		"25:30", "26:00", "26:30", "27:00", "27:30", "28:00"};
 %>
 
 <!DOCTYPE html>
@@ -62,15 +62,15 @@ String[] hours = {"20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00",
 		%>
 
 		<div id="controls-area">
-			<label>予約スケジュール</label>
 			<button class="date-nav-btn" onclick="prevDay()">&lt;</button>
 			<input class="date-nav-btn" id="date-nav-input" type="date"
 				onchange="changeDate(this.value)">
 			<button class="date-nav-btn" onclick="nextDay()">&gt;</button>
 			<button class="date-nav-btn" id="date-nav-today" onclick="setToday()">今日</button>
-
-			<button class="date-nav-btn" onclick="refreshKeepDate()"id="date-nav-today" >更新</button>
-			<button class="date-nav-btn" onclick="location.href='AdminSeat.jsp'"id="seatcontrol">座席管理</button>
+			<button class="date-nav-btn" onclick="refreshKeepDate()"
+				id="date-nav-today">更新</button>
+			<button class="date-nav-btn" onclick="location.href='AdminSeat.jsp'"
+				id="seatcontrol">座席管理</button>
 			<p>＊予約追加の場合は顧客管理で顧客を選択して顧客詳細から追加して下さい</p>
 		</div>
 
@@ -117,13 +117,27 @@ String[] hours = {"20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00",
 // 1. JSPから渡されたデータを保持
 let reservations = [
     <%if (list != null) {
-	for (Reservation r : list) {%>
+	for (Reservation r : list) {
+		if (r.getCancelDate() != null) {
+			continue;
+		}
+		// ★ 開始時間の計算（0〜4時は24〜28時表記に変換）
+		java.time.LocalDateTime st = r.getStartDateTime();
+		int sHour = st.getHour();
+		int sMin = st.getMinute();
+		String startStr = String.format("%02d:%02d", (sHour < 5 ? sHour + 24 : sHour), sMin);
+
+		// ★ 終了時間の計算（同様に変換）
+		java.time.LocalDateTime et = r.getEndDateTime();
+		int eHour = et.getHour();
+		int eMin = et.getMinute();
+		String endStr = String.format("%02d:%02d", (eHour < 5 ? eHour + 24 : eHour), eMin);%>
         {
             id: "<%=r.getReserveId()%>",
-            date: "<%=r.getStartDateTime().toLocalDate().format(dateFmt)%>",
+            date: "<%=st.toLocalDate().format(dateFmt)%>",
             seatId: "<%=r.getSeatId()%>",
-            start: "<%=r.getStartDateTime().toLocalTime().format(timeFmt)%>",
-            end: "<%=r.getEndDateTime().toLocalTime().format(timeFmt)%>",
+            start: "<%=startStr%>", // 変換された開始時間（例：25:30）
+            end: "<%=endStr%>",     // 変換された終了時間
             name: "<%=r.getUserName()%>",
             count: <%=r.getReservePeople()%>
         },
@@ -141,17 +155,13 @@ function formatDate(d){
 
 function refreshKeepDate() {
     const selectedDate = document.getElementById("date-nav-input").value;
-    
-    // JSPを直接開くのではなく、Controllerを経由させる
-    // これにより、Java側で DBからの最新取得(execute) が走り、セッションが新しくなります
     location.href = "AdminController?command=reservationManage&refDate=" + selectedDate;
 }
 
 function prevDay(){ currentDate.setDate(currentDate.getDate() - 1); updateDateInput(); }
 function nextDay(){ currentDate.setDate(currentDate.getDate() + 1); updateDateInput(); }
 function setToday(){ 
-    // 今日ボタンを押したときは、URLのパラメータを消してリロードするのが確実です
-	location.href = "AdminController?command=reservationManage";
+    location.href = "AdminController?command=reservationManage";
 }
 
 function changeDate(val){ 
@@ -188,8 +198,12 @@ function paintDay() {
     reservations.forEach((r, idx) => {
         let bDate = r.date;
         const startH = parseInt(r.start.split(":")[0]);
-        if (startH < 6) {
-            let d = new Date(r.date);
+        
+        // ★ Java側で24以上になっているため、条件式を「>= 24」に変更
+        // カレンダー上は「前日」の列に描画するために日付を1日戻す
+        if (startH >= 24) {
+            const parts = r.date.split('-');
+            let d = new Date(parts[0], parts[1] - 1, parts[2]);
             d.setDate(d.getDate() - 1);
             bDate = formatDate(d);
         }
@@ -255,16 +269,14 @@ function deleteReservation(reserveId) {
     });
 }
 
-// ★★★ ページ読み込み時の初期化処理（ここがキモ） ★★★
+// ★★★ ページ読み込み時の初期化処理 ★★★
 window.onload = function() {
     const urlParams = new URLSearchParams(window.location.search);
     const refDate = urlParams.get('refDate');
 
     if (refDate) {
-        // URLに日付があればそれをセット
         currentDate = new Date(refDate);
     } else {
-        // なければ今日
         currentDate = new Date();
     }
     updateDateInput();

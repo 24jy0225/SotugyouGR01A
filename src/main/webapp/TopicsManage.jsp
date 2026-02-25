@@ -48,9 +48,9 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 						placeholder="トピック内容" maxlength="1000" class="topic-content"></textarea>
 				</div>
 				<div class="topics-form-div">
-					<label for="photo_id">画像</label> <input type="file"
-						accept="image/png,image/jpeg,image/jpg" name="image" id="photo_id"
-						class="topic-photo" onchange="previewImage(this)">
+					<label for="photo_id">画像</label> 
+					<input type="file" accept="image/png,image/jpeg,image/jpg" 
+					name="image" id="photo_id" class="topic-photo" onchange="previewImage(this)" required>
 				</div>
 				<div class="topics-form-div">
 					<input type="button" onclick="addTopics()" value="＋　追加する"
@@ -113,11 +113,10 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
         function addTopics() {
             const form = document.getElementById("topicsAddForm");
             // バリデーション（簡易）
-            if(!document.getElementById("topics_title").value || !document.getElementById("topics_content").value){
-                alert("タイトルと内容は必須です");
+            if(!document.getElementById("topics_title").value || !document.getElementById("topics_content").value || !document.getElementById("photo_id").value){
+                alert("タイトル、内容、写真は必須です");
                 return;
             }
-
             const formData = new FormData(form);
             
             // 画面表示用の一時変数

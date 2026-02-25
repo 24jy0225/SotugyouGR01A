@@ -1,270 +1,313 @@
 /* デスクトップ用のスタイル */
 main {
-    display: grid;
-    place-content: center;
-    grid-template-areas:
-        "member-info member-couponlist"
-        "member-reservation member-reservation-list";
-    grid-template-columns: 900px 900px;
-    grid-template-rows: auto auto;
-    
+	display: grid;
+	place-content: center;
+	grid-template-areas:
+		"member-info member-couponlist"
+		"member-reservation member-reservation-list";
+	grid-template-columns: 900px 900px;
+	grid-template-rows: auto auto;
+	margin-top: 100px;
 }
 
 .member-info {
-    display: flex;
-    flex-direction: column;
-    align-items: end;
-    gap: 20px;
+	display: flex;
+	flex-direction: column;
 }
 
-.member-content {
-    width: 500px;
+.member-inner {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	margin: 0 auto;
 }
 
 .member-data {
-    margin-left: 20px;
+	margin-left: 20px;
 }
 
 .member-information {
-    color: white;
-    width: 500px;
+	text-align: center;
+}
+
+.member-information a {
+	color: white;
+}
+
+.member-information a:visited {
+	color: white;
+}
+
+.member-information a:hover {
+	color: #E06B2F;
 }
 
 .member-couponlist {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 900px;
-    gap: 16px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	width: 900px;
+	gap: 16px;
 }
 
 .coupon {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    align-self: stretch;
-    height: 225px;
-    border-radius: 10px;
-    background: #FFF;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	align-self: stretch;
+	height: 225px;
+	border-radius: 10px;
+	background: #FFF;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .coupon-head {
-    background: linear-gradient(135deg, #DE9514 0%, #E06B2F 100%);
-    width: 160px;
-    height: 225px;
-    border-radius: 8px 0px 0px 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+	background: linear-gradient(135deg, #DE9514 0%, #E06B2F 100%);
+	width: 160px;
+	height: 225px;
+	border-radius: 8px 0px 0px 8px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
 }
 
 .coupon-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
 }
 
 .coupon-icon {
-    font-size: 48px;
+	font-size: 48px;
 }
 
 .coupon-percent {
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
+	font-size: 20px;
+	font-weight: bold;
+	color: white;
 }
 
 .coupon-head::before,
 .coupon-head::after {
-    content: '';
-    position: absolute;
-    right: -5px;
-    width: 10px;
-    height: 10px;
-    background: #000;
-    border-radius: 50%;
+	content: '';
+	position: absolute;
+	right: -5px;
+	width: 10px;
+	height: 10px;
+	background: #000;
+	border-radius: 50%;
 }
 
 .coupon-head::before {
-    top: -5px;
+	top: -5px;
 }
 
 .coupon-head::after {
-    bottom: -5px;
+	bottom: -5px;
 }
 
 .coupon-body {
-    display: flex;
-    flex-direction: column;
-    width: 740px;
-    height: 225px;
-    align-items: center;
-    border-left: 3px dashed #ccc;
+	display: flex;
+	flex-direction: column;
+	width: 740px;
+	height: 225px;
+	align-items: center;
+	border-left: 3px dashed #ccc;
 }
 
 .coupon-table {
-    display: flex;
-    width: 650px;
-    flex-direction: column;
-    align-items: flex-start;
-    color: black;
-    margin-top: 0;
-    margin-bottom: 0;
+	display: flex;
+	width: 650px;
+	flex-direction: column;
+	align-items: flex-start;
+	color: black;
+	margin-top: 0;
+	margin-bottom: 0;
 }
 
 .coupon-table td {
-    padding: 5px;
+	padding: 5px;
 }
 
 .coupon-use {
-    display: flex;
-    margin: auto auto 20px auto;
-    border: none;
-    border-radius: 8px;
-    background: linear-gradient(135deg, #DE9514 0%, #E06B2F 100%);
-    width: 650px;
-    height: 36px;
-    padding: 8px 16px;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    color: white;
-    font-weight: bold;
+	display: flex;
+	margin: auto auto 20px auto;
+	border: none;
+	border-radius: 8px;
+	background: linear-gradient(135deg, #DE9514 0%, #E06B2F 100%);
+	width: 650px;
+	height: 36px;
+	padding: 8px 16px;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	color: white;
+	font-weight: bold;
 }
 
 .member-reservation-list {
-    border: 5px solid #4A5565;
-    width: 900px;
-    height: auto;
-    grid-column: 1/3;
-    margin: 100px auto 100px auto;
-    padding: 20px;
+	border: 5px solid #4A5565;
+	width: 900px;
+	height: auto;
+	grid-column: 1/3;
+	margin: 100px auto 100px auto;
+	padding: 20px;
 }
 
 .member-reservation {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    margin-top: 20px;
-    border-radius: 14px;
-    border: 1.25px solid rgba(0, 0, 0, 0.10);
-    background: #FFF;
-    color: black;
+	display: flex;
+	flex-direction: column;
+	padding: 20px;
+	margin-top: 20px;
+	border-radius: 14px;
+	border: 1.25px solid rgba(0, 0, 0, 0.10);
+	background: #FFF;
+	color: black;
 }
 
 .member-reservation table {
-    justify-content: space-evenly;
+	justify-content: space-evenly;
 }
 
-.reservation-numbertitle{
-    text-align: end;
+.reservation-numbertitle {
+	text-align: end;
 }
-.reservation-cancel{
-    font-weight: bold;
-    text-align: center;
-    justify-content: end;
-    background-color: white;
-    border-radius: 8px;
-    border: black solid 1px;
-    width: 120px;
-    margin: auto 0 auto auto;
-    cursor: pointer;
+
+.reservation-cancel {
+	font-weight: bold;
+	text-align: right;
+	justify-content: end;
+	background-color: white;
+	border-radius: 8px;
+	border: black solid 1px;
+	width: auto;
+	margin: auto 0 auto auto;
+	cursor: pointer;
+	padding: 8px 16px;
+	font-size: 12px;
+	margin: 8px 0 0 auto;
+	display: block;
+}
+
+.reservation-cancel:hover {
+	background-color: #4A5565;
+	color: #E06B2F;
+	border: solid 1px #E06B2F;
+}
+
+.reservation-add{
+	font-weight: bold;
+	justify-content: end;
+	background-color: white;
+	border-radius: 8px;
+	border: black solid 1px;
+	width: auto;
+	margin: auto 0 auto auto;
+	cursor: pointer;
+	padding: 8px 16px;
+	font-size: 12px;
+	margin-left:10px;
+}
+
+.reservation-add:hover{
+	background-color: #4A5565;
+	color: #E06B2F;
+	border: solid 1px #E06B2F;
 }
 
 .modal-title {
-    font-size: 18px;
-    font-weight: 500;
-    margin-bottom: 8px;
+	font-size: 18px;
+	font-weight: 500;
+	margin-bottom: 8px;
 }
 
 .modal-description {
-    font-size: 13px;
-    color: #ccc;
-    margin-bottom: 25px;
-    line-height: 1.6;
+	font-size: 13px;
+	color: #ccc;
+	margin-bottom: 25px;
+	line-height: 1.6;
 }
 
 .coupon-box {
-    border: 1px solid #666;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    background-color: #0a0a0a;
+	border: 1px solid #666;
+	padding: 20px;
+	border-radius: 8px;
+	margin-bottom: 20px;
+	background-color: #0a0a0a;
 }
 
 .coupon-label {
-    font-size: 12px;
-    color: #ccc;
-    margin-bottom: 8px;
+	font-size: 12px;
+	color: #ccc;
+	margin-bottom: 8px;
 }
 
 .coupon-name {
-    font-size: 14px;
-    margin-bottom: 10px;
+	font-size: 14px;
+	margin-bottom: 10px;
 }
 
 .coupon-discount {
-    font-size: 16px;
-    font-weight: 600;
-    color: #b366ff;
+	font-size: 16px;
+	font-weight: 600;
+	color: #b366ff;
 }
 
 .button-group {
-    display: flex;
-    gap: 12px;
+	display: flex;
+	gap: 12px;
 }
 
 .btn {
-    padding: 12px 30px;
-    font-size: 14px;
-    cursor: pointer;
-    border-radius: 6px;
-    font-weight: 500;
-    transition: all 0.3s;
-    border: none;
+	padding: 12px 30px;
+	font-size: 14px;
+	cursor: pointer;
+	border-radius: 6px;
+	font-weight: 500;
+	transition: all 0.3s;
+	border: none;
 }
 
 .btn-use {
-    background-color: #ff8c42;
-    color: #fff;
-    flex: 1;
+	background-color: #ff8c42;
+	color: #fff;
+	flex: 1;
 }
 
 .btn-use:hover {
-    background-color: #e67a35;
+	background-color: #e67a35;
 }
 
 .btn-cancel {
-    background-color: #fff;
-    color: #000;
-    padding: 12px 24px;
+	background-color: #fff;
+	color: #000;
+	padding: 12px 24px;
 }
 
 .btn-cancel:hover {
-    background-color: #f0f0f0;
+	background-color: #f0f0f0;
 }
 
 /* モーダル本体のデザイン */
 dialog {
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.9);
-    margin: 300px auto;
-    border: 1px solid #fff;
-    padding: 30px;
-    max-width: 450px;
-    width: 100%;
-    border-radius: 8px;
-    color: white;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(0, 0, 0, 0.9);
+	margin: 300px auto;
+	border: 1px solid #fff;
+	padding: 30px;
+	max-width: 450px;
+	width: 100%;
+	border-radius: 8px;
+	color: white;
 }
 
 /* 背景を暗くする設定 */
 dialog::backdrop {
-    background-color: rgba(0, 0, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0.5);
 }
 
 /* ============================================
@@ -273,255 +316,241 @@ dialog::backdrop {
 
 /* タブレット〜スマートフォン (768px以下) */
 @media screen and (max-width: 768px) {
-    main {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-    }
+	main {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		margin: 0;
+		padding: 0;
+	}
 
-    /* 会員情報セクション */
-    .member-info {
-        width: 100%;
-        align-items: center;
-        text-align: center;
-        gap: 24px;
-        padding: 32px 20px;
-        background-color: #000;
-    }
+	/* 会員情報セクション */
+	.member-info {
+		width: 100%;
+		align-items: center;
+		text-align: center;
+		gap: 24px;
+		padding: 32px 20px;
+		background-color: #000;
+	}
 
-    .member-content {
-        width: 100%;
-    }
+	.member-content {
+		width: 100%;
+	}
 
-    .member-content p:first-child {
-        font-size: 14px;
-        font-weight: 500;
-        margin-bottom: 8px;
-        color: #999;
-    }
+	.member-content p:first-child {
+		font-size: 14px;
+		font-weight: 500;
+		margin-bottom: 8px;
+		color: #999;
+	}
 
-    .member-data {
-        margin-left: 0;
-        font-size: 15px;
-        line-height: 1.6;
-    }
+	.member-data {
+		margin-left: 0;
+		font-size: 15px;
+		line-height: 1.6;
+	}
 
-    .member-information {
-        width: 100%;
-        text-decoration: underline;
-        font-size: 14px;
-        display: block;
-        margin-top: 8px;
-    }
+	.member-information {
+		width: 100%;
+		text-decoration: underline;
+		font-size: 14px;
+		display: block;
+		margin-top: 8px;
+	}
 
-    /* クーポン一覧セクション */
-    .member-couponlist {
-        width: 100%;
-        padding: 20px;
-        gap: 20px;
-        align-items: stretch;
-        background-color: #000;
-    }
+	/* クーポン一覧セクション */
+	.member-couponlist {
+		width: 100%;
+		padding: 20px;
+		gap: 20px;
+		align-items: stretch;
+		background-color: #000;
+	}
 
-    .coupon {
-        width: 100%;
-        height: auto;
-        min-height: 140px;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
+	.coupon {
+		width: 100%;
+		height: auto;
+		min-height: 140px;
+		border-radius: 12px;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+	}
 
-    .coupon-head {
-        width: 100px;
-        height: auto;
-        min-height: 140px;
-        border-radius: 12px 0 0 12px;
-        flex-direction: column;
-        padding: 15px 0;
-        gap: 10px;
-    }
+	.coupon-head {
+		width: 100px;
+		height: auto;
+		min-height: 140px;
+		border-radius: 12px 0 0 12px;
+		flex-direction: column;
+		padding: 15px 0;
+		gap: 10px;
+	}
 
-    .coupon-head::before,
-    .coupon-head::after {
-        display: none;
-    }
+	.coupon-head::before,
+	.coupon-head::after {
+		display: none;
+	}
 
-    /* チケットのギザギザ効果 */
-    .coupon-head {
-        position: relative;
-        background: 
-            radial-gradient(circle at right, transparent 8px, #DE9514 8px) right top / 100% 20px no-repeat,
-            radial-gradient(circle at right, transparent 8px, #E06B2F 8px) right bottom / 100% 20px no-repeat,
-            linear-gradient(135deg, #DE9514 0%, #E06B2F 100%);
-    }
+	/* チケットのギザギザ効果 */
+	.coupon-head {
+		position: relative;
+		background:
+			radial-gradient(circle at right, transparent 8px, #DE9514 8px) right top / 100% 20px no-repeat,
+			radial-gradient(circle at right, transparent 8px, #E06B2F 8px) right bottom / 100% 20px no-repeat,
+			linear-gradient(135deg, #DE9514 0%, #E06B2F 100%);
+	}
 
-    /* クーポンヘッダーのコンテンツ */
-    .coupon-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        height: 100%;
-    }
+	/* クーポンヘッダーのコンテンツ */
+	.coupon-content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		height: 100%;
+	}
 
-    .coupon-icon {
-        font-size: 32px;
-    }
+	.coupon-icon {
+		font-size: 32px;
+	}
 
-    .coupon-percent {
-        font-size: 14px;
-        font-weight: bold;
-        color: white;
-        text-align: center;
-    }
+	.coupon-percent {
+		font-size: 14px;
+		font-weight: bold;
+		color: white;
+		text-align: center;
+	}
 
-    .coupon-body {
-        width: calc(100% - 100px);
-        height: auto;
-        min-height: 140px;
-        padding: 12px;
-        border-left: 2px dashed #ddd;
-        justify-content: space-between;
-    }
+	.coupon-body {
+		width: calc(100% - 100px);
+		height: auto;
+		min-height: 140px;
+		padding: 12px;
+		border-left: 2px dashed #ddd;
+		justify-content: space-between;
+	}
 
-    .coupon-table {
-        width: 100%;
-        margin-bottom: 0;
-    }
+	.coupon-table {
+		width: 100%;
+		margin-bottom: 0;
+	}
 
-    .coupon-table tr:first-child td {
-        font-weight: bold;
-        font-size: 13px;
-        padding: 2px 0;
-    }
+	.coupon-table tr:first-child td {
+		font-weight: bold;
+		font-size: 13px;
+		padding: 2px 0;
+	}
 
-    .coupon-table tr:nth-child(2) td {
-        font-size: 11px;
-        color: #666;
-        padding: 2px 0;
-    }
+	.coupon-table tr:nth-child(2) td {
+		font-size: 11px;
+		color: #666;
+		padding: 2px 0;
+	}
 
-    .coupon-table td {
-        padding: 2px;
-        font-size: 11px;
-    }
+	.coupon-table td {
+		padding: 2px;
+		font-size: 11px;
+	}
 
-    /* 有効期限のスタイル */
-    .coupon-table:last-of-type {
-        margin-top: 8px;
-    }
+	/* 有効期限のスタイル */
+	.coupon-table:last-of-type {
+		margin-top: 8px;
+	}
 
-    .coupon-table:last-of-type tr:first-child td {
-        font-size: 10px;
-        font-weight: normal;
-        color: #666;
-    }
+	.coupon-table:last-of-type tr:first-child td {
+		font-size: 10px;
+		font-weight: normal;
+		color: #666;
+	}
 
-    .coupon-table:last-of-type tr:last-child td {
-        font-size: 10px;
-    }
+	.coupon-table:last-of-type tr:last-child td {
+		font-size: 10px;
+	}
 
-    .coupon-use {
-        width: 100%;
-        max-width: 100%;
-        height: 32px;
-        font-size: 13px;
-        margin: 8px 0 0 0;
-        padding: 0;
-    }
+	.coupon-use {
+		width: 100%;
+		max-width: 100%;
+		height: 32px;
+		font-size: 13px;
+		margin: 8px 0 0 0;
+		padding: 0;
+	}
 
-    /* 予約一覧セクション */
-    .member-reservation-list {
-        width: 100%;
-        border: none;
-        border-top: 2px solid #333;
-        padding: 20px;
-        margin: 0;
-        background-color: #000;
-    }
+	/* 予約一覧セクション */
+	.member-reservation-list {
+		width: 100%;
+		border: none;
+		border-top: 2px solid #333;
+		padding: 20px;
+		margin: 0;
+		background-color: #000;
+	}
 
-    .member-reservation-list > p {
-        font-size: 16px;
-        font-weight: bold;
-        margin-bottom: 16px;
-        color: white;
-    }
+	.member-reservation-list>label {
+		padding-right:10px;
+		font-size: 16px;
+		font-weight: bold;
+		margin-bottom: 16px;
+		color: white;
+	}
 
-    .member-reservation {
-        width: 100%;
-        padding: 16px;
-        margin-top: 12px;
-        border-radius: 12px;
-        background: white;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
+	.member-reservation {
+		width: 100%;
+		padding: 16px;
+		margin-top: 12px;
+		border-radius: 12px;
+		background: white;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	}
 
-    .member-reservation table {
-        width: 100%;
-        margin-bottom: 8px;
-    }
+	.member-reservation table {
+		width: 100%;
+		margin-bottom: 8px;
+	}
 
-    .member-reservation table td {
-        font-size: 13px;
-        padding: 4px 8px 4px 0;
-    }
+	.member-reservation table td {
+		font-size: 13px;
+		padding: 4px 8px 4px 0;
+	}
 
-    .member-reservation table:first-child {
-        margin-bottom: 4px;
-    }
+	.reservation-numbertitle {
+		text-align: left;
+		font-size: 12px;
+		color: #666;
+	}
 
-    .member-reservation table:nth-child(2) {
-        margin-bottom: 8px;
-    }
 
-    .reservation-numbertitle {
-        text-align: left;
-        font-size: 12px;
-        color: #666;
-    }
+	/* モーダルのレスポンシブ */
+	dialog {
+		margin: 80px auto;
+		padding: 24px;
+		max-width: 90%;
+	}
 
-    .reservation-cancel {
-        width: auto;
-        padding: 8px 16px;
-        font-size: 12px;
-        margin: 8px 0 0 auto;
-        display: block;
-    }
+	.modal-title {
+		font-size: 16px;
+	}
 
-    /* モーダルのレスポンシブ */
-    dialog {
-        margin: 80px auto;
-        padding: 24px;
-        max-width: 90%;
-    }
+	.modal-description {
+		font-size: 12px;
+		margin-bottom: 20px;
+	}
 
-    .modal-title {
-        font-size: 16px;
-    }
+	.coupon-box {
+		padding: 16px;
+	}
 
-    .modal-description {
-        font-size: 12px;
-        margin-bottom: 20px;
-    }
+	.button-group {
+		flex-direction: column;
+		gap: 10px;
+	}
 
-    .coupon-box {
-        padding: 16px;
-    }
+	.btn {
+		width: 100%;
+		padding: 14px;
+	}
 
-    .button-group {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .btn {
-        width: 100%;
-        padding: 14px;
-    }
-
-    .btn-cancel {
-        padding: 14px;
-    }
+	.btn-cancel {
+		padding: 14px;
+	}
 }

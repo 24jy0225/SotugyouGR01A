@@ -26,6 +26,7 @@ import action.Reservation.ReservationHistoryAction;
 import action.Reservation.ReservationSeatAction;
 import action.Reservation.ReservationTimeAction;
 import action.Reservation.ReserveAction;
+import action.Reservation.ReserveFindAction;
 import action.Topics.TopicsAction;
 import action.main.AuthenticateAction;
 import action.main.LoginAction;
@@ -65,6 +66,29 @@ public class UserController extends HttpServlet {
 		// TODO Auto-generated method stub
 		String command = req.getParameter("command");
 		String nextPage = null;
+
+		if (command == null) {
+			resp.sendRedirect("index.jsp");
+			return;
+		}
+
+		List<String> noLoginRequired = List.of(
+				"LoginAction", "UserRegister", "RegisterAction", "goMain",
+				"passwordReset", "passwordResetInput",
+				"authentication", "Course", "Seat", "Time", "reservationDate");
+
+		if (!noLoginRequired.contains(command)) {
+
+			HttpSession session = req.getSession(false);
+
+			if (session == null || session.getAttribute("LoginUser") == null) {
+
+				req.setAttribute("errorMsg", "一定時間操作がなかったため、自動的にログアウトしました。再度ログインしてください。");
+				RequestDispatcher rd = req.getRequestDispatcher("Login.jsp");
+				rd.forward(req, resp);
+				return;
+			}
+		}
 		HttpSession session = req.getSession();
 		switch (command) {
 		case "Course":
@@ -118,7 +142,10 @@ public class UserController extends HttpServlet {
 			AuthenticateAction authenticateAction = new AuthenticateAction();
 			boolean authenticateResult = authenticateAction.execute(req);
 			if (authenticateResult) {
-				req.setAttribute("msg", "本登録が完了しました。ログインしてください。");
+				if (session != null) {
+					session.invalidate();
+				}
+				req.setAttribute("msg", "認証が完了しました。ログインしてください。");
 				nextPage = "Success.jsp";
 			} else {
 				session.setAttribute("errorMsg", "無効なリンクか、有効期限切れです。");
@@ -151,11 +178,19 @@ public class UserController extends HttpServlet {
 			session.setAttribute("photoList", photoList);
 			nextPage = "top.jsp";
 			break;
-		case "cancel":
+		case "cancelConfirm":
+			nextPage = "reservation_cancel.jsp";
 			String reserveId = req.getParameter("reserveId");
 			session.setAttribute("reserveId", reserveId);
+			ReserveFindAction reservationFindAction = new ReserveFindAction();
+			Reservation r = reservationFindAction.execute(req);
+			session.setAttribute("findReserve", r);
+			break;
+		case "cancel":
+			reserveId = req.getParameter("reserveId");
+			session.setAttribute("cancelReserveId", reserveId);
 			ReservationCancelAction reservationCancelAction = new ReservationCancelAction();
-			Reservation r = reservationCancelAction.execute(req);
+			r = reservationCancelAction.execute(req);
 			if (r != null) {
 				session.setAttribute("cancelReserve", r);
 				resp.sendRedirect("ReservationCancelComplete.jsp");
@@ -165,6 +200,13 @@ public class UserController extends HttpServlet {
 				session.setAttribute("errorMsg", "cancelできませんでした");
 				break;
 			}
+		case "logout":
+			nextPage = "index.jsp";
+			session = req.getSession();
+			if (session != null) {
+				session.invalidate();
+			}
+			break;
 
 		default:
 			nextPage = "Error.jsp"; // 例としてエラーページを設定
@@ -187,7 +229,27 @@ public class UserController extends HttpServlet {
 		HttpSession session = null;
 		String nextPage = null;
 		String command = req.getParameter("command");
+		if (command == null) {
+			resp.sendRedirect("index.jsp");
+			return;
+		}
 
+		List<String> noLoginRequired = List.of(
+				"LoginAction", "UserRegister", "RegisterAction", "goMain",
+				"passwordReset", "passwordResetInput", "Reserve");
+
+		if (!noLoginRequired.contains(command)) {
+
+			session = req.getSession(false);
+
+			if (session == null || session.getAttribute("LoginUser") == null) {
+
+				req.setAttribute("errorMsg", "一定時間操作がなかったため、自動的にログアウトしました。再度ログインしてください。");
+				RequestDispatcher rd = req.getRequestDispatcher("Login.jsp");
+				rd.forward(req, resp);
+				return;
+			}
+		}
 		switch (command) {
 		case "UserRegister":
 			nextPage = "UserRegister.jsp";
@@ -232,13 +294,6 @@ public class UserController extends HttpServlet {
 				req.setAttribute("errorMsg", "ユーザーが見つかりませんでした");
 			}
 
-			break;
-		case "logout":
-			nextPage = "Main.jsp";
-			session = req.getSession();
-			if (session != null) {
-				session.invalidate();
-			}
 			break;
 		case "Reserve":
 
@@ -290,6 +345,9 @@ public class UserController extends HttpServlet {
 			break;
 		case "useCoupon":
 			try {
+				session = req.getSession();
+				String couponId = req.getParameter("couponNumber");
+				session.setAttribute("couponId", couponId);
 				CouponUseAction useAction = new CouponUseAction();
 				useAction.execute(req, resp);
 
@@ -331,25 +389,41 @@ public class UserController extends HttpServlet {
 			}
 			break;
 		case "userInfoEdit":
+			//次やるところ
 			session = req.getSession();
 			String email = req.getParameter("email");
+			String preEmail = req.getParameter("preEmail");
 			String tel = req.getParameter("tel");
 			String name = req.getParameter("name");
 			session.setAttribute("email", email);
 			session.setAttribute("tel", tel);
 			session.setAttribute("name", name);
 			UserInfoEditAction userInfoEditAction = new UserInfoEditAction();
-			user = userInfoEditAction.execute(req);
-			if (user != null) {
-				session.setAttribute("LoginUser", user);
-				session.setAttribute("message", "会員情報を変更しました！");
-				resp.sendRedirect("UserInfoEdit.jsp");
-				return;
-			} else {
-				session.setAttribute("errorMsg", "変更失敗");
-				nextPage = "Error.jsp";
+			if (preEmail.equals(email)) {
+				user = userInfoEditAction.execute(req);
+				if (user != null) {
+					session.setAttribute("LoginUser", user);
+					session.setAttribute("message", "会員情報を変更しました！");
+					resp.sendRedirect("UserInfoEdit.jsp");
+					return;
+				} else {
+					session.setAttribute("errorMsg", "変更失敗");
+					nextPage = "Error.jsp";
+					break;
+				}
+			} else if (!preEmail.equals(email)) {
+				session.setAttribute("tempEmail", email);
+				boolean result = userInfoEditAction.update(req);
+				if (result) {
+					req.setAttribute("msg", "名前・電話番号を更新し、新しいアドレスに確認メールを送信しました。");
+					nextPage = "UserAuthentication.jsp";
+				} else {
+					req.setAttribute("errorMsg", "更新処理またはメール送信に失敗しました。");
+					nextPage = "Error.jsp";
+				}
 				break;
 			}
+			break;
 		default:
 			nextPage = "Error.jsp";
 			req.setAttribute("errorMsg", "不正なポストコマンド: " + command);

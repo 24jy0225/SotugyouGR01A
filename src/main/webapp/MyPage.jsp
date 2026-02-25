@@ -35,80 +35,86 @@ if (couponUsageList == null)
 <body>
 	<header class="header" data-name="ヘッダー">
 		<div class="logos" id="logo" onclick="location.href='./top.jsp'">
-			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo" class="logo">
+			<img src="./image/assets/user/ロゴタイプ_金色b.svg" alt="logo"
+				class="logo">
 		</div>
 		<button class="hamburger-menu" id="hamburgerBtn" aria-label="メニュー">
-            <img src="./image/assets/user/hamburger.svg" alt="メニュー">
-        </button>
+			<img src="./image/assets/user/hamburger.svg" alt="メニュー">
+		</button>
 		<!-- PC用ナビゲーション -->
-        <nav class="nav-menu">
+		<nav class="nav-menu">
 			<a href="./whats_Shisha.jsp" class="nav-link">What's</a> 
-			<a href="./how_to_Use.jsp" class="nav-link">Use</a> 
-			<a href="./system-introduction.jsp" class="nav-link">System</a>
-			<a	href="./menu.jsp" class="nav-link">Menu</a> 
+			<a href="./how_to_Use.jsp" class="nav-link">Use</a>
+			<a href="./system-introduction.jsp" class="nav-link">System</a> 
+			<a href="./menu.jsp" class="nav-link">Menu</a> 
 			<a href="./topics.jsp" class="nav-link">Topics</a> 
 			<a href="./contact.jsp" class="nav-link">Contact</a>
 			<a href="UserController?command=reservationDate" class="nav-link">Reservation</a>
-			<%if (user != null) { %>
-				<div class="nav-member-group">
-					<a href="UserController?command=MyPage" class="nav-link">Member</a>
-					<a href="UserController?command=logout" class="nav-logout-link">logout</a>
-				</div>
-			<% } else { %>
-				<a href="./Login.jsp" class="nav-link">Login</a>
-			<% } %>
+			<%
+			if (user != null) {
+			%>
+			<div class="nav-member-group">
+				<a href="UserController?command=MyPage" class="nav-link">Member</a>
+				<a href="UserController?command=logout" class="nav-logout-link">logout</a>
+			</div>
+			<%
+			} else {
+			%>
+			<a href="./Login.jsp" class="nav-link">Login</a>
+			<%
+			}
+			%>
 		</nav>
-        <!-- スマホ用ナビゲーション -->
-        <nav class="mobile-nav" id="mobileNav">
-            <a href="./whats_Shisha.jsp" class="mobile-nav-link">What's</a> 
+		<!-- スマホ用ナビゲーション -->
+		<nav class="mobile-nav" id="mobileNav">
+			<a href="./whats_Shisha.jsp" class="mobile-nav-link">What's</a> 
 			<a href="./how_to_Use.jsp" class="mobile-nav-link">Use</a> 
 			<a href="./system-introduction.jsp" class="mobile-nav-link">System</a>
-			<a	href="./menu.jsp" class="mobile-nav-link">Menu</a> 
+			<a href="./menu.jsp" class="mobile-nav-link">Menu</a> 
 			<a href="./topics.jsp" class="mobile-nav-link">Topics</a> 
-			<a href="./contact.jsp" class="mobile-nav-link">Contact</a>
+			<a href="./contact.jsp" class="mobile-nav-link">Contact</a> 
 			<a href="UserController?command=reservationDate" class="mobile-nav-link">Reservation</a>
-			<%if (user != null) { %>
-				<a href="UserController?command=MyPage" class="mobile-nav-link">Member</a>
-				<a href="UserController?command=logout" class="mobile-nav-link mobile-nav-logout">Logout</a>
-			<% } else { %>
-				<a href="./Login.jsp" class="mobile-nav-link">Login</a>
-			<% } %>
-        </nav>
+			<%
+			if (user != null) {
+			%>
+			<a href="UserController?command=MyPage" class="mobile-nav-link">Member</a>
+			<a href="UserController?command=logout"
+				class="mobile-nav-link mobile-nav-logout">Logout</a>
+			<%
+			} else {
+			%>
+			<a href="./Login.jsp" class="mobile-nav-link">Login</a>
+			<%
+			}
+			%>
+		</nav>
 	</header>
 
 	<main>
-		<%
-		if (msg != null) {
-		%>
-		<div
-			style="color: #d4af37; font-weight: bold; border: 1px solid #d4af37; padding: 15px; margin: 20px auto; max-width: 800px; text-align: center; background: rgba(212, 175, 55, 0.1);">
-			<%=msg%>
-		</div>
-		<%
-		session.removeAttribute("message");
-		%>
-		<%
-		}
-		%>
 
 		<div class="member-info">
-			<div class="member-content">
-				<p>
-					Name / 会員番号:<%=user.getUserId()%></p>
-				<p class="member-data"><%=user.getName()%></p>
-			</div>
-			<div class="member-content">
-				<p>Mail address</p>
-				<p class="member-data"><%=user.getUserEmail()%></p>
-			</div>
-			<div class="member-content">
-				<p>tel number</p>
-				<p class="member-data">
-					<%=(user.getUserTel() == null || user.getUserTel().isEmpty()) ? "未登録" : user.getUserTel()%>
+			<div class="member-inner">
+				<div>
+					<p>
+						Name / 会員番号:<%=user.getUserId()%></p>
+					<p class="member-data"><%=user.getName()%></p>
+				</div>
+				<div>
+					<p>Mail address</p>
+					<p class="member-data"><%=user.getUserEmail()%></p>
+				</div>
+				<div>
+					<p>tel number</p>
+					<p class="member-data">
+						<%=(user.getUserTel() == null || user.getUserTel().isEmpty()) ? "未登録" : user.getUserTel()%></p>
+				</div>
+				<p class="member-information">
+					<a href="UserInfoEdit.jsp">会員情報変更はこちら</a>
+				</p>
+				<p class="member-information">
+					<a href="PasswordReset.jsp">パスワード変更はこちら</a>
 				</p>
 			</div>
-			<a href="UserInfoEdit.jsp" class="member-information">会員情報変更はこちら</a>
-			<a href="PasswordReset.jsp" class="member-information">パスワード変更はこちら</a>
 		</div>
 
 		<div class="member-couponlist">
@@ -119,7 +125,8 @@ if (couponUsageList == null)
 					LocalDate startDate = usage.getCoupon().getStartDate();
 					LocalDate endDate = usage.getCoupon().getEndDate();
 					// 期限外または非アクティブならスキップ
-					if (today.isBefore(startDate) || today.isAfter(endDate) || !usage.getCoupon().getIsActive()) {
+					if (today.isBefore(startDate) || today.isAfter(endDate) || !usage.getCoupon().getIsActive()
+					|| !usage.isCouponUsage()) {
 				continue;
 					}
 					hasValidCoupon = true;
@@ -146,8 +153,9 @@ if (couponUsageList == null)
 						</tr>
 					</table>
 					<button type="button" class="coupon-use"
-						onclick="showCouponModal('<%=usage.getCoupon().getCouponId()%>', '<%=usage.getCoupon().getCouponName()%>')">
-						クーポンを使用する</button>
+						data-id="<%=usage.getCoupon().getCouponId()%>"
+						data-name="<%=usage.getCoupon().getCouponName()%>"
+						onclick="showCouponModal(this)">クーポンを使用する</button>
 				</div>
 			</div>
 			<%
@@ -162,32 +170,67 @@ if (couponUsageList == null)
 		</div>
 
 		<div class="member-reservation-list">
-			<p>予約一覧</p>
+			<label>予約一覧</label>
+			<button onclick="location.href='UserController?command=reservationDate'"
+				class="reservation-add">＋予約追加</button>
 			<%
 			if (reservationList.isEmpty()) {
 			%>
 			<p style="color: #fff; padding: 20px;">現在ご予約はありません。</p>
 			<%
 			} else {
-			for (Reservation res : reservationList) {
-				if(res.getReserveDate().isBefore(today) || res.getCancelDate() != null){ continue; }
+
+			for (int i = reservationList.size() -1; i >= 0; i--) {
+				Reservation res  = reservationList.get(i);
+				// ★開始時間・終了時間を取得
+				java.time.LocalDateTime startDt = res.getStartDateTime();
+				java.time.LocalDateTime endDt = res.getEndDateTime();
+
+				// 過去の予約やキャンセル済みはスキップ
+				if (startDt.toLocalDate().isBefore(today) || res.getCancelDate() != null) {
+					continue;
+				}
+
+				// --- 開始時間の24時間表記ロジック ---
+				int sHour = startDt.getHour();
+				int sMinute = startDt.getMinute();
+				java.time.LocalDate displayDate = startDt.toLocalDate();
+
+				// 0〜4時の場合は日付を1日戻し、時間を+24する
+				if (sHour < 5) {
+					displayDate = displayDate.minusDays(1);
+					sHour += 24;
+				}
+				String dateStr = displayDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+				String startStr = String.format("%02d:%02d", sHour, sMinute);
+
+				// --- 終了時間の24時間表記ロジック ---
+				int eHour = endDt.getHour();
+				int eMinute = endDt.getMinute();
+				if (eHour < 5) {
+					eHour += 24; // 終了時間も同様に+24する
+				}
+				String endStr = String.format("%02d:%02d", eHour, eMinute);
 			%>
 			<div class="member-reservation">
 				<table>
 					<tr>
-						<td><%=res.getReserveDate()%></td>
-						<td><%=res.getReservePeople()%>名</td>
-						<td class="reservation-numbertitle">予約番号：</td>
-						<td><%=res.getReserveId()%></td>
+						<td width="250">予約番号：<%=res.getReserveId()%></td>
+						<td>座席番号：<%=res.getSeatId()%></td>
+						<td>利用人数：<%=res.getReservePeople()%>名</td>
+						<td>
+							<button class="reservation-cancel"
+							onclick="location.href='UserController?command=cancelConfirm&reserveId=<%=res.getReserveId()%>'">キャンセル</button>
+						</td>
+					</tr>
+					<tr>
+						<td>予約日：<%=dateStr%></td>
+						<td><%=startStr%>～<%=endStr%></td>
 					</tr>
 				</table>
-				<button class="reservation-cancel"
-					onclick="location.href='UserController?command=cancel&reserveId=<%=res.getReserveId()%>'">キャンセルする</button>
 			</div>
-			<%
-			}
-			}
-			%>
+			<% }%>
+		<% }%>
 		</div>
 	</main>
 
@@ -203,7 +246,6 @@ if (couponUsageList == null)
 	<div class="coupon-box">
 		<div class="coupon-label">クーポン</div>
 		<div id="modal-coupon-name" class="coupon-name">クーポン名</div>
-		<div class="coupon-discount">CONFIRM</div>
 	</div>
 	<div class="button-group">
 		<button type="button" class="btn btn-use" id="finalConfirmButton">使用する</button>
@@ -218,27 +260,31 @@ if (couponUsageList == null)
 	</footer>
 
 	<script>
-        const modal = document.getElementById('confirmModal');
-        const targetInput = document.getElementById('targetCouponNumber');
-        const modalCouponName = document.getElementById('modal-coupon-name');
+    const modal = document.getElementById('confirmModal');
+    const targetInput = document.getElementById('targetCouponNumber');
+    const modalCouponName = document.getElementById('modal-coupon-name');
 
-        // モーダルを開く関数
-        function showCouponModal(id, name) {
-            targetInput.value = id;
-            modalCouponName.textContent = name;
-            modal.showModal();
-        }
+    // 修正された関数
+    function showCouponModal(element) { // 引数を 'element' にする
+        // 引数で受け取った 'element' (ボタン自身) から data属性を取得
+        const id = element.getAttribute('data-id');
+        const name = element.getAttribute('data-name');
+        
+        targetInput.value = id;
+        modalCouponName.textContent = name;
+        modal.showModal();
+    }
 
-        // 「キャンセル」で閉じる
-        document.getElementById('closeButton').addEventListener('click', () => {
-            modal.close();
-        });
+    // 「キャンセル」で閉じる
+    document.getElementById('closeButton').addEventListener('click', () => {
+        modal.close();
+    });
 
-        // 「使用する」でフォーム送信
-        document.getElementById('finalConfirmButton').addEventListener('click', () => {
-            document.getElementById('useForm').submit();
-        });
-    </script>
+    // 「使用する」でフォーム送信
+    document.getElementById('finalConfirmButton').addEventListener('click', () => {
+        document.getElementById('useForm').submit();
+    });
+</script>
 </body>
 </html>
 <script type="text/javascript" src="./javascript/logoScript.js"></script>

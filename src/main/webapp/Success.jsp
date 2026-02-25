@@ -10,7 +10,21 @@ User user = (User)session.getAttribute("LoginUser");
 <title>成功だお</title>
 </head>
 <body>
-<% if(session.getAttribute("afterLoginPage") != null){%>
+<%
+	String msg = (String) request.getAttribute("msg");
+	if (msg != null) {
+	%>
+	<div
+		style="color: green; font-weight: bold; border: 1px solid green; padding: 10px; margin-bottom: 10px;">
+		<%=msg%>
+	</div>
+	<%
+	// 一度表示したら消す（そうしないと、ずっと表示され続けてしまうため）
+	request.removeAttribute("msg");
+	}
+	%>
+
+<% if(session.getAttribute("afterLoginPage") != null || msg != null){%>
 	<button onclick="location.href='Login.jsp'">ログイン画面</button>
 <% }else{ %>
 	<button onclick="location.href='top.jsp'">ホームに戻る</button>
