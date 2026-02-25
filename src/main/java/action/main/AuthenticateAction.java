@@ -29,8 +29,8 @@ public class AuthenticateAction extends HttpServlet {
 		}
 
 		UserDao dao = new UserDao();
-
-		return dao.authenticate(token);
+		
+		return dao.completeEmailUpdate(token);
 
 	}
 

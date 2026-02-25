@@ -287,6 +287,7 @@ public class AdminController extends HttpServlet {
 			return;
 
 		case "topicsAdd":
+			//次やるところ
 			Part topicsPart = req.getPart("image");
 			String topicsTitle = req.getParameter("topicsTitle");
 			String topicsContent = req.getParameter("topicsContent");
