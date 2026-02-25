@@ -43,11 +43,12 @@ if (couponUsageList == null)
 		</button>
 		<!-- PC用ナビゲーション -->
 		<nav class="nav-menu">
-			<a href="./whats_Shisha.jsp" class="nav-link">What's</a> <a
-				href="./how_to_Use.jsp" class="nav-link">Use</a> <a
-				href="./system-introduction.jsp" class="nav-link">System</a> <a
-				href="./menu.jsp" class="nav-link">Menu</a> <a href="./topics.jsp"
-				class="nav-link">Topics</a> <a href="./contact.jsp" class="nav-link">Contact</a>
+			<a href="./whats_Shisha.jsp" class="nav-link">What's</a> 
+			<a href="./how_to_Use.jsp" class="nav-link">Use</a>
+			<a href="./system-introduction.jsp" class="nav-link">System</a> 
+			<a href="./menu.jsp" class="nav-link">Menu</a> 
+			<a href="./topics.jsp" class="nav-link">Topics</a> 
+			<a href="./contact.jsp" class="nav-link">Contact</a>
 			<a href="UserController?command=reservationDate" class="nav-link">Reservation</a>
 			<%
 			if (user != null) {
@@ -66,14 +67,13 @@ if (couponUsageList == null)
 		</nav>
 		<!-- スマホ用ナビゲーション -->
 		<nav class="mobile-nav" id="mobileNav">
-			<a href="./whats_Shisha.jsp" class="mobile-nav-link">What's</a> <a
-				href="./how_to_Use.jsp" class="mobile-nav-link">Use</a> <a
-				href="./system-introduction.jsp" class="mobile-nav-link">System</a>
-			<a href="./menu.jsp" class="mobile-nav-link">Menu</a> <a
-				href="./topics.jsp" class="mobile-nav-link">Topics</a> <a
-				href="./contact.jsp" class="mobile-nav-link">Contact</a> <a
-				href="UserController?command=reservationDate"
-				class="mobile-nav-link">Reservation</a>
+			<a href="./whats_Shisha.jsp" class="mobile-nav-link">What's</a> 
+			<a href="./how_to_Use.jsp" class="mobile-nav-link">Use</a> 
+			<a href="./system-introduction.jsp" class="mobile-nav-link">System</a>
+			<a href="./menu.jsp" class="mobile-nav-link">Menu</a> 
+			<a href="./topics.jsp" class="mobile-nav-link">Topics</a> 
+			<a href="./contact.jsp" class="mobile-nav-link">Contact</a> 
+			<a href="UserController?command=reservationDate" class="mobile-nav-link">Reservation</a>
 			<%
 			if (user != null) {
 			%>
@@ -170,7 +170,9 @@ if (couponUsageList == null)
 		</div>
 
 		<div class="member-reservation-list">
-			<p>予約一覧</p>
+			<label>予約一覧</label>
+			<button onclick="location.href='UserController?command=reservationDate'"
+				class="reservation-add">＋予約追加</button>
 			<%
 			if (reservationList.isEmpty()) {
 			%>
@@ -178,7 +180,8 @@ if (couponUsageList == null)
 			<%
 			} else {
 
-			for (Reservation res : reservationList) {
+			for (int i = reservationList.size() -1; i >= 0; i--) {
+				Reservation res  = reservationList.get(i);
 				// ★開始時間・終了時間を取得
 				java.time.LocalDateTime startDt = res.getStartDateTime();
 				java.time.LocalDateTime endDt = res.getEndDateTime();
@@ -198,7 +201,7 @@ if (couponUsageList == null)
 					displayDate = displayDate.minusDays(1);
 					sHour += 24;
 				}
-				String dateStr = displayDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+				String dateStr = displayDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
 				String startStr = String.format("%02d:%02d", sHour, sMinute);
 
 				// --- 終了時間の24時間表記ロジック ---
@@ -212,30 +215,23 @@ if (couponUsageList == null)
 			<div class="member-reservation">
 				<table>
 					<tr>
-						<td><%=dateStr%></td>
-						<td><%=res.getReservePeople()%>名</td>
-						<td class="reservation-numbertitle">予約番号：</td>
-						<td><%=res.getReserveId()%></td>
+						<td width="250">予約番号：<%=res.getReserveId()%></td>
+						<td>座席番号：<%=res.getSeatId()%></td>
+						<td>利用人数：<%=res.getReservePeople()%>名</td>
+						<td>
+							<button class="reservation-cancel"
+							onclick="location.href='UserController?command=cancelConfirm&reserveId=<%=res.getReserveId()%>'">キャンセル</button>
+						</td>
 					</tr>
 					<tr>
-						<td>座席番号</td>
-						<td>開始時間</td>
-						<td>終了時間</td>
-					</tr>
-					<tr>
-						<td><%=res.getSeatId()%></td>
-						<td><%=startStr%></td>
-						<td><%=endStr%></td>
+						<td>予約日：<%=dateStr%></td>
+						<td><%=startStr%>～<%=endStr%></td>
 					</tr>
 				</table>
-				<button class="reservation-cancel"
-					onclick="location.href='UserController?command=cancelConfirm&reserveId=<%=res.getReserveId()%>'">キャンセルする</button>
 			</div>
-					<%
-				}
-				}
-				%>
-		/div>
+			<% }%>
+		<% }%>
+		</div>
 	</main>
 
 	<form id="useForm" action="UserController" method="POST"
