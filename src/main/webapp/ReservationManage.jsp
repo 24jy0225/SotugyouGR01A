@@ -118,6 +118,9 @@ String[] hours = {"20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00",
 let reservations = [
     <%if (list != null) {
 	for (Reservation r : list) {
+		if (r.getCancelDate() != null) {
+			continue;
+		}
 		// ★ 開始時間の計算（0〜4時は24〜28時表記に変換）
 		java.time.LocalDateTime st = r.getStartDateTime();
 		int sHour = st.getHour();

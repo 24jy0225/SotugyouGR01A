@@ -367,6 +367,7 @@ public class UserController extends HttpServlet {
 				}				
 			}else if(!preEmail.equals(email)) {
 				nextPage = "Login.jsp";
+				
 			}
 			break;
 		default:
