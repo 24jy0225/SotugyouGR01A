@@ -19,9 +19,6 @@
 <link rel="stylesheet" href="./css/user/password-reset-completeStyle.css">
 <link rel="stylesheet" href="./css/user/hamburgerStyle.css">
 <title>エラー検知</title>
-<style type="text/css">
-	
-</style>
 </head>
 <body>
 <header class="header" data-name="ヘッダー">
@@ -68,11 +65,11 @@
         </nav>
 	</header>
 	<main>
-	<h1 class="playfair-display errerMsg"><%= errorMsg %></h1>
+	<h1 class="playfair-display errorMsg"><%= errorMsg %></h1>
 	<% if(action.equals("ByAdmin")){ %>
-	<button onclick="location.href='AdminMain.jsp'">トップに戻る</button>
+	<button onclick="location.href='AdminMain.jsp'"class="errorBtn">トップに戻る</button>
 	<% }else{ %>
-	<button onclick="location.href='index.jsp'">トップに戻る</button>
+	<button onclick="location.href='index.jsp'" class="errorBtn">トップに戻る</button>
 	<% } %>
 	</main>
 	
