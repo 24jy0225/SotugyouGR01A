@@ -110,26 +110,26 @@ User user = (User) session.getAttribute("LoginUser");
 				</div>
 
 				<div class="form-options">
-					<label class="remember-me"> 
-						<input type="checkbox"id="remember"> 
-						<span>Remember me</span>
-					</label> 
-					<a href="PasswordReset.jsp" class="forgot-password">
-						Forgot Password?
-					</a>
+					<label class="remember-me"> <input type="checkbox"
+						id="remember"> <span>Remember me</span>
+					</label> <a href="PasswordReset.jsp" class="forgot-password"> Forgot
+						Password? </a>
 				</div>
 
 				<button type="submit" class="login-button">Log In</button>
 
 				<div class="signup-link">
-					No account yet? 
-					<a href="UserRegister.jsp">Sign Up</a>
+					No account yet? <a href="UserRegister.jsp">Sign Up</a>
 				</div>
 				<input type="hidden" name="command" value="LoginAction">
 			</form>
 		</div>
 	</main>
-
+	<footer>
+		<p>
+			<small>&copy;The Shisha Honjin</small>
+		</p>
+	</footer>
 </body>
 
 </html>
