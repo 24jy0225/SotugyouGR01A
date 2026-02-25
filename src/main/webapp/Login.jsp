@@ -74,7 +74,18 @@ User user = (User) session.getAttribute("LoginUser");
 			%>
 		</nav>
 	</header>
-
+	<%
+	String msg = (String) request.getAttribute("errorMsg");
+	if (msg != null) {
+	%>
+	<div
+		style="color: white; text-align: center; background: #333; padding: 10px; margin-bottom: 10px;">
+		<%=msg%>
+	</div>
+	<%
+	request.removeAttribute("errorMsg");
+	}
+	%>
 	<main>
 
 		<div class="login-container">

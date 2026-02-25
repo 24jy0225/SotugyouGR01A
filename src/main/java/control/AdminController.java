@@ -66,12 +66,21 @@ public class AdminController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		String nextPage = null;
-		HttpSession session = req.getSession();
 		String command = (String) req.getParameter("command");
+		HttpSession session = null;
 		if (command == null) {
 			resp.sendRedirect("AdminLogin.jsp");
 			return;
 		}
+		
+		session = req.getSession(false);
+		if (session == null || session.getAttribute("adminId") == null) {
+			req.setAttribute("errorMsg", "一定時間操作がなかったため、自動的にログアウトしました。再度ログインしてください。");
+			RequestDispatcher rd = req.getRequestDispatcher("AdminLogin.jsp");
+			rd.forward(req, resp);
+			return;
+		}
+		
 		switch (command) {
 
 		case "editCoupon":
@@ -131,16 +140,33 @@ public class AdminController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		
 		String nextPage = null;
 		HttpSession session = req.getSession();
 		String command = (String) req.getParameter("command");
-		List<Reservation> reservationList = new ArrayList<>();
-		ReservationHistoryAction action = new ReservationHistoryAction();
-		boolean success;
+		
 		if (command == null) {
 			resp.sendRedirect("AdminLogin.jsp");
 			return;
 		}
+		
+		List<String> noLoginRequired = List.of("login");
+		
+		if (!noLoginRequired.contains(command)) {
+			HttpSession sessionCheck = req.getSession(false);
+			if (sessionCheck == null || sessionCheck.getAttribute("adminId") == null) {
+				req.setAttribute("errorMsg", "一定時間操作がなかったため、自動的にログアウトしました。再度ログインしてください。");
+				RequestDispatcher rd = req.getRequestDispatcher("AdminLogin.jsp");
+				rd.forward(req, resp);
+				return;
+			}
+		}
+		
+		session = req.getSession();
+		List<Reservation> reservationList = new ArrayList<>();
+		ReservationHistoryAction action = new ReservationHistoryAction();
+		boolean success;
 		switch (command) {
 		case "reservationDelete":
 			String id = req.getParameter("id");

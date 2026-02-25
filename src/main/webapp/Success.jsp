@@ -20,7 +20,7 @@ User user = (User)session.getAttribute("LoginUser");
 	</div>
 	<%
 	// 一度表示したら消す（そうしないと、ずっと表示され続けてしまうため）
-	session.removeAttribute("msg");
+	request.removeAttribute("msg");
 	}
 	%>
 
