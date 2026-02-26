@@ -6,23 +6,13 @@ List<Photo> photoList = (List<Photo>) session.getAttribute("photoList");
 List<Topics> topicsList = (List<Topics>) session.getAttribute("top4List");
 
 User user = (User) session.getAttribute("LoginUser");
-String topImageName = "./image/assets/user/burning_coal.jpg";
-String flavor = "./image/assets/user/flavar.png";
+String topImageName = "/image/assets/user/burning_coal.jpg";
 //2. リストを回して "top" カテゴリを探す
 if (photoList != null) {
 	for (Photo p : photoList) {
 		// "top" と p.getPhotoCategory() が一致するかチェック
 		if ("top".equals(p.getPhotoCategory())) {
 	topImageName = p.getPhotoFileName(); // ファイル名を取得
-	break; // 見つかったらループを抜ける
-		}
-	}
-}
-if (photoList != null) {
-	for (Photo p : photoList) {
-		// "top" と p.getPhotoCategory() が一致するかチェック
-		if ("flavor".equals(p.getPhotoCategory())) {
-	flavor = p.getPhotoFileName(); // ファイル名を取得
 	break; // 見つかったらループを抜ける
 		}
 	}
@@ -92,7 +82,7 @@ if (photoList != null) {
 		<div class="hero-section">
 			<div class="hero-background-image">
 				<img
-					src="<%= topImageName %>"
+					src=".<%= topImageName %>"
 					alt="シーシャの炭">
 			</div>
 			<div class="logo-image">
@@ -304,7 +294,7 @@ if (photoList != null) {
 						<p><%=t.getTopicsTitle()%></p>
 					</div>
 					<div class="topic-card-image">
-						<img src="<%=t.getPhotoId().getPhotoFileName()%>"
+						<img src=".<%=t.getPhotoId().getPhotoFileName()%>"
 							alt="トピック1">
 					</div>
 				</div>

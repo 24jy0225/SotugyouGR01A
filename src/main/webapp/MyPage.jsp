@@ -229,17 +229,9 @@ if (couponUsageList == null)
 					</tr>
 				</table>
 			</div>
-<<<<<<< HEAD
-					<%
-				}
-				}
-				%>
-		
-=======
 			<% }%>
 		<% }%>
 		</div>
->>>>>>> d8c1feda26df77b65714d7c0a6486ad35d12c1a5
 	</main>
 
 	<form id="useForm" action="UserController" method="POST"

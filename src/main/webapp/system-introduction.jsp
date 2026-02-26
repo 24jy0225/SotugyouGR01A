@@ -3,7 +3,7 @@
 <%
 List<Photo> photoList = (List<Photo>) session.getAttribute("photoList");
 User user = (User)session.getAttribute("LoginUser");
-String system = "./image/assets/user/SystemMenu.jpg";
+String system = "/image/assets/user/SystemMenu.jpg";
 if (photoList != null) {
 	for (Photo p : photoList) {
 		
@@ -84,7 +84,7 @@ if (photoList != null) {
 			<hr>
 		</div>
 		<div class="system-img">
-			<img src="<%= system %>" alt="">
+			<img src=".<%= system %>" alt="">
 		</div>
 	</main>
 	<!-- フッター -->

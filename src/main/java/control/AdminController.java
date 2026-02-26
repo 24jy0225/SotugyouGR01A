@@ -289,7 +289,7 @@ public class AdminController extends HttpServlet {
 
 			String fileName = System.currentTimeMillis() + "_" + part.getSubmittedFileName();
 			String saveDir = getServletContext().getRealPath("/image/photo");
-			String webPath = req.getContextPath() + "/image/photo/" + fileName;
+			String webPath = "image/photo/" + fileName;
 
 			try {
 
@@ -319,15 +319,11 @@ public class AdminController extends HttpServlet {
 			String topicsContent = req.getParameter("topicsContent");
 
 			String contentType = topicsPart.getContentType();
-			if (!contentType.startsWith("image/")) {
-				req.setAttribute("error", "画像ファイルのみアップロード可能です");
-				return;
-			}
-			if (topicsPart == null || topicsPart.getSize() == 0) {
-
-				resp.sendRedirect("Error.jsp");
-				return;
-			}
+			if (contentType == null || !contentType.startsWith("image/")) {
+		        req.setAttribute("error", "画像ファイルのみアップロード可能です");
+		        // ここは通常、元の入力画面にフォワードさせます
+		        return;
+		    }
 
 			String tName = topicsPart.getSubmittedFileName();
 			String tExt = "";
@@ -338,7 +334,7 @@ public class AdminController extends HttpServlet {
 			String tFileName = System.currentTimeMillis() + tExt;
 
 			String tSaveDir = getServletContext().getRealPath("/image/photo");
-			String tWebPath = req.getContextPath() + "/image/photo/" + tFileName;
+			String tWebPath = "/image/photo/" + tFileName;
 
 			try {
 
