@@ -62,13 +62,11 @@ String[] hours = {"20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00",
 		%>
 
 		<div id="controls-area">
-			<label>予約スケジュール</label>
 			<button class="date-nav-btn" onclick="prevDay()">&lt;</button>
 			<input class="date-nav-btn" id="date-nav-input" type="date"
 				onchange="changeDate(this.value)">
 			<button class="date-nav-btn" onclick="nextDay()">&gt;</button>
 			<button class="date-nav-btn" id="date-nav-today" onclick="setToday()">今日</button>
-
 			<button class="date-nav-btn" onclick="refreshKeepDate()"
 				id="date-nav-today">更新</button>
 			<button class="date-nav-btn" onclick="location.href='AdminSeat.jsp'"
@@ -120,6 +118,9 @@ String[] hours = {"20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00",
 let reservations = [
     <%if (list != null) {
 	for (Reservation r : list) {
+		if (r.getCancelDate() != null) {
+			continue;
+		}
 		// ★ 開始時間の計算（0〜4時は24〜28時表記に変換）
 		java.time.LocalDateTime st = r.getStartDateTime();
 		int sHour = st.getHour();

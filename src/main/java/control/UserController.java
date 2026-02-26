@@ -66,6 +66,29 @@ public class UserController extends HttpServlet {
 		// TODO Auto-generated method stub
 		String command = req.getParameter("command");
 		String nextPage = null;
+
+		if (command == null) {
+			resp.sendRedirect("index.jsp");
+			return;
+		}
+
+		List<String> noLoginRequired = List.of(
+				"LoginAction", "UserRegister", "RegisterAction", "goMain",
+				"passwordReset", "passwordResetInput",
+				"authentication", "Course", "Seat", "Time", "reservationDate");
+
+		if (!noLoginRequired.contains(command)) {
+
+			HttpSession session = req.getSession(false);
+
+			if (session == null || session.getAttribute("LoginUser") == null) {
+
+				req.setAttribute("errorMsg", "一定時間操作がなかったため、自動的にログアウトしました。再度ログインしてください。");
+				RequestDispatcher rd = req.getRequestDispatcher("Login.jsp");
+				rd.forward(req, resp);
+				return;
+			}
+		}
 		HttpSession session = req.getSession();
 		switch (command) {
 		case "Course":
@@ -119,7 +142,10 @@ public class UserController extends HttpServlet {
 			AuthenticateAction authenticateAction = new AuthenticateAction();
 			boolean authenticateResult = authenticateAction.execute(req);
 			if (authenticateResult) {
-				req.setAttribute("msg", "本登録が完了しました。ログインしてください。");
+				if (session != null) {
+					session.invalidate();
+				}
+				req.setAttribute("msg", "認証が完了しました。ログインしてください。");
 				nextPage = "Success.jsp";
 			} else {
 				session.setAttribute("errorMsg", "無効なリンクか、有効期限切れです。");
@@ -203,7 +229,27 @@ public class UserController extends HttpServlet {
 		HttpSession session = null;
 		String nextPage = null;
 		String command = req.getParameter("command");
+		if (command == null) {
+			resp.sendRedirect("index.jsp");
+			return;
+		}
 
+		List<String> noLoginRequired = List.of(
+				"LoginAction", "UserRegister", "RegisterAction", "goMain",
+				"passwordReset", "passwordResetInput", "Reserve");
+
+		if (!noLoginRequired.contains(command)) {
+
+			session = req.getSession(false);
+
+			if (session == null || session.getAttribute("LoginUser") == null) {
+
+				req.setAttribute("errorMsg", "一定時間操作がなかったため、自動的にログアウトしました。再度ログインしてください。");
+				RequestDispatcher rd = req.getRequestDispatcher("Login.jsp");
+				rd.forward(req, resp);
+				return;
+			}
+		}
 		switch (command) {
 		case "UserRegister":
 			nextPage = "UserRegister.jsp";
@@ -352,8 +398,8 @@ public class UserController extends HttpServlet {
 			session.setAttribute("email", email);
 			session.setAttribute("tel", tel);
 			session.setAttribute("name", name);
-			if(preEmail.equals(email)) {
-				UserInfoEditAction userInfoEditAction = new UserInfoEditAction();
+			UserInfoEditAction userInfoEditAction = new UserInfoEditAction();
+			if (preEmail.equals(email)) {
 				user = userInfoEditAction.execute(req);
 				if (user != null) {
 					session.setAttribute("LoginUser", user);
@@ -364,9 +410,18 @@ public class UserController extends HttpServlet {
 					session.setAttribute("errorMsg", "変更失敗");
 					nextPage = "Error.jsp";
 					break;
-				}				
-			}else if(!preEmail.equals(email)) {
-				nextPage = "Login.jsp";
+				}
+			} else if (!preEmail.equals(email)) {
+				session.setAttribute("tempEmail", email);
+				boolean result = userInfoEditAction.update(req);
+				if (result) {
+					req.setAttribute("msg", "名前・電話番号を更新し、新しいアドレスに確認メールを送信しました。");
+					nextPage = "UserAuthentication.jsp";
+				} else {
+					req.setAttribute("errorMsg", "更新処理またはメール送信に失敗しました。");
+					nextPage = "Error.jsp";
+				}
+				break;
 			}
 			break;
 		default:

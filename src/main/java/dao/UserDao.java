@@ -287,4 +287,41 @@ public class UserDao {
 
 	}
 
+	public boolean updateProfileWithTempEmail(String userId, String name, String tel, String email, String token) {
+		String sql = "UPDATE 会員 SET member_name = ?, member_tel = ?, temporary_email = ?, url_token = ?, "
+	               + "token_expire = DATE_ADD(NOW(), INTERVAL 1 DAY) WHERE member_id = ?";
+
+	    try (Connection con = createConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+	        pstmt.setString(1, name);
+	        pstmt.setString(2, tel);
+	        pstmt.setString(3, email);
+	        pstmt.setString(4, token);
+	        pstmt.setString(5, userId);
+
+	        return pstmt.executeUpdate() == 1;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	
+	}
+	
+	public boolean completeEmailUpdate(String token) {
+	  
+	    String sql = "UPDATE 会員 SET "
+	               + "member_email_address = IFNULL(temporary_email, member_email_address), "
+	               + "authentication = 1, "
+	               + "temporary_email = NULL, "
+	               + "url_token = NULL "
+	               + "WHERE url_token = ? AND token_expire > NOW()";
+
+	    try (Connection con = createConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+	        pstmt.setString(1, token);
+	        return pstmt.executeUpdate() == 1; // 1件更新できれば成功
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+
 }
