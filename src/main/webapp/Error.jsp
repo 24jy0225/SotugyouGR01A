@@ -71,10 +71,10 @@
 							</p>
 						</div>
 						<% if(action.equals("ByAdmin")){ %>
-							<button onclick="location.href='AdminMain.jsp'">トップに戻る</button>
-							<% }else{ %>
-								<button onclick="location.href='index.jsp'">トップに戻る</button>
-								<% } %>
+						<button onclick="location.href='AdminMain.jsp'" class="errorbtn">トップに戻る</button>
+						<% }else{ %>
+						<button onclick="location.href='index.jsp'" class="errorbtn">トップに戻る</button>
+						<% } %>
 					</main>
 					<footer>
 						<p><small>&copy;The Shisha Honjin</small></p>
