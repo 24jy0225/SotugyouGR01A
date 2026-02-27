@@ -10,6 +10,7 @@ List<User> userList = (List<User>) session.getAttribute("UserList");
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="./css/admin/adminStyle.css">
 <link rel="stylesheet" href="./css/admin/adminCustomerStyle.css">
+<link rel="icon" href="./image/assets/Admin_logo.png">
 <title>管理者顧客管理</title>
 </head>
 <body>

@@ -13,6 +13,7 @@ String action = (String) session.getAttribute("action");
 <link rel="icon" href="../assets/ロゴマーク_金色b.webp">
 <link rel="stylesheet" href="./css/user/style.css">
 <link rel="stylesheet" href="./css/user/member-editStyle.css">
+<link rel="icon" href="./image/assets/Admin_logo.png">
 <title>会員情報の変更</title>
 </head>
 

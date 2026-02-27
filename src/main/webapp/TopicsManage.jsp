@@ -10,6 +10,7 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="./css/admin/adminStyle.css">
 <link rel="stylesheet" href="./css/admin/adminTopicsStyle.css">
+<link rel="icon" href="./image/assets/Admin_logo.png">
 <title>管理者トピックス管理</title>
 </head>
 <body>
