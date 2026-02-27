@@ -81,11 +81,13 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 			</div>
 			<p>今後の予約</p>
 			<%
+			boolean hasFutureReservation = false;
 			for (Reservation r : reservationList) {
 				if (!r.getUserId().equals(user.getUserId()) || r.getCancelDate() != null
 				|| r.getStartDateTime().isBefore(java.time.LocalDateTime.now())) {
 					continue;
 				}
+				hasFutureReservation = true;
 				java.time.LocalDateTime start = r.getStartDateTime();
 				java.time.LocalDateTime end = r.getEndDateTime();
 				year = start.getYear();
@@ -311,11 +313,25 @@ List<CouponUsage> couponUsageList = (List<CouponUsage>) session.getAttribute("co
 	</main>
 	<script type="text/javascript">
 		function deleteUser(userId) {
-			if (confirm("ユーザーを削除しますか？\n*予約とクーポンも削除されます*")) {
+			var hasFutureRes = <%= hasFutureReservation %>;
+		    var message = "ユーザーを削除しますか？\n*予約とクーポンも削除されます*";
+
+		    // 今後の予約がある場合、メッセージを追加または別の確認を出す
+		    if (hasFutureRes) {
+		        message += "\n\n⚠️注意：このユーザーには【今後の予約】が入っています。";
+		    }
+
+		    if (confirm(message)) {
+		        // 二重チェックをしたい場合はここに追加のconfirmを入れます
+		        if (hasFutureRes) {
+		            if (!confirm("本当によろしいですか？今後の予約もすべて取り消されます。")) {
+		                return;
+		            }
+		        }
 				document.getElementById("targetCommand").value = "deleteUser";
 				document.getElementById("targetUserId").value = userId;
 				document.getElementById("editUserForm").submit();
-			}
+		    }
 		}
 
 		function makeUserReserve(userId) {
