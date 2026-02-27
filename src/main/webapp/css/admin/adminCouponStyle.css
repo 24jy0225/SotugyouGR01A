@@ -28,6 +28,7 @@
     background: #030213;
     color: white;
 	cursor:pointer;
+	border: 1px solid black;
 }
 
 .coupon-main-head button:hover {
