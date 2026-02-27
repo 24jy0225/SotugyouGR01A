@@ -95,3 +95,11 @@ tr {
     border: #D1D5DC solid 1px;
     background-color: white;
 }
+
+.seat-add-btn{
+	cursor: pointer;
+}
+
+.seat-add-btn:hover{
+	opacity: 0.8;
+}
