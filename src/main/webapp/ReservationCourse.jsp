@@ -27,7 +27,7 @@ if (date != null && date.contains("-")) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>予約登録システム - コース選択</title>
-    <link rel="icon" href="./image/assets/user/ロゴ完成_金色b.svg">
+    <link rel="icon" href="./image/assets/user/ロゴマーク_金色b.webp">
     <link rel="stylesheet" href="./css/user/style.css">
     <link rel="stylesheet" href="./css/user/reservation_courseStyle.css">
     <link rel="stylesheet" href="./css/user/hamburgerStyle.css">

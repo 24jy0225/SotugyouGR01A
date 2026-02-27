@@ -35,7 +35,7 @@ String buttonText = (user != null || ("ByAdmin".equals(action) && targetUser != 
 <title>予約登録システム - 時間選択</title>
 <link rel="stylesheet" href="./css/user/style.css">
 <link rel="stylesheet" href="./css/user/reservation_timeStyle.css">
-<link rel="icon" href="../assets/ロゴ完成_金色b.svg">
+<link rel="icon" href="./image/assets/user/ロゴマーク_金色b.webp">
 <link rel="stylesheet" href="./css/user/hamburgerStyle.css">
 <style>
 
