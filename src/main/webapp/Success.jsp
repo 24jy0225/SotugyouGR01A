@@ -30,11 +30,33 @@ User user = (User) session.getAttribute("LoginUser");
 		font-size : 48px;
 	}
 	.success-btn{
-		margin-top : 100px;
-		margin-bottom: 100px;
+		display: inline-flex;
+    	align-items: center;
+    	gap: 0.5rem;
+    	padding: 0.75rem 2rem;
+    	font-family: 'Noto Sans JP', sans-serif;
+    	font-size: 0.9rem;
+    	font-weight: 500;
+    	letter-spacing: 0.05em;
+    	cursor: pointer;
+    	border: none;
+    	border-radius: 2px;
+    	text-decoration: none;
+    	background: transparent;
+    	color: rgb(232, 232, 240);
+    	border: 1px solid rgb(85, 85, 106);
 		font-size : 24px;
+		margin : 100px auto;		
+		margin-bottom: 100px;
 	}
-	
+    .success-btn:hover {
+    	border-color: rgb(255, 60, 60);
+    	color: rgb(255, 60, 60);
+    	transform: translateY(-2px);
+	}
+}
+
+
 }
 
 

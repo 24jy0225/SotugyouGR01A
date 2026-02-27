@@ -19,7 +19,7 @@ public class PasswordResetAction {
 			String baseURL = requestURL.substring(0, requestURL.lastIndexOf("/"));
 			String resetURL = baseURL + "/UserController?command=passwordReset&token=" + token;
 
-			MailUtil.send(email, resetURL);
+			MailUtil.sendPasswordResetMail(email, resetURL);
 
 			return true;
 		}

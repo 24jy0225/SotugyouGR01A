@@ -291,7 +291,7 @@ public class UserController extends HttpServlet {
 
 			} else {
 				nextPage = "Error.jsp";
-				req.setAttribute("errorMsg", "ユーザーが見つかりませんでした");
+				session.setAttribute("errorMsg", "ユーザーが見つかりませんでした");
 			}
 
 			break;

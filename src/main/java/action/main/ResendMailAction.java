@@ -48,7 +48,7 @@ public class ResendMailAction extends HttpServlet {
             String baseURL = requestURL.substring(0, requestURL.lastIndexOf("/"));
             String authenticationURL = baseURL + "/UserController?command=authenticateion&token=" + newToken;
 
-            MailUtil.send(email, authenticationURL);
+            MailUtil.sendPasswordResetMail(email, authenticationURL);
             return true;
         } else {
             return false;

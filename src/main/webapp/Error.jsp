@@ -4,7 +4,7 @@
 		<% String action=(String)session.getAttribute("action"); %>
 			<% if(action==null){ action="" ; } %>
 			<% if(errorMsg == null){
-				errorMsg = "AbsoruteWoka";
+				errorMsg = "不明なエラーが出ました";
 			} %>
 				<!DOCTYPE html>
 				<html>

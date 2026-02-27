@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpSession;
 
 import dao.UserDao;
 import model.User;
+import util.MailUtil;
 
 /**
  * Servlet implementation class UserInfoEditAction
@@ -42,7 +43,7 @@ public class UserInfoEditAction {
             String authenticationURL = baseURL + "/UserController?command=authentication&token=" + token;
 
             // 4. 新しいアドレスに送信
-            util.MailUtil.send(email, authenticationURL);
+            MailUtil.sendWelcomeMail(email,authenticationURL);
         }
         return result;
     }

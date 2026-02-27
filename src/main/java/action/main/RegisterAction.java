@@ -56,13 +56,13 @@ public class RegisterAction extends HttpServlet {
 		boolean result = dao.createUser(user , token);
 		
 		if(result) {
-			req.getSession().setAttribute("tempEmail", "email");
+			req.getSession().setAttribute("tempEmail", email);
 			String requestURL = req.getRequestURL().toString();
             String baseURL = requestURL.substring(0, requestURL.lastIndexOf("/"));
             String authenticationURL = baseURL + "/UserController?command=authentication&token=" + token;
 
             // メール送信 (MailUtil呼び出し)
-            MailUtil.send(email, authenticationURL);
+            MailUtil.sendWelcomeMail(email,authenticationURL);
 		}
 		
 		return result;

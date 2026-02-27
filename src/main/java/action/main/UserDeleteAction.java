@@ -29,7 +29,7 @@ public class UserDeleteAction extends HttpServlet {
     	String userId = (String)session.getAttribute("userId");
     	CouponDao cDao = new CouponDao();
     	ReservationDao rDao = new ReservationDao();
-    	if(cDao.deleteUserCoupon(userId) && rDao.deleteAll(userId)) {
+    	if(cDao.deleteUserCoupon(userId) && rDao.deleteAll(userId) && rDao.cancelDeleteAll(userId)) {
     		UserDao dao = new UserDao();
         	return dao.delete(userId);
     	}

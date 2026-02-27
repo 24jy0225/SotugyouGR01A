@@ -307,6 +307,21 @@ public class ReservationDao {
 		}
 		return false;
 	}
+	
+	public boolean cancelDeleteAll(String userId) {
+		String sql = "DELETE FROM キャンセル履歴 WHERE member_id = ? ;";
+		try (Connection con = createConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, userId);
+			pstmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 
 	public Reservation findByRid(String reserveId) {
 		String sql = "SELECT * FROM 予約 WHERE reservation_number = ? ;";
