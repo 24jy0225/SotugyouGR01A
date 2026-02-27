@@ -35,7 +35,7 @@ String endStr = String.format("%02d:%02d", eHour, eMinute);
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" href="./image/assets/user/ロゴ完成_金色b.svg">
+<link rel="icon" href="./image/assets/user/ロゴマーク_金色b.webp">
 <link rel="stylesheet" href="./css/user/style.css">
 <link rel="stylesheet" href="./css/user/reservation_completedStyle.css">
 <link rel="stylesheet" href="./css/user/hamburgerStyle.css">
