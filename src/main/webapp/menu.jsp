@@ -5,9 +5,9 @@ List<Photo> photoList = (List<Photo>) session.getAttribute("photoList");
 %>
 <%
 User user = (User) session.getAttribute("LoginUser");
-String drink = "./image/assets/user/menu/alcoholdrink1.webp";
-String flavor = "./image/assets/user/フレーバーメニュー.webp";
-String food = "./image/assets/user/menu/food1.webp";
+String drink = "/image/assets/user/menu/alcoholdrink1.webp";
+String flavor = "/image/assets/user/フレーバーメニュー.webp";
+String food = "/image/assets/user/menu/food1.webp";
 if (photoList != null) {
 	for (Photo p : photoList) {
 
@@ -109,7 +109,7 @@ if (photoList != null) {
 			<hr>
 		</div>
 		<div class="flavor-content">
-			<img src="<%=flavor%>" alt="flavor">
+			<img src=".<%=flavor%>" alt="flavor">
 		</div>
 		<div class="section-title-container">
 			<hr>
@@ -119,7 +119,7 @@ if (photoList != null) {
 		<div class="drink-back">
 			<div class="drink-content">
 				<div class="slide-item" id="drinkSliderTrack">
-					<img src="<%=drink%>" alt="">
+					<img src=".<%=drink%>" alt="">
 				</div>
 			</div>
 		</div>
@@ -134,7 +134,7 @@ if (photoList != null) {
 				<div class="slider-wrapper">
 					<div class="slide-item" id="foodSliderTrack">
 
-						<img src="<%=food%>" alt="">
+						<img src=".<%=food%>" alt="">
 
 					</div>
 				</div>

@@ -37,12 +37,15 @@ public class DesignUpdateAction {
 		System.out.println("DBから取得したパス: " + dbPath);
 		if (dbPath != null && !dbPath.isEmpty()) {
 
-			String fileName = dbPath.substring(dbPath.lastIndexOf("/") + 1);
-			String serverSaveDir = req.getServletContext().getRealPath("/image/photo");
-			File serverFile = new File(serverSaveDir + File.separator + fileName);
-			if (serverFile.exists()) {
-				serverFile.delete();
-			}
+			String rootPath = req.getServletContext().getRealPath("/");
+			File oldFile = new File(rootPath, dbPath);
+			if (oldFile.exists()) {
+	            if (oldFile.delete()) {
+	                System.out.println("古いファイルを削除しました: " + oldFile.getPath());
+	            } else {
+	                System.out.println("ファイルの削除に失敗しました。");
+	            }
+	        }
 
 		}
 		dao.update(category, webPath);

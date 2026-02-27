@@ -28,12 +28,14 @@ public class TopicsDeleteAction {
 
 			if (dbPath != null && !dbPath.isEmpty()) {
 
-				String fileName = dbPath.substring(dbPath.lastIndexOf("/") + 1);
-				String serverSaveDir = req.getServletContext().getRealPath("/image/photo");
-				File serverFile = new File(serverSaveDir + File.separator + fileName);
-				if (serverFile.exists()) {
-					serverFile.delete();
-				}
+				String rootPath = req.getServletContext().getRealPath("/");
+                File serverFile = new File(rootPath, dbPath); 
+
+                if (serverFile.exists()) {
+                    if (serverFile.delete()) {
+                        System.out.println("ファイルを削除しました: " + serverFile.getPath());
+                    }
+                }
 
 			}
 		}

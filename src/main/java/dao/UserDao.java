@@ -150,7 +150,7 @@ public class UserDao {
 				     SELECT *,
 				     (SELECT COUNT(*) FROM 予約
 				      WHERE 予約.member_id = 会員.member_id
-				      AND 予約.reservation_date >= NOW()) AS res_count,
+				      AND 予約.reservation_date >= CURDATE()) AS res_count,
 				     (SELECT COUNT(*) FROM クーポン利用
 				      WHERE クーポン利用.member_id = 会員.member_id) AS coup_count
 				   FROM 会員
