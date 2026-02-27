@@ -359,9 +359,13 @@ public class AdminController extends HttpServlet {
 			success = topicsAddAction.execute(req, resp);
 
 			if (success) {
-				resp.setStatus(HttpServletResponse.SC_OK);
+				TopicsAction topicsAction = new TopicsAction();
+				List<Topics> topicsList = topicsAction.execute();
+				session.setAttribute("topicsList", topicsList);
+				session.setAttribute("message", "クーポンを追加しました");
+				resp.sendRedirect("TopicsManage.jsp");
 			} else {
-				resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				resp.sendRedirect("Error.jsp");
 			}
 			return;
 
