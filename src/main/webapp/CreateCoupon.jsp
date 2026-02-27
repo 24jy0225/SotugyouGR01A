@@ -38,7 +38,7 @@
 				</div>
 				<div class="coupon-form-div">
 					<label for="coupon-content">クーポン内容</label>
-					<textarea name="couponContent" id="coupon-content" maxlength="200"></textarea>
+					<textarea name="couponContent" id="coupon-content" maxlength="200" required></textarea>
 				</div>
 				<div class="coupon-form-div">
 					<label for="coupon-start">クーポン開始日</label> <input type="date"
