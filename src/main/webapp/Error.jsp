@@ -1,7 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="model.User"%>
+	<% User user = (User) session.getAttribute("LoginUser"); %>
 	<% String errorMsg=(String)session.getAttribute("errorMsg"); %>
 		<% String action=(String)session.getAttribute("action"); %>
 			<% if(action==null){ action="" ; } %>
+			<% if(errorMsg == null){
+				errorMsg = "AbsoruteWoka";
+			} %>
 				<!DOCTYPE html>
 				<html>
 
