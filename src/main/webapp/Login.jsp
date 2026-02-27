@@ -104,7 +104,6 @@ User user = (User) session.getAttribute("LoginUser");
 					<div class="input-wrapper">
 						<input type="password" id="password" class="form-input"
 							name="password" placeholder="Placeholder text" required>
-						<span class="password-toggle" onclick="togglePassword()">不</span>
 					</div>
 					<p class="password-hint">パスワードは英字大文字・小文字・数字を含む8文字以上で入力してください。</p>
 				</div>
