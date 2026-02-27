@@ -34,19 +34,19 @@
 				<input type="hidden" name="command" value="createCoupon">
 				<div class="coupon-form-div">
 					<label for="coupon-name">クーポン名</label> <input type="text"
-						name="couponName" id="coupon_name">
+						name="couponName" id="coupon_name" required>
 				</div>
 				<div class="coupon-form-div">
 					<label for="coupon-content">クーポン内容</label>
-					<textarea name="couponContent" id="coupon-content" maxlength="100"></textarea>
+					<textarea name="couponContent" id="coupon-content" maxlength="200" required></textarea>
 				</div>
 				<div class="coupon-form-div">
 					<label for="coupon-start">クーポン開始日</label> <input type="date"
-						name="startDate" id="coupon-start">
+						name="startDate" id="coupon-start" required>
 				</div>
 				<div class="coupon-form-div">
 					<label for="coupon-end">クーポン期限日</label> <input type="date"
-						name="endDate" id="coupon-end">
+						name="endDate" id="coupon-end" required>
 				</div>
 				<input type="submit" value="クーポンを発行" id="coupon-submit">
 			</form>

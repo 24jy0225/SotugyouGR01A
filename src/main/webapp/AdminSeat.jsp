@@ -12,7 +12,7 @@ List<Seat> seatList = (List<Seat>) session.getAttribute("Seat");
 <link rel="stylesheet" href="./css/admin/adminStyle.css">
 <link rel="stylesheet" href="./css/admin/adminSeatStyle.css">
 <link rel="icon" href="./image/assets/Admin_logo.png">
-<title>席</title>
+<title>座席管理</title>
 </head>
 
 <body>
@@ -48,7 +48,7 @@ List<Seat> seatList = (List<Seat>) session.getAttribute("Seat");
 					</td>
 				</tr>
 			</table>
-			<button onclick="addSeat()" class="">座席追加</button>
+			<button onclick="addSeat()" class="seat-add-btn">＋座席追加</button>
 		</div>
 		<div class="seat_main_body">
 			<table>
