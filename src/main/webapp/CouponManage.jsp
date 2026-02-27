@@ -48,6 +48,15 @@ if (couponList != null && !couponList.isEmpty()) {
 <title>クーポン管理</title>
 </head>
 <body>
+	<header>
+		<nav class="nav-menu">
+			<button onclick="location.href='ReservationManage.jsp'">予約管理</button>
+			<button onclick="location.href='UserManage.jsp'">顧客管理</button>
+			<button onclick="location.href='CouponManage.jsp'">クーポン管理</button>
+			<button onclick="location.href='TopicsManage.jsp'">お知らせ管理</button>
+			<button onclick="location.href='DesignCustom.jsp'">Webサイト管理</button>
+		</nav>
+	</header>
 	<%
 	String msg = (String) session.getAttribute("message");
 	if (msg != null) {
@@ -61,15 +70,6 @@ if (couponList != null && !couponList.isEmpty()) {
 	session.removeAttribute("message");
 	}
 	%>
-	<header>
-		<nav class="nav-menu">
-			<button onclick="location.href='ReservationManage.jsp'">予約管理</button>
-			<button onclick="location.href='UserManage.jsp'">顧客管理</button>
-			<button onclick="location.href='CouponManage.jsp'">クーポン管理</button>
-			<button onclick="location.href='TopicsManage.jsp'">お知らせ管理</button>
-			<button onclick="location.href='DesignCustom.jsp'">Webサイト管理</button>
-		</nav>
-	</header>
 	<main class="coupon-main">
 		<div class="coupon-main-head">
 			<table>

@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8" import="java.util.* , model.Topics"%>
 <%
 List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
+String meg = (String) session.getAttribute("message");
 %>
 <!DOCTYPE html>
 <html>
@@ -23,6 +24,19 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 			<button onclick="location.href='DesignCustom.jsp'">Webサイト管理</button>
 		</nav>
 	</header>
+	<%
+	String msg = (String) session.getAttribute("message");
+	if (msg != null) {
+	%>
+	<div id="status-message"
+		style="color: green; font-weight: bold; border: 1px solid green; padding: 10px; margin-bottom: 10px;">
+		<%=msg%>
+	</div>
+	<%
+	// 一度表示したら消す（そうしないと、ずっと表示され続けてしまうため）
+	session.removeAttribute("message");
+	}
+	%>
 	<main>
 
 		<div class="add-topic">
@@ -37,7 +51,8 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 				</table>
 			</div>
 			<form id="topicsAddForm" class="add-topic-form"
-				onsubmit="return false;">
+				action="AdminController" method="POST" enctype="multipart/form-data"
+				onsubmit="return addTopics();">
 				<div class="topics-form-div">
 					<label for="topics_title">トピックタイトル</label> <input type="text"
 						name="topicsTitle" id="topics_title" placeholder="トピックタイトル"
@@ -49,14 +64,14 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 						placeholder="トピック内容" maxlength="1000" class="topic-content"></textarea>
 				</div>
 				<div class="topics-form-div">
-					<label for="photo_id">画像</label> 
-					<input type="file" accept="image/png,image/jpeg,image/jpg" 
-					name="image" id="photo_id" class="topic-photo" onchange="previewImage(this)" required>
+					<label for="photo_id">画像</label> <input type="file"
+						accept="image/png,image/jpeg,image/jpg" name="image" id="photo_id"
+						class="topic-photo" onchange="previewImage(this)" required>
 				</div>
 				<div class="topics-form-div">
-					<input type="button" onclick="addTopics()" value="＋　追加する"
-						id="topic-submit" class="topic-submit"> <input
-						type="hidden" name="command" value="topicsAdd">
+					<input type="submit" value="＋　追加する" id="topic-submit"
+						class="topic-submit"> <input type="hidden" name="command"
+						value="topicsAdd">
 				</div>
 			</form>
 		</div>
@@ -113,59 +128,23 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
 
         function addTopics() {
             const form = document.getElementById("topicsAddForm");
-            // バリデーション（簡易）
-            if(!document.getElementById("topics_title").value || !document.getElementById("topics_content").value || !document.getElementById("photo_id").value){
-                alert("タイトル、内容、写真は必須です");
-                return;
-            }
-            const formData = new FormData(form);
             
-            // 画面表示用の一時変数
+            // バリデーション
             const titleVal = document.getElementById("topics_title").value;
             const contentVal = document.getElementById("topics_content").value;
+            const photoInput = document.getElementById("photo_id");
 
-            fetch("AdminController", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => {
-                if(response.ok) {
-                    alert("登録成功！");
-                    
-                    // 入力をクリア
-                    document.getElementById("topics_title").value = "";
-                    document.getElementById("topics_content").value = "";
-                    // 【修正】IDを photo_id に修正
-                    document.getElementById("photo_id").value = ""; 
-                    document.getElementById("preview_img").src = ""; // プレビューもクリア
+            if(!titleVal || !contentVal || !photoInput.value){
+                alert("タイトル、内容、写真は必須です");
+                return false;
+            }
+            return true;
 
-                    // 行を増やす
-                    // 【修正】HTML側に id="topicsTbody" を追加したので取得可能になる
-                    const tbody = document.getElementById("topicsTbody");
-                    if(tbody) {
-                        const newRow = tbody.insertRow(0); // 0にすると一番上に追加される
-                        // 注意: IDがないため、ここでの削除ボタンはリロードするまで機能しない（または仮IDが必要）
-                        newRow.innerHTML = `
-                            <td>${titleVal}</td>
-                            <td style="white-space: pre-wrap; word-wrap: break-word;">${contentVal}</td>
-                            <td><button type='button' disabled>リロード後に削除可</button></td>
-                        `;
-                    } else {
-                        // tbodyが見つからない場合のフォールバック（リロード）
-                        location.reload();
-                    }
-                } else {
-                    alert("サーバーエラーが発生しました");
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                alert("通信エラーが発生しました");
-            });
         }
 
         function deleteTopics(topicsId, btn) {
             if(!confirm("削除しますか？")) return;
+            
             const params = new URLSearchParams();
             params.append("command", "deleteTopics");
             params.append("topicsId", topicsId);
@@ -177,8 +156,18 @@ List<Topics> topicsList = (List<Topics>) session.getAttribute("topicsList");
             })
             .then(res => {
                 if(res.ok) {
-                    const row = btn.closest("tr");
-                    row.remove();
+                    const titleRow = btn.closest("tr");
+                    const contentRow = titleRow.nextElementSibling; // 次の行（内容行）を取得
+                    titleRow.remove();
+                    if(contentRow) contentRow.remove();
+                    const msgDiv = document.getElementById("status-message");
+                    msgDiv.innerText = "お知らせを削除しました"; // メッセージを設定
+                    msgDiv.style.display = "block";
+
+                    setTimeout(() => {
+                        msgDiv.style.display = "none";
+                    }, 3000);
+                    
                 } else {
                     alert("削除に失敗しました");
                 }
