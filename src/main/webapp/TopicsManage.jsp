@@ -43,10 +43,10 @@ String meg = (String) session.getAttribute("message");
 			<div class="topics-head">
 				<table>
 					<tr>
-						<td>トピックス管理</td>
+						<td>お知らせ管理</td>
 					</tr>
 					<tr>
-						<td>トピックの追加、削除ができます</td>
+						<td>お知らせの追加、削除ができます</td>
 					</tr>
 				</table>
 			</div>
@@ -54,12 +54,12 @@ String meg = (String) session.getAttribute("message");
 				action="AdminController" method="POST" enctype="multipart/form-data"
 				onsubmit="return addTopics();">
 				<div class="topics-form-div">
-					<label for="topics_title">トピックタイトル</label> <input type="text"
+					<label for="topics_title">タイトル</label> <input type="text"
 						name="topicsTitle" id="topics_title" placeholder="トピックタイトル"
 						class="topic-title">
 				</div>
 				<div class="topics-form-div">
-					<label for="topics_content">トピック内容</label>
+					<label for="topics_content">内容</label>
 					<textarea name="topicsContent" id="topics_content"
 						placeholder="トピック内容" maxlength="1000" class="topic-content"></textarea>
 				</div>
